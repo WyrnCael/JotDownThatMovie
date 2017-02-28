@@ -1,0 +1,7 @@
+#Tue Feb 28 23:48:47 CET 2017
+base.0=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_683f925e753d6fedad013db6ab49a9a9f600c0ff
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_a4738b6da1f4a0523ce266af413d71dacf57dd53\\classes.dex
+base.1=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_a4738b6da1f4a0523ce266af413d71dacf57dd53
+file.0=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_683f925e753d6fedad013db6ab49a9a9f600c0ff\\classes.dex
