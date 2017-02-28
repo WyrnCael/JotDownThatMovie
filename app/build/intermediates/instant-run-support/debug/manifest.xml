@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pruebas.pureba1"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="25" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.android.tools.fd.runtime.BootstrapApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="pruebas.prueba1.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter android:label="@string/app_name" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="pruebas.prueba1.AnadirPelicula"
+            android:label="@string/title_activity_saludo"
+            android:windowSoftInputMode="stateVisible" >
+        </activity>
+        <activity
+            android:name="pruebas.prueba1.search.ActivitySearch"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="pruebas.prueba1.video.alter.GetVideoURLAlter"
+            android:label="@string/title_activity_saludo" >
+        </activity>
+        <activity
+            android:name="pruebas.prueba1.mostrarPelicula.InfoMovieSearch"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_saludo" >
+        </activity>
+        <activity
+            android:name="pruebas.prueba1.mostrarPelicula.InfoMovieDatabase"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_saludo" >
+        </activity>
+    </application>
+
+</manifest>

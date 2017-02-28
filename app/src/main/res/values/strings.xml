@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">JotDownThatMovie</string>
+    <string name="action_settings">Settings</string>
+    <string name="hola">Buscar</string>
+    <string name="nombre">Nombre de la pelicula:</string>
+    <string name="anyo">Año:</string>
+	<string name="title_activity_main">Peliculas por ver</string>
+	<string name="title_activity_saludo">Añadir Pelicula</string>
+	
+	<string name="OpcLista1">Modificar</string>
+	<string name="OpcLista2">Eliminar</string>
+	
+	<string name="image">Thumbnail</string>
+	
+</resources>
