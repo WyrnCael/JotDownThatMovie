@@ -5,29 +5,29 @@
     density="560dpi"
     format="8"
     plugin-version="2.2.3"
-    timestamp="560704296379483"
+    timestamp="560939994475630"
     token="6631548626940648492"
     verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="237" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="274" />
     <task
         name="verifier"
-        duration="0" />
+        duration="116" />
 
     <artifact
         location="C:\Users\Jota\StudioProjects\Pureba11\app\build\outputs\apk\app-debug.apk"
         type="MAIN" />
 
     <build
-        timestamp="560704296379483"
+        timestamp="560939994475630"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\Jota\StudioProjects\Pureba11\app\build\outputs\apk\app-debug.apk"
