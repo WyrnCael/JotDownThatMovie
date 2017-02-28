@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Feb 28 23:48:47 CET 2017
+#Tue Feb 28 23:52:50 CET 2017
 25.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\menu\\menu_pelicula_lista.xml
 25.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 22.set=ANDROID_RESOURCE
