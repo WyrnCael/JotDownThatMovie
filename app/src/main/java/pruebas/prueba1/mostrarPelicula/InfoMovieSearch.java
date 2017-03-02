@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -95,7 +96,7 @@ public class InfoMovieSearch extends Activity {
             	 insert(pelicula);
             	 
             	 Toast toast = Toast.makeText(getApplicationContext(),
-                 "Película " + pelicula.getTitulo() + " añadida!",
+						 getResources().getString(R.string.film) + " " + pelicula.getTitulo() + " " + getResources().getString(R.string.added) + "!",
                  Toast.LENGTH_SHORT);
 		         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 		         toast.show();      
@@ -137,7 +138,7 @@ public class InfoMovieSearch extends Activity {
         for (int j = 0; j < pelicula.getGeneros().size() ; j++){
         	if ( j > 0){
         		gene += ", " + pelicula.getGeneros().get(j).toLowerCase();
-        		generoLab.setText("Generos:");
+        		generoLab.setText(getResources().getString(R.string.genders));
         	}
         	else gene += pelicula.getGeneros().get(j);        	
         }
@@ -148,7 +149,7 @@ public class InfoMovieSearch extends Activity {
         for (int d = 0; d < pelicula.getDirectores().size() ; d++){
         	if (d > 0){
         		direc += ", " + pelicula.getDirectores().get(d);
-        		directorLab.setText("Directores: ");
+        		directorLab.setText(getResources().getString(R.string.directors));
         	}
         	else direc += pelicula.getDirectores().get(d);
         }
@@ -178,7 +179,7 @@ public class InfoMovieSearch extends Activity {
             super.onPreExecute();
             
             pDialog = new ProgressDialog(context);
-            pDialog.setMessage("Buscando");
+            pDialog.setMessage(getResources().getString(R.string.searching));
             pDialog.setCancelable(true);
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.show();	             
@@ -209,7 +210,7 @@ public class InfoMovieSearch extends Activity {
     	private void getSinopsisPelicula() throws IOException{
     		String web = null;
     		
-    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "?api_key=" + General.APIKEY + "&language=es";
+    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage();
     		
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();
@@ -272,7 +273,7 @@ public class InfoMovieSearch extends Activity {
     	private void getCreditsPelicula() throws IOException{
     		String web = null;
     		
-    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/credits?api_key=" + General.APIKEY + "&language=es";
+    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/credits?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage();
     		
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();
