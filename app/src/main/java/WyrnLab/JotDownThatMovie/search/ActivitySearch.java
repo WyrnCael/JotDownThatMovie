@@ -1,24 +1,19 @@
-package pruebas.prueba1.search;
+package WyrnLab.JotDownThatMovie.search;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import data.General;
-import pruebas.prueba1.mostrarPelicula.InfoMovieSearch;
-import pruebas.prueba1.search.CustomListViewAdapter;
-import pruebas.prueba1.search.RowItem;
-import pruebas.prueba1.sql.PeliculasSQLiteHelper;
-import pruebas.pureba1.R;
+import WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieSearch;
+import WyrnLab.pureba1.R;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
+
 import api.search.Pelicula;
  
 public class ActivitySearch extends Activity implements

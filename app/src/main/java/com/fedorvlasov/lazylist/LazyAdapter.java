@@ -1,6 +1,6 @@
 package com.fedorvlasov.lazylist;
 
-import pruebas.pureba1.R;
+import WyrnLab.pureba1.R;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
