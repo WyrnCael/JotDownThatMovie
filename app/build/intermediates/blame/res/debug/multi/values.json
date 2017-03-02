@@ -30,9 +30,9 @@
                 "to": {
                     "startLine": 48,
                     "startColumn": 4,
-                    "startOffset": 2245,
+                    "startOffset": 2340,
                     "endColumn": 57,
-                    "endOffset": 2298
+                    "endOffset": 2393
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\dimens.xml"
@@ -42,9 +42,9 @@
                 "to": {
                     "startLine": 49,
                     "startColumn": 4,
-                    "startOffset": 2303,
+                    "startOffset": 2398,
                     "endColumn": 55,
-                    "endOffset": 2354
+                    "endOffset": 2449
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\dimens.xml"
@@ -54,21 +54,21 @@
                 "to": {
                     "startLine": 50,
                     "startColumn": 4,
-                    "startOffset": 2359,
-                    "endColumn": 43,
-                    "endOffset": 2398
+                    "startOffset": 2454,
+                    "endColumn": 42,
+                    "endOffset": 2492
                 },
                 "from": {
-                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\exploded-aar\\com.android.support\\gridlayout-v7\\19.1.0\\res\\values\\values.xml"
+                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\exploded-aar\\com.android.support\\gridlayout-v7\\25.1.0\\res\\values\\values.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 51,
                     "startColumn": 4,
-                    "startOffset": 2403,
+                    "startOffset": 2497,
                     "endColumn": 33,
-                    "endOffset": 2432
+                    "endOffset": 2526
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\integers.xml"
@@ -78,9 +78,9 @@
                 "to": {
                     "startLine": 52,
                     "startColumn": 4,
-                    "startOffset": 2437,
+                    "startOffset": 2531,
                     "endColumn": 44,
-                    "endOffset": 2477
+                    "endOffset": 2571
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -90,9 +90,9 @@
                 "to": {
                     "startLine": 53,
                     "startColumn": 4,
-                    "startOffset": 2482,
+                    "startOffset": 2576,
                     "endColumn": 44,
-                    "endOffset": 2522
+                    "endOffset": 2616
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -102,9 +102,9 @@
                 "to": {
                     "startLine": 54,
                     "startColumn": 4,
-                    "startOffset": 2527,
+                    "startOffset": 2621,
                     "endColumn": 52,
-                    "endOffset": 2575
+                    "endOffset": 2669
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -114,28 +114,21 @@
                 "to": {
                     "startLine": 55,
                     "startColumn": 4,
-                    "startOffset": 2580,
+                    "startOffset": 2674,
                     "endColumn": 41,
-                    "endOffset": 2617
+                    "endOffset": 2711
                 },
                 "from": {
-                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 17,
-                        "startColumn": 4,
-                        "startOffset": 703,
-                        "endColumn": 41,
-                        "endOffset": 740
-                    }
+                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 56,
                     "startColumn": 4,
-                    "startOffset": 2622,
+                    "startOffset": 2716,
                     "endColumn": 55,
-                    "endOffset": 2673
+                    "endOffset": 2767
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -145,9 +138,9 @@
                 "to": {
                     "startLine": 57,
                     "startColumn": 4,
-                    "startOffset": 2678,
+                    "startOffset": 2772,
                     "endColumn": 39,
-                    "endOffset": 2713
+                    "endOffset": 2807
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -157,9 +150,9 @@
                 "to": {
                     "startLine": 58,
                     "startColumn": 4,
-                    "startOffset": 2718,
+                    "startOffset": 2812,
                     "endColumn": 38,
-                    "endOffset": 2752
+                    "endOffset": 2846
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -169,9 +162,9 @@
                 "to": {
                     "startLine": 59,
                     "startColumn": 4,
-                    "startOffset": 2757,
+                    "startOffset": 2851,
                     "endColumn": 53,
-                    "endOffset": 2806
+                    "endOffset": 2900
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -181,28 +174,21 @@
                 "to": {
                     "startLine": 60,
                     "startColumn": 4,
-                    "startOffset": 2811,
+                    "startOffset": 2905,
                     "endColumn": 46,
-                    "endOffset": 2853
+                    "endOffset": 2947
                 },
                 "from": {
-                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 18,
-                        "startColumn": 4,
-                        "startOffset": 745,
-                        "endColumn": 46,
-                        "endOffset": 787
-                    }
+                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 61,
                     "startColumn": 4,
-                    "startOffset": 2858,
+                    "startOffset": 2952,
                     "endColumn": 46,
-                    "endOffset": 2900
+                    "endOffset": 2994
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -212,9 +198,9 @@
                 "to": {
                     "startLine": 62,
                     "startColumn": 4,
-                    "startOffset": 2905,
+                    "startOffset": 2999,
                     "endColumn": 48,
-                    "endOffset": 2949
+                    "endOffset": 3043
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -224,9 +210,9 @@
                 "to": {
                     "startLine": 63,
                     "startColumn": 4,
-                    "startOffset": 2954,
+                    "startOffset": 3048,
                     "endColumn": 37,
-                    "endOffset": 2987
+                    "endOffset": 3081
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -236,9 +222,9 @@
                 "to": {
                     "startLine": 64,
                     "startColumn": 4,
-                    "startOffset": 2992,
+                    "startOffset": 3086,
                     "endColumn": 42,
-                    "endOffset": 3030
+                    "endOffset": 3124
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -248,9 +234,9 @@
                 "to": {
                     "startLine": 65,
                     "startColumn": 4,
-                    "startOffset": 3035,
+                    "startOffset": 3129,
                     "endColumn": 44,
-                    "endOffset": 3075
+                    "endOffset": 3169
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -260,9 +246,9 @@
                 "to": {
                     "startLine": 66,
                     "startColumn": 4,
-                    "startOffset": 3080,
+                    "startOffset": 3174,
                     "endColumn": 39,
-                    "endOffset": 3115
+                    "endOffset": 3209
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -272,9 +258,9 @@
                 "to": {
                     "startLine": 67,
                     "startColumn": 4,
-                    "startOffset": 3120,
+                    "startOffset": 3214,
                     "endColumn": 43,
-                    "endOffset": 3159
+                    "endOffset": 3253
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -284,9 +270,9 @@
                 "to": {
                     "startLine": 68,
                     "startColumn": 4,
-                    "startOffset": 3164,
+                    "startOffset": 3258,
                     "endColumn": 46,
-                    "endOffset": 3206
+                    "endOffset": 3300
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -296,21 +282,28 @@
                 "to": {
                     "startLine": 69,
                     "startColumn": 4,
-                    "startOffset": 3211,
-                    "endColumn": 44,
-                    "endOffset": 3251
+                    "startOffset": 3305,
+                    "endColumn": 67,
+                    "endOffset": 3368
                 },
                 "from": {
-                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
+                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 26,
+                        "startColumn": 4,
+                        "startOffset": 1043,
+                        "endColumn": 67,
+                        "endOffset": 1106
+                    }
                 }
             },
             {
                 "to": {
                     "startLine": 70,
                     "startColumn": 4,
-                    "startOffset": 3256,
-                    "endColumn": 47,
-                    "endOffset": 3299
+                    "startOffset": 3373,
+                    "endColumn": 44,
+                    "endOffset": 3413
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -320,9 +313,9 @@
                 "to": {
                     "startLine": 71,
                     "startColumn": 4,
-                    "startOffset": 3304,
-                    "endColumn": 61,
-                    "endOffset": 3361
+                    "startOffset": 3418,
+                    "endColumn": 47,
+                    "endOffset": 3461
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -332,9 +325,9 @@
                 "to": {
                     "startLine": 72,
                     "startColumn": 4,
-                    "startOffset": 3366,
-                    "endColumn": 59,
-                    "endOffset": 3421
+                    "startOffset": 3466,
+                    "endColumn": 61,
+                    "endOffset": 3523
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -344,9 +337,9 @@
                 "to": {
                     "startLine": 73,
                     "startColumn": 4,
-                    "startOffset": 3426,
-                    "endColumn": 50,
-                    "endOffset": 3472
+                    "startOffset": 3528,
+                    "endColumn": 59,
+                    "endOffset": 3583
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
@@ -356,10 +349,22 @@
                 "to": {
                     "startLine": 74,
                     "startColumn": 4,
-                    "startOffset": 3477,
-                    "endLine": 76,
+                    "startOffset": 3588,
+                    "endColumn": 50,
+                    "endOffset": 3634
+                },
+                "from": {
+                    "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 75,
+                    "startColumn": 4,
+                    "startOffset": 3639,
+                    "endLine": 77,
                     "endColumn": 12,
-                    "endOffset": 3555
+                    "endOffset": 3717
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\styles.xml"
@@ -367,12 +372,12 @@
             },
             {
                 "to": {
-                    "startLine": 77,
+                    "startLine": 78,
                     "startColumn": 4,
-                    "startOffset": 3560,
-                    "endLine": 79,
+                    "startOffset": 3722,
+                    "endLine": 80,
                     "endColumn": 12,
-                    "endOffset": 3627
+                    "endOffset": 3789
                 },
                 "from": {
                     "file": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\values\\styles.xml"

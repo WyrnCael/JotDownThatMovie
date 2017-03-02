@@ -5,40 +5,33 @@
     density="560dpi"
     format="8"
     plugin-version="2.2.3"
-    timestamp="729286472855159"
+    timestamp="732371506406260"
     token="6631548626940648492"
-    verifier="COLD_SWAP_REQUESTED" >
+    verifier="MANIFEST_FILE_CHANGE" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="364" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="287" />
     <task
         name="verifier"
-        duration="0" />
+        duration="127" />
 
     <artifact
-        location="C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\instant-run-resources\resources-debug.ir.ap_"
-        type="RESOURCES" />
+        location="C:\Users\Jota\StudioProjects\Pureba11\app\build\outputs\apk\app-debug.apk"
+        type="MAIN" />
 
     <build
-        timestamp="729117612477803"
-        verifier="BINARY_MANIFEST_FILE_CHANGE" >
+        timestamp="732371506406260"
+        verifier="MANIFEST_FILE_CHANGE" >
         <artifact
             location="C:\Users\Jota\StudioProjects\Pureba11\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
-    </build>
-    <build
-        timestamp="729286472855159"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\instant-run-resources\resources-debug.ir.ap_"
-            type="RESOURCES" />
     </build>
 
 </instant-run>

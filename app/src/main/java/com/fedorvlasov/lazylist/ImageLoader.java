@@ -15,7 +15,7 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import pruebas.pureba1.R;
+import WyrnLab.pureba1.R;
 import android.os.Handler;
 import android.content.Context;
 import android.graphics.Bitmap;

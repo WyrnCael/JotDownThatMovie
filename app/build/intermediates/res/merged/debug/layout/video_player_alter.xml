@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <pruebas.prueba1.video.alter.VideoEnabledWebView
+        <WyrnLab.JotDownThatMovie.video.alter.VideoEnabledWebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

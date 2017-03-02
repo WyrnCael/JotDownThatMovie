@@ -1,11 +1,10 @@
 package com.fedorvlasov.lazylist;
 
-import pruebas.pureba1.R;
+import WyrnLab.pureba1.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {

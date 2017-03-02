@@ -23,7 +23,9 @@
 	
 	<string name="OpcLista1">Modify</string>
 	<string name="OpcLista2">Delete</string>
-	
+
+    <string name="notAviableTrailer">Not available trailer</string>
+
 	<string name="image">Thumbnail</string>
 	
 </resources>
