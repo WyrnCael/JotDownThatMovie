@@ -3,14 +3,26 @@
 
     <string name="app_name">JotDownThatMovie</string>
     <string name="action_settings">Settings</string>
-    <string name="hola">Buscar</string>
-    <string name="nombre">Nombre de la pelicula:</string>
-    <string name="anyo">Año:</string>
-	<string name="title_activity_main">Peliculas por ver</string>
-	<string name="title_activity_saludo">Añadir Pelicula</string>
+    <string name="hola">Search</string>
+    <string name="nombre">Movie name:</string>
+    <string name="anyo">Year:</string>
+    <string name="director">Director:</string>
+    <string name="directors">Directors:</string>
+    <string name="gender">Gender:</string>
+    <string name="genders">Genders:</string>
+    <string name="valoracion">Valoration:</string>
+    <string name="film">Film</string>
+    <string name="added">added</string>
+    <string name="notavailable">N/A</string>
+    <string name="addMovie">+ Add new movie...</string>
+    <string name="addButton">Add</string>
+    <string name="backButton">Go Back</string>
+    <string name="searching">Searching</string>
+	<string name="title_activity_main">Unseen Movies</string>
+	<string name="title_activity_saludo">Add Movie</string>
 	
-	<string name="OpcLista1">Modificar</string>
-	<string name="OpcLista2">Eliminar</string>
+	<string name="OpcLista1">Modify</string>
+	<string name="OpcLista2">Delete</string>
 	
 	<string name="image">Thumbnail</string>
 	
