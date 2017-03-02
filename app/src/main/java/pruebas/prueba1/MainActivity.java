@@ -73,8 +73,7 @@ public class MainActivity extends Activity {
     }
 	
 	private void refreshList(){
-		
-		String[] planets = new String[] { "+ Añadir..." };
+		String[] planets = new String[] { getResources().getString(R.string.addMovie) };
     	ArrayList<String> planetList = new ArrayList<String>();  
         planetList.addAll( Arrays.asList(planets) );      	
      

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AnotaEsaPelicula</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="hola">Buscar</string>
+    <string name="nombre">Nombre:</string>
+    <string name="anyo">Año:</string>
+    <string name="director">Director:</string>
+    <string name="directors">Directores:</string>
+    <string name="valoracion">Valoración:</string>
+    <string name="gender">Genero:</string>
+    <string name="genders">Generos:</string>
+    <string name="film">Pelicula</string>
+    <string name="added">añadida</string>
+    <string name="notavailable">N/D</string>
+    <string name="addMovie">+ Añadir...</string>
+    <string name="addButton">Añadir</string>
+    <string name="backButton">Volver</string>
+    <string name="searching">Buscando</string>
+	<string name="title_activity_main">Peliculas por ver</string>
+	<string name="title_activity_saludo">Añadir Pelicula</string>
+	
+	<string name="OpcLista1">Modificar</string>
+	<string name="OpcLista2">Eliminar</string>
+	
+	<string name="image">Thumbnail</string>
+	
+</resources>
