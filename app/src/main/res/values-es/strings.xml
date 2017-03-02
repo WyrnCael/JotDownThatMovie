@@ -23,6 +23,8 @@
 	
 	<string name="OpcLista1">Modificar</string>
 	<string name="OpcLista2">Eliminar</string>
+
+    <string name="notAviableTrailer">Trailer no disponible</string>
 	
 	<string name="image">Thumbnail</string>
 	
