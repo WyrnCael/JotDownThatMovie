@@ -43,8 +43,11 @@ public class ActivitySearch extends Activity implements
         for (int i = 0; i < peliculas.size(); i++) {
         	// Insertar imagen
         	String img = General.base_url + "w92" +  peliculas.get(i).getImagePath();
-        	
-        	RowItem item = new RowItem(1, img, peliculas.get(i).getTitulo(), ("Año: " + peliculas.get(i).getAnyo() + "   Valoración: " + peliculas.get(i).getRating()) );
+			RowItem item;
+        	if(peliculas.get(i).getRating() == 0.0)
+        		item = new RowItem(1, img, peliculas.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + peliculas.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)) );
+			else
+				item = new RowItem(1, img, peliculas.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + peliculas.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + peliculas.get(i).getRating()) );
             rowItems.add(item);
         }
         
