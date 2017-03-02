@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Feb 28 23:52:50 CET 2017
+#Thu Mar 02 22:35:31 CET 2017
 25.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\menu\\menu_pelicula_lista.xml
 25.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 22.set=ANDROID_RESOURCE
@@ -30,7 +30,7 @@ count=33
 31.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 15.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_683f925e753d6fedad013db6ab49a9a9f600c0ff
 26.set=DEX
-7.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\movie_info.xml
+7.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\item.xml
 7.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 15.set=DEX
 27.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\search_principal.xml
@@ -47,7 +47,7 @@ count=33
 32.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 6.set=ANDROID_RESOURCE
 16.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\5\\slice_0
-8.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\item.xml
+8.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\movie_info.xml
 8.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 17.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\drawable-hdpi-v4\\poster.jpg
 25.set=ANDROID_RESOURCE

@@ -1,4 +1,4 @@
-#Tue Feb 28 23:52:50 CET 2017
+#Thu Mar 02 22:35:31 CET 2017
 base.0=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_683f925e753d6fedad013db6ab49a9a9f600c0ff
 renamed.1=classes2.dex
 renamed.0=classes.dex

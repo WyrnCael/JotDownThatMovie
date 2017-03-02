@@ -1,8 +1,8 @@
 #Internal package file, do not edit.
-#Tue Feb 28 23:52:43 CET 2017
+#Thu Mar 02 22:38:16 CET 2017
 8.set=ANDROID_RESOURCE
 1.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
-1.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\simplerow.xml
+1.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\resources.arsc
 3.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\drawable\\icon.png
 3.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 15.set=ANDROID_RESOURCE
@@ -15,14 +15,14 @@
 11.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 9.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 9.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\main.xml
-13.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\menu\\main.xml
+13.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\search_principal.xml
 13.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 11.set=ANDROID_RESOURCE
 0.set=ANDROID_RESOURCE
 15.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\drawable-hdpi-v4\\poster.jpg
 15.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 18.set=ANDROID_RESOURCE
-17.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\mostrar_peliculas.xml
+17.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\video_player.xml
 17.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 7.set=ANDROID_RESOURCE
 14.set=ANDROID_RESOURCE
@@ -32,7 +32,7 @@
 0.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\AndroidManifest.xml
 17.set=ANDROID_RESOURCE
 6.set=ANDROID_RESOURCE
-2.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\resources.arsc
+2.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\simplerow.xml
 2.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 4.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\list_item.xml
 4.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
@@ -44,7 +44,7 @@
 8.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 8.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\video_player_alter.xml
 2.set=ANDROID_RESOURCE
-12.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\search_principal.xml
+12.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\menu\\main.xml
 12.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 14.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\activity_main.xml
 14.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
@@ -52,7 +52,7 @@
 16.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 9.set=ANDROID_RESOURCE
 count=19
-18.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\video_player.xml
+18.file=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\mostrar_peliculas.xml
 18.base=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\resources-debug.ap_
 16.set=ANDROID_RESOURCE
 5.set=ANDROID_RESOURCE

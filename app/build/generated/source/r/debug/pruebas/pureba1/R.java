@@ -128,13 +128,13 @@ containing a value of this type.
         public static final int useDefaultMargins=0x7f010003;
     }
     public static final class color {
-        public static final int gris_claro=0x7f060000;
-        public static final int gris_oscuro=0x7f060001;
+        public static final int gris_claro=0x7f070000;
+        public static final int gris_oscuro=0x7f070001;
     }
     public static final class dimen {
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
-        public static final int default_gap=0x7f040002;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
+        public static final int default_gap=0x7f050002;
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
@@ -204,7 +204,7 @@ containing a value of this type.
         public static final int webView=0x7f0a0035;
     }
     public static final class integer {
-        public static final int x=0x7f070000;
+        public static final int x=0x7f080000;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -224,30 +224,35 @@ containing a value of this type.
         public static final int menu_pelicula_lista=0x7f090001;
     }
     public static final class string {
-        public static final int OpcLista1=0x7f080000;
-        public static final int OpcLista2=0x7f080001;
-        public static final int action_settings=0x7f080002;
-        public static final int anyo=0x7f080003;
-        public static final int app_name=0x7f080004;
-        public static final int hola=0x7f080005;
-        public static final int image=0x7f080006;
-        public static final int nombre=0x7f080007;
-        public static final int title_activity_main=0x7f080008;
-        public static final int title_activity_saludo=0x7f080009;
+        public static final int OpcLista1=0x7f040000;
+        public static final int OpcLista2=0x7f040001;
+        public static final int action_settings=0x7f040002;
+        public static final int addButton=0x7f040003;
+        public static final int addMovie=0x7f040004;
+        public static final int added=0x7f040005;
+        public static final int anyo=0x7f040006;
+        public static final int app_name=0x7f040007;
+        public static final int backButton=0x7f040008;
+        public static final int director=0x7f040009;
+        public static final int directors=0x7f04000a;
+        public static final int film=0x7f04000b;
+        public static final int gender=0x7f04000c;
+        public static final int genders=0x7f04000d;
+        public static final int hola=0x7f04000e;
+        public static final int image=0x7f04000f;
+        public static final int nombre=0x7f040010;
+        public static final int notavailable=0x7f040011;
+        public static final int searching=0x7f040012;
+        public static final int title_activity_main=0x7f040013;
+        public static final int title_activity_saludo=0x7f040014;
+        public static final int valoracion=0x7f040015;
     }
     public static final class style {
         /**  API 11 theme customizations can go here. 
  API 14 theme customizations can go here. 
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
          */
-        public static final int AppBaseTheme=0x7f050000;
-        /**  All customizations that are NOT specific to a particular API-level can go here. 
-         */
-        public static final int AppTheme=0x7f050001;
+        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppTheme=0x7f060001;
     }
     public static final class styleable {
         /** Attributes that can be used with a GridLayout.

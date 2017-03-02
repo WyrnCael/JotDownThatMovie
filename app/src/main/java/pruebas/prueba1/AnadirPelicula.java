@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -145,7 +146,7 @@ public class AnadirPelicula extends Activity {
             super.onPreExecute();
             
             pDialog = new ProgressDialog(context);
-            pDialog.setMessage("Buscando");
+            pDialog.setMessage(getResources().getString(R.string.addMovie));
             pDialog.setCancelable(true);
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.show();	             
@@ -155,7 +156,7 @@ public class AnadirPelicula extends Activity {
     		String web = null;
     		
     		@SuppressWarnings("deprecation")
-    		String url = General.URLPRINCIPAL + "3/search/movie?api_key=" + General.APIKEY + "&language=es&query=" + URLEncoder.encode(nombre) ;
+    		String url = General.URLPRINCIPAL + "3/search/movie?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage() + "&query=" + URLEncoder.encode(nombre) ;
 
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();
