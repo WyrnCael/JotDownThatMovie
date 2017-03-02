@@ -1,17 +1,11 @@
-package pruebas.prueba1.video;
+package WyrnLab.JotDownThatMovie.video;
 
-import pruebas.prueba1.MainActivity.SearchBaseUrl;
-import pruebas.pureba1.R;
+import WyrnLab.pureba1.R;
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
-import android.widget.ListView;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
 public class VideoPlayer extends Activity {
 

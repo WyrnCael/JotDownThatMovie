@@ -1,45 +1,21 @@
-package pruebas.prueba1.mostrarPelicula;
+package WyrnLab.JotDownThatMovie.mostrarPelicula;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
 import com.fedorvlasov.lazylist.ImageLoader;
 
 import data.General;
-import pruebas.prueba1.AnadirPelicula;
-import pruebas.prueba1.AnadirPelicula.Search;
-import pruebas.prueba1.sql.PeliculasSQLiteHelper;
-import pruebas.prueba1.video.GetVideoURL;
-import pruebas.prueba1.video.alter.GetVideoURLAlter;
-import pruebas.pureba1.R;
+import WyrnLab.JotDownThatMovie.video.alter.GetVideoURLAlter;
+import WyrnLab.pureba1.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import api.search.Pelicula;
 
 public class InfoMovieDatabase extends Activity {

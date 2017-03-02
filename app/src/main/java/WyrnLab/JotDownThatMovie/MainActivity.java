@@ -1,4 +1,4 @@
-package pruebas.prueba1;
+package WyrnLab.JotDownThatMovie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,10 +14,9 @@ import javax.net.ssl.HttpsURLConnection;
 import com.eclipsesource.json.JsonObject;
 
 import data.General;
-import pruebas.prueba1.mostrarPelicula.InfoMovieDatabase;
-import pruebas.prueba1.sql.PeliculasSQLiteHelper;
-import pruebas.prueba1.video.VideoPlayer;
-import pruebas.pureba1.R;
+import WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieDatabase;
+import WyrnLab.JotDownThatMovie.sql.PeliculasSQLiteHelper;
+import WyrnLab.pureba1.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -40,7 +39,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.view.View;
 import api.search.Pelicula;
-import android.support.v4.app.ActionBarDrawerToggle;
 
 public class MainActivity extends Activity {
 

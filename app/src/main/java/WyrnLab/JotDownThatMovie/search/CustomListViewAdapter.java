@@ -1,10 +1,10 @@
-package pruebas.prueba1.search;
+package WyrnLab.JotDownThatMovie.search;
 
 import java.util.List;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 
-import pruebas.pureba1.R;
+import WyrnLab.pureba1.R;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;

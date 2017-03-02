@@ -1,4 +1,4 @@
-package pruebas.prueba1.video;
+package WyrnLab.JotDownThatMovie.video;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,11 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import pruebas.prueba1.mostrarPelicula.InfoMovieSearch.SearchInfoMovie;
-import pruebas.pureba1.R;
+import WyrnLab.pureba1.R;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -51,7 +51,7 @@ public class GetVideoURL extends Activity{
 		this.runOnUiThread(new Runnable() {
 			  public void run() {
 				  Toast toast = Toast.makeText(getApplicationContext(),
-			        "Trailer no disponible",
+						  getResources().getString(R.string.notAviableTrailer),
 			        Toast.LENGTH_SHORT);
 			         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 			         toast.show();
@@ -73,7 +73,7 @@ public class GetVideoURL extends Activity{
             super.onPreExecute();
             
             pDialog = new ProgressDialog(context);
-            pDialog.setMessage("Buscando");
+            pDialog.setMessage(getResources().getString(R.string.searching));
             pDialog.setCancelable(true);
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.show();	             
@@ -107,7 +107,7 @@ public class GetVideoURL extends Activity{
     	private void getURLPelicula() throws IOException{
     		String web = null;
 
-            String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=es";
+            String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage();
     		
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();

@@ -1,4 +1,4 @@
-package pruebas.prueba1.sql;
+package WyrnLab.JotDownThatMovie.sql;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

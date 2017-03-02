@@ -1,4 +1,4 @@
-package pruebas.prueba1;
+package WyrnLab.JotDownThatMovie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,14 +16,12 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 
 import data.General;
-import pruebas.prueba1.search.ActivitySearch;
-import pruebas.prueba1.sql.PeliculasSQLiteHelper;
-import pruebas.pureba1.R;
+import WyrnLab.JotDownThatMovie.search.ActivitySearch;
+import WyrnLab.pureba1.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
