@@ -12,13 +12,13 @@ Jot down movies recommended by friends.
 
 ### Screenshots
 
-![alt tag](http://i.imgur.com/tjFedHE.png)
+![alt tag](http://i.imgur.com/j0tpZV1.png)
 
-![alt tag](http://i.imgur.com/6vbmLoy.png)
+![alt tag](http://i.imgur.com/dTQDdLz.png)
 
-![alt tag](http://i.imgur.com/Sq2cGZJ.png)
+![alt tag](http://i.imgur.com/cQwU2RV.png)
 
-![alt tag](http://i.imgur.com/uGYQ0RL.png)
+![alt tag](http://i.imgur.com/ZSSUVZd.png)
 
 ### Database
 
