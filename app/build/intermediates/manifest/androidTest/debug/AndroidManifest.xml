@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pruebas.pureba1.test">
+    package="WyrnLab.JotDownThatMovie.test">
 
     <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="19" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="pruebas.pureba1"
+                     android:targetPackage="WyrnLab.JotDownThatMovie"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for pruebas.pureba1"/>
+                     android:label="Tests for WyrnLab.JotDownThatMovie"/>
 </manifest>
