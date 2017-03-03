@@ -9,6 +9,7 @@ Jot down movies recommended by friends.
  - View movie info.
  - Search movie trailer.
  - Save films that you want to watch.
+ - English and Spanish version.
 
 ### Screenshots
 
