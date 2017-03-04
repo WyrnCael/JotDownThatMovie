@@ -15,7 +15,7 @@ public class VideoPlayer extends Activity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.video_player);
  
-        WebView mWebView = (WebView) findViewById(R.id.ViewVideo);;
+        WebView mWebView = (WebView) findViewById(R.id.webView);;
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setPluginState(PluginState.ON);
         mWebView.loadUrl("http://www.youtube.com/embed/" + "NgNtsmvn2PU" + "?autoplay=1&vq=small");
