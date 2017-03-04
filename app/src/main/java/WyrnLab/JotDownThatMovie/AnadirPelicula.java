@@ -144,7 +144,7 @@ public class AnadirPelicula extends Activity {
             super.onPreExecute();
             
             pDialog = new ProgressDialog(context);
-            pDialog.setMessage(getResources().getString(R.string.addMovie));
+            pDialog.setMessage(getResources().getString(R.string.searching));
             pDialog.setCancelable(true);
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.show();	             

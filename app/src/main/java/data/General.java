@@ -7,6 +7,7 @@ import api.search.Pelicula;
 public class General {
 	public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
 	public final static String APIKEY = "YOUR_TMDB_APIKEY";
+	public final static String YAPIKEY = "YOUR_YOUTUBE_APIKEY";
 	public static String base_url;
 	public static List<Pelicula> peliculasBuscadas;
 	

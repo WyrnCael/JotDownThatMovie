@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -14,9 +15,10 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.fedorvlasov.lazylist.ImageLoader;
 
+import WyrnLab.JotDownThatMovie.search.SearchURLTrailer;
+import WyrnLab.JotDownThatMovie.video.YoutubeApi.YoutubeActivityView;
 import data.General;
 import WyrnLab.JotDownThatMovie.sql.PeliculasSQLiteHelper;
-import WyrnLab.JotDownThatMovie.video.alter.GetVideoURLAlter;
 import WyrnLab.pureba1.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -108,10 +110,36 @@ public class InfoMovieSearch extends Activity {
         
         botonTrailer.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {  
-           	 Intent intent =  new Intent(InfoMovieSearch.this, GetVideoURLAlter.class);        
-                intent.putExtra("Pelicula", pelicula);  
-                startActivityForResult(intent, 1);           	 
+            public void onClick(View v) {
+                pDialog = new ProgressDialog(InfoMovieSearch.this);
+                pDialog.setMessage(getResources().getString(R.string.searching));
+                pDialog.setCancelable(true);
+                pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                pDialog.show();
+
+                SearchURLTrailer searchorMovie = new SearchURLTrailer(InfoMovieSearch.this, pelicula);
+                try {
+                    String trailerId = searchorMovie.execute().get();
+                    if(trailerId == null){
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                getResources().getString(R.string.notAviableTrailer),
+                                Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+                    }
+                    else {
+                        pDialog.dismiss();
+                        Intent intent =  new Intent(InfoMovieSearch.this, YoutubeActivityView.class);
+                        intent.putExtra("TrailerId", trailerId);
+                        startActivityForResult(intent, 1);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } finally {
+                    pDialog.dismiss();
+                }
             }
        });
         
