@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:2:1-59:12
+ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:2:1-61:12
 	package
 		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:3:5-30
 		INJECTED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml
@@ -25,15 +25,15 @@ ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xm
 		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:8:19-75
 uses-sdk
 ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:10:5-12:41
-MERGED from [com.android.support:gridlayout-v7:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\gridlayout-v7\25.1.0\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.1.0\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-fragment:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.1.0\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-media-compat:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.1.0\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-core-ui:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.1.0\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-utils:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.1.0\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-compat:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.1.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:gridlayout-v7:25.1.0] C:\Users\Jota\.android\build-cache\c777e6d408b407cf6ca7b241b53ef26e371fb25f\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:25.1.0] C:\Users\Jota\.android\build-cache\e6ad06bd138500f2abdd1d9c201ce543ec2dd22a\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.1.0] C:\Users\Jota\.android\build-cache\04b3b45bc39ae4078d67b5b801db628f7db9815e\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.1.0] C:\Users\Jota\.android\build-cache\c7e39a6e840503bcb12140a93ac73fa03ea18e57\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.1.0] C:\Users\Jota\.android\build-cache\0a66f07c30400ba6cc07753eb36287a8aeed32ed\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.1.0] C:\Users\Jota\.android\build-cache\b4872e6fd6ad5a25778edd8747fb2c5f0b4e9fae\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\Jota\.android\build-cache\2123431fa45407c8c6950df071af75df18b05069\output\AndroidManifest.xml:21:5-23:58
 	tools:overrideLibrary
-		ADDED from [com.android.support:support-v4:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.1.0\AndroidManifest.xml:23:9-51
+		ADDED from [com.android.support:support-v4:25.1.0] C:\Users\Jota\.android\build-cache\e6ad06bd138500f2abdd1d9c201ce543ec2dd22a\output\AndroidManifest.xml:23:9-51
 	android:targetSdkVersion
 		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:12:9-38
 		INJECTED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml
@@ -43,14 +43,14 @@ MERGED from [com.android.support:support-compat:25.1.0] C:\Users\Jota\StudioProj
 		INJECTED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml
 application
-ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:14:5-56:19
-MERGED from [com.android.support:gridlayout-v7:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\gridlayout-v7\25.1.0\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.1.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-fragment:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.1.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-media-compat:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.1.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-ui:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.1.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-utils:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.1.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-compat:25.1.0] C:\Users\Jota\StudioProjects\Pureba11\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.1.0\AndroidManifest.xml:25:5-20
+ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:14:5-58:19
+MERGED from [com.android.support:gridlayout-v7:25.1.0] C:\Users\Jota\.android\build-cache\c777e6d408b407cf6ca7b241b53ef26e371fb25f\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:25.1.0] C:\Users\Jota\.android\build-cache\e6ad06bd138500f2abdd1d9c201ce543ec2dd22a\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.1.0] C:\Users\Jota\.android\build-cache\04b3b45bc39ae4078d67b5b801db628f7db9815e\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.1.0] C:\Users\Jota\.android\build-cache\c7e39a6e840503bcb12140a93ac73fa03ea18e57\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.1.0] C:\Users\Jota\.android\build-cache\0a66f07c30400ba6cc07753eb36287a8aeed32ed\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.1.0] C:\Users\Jota\.android\build-cache\b4872e6fd6ad5a25778edd8747fb2c5f0b4e9fae\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\Jota\.android\build-cache\2123431fa45407c8c6950df071af75df18b05069\output\AndroidManifest.xml:25:5-20
 	android:label
 		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:17:9-41
 	android:allowBackup
@@ -91,25 +91,27 @@ ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xm
 		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:37:13-45
 	android:name
 		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:36:13-74
-activity#WyrnLab.JotDownThatMovie.video.alter.GetVideoURLAlter
-ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:40:9-43:20
+activity#WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieSearch
+ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:40:9-44:20
 	android:label
 		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:41:19-64
-	android:name
-		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:40:19-87
-activity#WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieSearch
-ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:45:9-49:20
-	android:label
-		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:46:19-64
 	android:configChanges
-		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:47:19-80
+		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:42:19-80
 	android:name
-		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:45:19-90
+		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:40:19-90
 activity#WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieDatabase
-ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:51:9-55:20
+ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:46:9-50:20
 	android:label
-		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:52:19-64
+		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:47:19-64
 	android:configChanges
-		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:53:19-80
+		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:48:19-80
 	android:name
-		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:51:19-92
+		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:46:19-92
+activity#WyrnLab.JotDownThatMovie.video.YoutubeApi.YoutubeActivityView
+ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:52:9-56:20
+	android:label
+		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:53:13-36
+	android:configChanges
+		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:54:13-74
+	android:name
+		ADDED from C:\Users\Jota\StudioProjects\Pureba11\app\src\main\AndroidManifest.xml:52:19-95

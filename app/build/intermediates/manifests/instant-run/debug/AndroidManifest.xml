@@ -5,14 +5,13 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="19" />
+        android:minSdkVersion="20"
+        android:targetSdkVersion="25" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.android.tools.fd.runtime.BootstrapApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -36,10 +35,6 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="WyrnLab.JotDownThatMovie.video.alter.GetVideoURLAlter"
-            android:label="@string/title_activity_saludo" >
-        </activity>
-        <activity
             android:name="WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieSearch"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_saludo" >
@@ -49,6 +44,15 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_saludo" >
         </activity>
+        <activity
+            android:name="WyrnLab.JotDownThatMovie.video.YoutubeApi.YoutubeActivityView"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="Trailer" >
+        </activity>
+
+        <service
+            android:name="com.android.tools.fd.runtime.InstantRunService"
+            android:exported="true" />
     </application>
 
 </manifest>
