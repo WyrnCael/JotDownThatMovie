@@ -33,7 +33,6 @@ int id CtxLstOpc2 0x7f0a003a
 int id LblNombre 0x7f0a0013
 int id LinearLayout1 0x7f0a0012
 int id TxtNombre 0x7f0a0014
-int id ViewVideo 0x7f0a0033
 int id action_settings 0x7f0a0038
 int id alignBounds 0x7f0a0002
 int id alignMargins 0x7f0a0003
@@ -80,6 +79,7 @@ int id vertical 0x7f0a0001
 int id videoLayout 0x7f0a0036
 int id videoLoading 0x7f0a0037
 int id webView 0x7f0a0035
+int id youtube_view 0x7f0a0033
 int integer x 0x7f080000
 int layout activity_main 0x7f030000
 int layout item 0x7f030001
