@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie;
+package com.wyrnlab.jotdownthatmovie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +16,8 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 
 import data.General;
-import WyrnLab.JotDownThatMovie.search.ActivitySearch;
-import WyrnLab.pureba1.R;
+import com.wyrnlab.jotdownthatmovie.search.ActivitySearch;
+import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie.video.YoutubeApi;
+package com.wyrnlab.jotdownthatmovie.video.YoutubeApi;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,17 +7,18 @@ import android.os.Bundle;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayer.Provider;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.wyrnlab.jotdownthatmovie.R;
 
-import WyrnLab.pureba1.R;
+import java.security.Provider;
+
 import data.General;
 
 /**
  * Created by Jota on 03/03/2017.
  */
 
-public class YoutubeActivityView extends YouTubeBaseActivity  {
+public class YoutubeActivityView extends YouTubeBaseActivity {
 
     private String trailerId;
     protected ProgressDialog pDialog;
@@ -34,12 +35,16 @@ public class YoutubeActivityView extends YouTubeBaseActivity  {
         YouTubePlayer.OnInitializedListener initListener = new YouTubePlayer.OnInitializedListener(){
 
             @Override
-            public void onInitializationSuccess(Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 youTubePlayer.cueVideo(trailerId);
+                youTubePlayer.setFullscreen(true);
+                if(!youTubePlayer.isPlaying()){
+                    youTubePlayer.play();
+                }
             }
 
             @Override
-            public void onInitializationFailure(Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
             }
         };
