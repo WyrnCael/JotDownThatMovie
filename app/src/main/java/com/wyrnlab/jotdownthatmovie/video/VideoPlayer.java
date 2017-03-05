@@ -1,6 +1,6 @@
-package WyrnLab.JotDownThatMovie.video;
+package com.wyrnlab.jotdownthatmovie.video;
 
-import WyrnLab.pureba1.R;
+import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;

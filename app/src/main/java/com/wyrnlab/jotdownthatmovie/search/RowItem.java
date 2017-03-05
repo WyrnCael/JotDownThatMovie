@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie.search;
+package com.wyrnlab.jotdownthatmovie.search;
 
 public class RowItem {
 	private int id;
