@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="WyrnLab.JotDownThatMovie.video.YoutubeApi.YoutubeActivityView">
+    tools:context=".video.YoutubeApi.YoutubeActivityView">
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/youtube_view"

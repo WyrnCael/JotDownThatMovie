@@ -1,11 +1,11 @@
-package WyrnLab.JotDownThatMovie.search;
+package com.wyrnlab.jotdownthatmovie.search;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import data.General;
-import WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieSearch;
-import WyrnLab.pureba1.R;
+import com.wyrnlab.jotdownthatmovie.mostrarPelicula.InfoMovieSearch;
+import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

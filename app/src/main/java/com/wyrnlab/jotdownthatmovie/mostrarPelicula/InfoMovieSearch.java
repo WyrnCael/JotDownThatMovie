@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie.mostrarPelicula;
+package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,11 +15,11 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.fedorvlasov.lazylist.ImageLoader;
 
-import WyrnLab.JotDownThatMovie.search.SearchURLTrailer;
-import WyrnLab.JotDownThatMovie.video.YoutubeApi.YoutubeActivityView;
+import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
+import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 import data.General;
-import WyrnLab.JotDownThatMovie.sql.PeliculasSQLiteHelper;
-import WyrnLab.pureba1.R;
+import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
+import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;

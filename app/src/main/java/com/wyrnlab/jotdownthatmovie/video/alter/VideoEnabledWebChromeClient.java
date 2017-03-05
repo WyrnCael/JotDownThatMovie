@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie.video.alter;
+package com.wyrnlab.jotdownthatmovie.video.alter;
 
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;

@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie.sql;
+package com.wyrnlab.jotdownthatmovie.sql;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

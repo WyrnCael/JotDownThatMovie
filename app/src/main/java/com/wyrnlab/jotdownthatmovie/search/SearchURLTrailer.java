@@ -1,6 +1,5 @@
-package WyrnLab.JotDownThatMovie.search;
+package com.wyrnlab.jotdownthatmovie.search;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,12 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
 import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import WyrnLab.pureba1.R;
 import api.search.Pelicula;
 import data.General;
 

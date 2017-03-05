@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie;
+package com.wyrnlab.jotdownthatmovie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,9 +14,10 @@ import javax.net.ssl.HttpsURLConnection;
 import com.eclipsesource.json.JsonObject;
 
 import data.General;
-import WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieDatabase;
-import WyrnLab.JotDownThatMovie.sql.PeliculasSQLiteHelper;
-import WyrnLab.pureba1.R;
+
+import com.wyrnlab.jotdownthatmovie.mostrarPelicula.InfoMovieDatabase;
+import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
+import com.wyrnlab.jotdownthatmovie.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -112,7 +113,7 @@ public class MainActivity extends Activity {
             		 startActivityForResult(intent, REQUEST_CODE_A);  
             	 }
         		 else{        		 
-	        		Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);  
+	        		Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
 	            	Pelicula pelicula = readFromSQL(position);
 			        intent.putExtra("Pelicula", pelicula);          
 					startActivity(intent);
