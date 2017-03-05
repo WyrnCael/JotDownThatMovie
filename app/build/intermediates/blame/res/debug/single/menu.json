@@ -1,10 +1,18 @@
 [
     {
+        "merged": "C:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_pelicula_lista.xml",
+        "source": "C:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\src\\main\\res\\menu\\menu_pelicula_lista.xml"
+    },
+    {
         "merged": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
         "source": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\menu\\main.xml"
     },
     {
         "merged": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_pelicula_lista.xml",
         "source": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\menu\\menu_pelicula_lista.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "C:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\src\\main\\res\\menu\\main.xml"
     }
 ]

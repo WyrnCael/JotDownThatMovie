@@ -1,4 +1,7 @@
-#Sat Mar 04 21:42:13 CET 2017
-base.0=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
-renamed.0=classes.dex
-file.0=C\:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
+#Sun Mar 05 17:04:00 CET 2017
+base.0=C\:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_551905724eca0fbed38fb3cedf49dd358e9e5cc5
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=C\:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_f31ba075373da30cc31bcc7c6861ac32cdf9866b\\classes.dex
+base.1=C\:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_f31ba075373da30cc31bcc7c6861ac32cdf9866b
+file.0=C\:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_551905724eca0fbed38fb3cedf49dd358e9e5cc5\\classes.dex

@@ -1,17 +1,16 @@
-package WyrnLab.JotDownThatMovie.mostrarPelicula;
+package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 
-import WyrnLab.JotDownThatMovie.search.SearchURLTrailer;
-import WyrnLab.JotDownThatMovie.video.YoutubeApi.YoutubeActivityView;
+import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
+import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 import data.General;
-import WyrnLab.pureba1.R;
+import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;

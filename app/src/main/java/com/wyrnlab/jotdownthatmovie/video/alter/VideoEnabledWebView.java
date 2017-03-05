@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie.video.alter;
+package com.wyrnlab.jotdownthatmovie.video.alter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

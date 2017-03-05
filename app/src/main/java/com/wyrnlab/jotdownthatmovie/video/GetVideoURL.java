@@ -1,4 +1,4 @@
-package WyrnLab.JotDownThatMovie.video;
+package com.wyrnlab.jotdownthatmovie.video;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import WyrnLab.pureba1.R;
+import com.wyrnlab.jotdownthatmovie.R;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
