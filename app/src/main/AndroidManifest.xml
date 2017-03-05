@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="WyrnLab.pureba1"
+    package="com.wyrnlab.jotdownthatmovie"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="WyrnLab.JotDownThatMovie.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
@@ -26,29 +26,29 @@
             </intent-filter>
         </activity>
  
-        <activity android:name="WyrnLab.JotDownThatMovie.AnadirPelicula"
+        <activity android:name=".AnadirPelicula"
                   android:label="@string/title_activity_saludo"
                   android:windowSoftInputMode="stateVisible" >
  
         </activity>
         
         <activity
-            android:name="WyrnLab.JotDownThatMovie.search.ActivitySearch"
+            android:name=".search.ActivitySearch"
             android:label="@string/app_name" >
         </activity>
         
-        <activity android:name="WyrnLab.JotDownThatMovie.video.alter.GetVideoURLAlter"
+        <activity android:name=".video.alter.GetVideoURLAlter"
                   android:label="@string/title_activity_saludo">
  
         </activity>
         
-        <activity android:name="WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieSearch"
+        <activity android:name=".mostrarPelicula.InfoMovieSearch"
                   android:label="@string/title_activity_saludo"
                   android:configChanges="keyboardHidden|orientation|screenSize" >
  
         </activity>
         
-        <activity android:name="WyrnLab.JotDownThatMovie.mostrarPelicula.InfoMovieDatabase"
+        <activity android:name=".mostrarPelicula.InfoMovieDatabase"
                   android:label="@string/title_activity_saludo"
                   android:configChanges="keyboardHidden|orientation|screenSize" >
  
