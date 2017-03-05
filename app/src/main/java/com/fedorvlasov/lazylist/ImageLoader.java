@@ -15,7 +15,7 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import WyrnLab.pureba1.R;
+import com.wyrnlab.jotdownthatmovie.R;
 import android.os.Handler;
 import android.content.Context;
 import android.graphics.Bitmap;
