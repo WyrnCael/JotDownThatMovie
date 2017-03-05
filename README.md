@@ -8,6 +8,7 @@ Jot down movies recommended by friends.
  - Browse results.
  - View movie info.
  - Search movie trailer.
+ - Watch trailer with [Youtube Api](https://developers.google.com/youtube/android/player/?hl=es-419).
  - Save films that you want to watch.
 
 ### Screenshots
@@ -25,3 +26,7 @@ Jot down movies recommended by friends.
 All the movies information are provided by [TheMovieDB](https://www.themoviedb.org/)
 
 [![alt tag](https://www.themoviedb.org/assets/static_cache/41bdcf10bbf6f84c0fc73f27b2180b95/images/v4/logos/91x81.png)](https://www.themoviedb.org/)
+
+### Resources
+
+ - [Youtube Api](https://developers.google.com/youtube/android/player/?hl=es-419)
