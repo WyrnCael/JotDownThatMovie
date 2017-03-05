@@ -2,5 +2,9 @@
     {
         "merged": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\poster.jpg",
         "source": "C:\\Users\\Jota\\StudioProjects\\Pureba11\\app\\src\\main\\res\\drawable-hdpi\\poster.jpg"
+    },
+    {
+        "merged": "C:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\poster.jpg",
+        "source": "C:\\Users\\Jota\\AndroidStudioProjects\\JotDownThatMovie\\app\\src\\main\\res\\drawable-hdpi\\poster.jpg"
     }
 ]
