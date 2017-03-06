@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
@@ -15,6 +16,7 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.fedorvlasov.lazylist.ImageLoader;
 
+import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 import data.General;
@@ -26,8 +28,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -210,6 +215,7 @@ public class InfoMovieSearch extends Activity {
     		try {
     			getSinopsisPelicula();	
     			getCreditsPelicula();
+                getImage();
     		} catch (IOException e) {
     			
     		}
@@ -352,6 +358,26 @@ public class InfoMovieSearch extends Activity {
     			}
     		}
     	}
+
+    	private void getImage(){
+            // Convertiomos la imagen a BLOB
+            Log.d("Convirtiendo a BLOB", General.base_url + "w500" + pelicula.getImagePath());
+            byte[] image = null;
+            try {
+                URL url = new URL(General.base_url + "w500" + pelicula.getImagePath());
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                Log.d("Convirtiendo a bitmap", myBitmap.toString());
+                image = ImageHandler.getBytes(myBitmap);
+                pelicula.setImage(image);
+            } catch (IOException e) {
+                // Log exception
+
+            }
+        }
     }
 	
 	 private void insert(Pelicula pelicula){
@@ -395,11 +421,11 @@ public class InfoMovieSearch extends Activity {
 	            }   
 	            
 	            String rating = Double.toString(pelicula.getRating());
-	            
+
 	            
 	            //Insertamos los datos en la tabla Peliculas
-	            db.execSQL("INSERT INTO Peliculas (filmId, nombre, anyo, titulo, tituloOriginal, descripcion, imagePath, directores, generos, rating) " +
-	                       "VALUES ('" + id + "', '" + nombre + "', '" + anyo + "', '" + titulo + "', '" + tituloOriginal + "', '" + descripcion + "', '" + imagePath + "', '" + directores + "', '" + generos + "', '" + rating + "')");
+	            db.execSQL("INSERT INTO Peliculas (filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating) " +
+	                       "VALUES ('" + id + "', '" + nombre + "', '" + anyo + "', '" + titulo + "', '" + tituloOriginal + "', '" + descripcion + "', '" + pelicula.getImage() + "', '" + directores + "', '" + generos + "', '" + rating + "')");
 	             
 	            //Cerramos la base de datos  
 	            db.close();          
