@@ -329,8 +329,7 @@ public class MainActivity extends Activity {
 	        
 	        JsonObject respuestaTotal = JsonObject.readFrom( json );
 	        JsonObject images = respuestaTotal.get("images").asObject();
-			Log.d("AAAA", respuestaTotal.toString());
-	        General.base_url = images.get("base_url").asString(); 
+			General.base_url = images.get("base_url").asString();
 	        
 	        } catch (IOException e) {
 				// TODO Auto-generated catch block
