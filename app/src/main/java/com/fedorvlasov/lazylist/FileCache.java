@@ -2,6 +2,7 @@ package com.fedorvlasov.lazylist;
 
 import java.io.File;
 import android.content.Context;
+import android.util.Log;
 
 public class FileCache {
     
@@ -29,10 +30,12 @@ public class FileCache {
     
     public void clear(){
         File[] files=cacheDir.listFiles();
-        if(files==null)
+        if(files==null){
             return;
-        for(File f:files)
+        }
+        for(File f:files) {
             f.delete();
+        }
     }
 
 }

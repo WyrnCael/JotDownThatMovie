@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import api.search.Pelicula;
+import data.SetTheLanguages;
 
 public class InfoMovieSearch extends Activity {
 
@@ -229,7 +230,7 @@ public class InfoMovieSearch extends Activity {
     	private void getSinopsisPelicula() throws IOException{
     		String web = null;
     		
-    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage();
+    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
     		
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();
@@ -292,7 +293,7 @@ public class InfoMovieSearch extends Activity {
     	private void getCreditsPelicula() throws IOException{
     		String web = null;
     		
-    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/credits?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage();
+    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
     		
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();

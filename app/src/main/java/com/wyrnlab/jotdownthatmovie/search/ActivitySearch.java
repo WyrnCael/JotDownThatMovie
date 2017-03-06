@@ -9,6 +9,7 @@ import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,6 +23,7 @@ public class ActivitySearch extends Activity implements
 		ListView listView;
 		List<RowItem> rowItems;
 		List<Pelicula> peliculas;
+		CustomListViewAdapter adapter;
 		final int REQUEST_CODE_PELIBUSCADA = 5;
  
     /** Called when the activity is first created. */
@@ -37,7 +39,7 @@ public class ActivitySearch extends Activity implements
     	rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < peliculas.size(); i++) {
         	// Insertar imagen
-        	String img = General.base_url + "w92" +  peliculas.get(i).getImagePath();
+			String img = General.base_url + "w92" +  peliculas.get(i).getImagePath();
 			RowItem item;
         	if(peliculas.get(i).getRating() == 0.0)
         		item = new RowItem(1, img, peliculas.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + peliculas.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)) );
@@ -48,7 +50,7 @@ public class ActivitySearch extends Activity implements
         
  
         listView = (ListView) findViewById(R.id.list);
-        CustomListViewAdapter adapter = new CustomListViewAdapter(this,
+        adapter = new CustomListViewAdapter(this,
         		R.layout.list_item, rowItems);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
@@ -76,5 +78,11 @@ public class ActivitySearch extends Activity implements
 	            break;
 	    }
 	}
+
+    @Override
+    public void onBackPressed() {
+        adapter.clearCache();
+        finish();
+    }
     
 }

@@ -28,6 +28,7 @@ import android.webkit.WebView;
 import android.webkit.WebSettings.PluginState;
 import android.widget.Toast;
 import api.search.Pelicula;
+import data.SetTheLanguages;
 
 public class GetVideoURL extends Activity{
 
@@ -107,7 +108,7 @@ public class GetVideoURL extends Activity{
     	private void getURLPelicula() throws IOException{
     		String web = null;
 
-            String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage();
+            String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
     		
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();

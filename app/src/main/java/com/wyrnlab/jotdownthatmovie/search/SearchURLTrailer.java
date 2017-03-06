@@ -18,6 +18,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import api.search.Pelicula;
 import data.General;
+import data.SetTheLanguages;
 
 /**
  * Created by Jota on 04/03/2017.
@@ -54,7 +55,6 @@ public class SearchURLTrailer extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result)
     {
-        Log.d("Tid", result);
         super.onPostExecute(result);
     }
 
@@ -62,7 +62,7 @@ public class SearchURLTrailer extends AsyncTask<String, Integer, String> {
     private void getURLPelicula() throws IOException{
         String web = null;
 
-        String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage();
+        String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
 
         URL oracle = new URL(url);
         yc = (HttpsURLConnection) oracle.openConnection();
