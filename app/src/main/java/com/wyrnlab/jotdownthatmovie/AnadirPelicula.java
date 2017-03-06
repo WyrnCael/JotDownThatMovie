@@ -17,13 +17,13 @@ import com.eclipsesource.json.JsonObject;
 
 import data.General;
 import com.wyrnlab.jotdownthatmovie.search.ActivitySearch;
-import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View.OnClickListener;
 import android.view.View;
@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import api.search.Pelicula;
+import data.SetTheLanguages;
 
 public class AnadirPelicula extends Activity {
 	
@@ -154,8 +155,8 @@ public class AnadirPelicula extends Activity {
     		String web = null;
     		
     		@SuppressWarnings("deprecation")
-    		String url = General.URLPRINCIPAL + "3/search/movie?api_key=" + General.APIKEY + "&language=" + Locale.getDefault().getDisplayLanguage() + "&query=" + URLEncoder.encode(nombre) ;
-
+    		String url = General.URLPRINCIPAL + "3/search/movie?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()) + "&query=" + URLEncoder.encode(nombre) ;
+            Log.d("url", url);
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();
     	    String json = "";
@@ -206,6 +207,7 @@ public class AnadirPelicula extends Activity {
     		for (int i = 0; i < res.size() ; i++){  
     			pelicula = new Pelicula();
             	JsonObject results = JsonObject.readFrom(res.get(i).toString());
+				Log.d("Info Movie", results.toString());
             	pelicula.setTituloOriginal(results.get("original_title").asString());
             	pelicula.setTitulo(results.get("title").asString());
             	pelicula.setId(results.get("id").asInt());

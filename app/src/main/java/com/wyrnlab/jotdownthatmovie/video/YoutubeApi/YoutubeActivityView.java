@@ -9,6 +9,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.video.alter.VideoEnabledWebView;
 
 import java.security.Provider;
 
@@ -42,7 +43,9 @@ public class YoutubeActivityView extends YouTubeBaseActivity {
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
+                /*Intent intent =  new Intent(YoutubeActivityView.this, VideoEnabledWebView.class);
+                intent.putExtra("Pelicula", pelicula);
+                startActivityForResult(intent, 1);*/
             }
         };
         youTubeView.initialize(General.APIKEY, initListener);
