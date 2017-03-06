@@ -2,6 +2,7 @@ package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 
+import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 import data.General;
@@ -11,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,8 +68,8 @@ public class InfoMovieDatabase extends Activity {
         valoracion.setText("	" + Double.toString(pelicula.getRating()));
         descripcion.setText(pelicula.getDescripcion());        
         ImageView image = (ImageView)findViewById(R.id.poster);
-        ImageLoader imageLoader = new ImageLoader(this);
-        imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
+        Log.d("Image", ImageHandler.getImage(pelicula.getImage()).toString());
+        image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
         
       //Implementamos el evento “click” del botón
         botonVolver.setOnClickListener(new OnClickListener() {
