@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -15,9 +16,12 @@ import com.eclipsesource.json.JsonObject;
 
 import data.General;
 
+import com.fedorvlasov.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.mostrarPelicula.InfoMovieDatabase;
+import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.ReadExternalStorage;
+import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.WriteExternalStorage;
 import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
-import com.wyrnlab.jotdownthatmovie.R;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -27,6 +31,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -40,6 +45,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.view.View;
 import api.search.Pelicula;
+import data.SetTheLanguages;
 
 public class MainActivity extends Activity {
 
@@ -55,22 +61,32 @@ public class MainActivity extends Activity {
     {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.mostrar_peliculas);
- 
+
+		// Vaciar cache imagenes
+		ImageLoader imageLoader = new ImageLoader(this);
+		imageLoader.clearCache();
+
+		// Solicitar permisos
+		ReadExternalStorage permRead = new ReadExternalStorage(this);
+		permRead.getPermissions();
+		WriteExternalStorage permWrite = new WriteExternalStorage(this);
+		permWrite.getPermissions();
+
         SearchBaseUrl searchor = new SearchBaseUrl(this);
-        searchor.execute();                
-        
+        searchor.execute();
+
         NavDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		//Lista
         NavList = (ListView) findViewById(R.id.lista);
-        
+
 
         //Localizar los controles
         mainListView = (ListView) findViewById( R.id.mainListView );
-        
+
         refreshList();
-        
+
     }
-	
+
 	private void refreshList(){
 		String[] planets = new String[] { getResources().getString(R.string.addMovie) };
     	ArrayList<String> planetList = new ArrayList<String>();  
@@ -79,8 +95,8 @@ public class MainActivity extends Activity {
         // Create ArrayAdapter using the planet list.  
         listAdapter = new ArrayAdaptado(this, R.layout.simplerow, planetList); 
         
-        
-        
+
+
         usdbh = new PeliculasSQLiteHelper(this, "DBPeliculas", null, 1);
 		
 		SQLiteDatabase dba = usdbh.getWritableDatabase();        
@@ -313,6 +329,7 @@ public class MainActivity extends Activity {
 	        
 	        JsonObject respuestaTotal = JsonObject.readFrom( json );
 	        JsonObject images = respuestaTotal.get("images").asObject();
+			Log.d("AAAA", respuestaTotal.toString());
 	        General.base_url = images.get("base_url").asString(); 
 	        
 	        } catch (IOException e) {

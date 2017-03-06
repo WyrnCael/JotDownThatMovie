@@ -60,6 +60,10 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
        imageLoader.DisplayImage(rowItem.getImageId(), holder.imageView);
          
         return convertView;
-    }   
+    }
+
+    public void clearCache(){
+        imageLoader.clearCache();
+    }
    
 }
