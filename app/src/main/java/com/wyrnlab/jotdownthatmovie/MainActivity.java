@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -221,7 +222,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public Pelicula readFromSQL(int position){
-		String[] campos = new String[] {"filmId", "nombre", "anyo", "titulo", "tituloOriginal", "descripcion", "imagePath", "directores", "generos", "rating" };
+		String[] campos = new String[] {"filmId", "nombre", "anyo", "titulo", "tituloOriginal", "descripcion", "image", "directores", "generos", "rating" };
 		String[] args = new String[]  { Integer.toString(position) };
 		
 		Pelicula pelicula = new Pelicula();
@@ -242,7 +243,7 @@ public class MainActivity extends Activity {
 			          pelicula.setTitulo(c.getString(3));
 			          pelicula.setTituloOriginal(c.getString(4));
 			          pelicula.setDescripcion(c.getString(5));
-			          pelicula.setImagePath(c.getString(6));
+					  pelicula.setImage(c.getBlob(6));
 			          pelicula.addDirectores(c.getString(7));
 			          pelicula.addGeneros(c.getString(8));
 			          pelicula.setRating(Double.parseDouble(c.getString(9)));

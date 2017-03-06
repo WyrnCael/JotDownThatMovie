@@ -12,6 +12,7 @@ public class Pelicula implements Serializable{
 	private String Titulo;
 	private String TituloOriginal;
 	private String Image_path;
+	private byte[] image;
 	private String Anyo;
 	private String Descripcion;
 	private List<String> Generos;
@@ -92,5 +93,10 @@ public class Pelicula implements Serializable{
 	
 	public List<String> getDirectores(){
 		return this.Directores;
+	}
+
+	public byte[] getImage() { return image; }
+
+	public void setImage(byte[] image) { this.image = image;
 	}
 }
