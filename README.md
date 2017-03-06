@@ -31,3 +31,4 @@ All the movies information are provided by [TheMovieDB](https://www.themoviedb.o
 ### Resources
 
  - [Youtube Api](https://developers.google.com/youtube/android/player/?hl=es-419)
+ - [LazyList](https://github.com/thest1/LazyList)
