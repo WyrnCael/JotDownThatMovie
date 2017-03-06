@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class PeliculasSQLiteHelper extends SQLiteOpenHelper {
 	 
     //Sentencia SQL para crear la tabla de Usuarios
-    String sqlCreate = "CREATE TABLE Peliculas (_id integer primary key autoincrement, filmId TEXT, nombre TEXT, anyo TEXT, titulo TEXT, tituloOriginal TEXT, descripcion TEXT, imagePath TEXT, directores TEXT, generos TEXT, rating TEXT, prioridad INTEGER)";
+    String sqlCreate = "CREATE TABLE Peliculas (_id integer primary key autoincrement, filmId TEXT, nombre TEXT, anyo TEXT, titulo TEXT, tituloOriginal TEXT, descripcion TEXT, image BLOB, directores TEXT, generos TEXT, rating TEXT, prioridad INTEGER)";
  
     public PeliculasSQLiteHelper(Context contexto, String nombre,
                                CursorFactory factory, int version) {
