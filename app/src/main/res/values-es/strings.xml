@@ -20,6 +20,8 @@
     <string name="searching">Buscando</string>
 	<string name="title_activity_main">Peliculas por ver</string>
 	<string name="title_activity_saludo">Añadir Pelicula</string>
+
+    <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
 	
 	<string name="OpcLista1">Modificar</string>
 	<string name="OpcLista2">Eliminar</string>

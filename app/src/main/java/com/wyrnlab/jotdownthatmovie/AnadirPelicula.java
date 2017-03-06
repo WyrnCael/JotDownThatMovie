@@ -17,12 +17,16 @@ import com.eclipsesource.json.JsonObject;
 
 import data.General;
 import com.wyrnlab.jotdownthatmovie.search.ActivitySearch;
+import com.wyrnlab.jotdownthatmovie.search.CheckInternetConection;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View.OnClickListener;
 import android.view.View;
@@ -30,6 +34,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import api.search.Pelicula;
 import data.SetTheLanguages;
 
@@ -96,9 +102,17 @@ public class AnadirPelicula extends Activity {
 	
 	public void pulsado(){
 		textoABuscar = txtNombre.getText().toString();
-   	 
-        Search searchor = new Search(AnadirPelicula.this);
-         searchor.execute(textoABuscar);
+
+		if(!CheckInternetConection.isConnectingToInternet(AnadirPelicula.this)){
+            Toast toast = Toast.makeText(getApplicationContext(),
+					getResources().getString(R.string.not_internet),
+					Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		} else {
+            Search searchor = new Search(AnadirPelicula.this);
+			searchor.execute(textoABuscar);
+		}
 	}
 	
 	public void muestralo(List<Pelicula> result){
