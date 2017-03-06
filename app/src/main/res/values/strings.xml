@@ -20,6 +20,8 @@
     <string name="searching">Searching</string>
 	<string name="title_activity_main">Unseen Movies</string>
 	<string name="title_activity_saludo">Add Movie</string>
+
+    <string name="not_internet">Can\'t connect to server, is internet enable?</string>
 	
 	<string name="OpcLista1">Modify</string>
 	<string name="OpcLista2">Delete</string>

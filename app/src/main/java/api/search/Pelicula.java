@@ -50,16 +50,8 @@ public class Pelicula implements Serializable{
 		this.Descripcion = desc;
 	}
 	
-	public void setGeneros(List<String> gen){
-		this.Generos = gen;
-	}
-	
 	public void addGeneros(String genero){
 		this.Generos.add(genero);
-	}
-	
-	public void setDirectores(List<String> dire){
-		this.Directores = dire;
 	}
 	
 	public void addDirectores(String dire){
