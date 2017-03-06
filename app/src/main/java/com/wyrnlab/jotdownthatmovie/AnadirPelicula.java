@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View.OnClickListener;
 import android.view.View;
@@ -156,8 +155,7 @@ public class AnadirPelicula extends Activity {
     		
     		@SuppressWarnings("deprecation")
     		String url = General.URLPRINCIPAL + "3/search/movie?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()) + "&query=" + URLEncoder.encode(nombre) ;
-            Log.d("url", url);
-    		URL oracle = new URL(url);
+            URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();
     	    String json = "";
     	    
@@ -207,8 +205,7 @@ public class AnadirPelicula extends Activity {
     		for (int i = 0; i < res.size() ; i++){  
     			pelicula = new Pelicula();
             	JsonObject results = JsonObject.readFrom(res.get(i).toString());
-				Log.d("Info Movie", results.toString());
-            	pelicula.setTituloOriginal(results.get("original_title").asString());
+				pelicula.setTituloOriginal(results.get("original_title").asString());
             	pelicula.setTitulo(results.get("title").asString());
             	pelicula.setId(results.get("id").asInt());
             	if(!results.get("release_date").isNull()){            		
