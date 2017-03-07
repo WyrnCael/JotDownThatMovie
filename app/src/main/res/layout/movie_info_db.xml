@@ -48,10 +48,9 @@
 
                     <ImageView
                         android:id="@+id/poster"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="8dp"
-                        android:layout_weight="0.6" />
+                        android:layout_width="143dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="8dp" />
 
                     <LinearLayout
                         android:layout_width="fill_parent"
