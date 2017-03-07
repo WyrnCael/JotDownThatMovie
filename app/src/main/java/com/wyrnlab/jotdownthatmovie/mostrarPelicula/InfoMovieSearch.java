@@ -1,11 +1,14 @@
 package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
@@ -28,6 +31,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -365,18 +369,25 @@ public class InfoMovieSearch extends Activity {
             byte[] image = null;
             try {
                 URL url = new URL(General.base_url + "w500" + pelicula.getImagePath());
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                Log.d("Convirtiendo a bitmap", myBitmap.toString());
-                image = ImageHandler.getBytes(myBitmap);
-                pelicula.setImage(image);
-            } catch (IOException e) {
-                // Log exception
+				URLConnection ucon = url.openConnection();
 
-            }
+				InputStream is = ucon.getInputStream();
+				BufferedInputStream bis = new BufferedInputStream(is);
+
+				ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+				//We create an array of bytes
+				byte[] data = new byte[50];
+				int current = 0;
+
+				while((current = bis.read(data,0,data.length)) != -1){
+					buffer.write(data,0,current);
+				}
+
+				pelicula.setImage(buffer.toByteArray());
+			} catch (Exception e) {
+				Log.d("ImageManager", "Error: " + e.toString());
+
+			}
         }
     }
 	
@@ -424,9 +435,23 @@ public class InfoMovieSearch extends Activity {
 
 	            
 	            //Insertamos los datos en la tabla Peliculas
-	            db.execSQL("INSERT INTO Peliculas (filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating) " +
-	                       "VALUES ('" + id + "', '" + nombre + "', '" + anyo + "', '" + titulo + "', '" + tituloOriginal + "', '" + descripcion + "', '" + pelicula.getImage() + "', '" + directores + "', '" + generos + "', '" + rating + "')");
-	             
+				String sql = "INSERT INTO Peliculas (filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating) " +
+						"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				SQLiteStatement insertStmt = db.compileStatement(sql);
+				insertStmt.clearBindings();
+				insertStmt.bindString(1, id);
+				insertStmt.bindString(2, nombre);
+				insertStmt.bindString(3, anyo);
+				insertStmt.bindString(4, titulo);
+				insertStmt.bindString(5, tituloOriginal);
+				insertStmt.bindString(6, descripcion);
+				insertStmt.bindBlob(7, pelicula.getImage());
+				insertStmt.bindString(8, directores);
+				insertStmt.bindString(9, generos);
+				insertStmt.bindString(10, rating);
+
+				insertStmt.executeInsert();
+
 	            //Cerramos la base de datos  
 	            db.close();          
 	        } 
