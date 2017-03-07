@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,21 +19,16 @@ import java.net.URLConnection;
 public class ImageHandler {
 
     public static byte[] getBytes(Bitmap bitmap) {
-        Log.d("Bitmap", bitmap.toString());
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 0, stream);
+        Log.d("Bitmap", stream.toByteArray().toString());
         return stream.toByteArray();
     }
 
     public static Bitmap getImage(byte[] image) {
-        Log.d("BLOB", image.toString());
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-
-
-
+        Log.d("BLOB", "" + image.length);
         // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
+        ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
+        return BitmapFactory.decodeStream(imageStream);
     }
 }
