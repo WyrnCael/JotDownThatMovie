@@ -19,7 +19,9 @@
     <string name="backButton">Go Back</string>
     <string name="searching">Searching</string>
 	<string name="title_activity_main">Unseen Movies</string>
-	<string name="title_activity_saludo">Add Movie</string>
+	<string name="title_activity_saludo">Movie search</string>
+    <string name="title_activity_results">Search results</string>
+    <string name="title_activity_info">Movie info</string>
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
 	
