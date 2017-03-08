@@ -118,13 +118,21 @@ public class AnadirPelicula extends Activity {
 	public void muestralo(List<Pelicula> result){
 		
 		General.peliculasBuscadas = new ArrayList<Pelicula>();
-		General.peliculasBuscadas = result;
+		General.setPeliculasBuscadas(result);
 		
-		Intent intent =  new Intent(AnadirPelicula.this, ActivitySearch.class);
-		
-		pDialog.dismiss();  
-		
-		startActivityForResult(intent, REQUEST_CODE_LISTABUSCADAS); 		       
+		pDialog.dismiss();
+
+        if(result.size() == 0){
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    getResources().getString(R.string.without_results),
+                    Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
+        } else {
+            Intent intent =  new Intent(AnadirPelicula.this, ActivitySearch.class);
+            startActivityForResult(intent, REQUEST_CODE_LISTABUSCADAS);
+        }
+
 		
 		// finish();		
 		

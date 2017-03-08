@@ -1,5 +1,8 @@
 package data;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import api.search.Pelicula;
@@ -13,6 +16,12 @@ public class General {
 	
 	public static void setPeliculasBuscadas(List<Pelicula> peliculas){
 		peliculasBuscadas = peliculas;
+		Collections.sort(peliculasBuscadas, new Comparator<Pelicula>(){
+			public int compare(Pelicula mov1, Pelicula mov2) {
+				// ## Ascending order
+				return mov2.getAnyo().compareToIgnoreCase(mov1.getAnyo());
+			}
+		});
 	}
 	
 	public static List<Pelicula> getPeliculasBuscadas(){
