@@ -10,7 +10,7 @@ Jot down movies recommended by friends.
  - Search movie trailer.
  - Watch trailer with [Youtube Api](https://developers.google.com/youtube/android/player/?hl=es-419).
  - Save movies that you want to watch.
- - Remove movies from list.
+ - Remove movie from list.
  - English and Spanish version.
 
 ### Screenshots
