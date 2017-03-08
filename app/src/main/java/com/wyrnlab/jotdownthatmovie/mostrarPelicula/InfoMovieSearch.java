@@ -365,7 +365,6 @@ public class InfoMovieSearch extends Activity {
 
     	private void getImage(){
             // Convertiomos la imagen a BLOB
-            Log.d("Convirtiendo a BLOB", General.base_url + "w500" + pelicula.getImagePath());
             byte[] image = null;
             try {
                 URL url = new URL(General.base_url + "w500" + pelicula.getImagePath());
