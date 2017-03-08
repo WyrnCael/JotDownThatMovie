@@ -68,7 +68,6 @@ public class InfoMovieDatabase extends Activity {
         valoracion.setText("	" + Double.toString(pelicula.getRating()));
         descripcion.setText(pelicula.getDescripcion());        
         ImageView image = (ImageView)findViewById(R.id.poster);
-        Log.d("Image", ImageHandler.getImage(pelicula.getImage()).toString());
         image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
         
       //Implementamos el evento “click” del botón

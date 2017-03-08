@@ -41,6 +41,7 @@ public class ActivitySearch extends Activity implements
         	// Insertar imagen
 			String img = General.base_url + "w92" +  peliculas.get(i).getImagePath();
             RowItem item;
+
         	if(peliculas.get(i).getRating() == 0.0)
         		item = new RowItem(1, img, peliculas.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + peliculas.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)) );
 			else
