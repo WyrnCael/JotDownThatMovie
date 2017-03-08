@@ -9,18 +9,21 @@ Jot down movies recommended by friends.
  - View movie info.
  - Search movie trailer.
  - Watch trailer with [Youtube Api](https://developers.google.com/youtube/android/player/?hl=es-419).
- - Save films that you want to watch.
+ - Save movies that you want to watch.
+ - Remove movies from list.
  - English and Spanish version.
 
 ### Screenshots
 
-![alt tag](http://i.imgur.com/j0tpZV1.png)
+![alt tag](http://i.imgur.com/bfUSM4r.png)
 
-![alt tag](http://i.imgur.com/dTQDdLz.png)
+![alt tag](http://i.imgur.com/Nbv8gAE.png)
 
-![alt tag](http://i.imgur.com/cQwU2RV.png)
+![alt tag](http://i.imgur.com/AuFepKJ.png)
 
-![alt tag](http://i.imgur.com/ZSSUVZd.png)
+![alt tag](http://i.imgur.com/5uSLBpx.png)
+
+![alt tag](http://i.imgur.com/LpQ2x7V.png)
 
 ### Database
 
