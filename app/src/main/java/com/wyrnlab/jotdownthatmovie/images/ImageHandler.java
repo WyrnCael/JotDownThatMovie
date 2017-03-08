@@ -21,12 +21,10 @@ public class ImageHandler {
     public static byte[] getBytes(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 0, stream);
-        Log.d("Bitmap", stream.toByteArray().toString());
         return stream.toByteArray();
     }
 
     public static Bitmap getImage(byte[] image) {
-        Log.d("BLOB", "" + image.length);
         // Decode bitmap with inSampleSize set
         ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
         return BitmapFactory.decodeStream(imageStream);
