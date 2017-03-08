@@ -189,13 +189,11 @@ public class MainActivity extends Activity {
 	 
 	    AdapterContextMenuInfo info =
 	        (AdapterContextMenuInfo) item.getMenuInfo();
-	 
-	    switch (item.getItemId()) {
-	        case R.id.CtxLstOpc1:
-	            
-	            return true;
+
+		 switch (item.getItemId()) {
 	        case R.id.CtxLstOpc2:
-	        	
+
+
 	        	String[] selected = textParser(listAdapter.getItem(info.position).toString());
 	        	
 	        	delete(selected[0], selected[1]);
