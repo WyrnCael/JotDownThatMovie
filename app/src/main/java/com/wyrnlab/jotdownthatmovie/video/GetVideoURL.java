@@ -155,9 +155,7 @@ public class GetVideoURL extends Activity{
     	private void leerJSONUrl(String json) throws IOException{
     		key = null;
     		
-    		System.out.println(json);
-    		
-    		JsonObject info = JsonObject.readFrom( json );     
+    		JsonObject info = JsonObject.readFrom( json );
     		JsonArray results = info.get("results").asArray();
     		if(!results.isNull()){
     			if(results.size() > 0){
