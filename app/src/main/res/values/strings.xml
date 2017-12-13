@@ -17,6 +17,7 @@
     <string name="addMovie">+ Add new movie...</string>
     <string name="addButton">Add</string>
     <string name="backButton">Go Back</string>
+    <string name="deleteButton">Remove</string>
     <string name="searching">Searching</string>
 	<string name="title_activity_main">Unseen Movies</string>
 	<string name="title_activity_saludo">Movie search</string>
@@ -27,7 +28,7 @@
     <string name="without_results">No results founds.</string>
 
     <string name="OpcLista1">Modify</string>
-	<string name="OpcLista2">Delete</string>
+	<string name="OpcLista2">Remove</string>
 
     <string name="notAviableTrailer">Not available trailer</string>
 

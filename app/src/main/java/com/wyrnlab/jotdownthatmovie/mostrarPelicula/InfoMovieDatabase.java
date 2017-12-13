@@ -2,6 +2,7 @@ package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 
+import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
@@ -36,6 +37,7 @@ public class InfoMovieDatabase extends Activity {
 	TextView directorLab;
 	Button botonVolver;
 	Button botonTrailer;
+    Button botonRemove;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class InfoMovieDatabase extends Activity {
         directorLab = (TextView)findViewById(R.id.directorLAb);
         botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+        botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
         
       //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
@@ -83,38 +86,47 @@ public class InfoMovieDatabase extends Activity {
             @Override
             public void onClick(View v) {
 
-                pDialog = new ProgressDialog(InfoMovieDatabase.this);
-                pDialog.setMessage(getResources().getString(R.string.searching));
-                pDialog.setCancelable(true);
-                pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                pDialog.show();
+            pDialog = new ProgressDialog(InfoMovieDatabase.this);
+            pDialog.setMessage(getResources().getString(R.string.searching));
+            pDialog.setCancelable(true);
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialog.show();
 
-                SearchURLTrailer searchorMovie = new SearchURLTrailer(InfoMovieDatabase.this, pelicula);
-                    try {
-                        String trailerId = searchorMovie.execute().get();
-                        if(trailerId == null){
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.notAviableTrailer),
-                                    Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-                            toast.show();
-                        }
-                        else {
-                            pDialog.dismiss();
-                            Intent intent =  new Intent(InfoMovieDatabase.this, YoutubeActivityView.class);
-                            intent.putExtra("TrailerId", trailerId);
-                            startActivityForResult(intent, 1);
-                        }
-                   } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } finally {
-                        pDialog.dismiss();
+            SearchURLTrailer searchorMovie = new SearchURLTrailer(InfoMovieDatabase.this, pelicula);
+                try {
+                    String trailerId = searchorMovie.execute().get();
+                    if(trailerId == null){
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                getResources().getString(R.string.notAviableTrailer),
+                                Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
                     }
+                    else {
+                        pDialog.dismiss();
+                        Intent intent =  new Intent(InfoMovieDatabase.this, YoutubeActivityView.class);
+                        intent.putExtra("TrailerId", trailerId);
+                        startActivityForResult(intent, 1);
+                    }
+               } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } finally {
+                    pDialog.dismiss();
                 }
-            });
-        }
+            }
+        });
+
+        botonRemove.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DAO.getInstance().delete(InfoMovieDatabase.this, pelicula.getTitulo(), pelicula.getAnyo());
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
+    }
 	
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {

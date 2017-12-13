@@ -17,6 +17,7 @@
     <string name="addMovie">+ Añadir...</string>
     <string name="addButton">Añadir</string>
     <string name="backButton">Volver</string>
+    <string name="deleteButton">Eliminar</string>
     <string name="searching">Buscando</string>
 	<string name="title_activity_main">Peliculas por ver</string>
 	<string name="title_activity_saludo">Búsqueda de película</string>
