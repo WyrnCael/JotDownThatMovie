@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.Debug;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -117,7 +118,7 @@ public class MainActivity extends Activity {
 					Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
 					Pelicula pelicula = DAO.getInstance().readFromSQL(MainActivity.this, position);
 					intent.putExtra("Pelicula", pelicula);
-					startActivity(intent);
+					startActivityForResult(intent, REQUEST_CODE_A);
 				}
 			}
 		});
@@ -144,10 +145,8 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch(requestCode) {
-			case REQUEST_CODE_A:
-				refreshList();
-				break;
+		if(requestCode == REQUEST_CODE_A) {
+			refreshList();
 		}
 	}
 
