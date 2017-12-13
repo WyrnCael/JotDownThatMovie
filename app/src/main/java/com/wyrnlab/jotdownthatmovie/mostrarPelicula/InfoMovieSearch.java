@@ -39,6 +39,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -64,6 +65,9 @@ public class InfoMovieSearch extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+		// Back button
+		getActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent i = getIntent();
         pelicula = (Pelicula)i.getSerializableExtra("Pelicula");
@@ -390,4 +394,20 @@ public class InfoMovieSearch extends Activity {
 			}
         }
     }
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+		int itemId = item.getItemId();
+		switch (itemId) {
+			case android.R.id.home:
+				finish();
+
+				// Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
+				break;
+
+		}
+
+		return true;
+	}
 }
