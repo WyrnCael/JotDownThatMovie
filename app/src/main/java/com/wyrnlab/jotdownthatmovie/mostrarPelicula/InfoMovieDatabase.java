@@ -15,6 +15,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -42,6 +43,9 @@ public class InfoMovieDatabase extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent i = getIntent();
         pelicula = (Pelicula)i.getSerializableExtra("Pelicula");
@@ -133,4 +137,20 @@ public class InfoMovieDatabase extends Activity {
 	  super.onConfigurationChanged(newConfig);
 	  //setContentView(R.layout.movie_info_db);
 	}
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case android.R.id.home:
+                finish();
+
+                // Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
+                break;
+
+        }
+
+        return true;
+    }
 }

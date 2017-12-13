@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -32,7 +33,9 @@ public class ActivitySearch extends Activity implements
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.search_principal);
-        
+
+        // Back button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         peliculas = General.getPeliculasBuscadas();
         
@@ -66,6 +69,22 @@ public class ActivitySearch extends Activity implements
 		startActivityForResult(intent, REQUEST_CODE_PELIBUSCADA); 	
         
         // finish();
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case android.R.id.home:
+                finish();
+
+                // Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
+                break;
+
+        }
+
+        return true;
     }
     
     @Override
