@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
+    /*signingConfigs {
         release {
             def props = new Properties()
 
@@ -15,7 +15,7 @@ android {
 
             android.signingConfigs.release.keyPassword props.keyAliasPassword
         }
-    }
+    }*/
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     compileOptions.encoding = 'ISO-8859-1'
@@ -24,13 +24,13 @@ android {
         minSdkVersion 11
         targetSdkVersion 25
     }
-    buildTypes {
+    /*buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
         }
-    }
+    }*/
 }
 
 dependencies {
