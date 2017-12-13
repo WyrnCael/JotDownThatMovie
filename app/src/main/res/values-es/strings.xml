@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AnotaEsaPelicula</string>
+    <string name="app_name">Anota Esa Pelicula</string>
     <string name="action_settings">Ajustes</string>
     <string name="hola">Buscar</string>
     <string name="nombre">Nombre:</string>

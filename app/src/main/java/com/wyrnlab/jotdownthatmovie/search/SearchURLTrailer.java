@@ -107,8 +107,6 @@ public class SearchURLTrailer extends AsyncTask<String, Integer, String> {
     }
 
     private void leerJSONUrl(String json) throws IOException{
-        System.out.println(json);
-
         JsonObject info = JsonObject.readFrom( json );
         JsonArray results = info.get("results").asArray();
         if(!results.isNull()){

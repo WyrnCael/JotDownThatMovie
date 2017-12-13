@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -52,6 +53,9 @@ public class AnadirPelicula extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+		// Back button
+		getActionBar().setDisplayHomeAsUpEnabled(true);
         
         //Obtenemos una referencia a los controles de la interfaz
         txtNombre = (EditText)findViewById(R.id.TxtNombre);
@@ -87,7 +91,7 @@ public class AnadirPelicula extends Activity {
                 return false;
             }
         });
-        
+
         
        //Implementamos el evento “click” del botón
         btnHola.setOnClickListener(new OnClickListener() {
@@ -136,6 +140,22 @@ public class AnadirPelicula extends Activity {
 		
 		// finish();		
 		
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+		int itemId = item.getItemId();
+		switch (itemId) {
+			case android.R.id.home:
+				finish();
+
+				// Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
+				break;
+
+		}
+
+		return true;
 	}
 	
 	@Override
@@ -234,7 +254,6 @@ public class AnadirPelicula extends Activity {
             		// Recortar año
                 	String an = results.get("release_date").asString();
                 	String anyo;
-                	System.out.println(an);
                 	if (an.length() > 0){
         	        	anyo = an.substring(0, 4);
                 	}
