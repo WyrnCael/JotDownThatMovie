@@ -8,10 +8,7 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" 
-        android:background="#ffffff"        
-        >
-
-
+        android:background="#ffffff">
     </FrameLayout>
 
     <FrameLayout
@@ -20,9 +17,9 @@
         android:layout_height="match_parent"
         android:background="@drawable/about_back"
         android:layout_margin="15dp"
-
-        android:radius="5dp">
-        <!-- android:visibility="gone" -->
+        android:visibility="gone"
+        android:radius="5dp"
+        android:translationZ="1dp">
 
 
         <LinearLayout
@@ -52,22 +49,11 @@
 
     </FrameLayout>
 
-    <ListView 
-            android:layout_width="fill_parent" 
-		    android:layout_height="fill_parent" 
+    <ListView
+            android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
 		    android:id="@+id/mainListView" >
 	</ListView>
-    <!-- The navigation drawer -->
-    <ListView android:id="@+id/lista"
-        android:layout_width="200dp"
-        android:layout_height="fill_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="#2E2E2E"
-        android:dividerHeight="2dp"
-        android:background="#424242"
-        android:textColor="#424242"
-        />
 </android.support.v4.widget.DrawerLayout>
 
 <!-- 
