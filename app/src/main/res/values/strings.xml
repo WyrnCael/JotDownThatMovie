@@ -29,6 +29,8 @@
 
     <string name="OpcLista1">Modify</string>
 	<string name="OpcLista2">Remove</string>
+    <string name="MenuAbout">About</string>
+    <string name="MenuQuit">Quit</string>
 
     <string name="notAviableTrailer">Not available trailer</string>
 
