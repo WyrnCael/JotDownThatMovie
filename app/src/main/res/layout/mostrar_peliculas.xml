@@ -9,7 +9,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" 
         android:background="#ffffff"        
-        />
+        >
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/about_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/about_back"
+        android:layout_margin="15dp"
+
+        android:radius="5dp">
+        <!-- android:visibility="gone" -->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="250px"
+                android:layout_height="250px"
+                android:layout_gravity="top|center"
+                android:layout_marginTop="30px"
+                android:clickable="false"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/byWirnLabs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="by WirnLabs"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light" />
+        </LinearLayout>
+
+    </FrameLayout>
+
     <ListView 
             android:layout_width="fill_parent" 
 		    android:layout_height="fill_parent" 
