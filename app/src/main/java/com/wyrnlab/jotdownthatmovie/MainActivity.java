@@ -36,6 +36,8 @@ import android.os.Debug;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -44,6 +46,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.view.View;
@@ -147,6 +151,53 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == REQUEST_CODE_A) {
 			refreshList();
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_about:
+				// Set about visible
+				FrameLayout frameLayout = (FrameLayout ) findViewById(R.id.about_frame);
+				frameLayout.setVisibility(View.VISIBLE);
+
+				ListView listView = (ListView ) findViewById(R.id.mainListView);
+				listView.setVisibility(View.GONE);
+
+				FrameLayout mainLayout = (FrameLayout ) findViewById(R.id.content_frame);
+				mainLayout.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						FrameLayout frameLayout = (FrameLayout ) findViewById(R.id.about_frame);
+						frameLayout.setVisibility(View.GONE);
+
+						ListView listView = (ListView ) findViewById(R.id.mainListView);
+						listView.setVisibility(View.VISIBLE);
+					}
+				});
+				frameLayout.setVisibility(View.VISIBLE);
+				return true;
+
+			case R.id.action_quit:
+				Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+				homeIntent.addCategory( Intent.CATEGORY_HOME );
+				homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(homeIntent);
+				finish();
+				return true;
+
+			default:
+				// If we got here, the user's action was not recognized.
+				// Invoke the superclass to handle it.
+				return super.onOptionsItemSelected(item);
+
 		}
 	}
 
