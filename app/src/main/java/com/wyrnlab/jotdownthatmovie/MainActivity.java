@@ -59,8 +59,6 @@ public class MainActivity extends Activity {
 	private ListView mainListView;
 	public final static int REQUEST_CODE_A = 1;
 	private ArrayAdaptado listAdapter;
-	private DrawerLayout NavDrawerLayout;
-	private ListView NavList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -80,11 +78,6 @@ public class MainActivity extends Activity {
 
 		SearchBaseUrl searchor = new SearchBaseUrl(this);
 		searchor.execute();
-
-		NavDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		//Lista
-		NavList = (ListView) findViewById(R.id.lista);
-
 
 		//Localizar los controles
 		mainListView = (ListView) findViewById( R.id.mainListView );
@@ -167,22 +160,17 @@ public class MainActivity extends Activity {
 				// Set about visible
 				FrameLayout frameLayout = (FrameLayout ) findViewById(R.id.about_frame);
 				frameLayout.setVisibility(View.VISIBLE);
+				frameLayout.setClickable(false);
 
-				ListView listView = (ListView ) findViewById(R.id.mainListView);
-				listView.setVisibility(View.GONE);
-
-				FrameLayout mainLayout = (FrameLayout ) findViewById(R.id.content_frame);
-				mainLayout.setOnClickListener(new View.OnClickListener() {
+				mainListView.setOnItemClickListener(new OnItemClickListener() {
 					@Override
-					public void onClick(View v) {
+					public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 						FrameLayout frameLayout = (FrameLayout ) findViewById(R.id.about_frame);
 						frameLayout.setVisibility(View.GONE);
 
-						ListView listView = (ListView ) findViewById(R.id.mainListView);
-						listView.setVisibility(View.VISIBLE);
+						refreshList();
 					}
 				});
-				frameLayout.setVisibility(View.VISIBLE);
 				return true;
 
 			case R.id.action_quit:
