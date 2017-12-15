@@ -177,7 +177,6 @@ public class InfoMovieDatabase extends Activity {
     }
 
     private void setShareIntent() {
-        System.out.println("aqui");
         if (mShareActionProvider != null) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
