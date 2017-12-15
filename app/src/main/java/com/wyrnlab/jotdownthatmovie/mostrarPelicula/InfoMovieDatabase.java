@@ -15,11 +15,15 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,7 @@ public class InfoMovieDatabase extends Activity {
 	Button botonVolver;
 	Button botonTrailer;
     Button botonRemove;
+    private ShareActionProvider mShareActionProvider;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,5 +157,33 @@ public class InfoMovieDatabase extends Activity {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate menu resource file.
+        getMenuInflater().inflate(R.menu.menu_movie, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+
+        setShareIntent();
+
+        // Return true to display menu
+        return true;
+    }
+
+    private void setShareIntent() {
+        System.out.println("aqui");
+        if (mShareActionProvider != null) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/movie/" + pelicula.getId());
+            sendIntent.setType("text/plain");
+            mShareActionProvider.setShareIntent(sendIntent);
+        }
     }
 }
