@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -40,7 +41,7 @@ import android.widget.Toast;
 import api.search.Pelicula;
 import data.SetTheLanguages;
 
-public class AnadirPelicula extends Activity {
+public class AnadirPelicula extends AppCompatActivity {
 	
 	String textoABuscar = "";
 	EditText txtNombre;
@@ -55,7 +56,7 @@ public class AnadirPelicula extends Activity {
         setContentView(R.layout.activity_main);
 
 		// Back button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         //Obtenemos una referencia a los controles de la interfaz
         txtNombre = (EditText)findViewById(R.id.TxtNombre);
@@ -122,11 +123,17 @@ public class AnadirPelicula extends Activity {
 	public void muestralo(List<Pelicula> result){
 		
 		General.peliculasBuscadas = new ArrayList<Pelicula>();
-		General.setPeliculasBuscadas(result);
+		if(result != null) General.setPeliculasBuscadas(result);
 		
 		pDialog.dismiss();
 
-        if(result.size() == 0){
+		if(result == null){
+			Toast toast = Toast.makeText(getApplicationContext(),
+					getResources().getString(R.string.empty_search),
+					Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		} else if(result.size() == 0){
             Toast toast = Toast.makeText(getApplicationContext(),
                     getResources().getString(R.string.without_results),
                     Toast.LENGTH_SHORT);
@@ -140,22 +147,6 @@ public class AnadirPelicula extends Activity {
 		
 		// finish();		
 		
-	}
-
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-
-		int itemId = item.getItemId();
-		switch (itemId) {
-			case android.R.id.home:
-				finish();
-
-				// Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
-				break;
-
-		}
-
-		return true;
 	}
 	
 	@Override
@@ -189,8 +180,8 @@ public class AnadirPelicula extends Activity {
             pDialog.setMessage(getResources().getString(R.string.searching));
             pDialog.setCancelable(true);
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pDialog.show();	             
-        }
+			pDialog.show();
+		}
     	
     	public List<Pelicula> buscar(String nombre)  throws IOException {
     		String web = null;
@@ -243,34 +234,36 @@ public class AnadirPelicula extends Activity {
     	
     	private void leerJSONBuscar(String json) throws IOException{
     		JsonObject respuestaTotal = JsonObject.readFrom( json );
-    		JsonArray res = respuestaTotal.get("results").asArray();
-    		for (int i = 0; i < res.size() ; i++){  
-    			pelicula = new Pelicula();
-            	JsonObject results = JsonObject.readFrom(res.get(i).toString());
-				pelicula.setTituloOriginal(results.get("original_title").asString());
-            	pelicula.setTitulo(results.get("title").asString());
-            	pelicula.setId(results.get("id").asInt());
-            	if(!results.get("release_date").isNull()){            		
-            		// Recortar año
-                	String an = results.get("release_date").asString();
-                	String anyo;
-                	if (an.length() > 0){
-        	        	anyo = an.substring(0, 4);
-                	}
-                	else{
-                		anyo = "N/D";
-                	}     
-            		pelicula.setAnyo(anyo);
-            	}
-            	if(results.get("poster_path").isString()){
-            		pelicula.setImagePath(results.get("poster_path").asString());
-            	}
-            	else{
-            		getOtrosPosters();
-            	}
-            	pelicula.setRating(results.get("vote_average").asDouble());
-            	this.peliculas.add(pelicula);            	
-    		}
+    		if(respuestaTotal.get("results") != null) {
+				JsonArray res = respuestaTotal.get("results").asArray();
+				for (int i = 0; i < res.size(); i++) {
+					pelicula = new Pelicula();
+					JsonObject results = JsonObject.readFrom(res.get(i).toString());
+					pelicula.setTituloOriginal(results.get("original_title").asString());
+					pelicula.setTitulo(results.get("title").asString());
+					pelicula.setId(results.get("id").asInt());
+					if (!results.get("release_date").isNull()) {
+						// Recortar año
+						String an = results.get("release_date").asString();
+						String anyo;
+						if (an.length() > 0) {
+							anyo = an.substring(0, 4);
+						} else {
+							anyo = "N/D";
+						}
+						pelicula.setAnyo(anyo);
+					}
+					if (results.get("poster_path").isString()) {
+						pelicula.setImagePath(results.get("poster_path").asString());
+					} else {
+						getOtrosPosters();
+					}
+					pelicula.setRating(results.get("vote_average").asDouble());
+					this.peliculas.add(pelicula);
+				}
+			} else {
+				this.peliculas = null;
+			}
     	}
 
     	@Override
@@ -351,4 +344,15 @@ public class AnadirPelicula extends Activity {
     		}
     	}
     }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				onBackPressed();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 }
