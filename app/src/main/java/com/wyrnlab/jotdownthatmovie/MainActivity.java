@@ -136,11 +136,8 @@ public class MainActivity extends Activity {
 				(AdapterView.AdapterContextMenuInfo)menuInfo;
 
 		// Si no es añadir
-		if (info.position != 0){
-			menu.setHeaderTitle(listView.getAdapter().getItem(info.position).toString());
-			inflater.inflate(R.menu.menu_pelicula_lista, menu);
-		}
-
+		menu.setHeaderTitle(listView.getAdapter().getItem(info.position).toString());
+		inflater.inflate(R.menu.menu_pelicula_lista, menu);
 	}
 
 	@Override
@@ -217,17 +214,6 @@ public class MainActivity extends Activity {
 			default:
 				return super.onContextItemSelected(item);
 		}
-	}
-
-	public String[] textParser(String cadena){
-		int posicionParentesis = cadena.indexOf("(");
-		int posicionUltimoParentesis = cadena.indexOf(")");
-		String[] ret = new String[2];
-		ret[0] = cadena.substring(0, (posicionParentesis-1));
-		ret[1] = cadena.substring((posicionParentesis+1), (posicionUltimoParentesis));
-
-		return ret;
-
 	}
 
 	public class SearchBaseUrl extends AsyncTask<String, Integer, List<Pelicula>> {
