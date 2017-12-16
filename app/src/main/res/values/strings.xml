@@ -23,6 +23,8 @@
 	<string name="title_activity_saludo">Movie search</string>
     <string name="title_activity_results">Search results</string>
     <string name="title_activity_info">Movie info</string>
+    <string name="removed">removed</string>
+    <string name="Movie">Movie</string>
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
     <string name="without_results">No results founds.</string>
@@ -31,6 +33,8 @@
 	<string name="OpcLista2">Remove</string>
     <string name="MenuAbout">About</string>
     <string name="MenuQuit">Quit</string>
+    <string name="MenuSearch">Search</string>
+    <string name="alreadySaved">was already saved!</string>
 
     <string name="notAviableTrailer">Not available trailer</string>
 
