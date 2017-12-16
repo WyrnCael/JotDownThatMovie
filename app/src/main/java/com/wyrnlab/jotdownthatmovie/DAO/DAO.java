@@ -26,34 +26,29 @@ public class DAO {
         return instance;
     }
 
-    public Pelicula readFromSQL(Context context, int position){
-        String[] campos = new String[] {"filmId", "nombre", "anyo", "titulo", "tituloOriginal", "descripcion", "image", "directores", "generos", "rating" };
-        String[] args = new String[]  { Integer.toString(position) };
-
-        Pelicula pelicula = new Pelicula();
+    public Pelicula readFromSQL(Context context, String title, String year){
+        Pelicula pelicula = null;
 
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, 1);
-        SQLiteDatabase db = usdbh.getWritableDatabase();
 
-        Cursor c = db.query("Peliculas", campos, null, null, null, null, null);
+        SQLiteDatabase db = usdbh.getWritableDatabase();
+        Cursor c = db.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating FROM Peliculas WHERE titulo = ? AND anyo = ?", new String[]{ title, year });
 
         //Nos aseguramos de que existe al menos un registro
         int pos = 1;
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
-                if (pos == position){
-                    pelicula.setId(Integer.parseInt(c.getString(0)));
-                    pelicula.setAnyo(c.getString(2));
-                    pelicula.setTitulo(c.getString(3));
-                    pelicula.setTituloOriginal(c.getString(4));
-                    pelicula.setDescripcion(c.getString(5));
-                    pelicula.setImage(c.getBlob(6));
-                    pelicula.addDirectores(c.getString(7));
-                    pelicula.addGeneros(c.getString(8));
-                    pelicula.setRating(Double.parseDouble(c.getString(9)));
-                }
-                pos++;
+                pelicula = new Pelicula();
+                pelicula.setId(Integer.parseInt(c.getString(0)));
+                pelicula.setAnyo(c.getString(2));
+                pelicula.setTitulo(c.getString(3));
+                pelicula.setTituloOriginal(c.getString(4));
+                pelicula.setDescripcion(c.getString(5));
+                pelicula.setImage(c.getBlob(6));
+                pelicula.addDirectores(c.getString(7));
+                pelicula.addGeneros(c.getString(8));
+                pelicula.setRating(Double.parseDouble(c.getString(9)));
             } while(c.moveToNext());
         }
 
@@ -80,22 +75,29 @@ public class DAO {
         db.close();
     }
 
-    public List<String> readAll(Context context){
-        List<String> result = new ArrayList<String>();
+    public List<Pelicula> readAll(Context context){
+        List<Pelicula> result = new ArrayList<Pelicula>();
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, 1);
 
         SQLiteDatabase dba = usdbh.getWritableDatabase();
-        Cursor c = dba.rawQuery(" SELECT nombre, anyo FROM Peliculas ", null);
+        Cursor c = dba.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating FROM Peliculas ", null);
 
         //Nos aseguramos de que existe al menos un registro
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
 
             do {
-                String nombre = c.getString(0);
-                String anyo  = c.getString(1);
-                result.add(nombre + " (" + anyo + ")\n");
-
+                Pelicula pelicula = new Pelicula();
+                pelicula.setId(Integer.parseInt(c.getString(0)));
+                pelicula.setAnyo(c.getString(2));
+                pelicula.setTitulo(c.getString(3));
+                pelicula.setTituloOriginal(c.getString(4));
+                pelicula.setDescripcion(c.getString(5));
+                pelicula.setImage(c.getBlob(6));
+                pelicula.addDirectores(c.getString(7));
+                pelicula.addGeneros(c.getString(8));
+                pelicula.setRating(Double.parseDouble(c.getString(9)));
+                result.add(pelicula);
             } while(c.moveToNext());
         }
 
@@ -104,7 +106,12 @@ public class DAO {
         return result;
     }
 
-    public void insert(Context context, Pelicula pelicula){
+    public boolean insert(Context context, Pelicula pelicula){
+        // Comprobamos si la pelicula ya existe
+        Pelicula result = readFromSQL(context, pelicula.getTitulo(), pelicula.getAnyo());
+        if(result != null)
+            return false;
+
         //Abrimos la base de datos 'DBUsuarios' en modo escritura
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, 1);
 
@@ -168,5 +175,6 @@ public class DAO {
             //Cerramos la base de datos
             db.close();
         }
+        return true;
     }
 }

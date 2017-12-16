@@ -23,6 +23,9 @@
 	<string name="title_activity_saludo">Búsqueda de película</string>
     <string name="title_activity_results">Resultados de la búsqueda</string>
     <string name="title_activity_info">Información de la pelicula</string>
+    <string name="removed">eliminada</string>
+    <string name="Movie">Película</string>
+    <string name="alreadySaved">ya estaba guardada!</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados</string>
@@ -31,6 +34,7 @@
 	<string name="OpcLista2">Eliminar</string>
     <string name="MenuAbout">Acerca de</string>
     <string name="MenuQuit">Salir</string>
+    <string name="MenuSearch">Buscar</string>
 
     <string name="notAviableTrailer">Trailer no disponible</string>
 	
