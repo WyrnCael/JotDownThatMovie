@@ -39,6 +39,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -47,13 +50,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 import api.search.Pelicula;
 import data.SetTheLanguages;
 
-public class InfoMovieSearch extends Activity {
+public class InfoMovieSearch extends AppCompatActivity {
 
 	ProgressDialog pDialog;
 	Pelicula pelicula;
@@ -72,7 +74,7 @@ public class InfoMovieSearch extends Activity {
         super.onCreate(savedInstanceState);
 
 		// Back button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent i = getIntent();
         pelicula = (Pelicula)i.getSerializableExtra("Pelicula");
@@ -419,7 +421,7 @@ public class InfoMovieSearch extends Activity {
 		MenuItem item = menu.findItem(R.id.menu_item_share);
 
 		// Fetch and store ShareActionProvider
-		mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+		mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
 		setShareIntent();
 
@@ -435,6 +437,17 @@ public class InfoMovieSearch extends Activity {
 			sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/movie/" + pelicula.getId());
 			sendIntent.setType("text/plain");
 			mShareActionProvider.setShareIntent(sendIntent);
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				onBackPressed();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 }

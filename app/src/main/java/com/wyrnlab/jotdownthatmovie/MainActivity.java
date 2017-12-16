@@ -35,7 +35,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Debug;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -56,7 +59,7 @@ import android.view.View;
 import api.search.Pelicula;
 import data.SetTheLanguages;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
 	public final static int REQUEST_CODE_A = 1;
 	private List<Pelicula> movies;
@@ -84,6 +87,18 @@ public class MainActivity extends Activity {
 
 		//Localizar los controles
 		listView = (ListView) findViewById( R.id.mainListView );
+
+		// Boton buscar
+		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				/*Snackbar.make(view, "Se presionó el FAB", Snackbar.LENGTH_LONG)
+						.setAction("Action", null).show();*/
+				Intent intent =  new Intent(MainActivity.this, AnadirPelicula.class);
+				startActivityForResult(intent, REQUEST_CODE_A);
+			}
+		});
 
 		refreshList();
 

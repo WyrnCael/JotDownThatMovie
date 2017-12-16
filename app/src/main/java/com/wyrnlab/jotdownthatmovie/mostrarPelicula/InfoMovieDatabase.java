@@ -13,6 +13,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -23,7 +26,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ShareActionProvider;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +34,7 @@ import java.util.concurrent.ExecutionException;
 
 import api.search.Pelicula;
 
-public class InfoMovieDatabase extends Activity {
+public class InfoMovieDatabase extends AppCompatActivity {
 
 	ProgressDialog pDialog;
 	Pelicula pelicula;
@@ -50,7 +53,7 @@ public class InfoMovieDatabase extends Activity {
         super.onCreate(savedInstanceState);
 
         // Back button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent i = getIntent();
         pelicula = (Pelicula)i.getSerializableExtra("Pelicula");
@@ -144,23 +147,7 @@ public class InfoMovieDatabase extends Activity {
 	  //setContentView(R.layout.movie_info_db);
 	}
 
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-
-        int itemId = item.getItemId();
-        switch (itemId) {
-            case android.R.id.home:
-                finish();
-
-                // Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
-                break;
-
-        }
-
-        return true;
-    }
-
-    @Override
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate menu resource file.
         getMenuInflater().inflate(R.menu.menu_movie, menu);
@@ -169,7 +156,7 @@ public class InfoMovieDatabase extends Activity {
         MenuItem item = menu.findItem(R.id.menu_item_share);
 
         // Fetch and store ShareActionProvider
-        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
         setShareIntent();
 
@@ -184,6 +171,17 @@ public class InfoMovieDatabase extends Activity {
             sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/movie/" + pelicula.getId());
             sendIntent.setType("text/plain");
             mShareActionProvider.setShareIntent(sendIntent);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
