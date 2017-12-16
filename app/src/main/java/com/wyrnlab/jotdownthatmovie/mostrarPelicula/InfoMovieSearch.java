@@ -35,6 +35,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -393,7 +395,9 @@ public class InfoMovieSearch extends Activity {
 				pelicula.setImage(buffer.toByteArray());
 			} catch (Exception e) {
 				Log.d("ImageManager", "Error: " + e.toString());
-
+				Bitmap b = BitmapFactory.decodeResource(getResources(),
+						R.drawable.stub);
+				pelicula.setImage(ImageHandler.getBytes(b));
 			}
         }
     }
