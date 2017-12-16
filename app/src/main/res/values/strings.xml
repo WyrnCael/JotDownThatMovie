@@ -28,6 +28,7 @@
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
     <string name="without_results">No results founds.</string>
+    <string name="empty_search">Write at least one letter.</string>
 
     <string name="OpcLista1">Modify</string>
 	<string name="OpcLista2">Remove</string>
