@@ -106,16 +106,24 @@ public class InfoMovieSearch extends Activity {
              @Override
              public void onClick(View v) {
 
-				 DAO.getInstance().insert(InfoMovieSearch.this, pelicula);
+				 if(DAO.getInstance().insert(InfoMovieSearch.this, pelicula)){
+					 Toast toast = Toast.makeText(getApplicationContext(),
+							 getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!",
+							 Toast.LENGTH_SHORT);
+					 toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+					 toast.show();
+
+					 setResult(Activity.RESULT_OK);
+					 finish();
+				 } else {
+					 Toast toast = Toast.makeText(getApplicationContext(),
+							 getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!",
+							 Toast.LENGTH_SHORT);
+					 toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+					 toast.show();
+				 }
             	 
-            	 Toast toast = Toast.makeText(getApplicationContext(),
-						 getResources().getString(R.string.film) + " " + pelicula.getTitulo() + " " + getResources().getString(R.string.added) + "!",
-                 Toast.LENGTH_SHORT);
-		         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-		         toast.show();      
-		         
-		         setResult(Activity.RESULT_OK);
-		         finish();
+
              }
         });
         

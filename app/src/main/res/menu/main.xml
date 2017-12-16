@@ -1,4 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/MenuSearch"/>
 
     <item
         android:id="@+id/action_about"
@@ -11,5 +16,4 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/MenuQuit"/>
-
 </menu>

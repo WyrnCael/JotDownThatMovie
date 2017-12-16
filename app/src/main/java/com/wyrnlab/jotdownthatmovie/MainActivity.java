@@ -22,6 +22,8 @@ import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.mostrarPelicula.InfoMovieDatabase;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.ReadExternalStorage;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.WriteExternalStorage;
+import com.wyrnlab.jotdownthatmovie.search.CustomListViewAdapter;
+import com.wyrnlab.jotdownthatmovie.search.RowItem;
 import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
 
 import android.os.AsyncTask;
@@ -56,9 +58,10 @@ import data.SetTheLanguages;
 
 public class MainActivity extends Activity {
 
-	private ListView mainListView;
 	public final static int REQUEST_CODE_A = 1;
-	private ArrayAdaptado listAdapter;
+	private List<Pelicula> movies;
+	ListView listView;
+	List<RowItem> rowItems;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -80,43 +83,43 @@ public class MainActivity extends Activity {
 		searchor.execute();
 
 		//Localizar los controles
-		mainListView = (ListView) findViewById( R.id.mainListView );
+		listView = (ListView) findViewById( R.id.mainListView );
 
 		refreshList();
 
 	}
 
 	private void refreshList(){
-		String[] planets = new String[] { getResources().getString(R.string.addMovie) };
-		ArrayList<String> planetList = new ArrayList<String>();
-		planetList.addAll( Arrays.asList(planets) );
 
-		List<String> results = DAO.getInstance().readAll(MainActivity.this);
+		movies = DAO.getInstance().readAll(MainActivity.this);
 
-		// Create ArrayAdapter using the planet list.
-		listAdapter = new ArrayAdaptado(this, R.layout.simplerow, planetList);
-		for(int i = 0; i < results.size(); i++){
-			listAdapter.add(results.get(i));
+		rowItems = new ArrayList<RowItem>();
+		RowItem item;
+		for (int i = 0; i < movies.size(); i++) {
+			if(movies.get(i).getRating() == 0.0)
+				item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)) );
+			else
+				item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movies.get(i).getRating()) );
+			rowItems.add(item);
 		}
 
-		// Set the ArrayAdapter as the ListView's adapter.
-		mainListView.setAdapter( listAdapter );
 
-		registerForContextMenu(mainListView);
+		listView = (ListView) findViewById(R.id.mainListView);
+		CustomListViewAdapter adapter;
+		adapter = new CustomListViewAdapter(this,
+				R.layout.list_item, rowItems);
+		listView.setAdapter(adapter);
 
-		mainListView.setOnItemClickListener(new OnItemClickListener() {
+		registerForContextMenu(listView);
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-				if (position == 0){
-					Intent intent =  new Intent(MainActivity.this, AnadirPelicula.class);
-					startActivityForResult(intent, REQUEST_CODE_A);
-				}
-				else{
-					Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
-					Pelicula pelicula = DAO.getInstance().readFromSQL(MainActivity.this, position);
-					intent.putExtra("Pelicula", pelicula);
-					startActivityForResult(intent, REQUEST_CODE_A);
-				}
+				Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
+				Pelicula search = movies.get(position);
+				Pelicula pelicula = DAO.getInstance().readFromSQL(MainActivity.this, search.getTitulo(), search.getAnyo());
+				intent.putExtra("Pelicula", pelicula);
+				startActivityForResult(intent, REQUEST_CODE_A);
 			}
 		});
 	}
@@ -134,7 +137,7 @@ public class MainActivity extends Activity {
 
 		// Si no es añadir
 		if (info.position != 0){
-			menu.setHeaderTitle(mainListView.getAdapter().getItem(info.position).toString());
+			menu.setHeaderTitle(listView.getAdapter().getItem(info.position).toString());
 			inflater.inflate(R.menu.menu_pelicula_lista, menu);
 		}
 
@@ -162,7 +165,7 @@ public class MainActivity extends Activity {
 				frameLayout.setVisibility(View.VISIBLE);
 				frameLayout.setClickable(false);
 
-				mainListView.setOnItemClickListener(new OnItemClickListener() {
+				listView.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 						FrameLayout frameLayout = (FrameLayout ) findViewById(R.id.about_frame);
@@ -181,6 +184,11 @@ public class MainActivity extends Activity {
 				finish();
 				return true;
 
+			case R.id.action_search:
+				Intent intent =  new Intent(MainActivity.this, AnadirPelicula.class);
+				startActivityForResult(intent, REQUEST_CODE_A);
+				return true;
+
 			default:
 				// If we got here, the user's action was not recognized.
 				// Invoke the superclass to handle it.
@@ -197,13 +205,11 @@ public class MainActivity extends Activity {
 
 		switch (item.getItemId()) {
 			case R.id.CtxLstOpc2:
+				Pelicula selected = movies.get(info.position);
 
+				DAO.getInstance().delete(MainActivity.this, selected.getTitulo(), selected.getAnyo());
 
-				String[] selected = textParser(listAdapter.getItem(info.position).toString());
-
-				DAO.getInstance().delete(MainActivity.this, selected[0], selected[1]);
-
-				Toast.makeText(getApplicationContext(), "Pelicula " + selected[0] + " eliminada!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + selected.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
 
 				refreshList();
 
@@ -305,21 +311,6 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-	}
-
-	private class ArrayAdaptado extends ArrayAdapter<String>{
-		public ArrayAdaptado(Context context, int lay, List<String> objects) {
-			super(context, lay, objects);
-		}
-
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = super.getView(position, convertView, parent);
-			if(position == 0){
-				v.setBackgroundColor(Color.rgb(183, 214, 171));
-			}
-			return v;
-
 		}
 	}
 }

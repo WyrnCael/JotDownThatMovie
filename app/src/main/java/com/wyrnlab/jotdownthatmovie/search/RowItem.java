@@ -2,11 +2,11 @@ package com.wyrnlab.jotdownthatmovie.search;
 
 public class RowItem {
 	private int id;
-    private String imageId;
+    private Object imageId;
     private String title;
     private String desc;
      
-    public RowItem(int id, String imageId, String title, String desc) {
+    public RowItem(int id, Object imageId, String title, String desc) {
     	this.id = id;
         this.imageId = imageId;
         this.title = title;
@@ -18,10 +18,10 @@ public class RowItem {
     public void setId(int id){
     	this.id = id;
     }
-    public String getImageId() {
+    public Object getImageId() {
         return imageId;
     }
-    public void setImageId(String imageId) {
+    public void setImageId(Object imageId) {
         this.imageId = imageId;
     }
     public String getDesc() {

@@ -5,6 +5,8 @@ import java.util.List;
 import com.fedorvlasov.lazylist.ImageLoader;
 
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -56,8 +58,12 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
         holder.imageView.setTag(rowItem.getImageId());
         holder.txtDesc.setText(rowItem.getDesc());
         holder.txtTitle.setText(rowItem.getTitle());
-        
-       imageLoader.DisplayImage(rowItem.getImageId(), holder.imageView);
+
+        if(rowItem.getImageId() instanceof  String)
+            imageLoader.DisplayImage((String) rowItem.getImageId(), holder.imageView);
+        else {
+            holder.imageView.setImageBitmap(ImageHandler.getImage((byte[]) rowItem.getImageId()));
+        }
          
         return convertView;
     }

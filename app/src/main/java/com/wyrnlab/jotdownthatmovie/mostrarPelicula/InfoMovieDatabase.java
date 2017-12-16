@@ -131,6 +131,7 @@ public class InfoMovieDatabase extends Activity {
             @Override
             public void onClick(View v) {
                 DAO.getInstance().delete(InfoMovieDatabase.this, pelicula.getTitulo(), pelicula.getAnyo());
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_OK);
                 finish();
             }
