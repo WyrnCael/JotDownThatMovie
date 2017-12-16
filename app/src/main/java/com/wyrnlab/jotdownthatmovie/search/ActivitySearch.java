@@ -9,6 +9,7 @@ import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +19,7 @@ import android.widget.ListView;
 
 import api.search.Pelicula;
  
-public class ActivitySearch extends Activity implements
+public class ActivitySearch extends AppCompatActivity implements
         OnItemClickListener {
  
 		ListView listView;
@@ -35,7 +36,7 @@ public class ActivitySearch extends Activity implements
         setContentView(R.layout.search_principal);
 
         // Back button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         peliculas = General.getPeliculasBuscadas();
         
@@ -70,22 +71,6 @@ public class ActivitySearch extends Activity implements
         
         // finish();
     }
-
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-
-        int itemId = item.getItemId();
-        switch (itemId) {
-            case android.R.id.home:
-                finish();
-
-                // Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
-                break;
-
-        }
-
-        return true;
-    }
     
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -103,6 +88,17 @@ public class ActivitySearch extends Activity implements
     public void onBackPressed() {
         adapter.clearCache();
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     
 }
