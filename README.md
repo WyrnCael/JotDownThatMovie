@@ -16,15 +16,15 @@ Jot down movies recommended by friends.
 
 ### Screenshots
 
-![alt tag](http://i.imgur.com/bfUSM4r.png)
+<img src="https://i.imgur.com/DE185oI.png" alt="Main View" width="329" height="585">
 
-![alt tag](http://i.imgur.com/Nbv8gAE.png)
+<img src="https://i.imgur.com/UzfF1Uj.png" alt="Search Movies" width="329" height="585">
 
-![alt tag](http://i.imgur.com/AuFepKJ.png)
+<img src="https://i.imgur.com/qVHYbWR.png" alt="Browse Results" width="329" height="585">
 
-![alt tag](http://i.imgur.com/5uSLBpx.png)
+<img src="https://i.imgur.com/PwKR9cQ.png" alt="Movie Info" width="329" height="585">
 
-![alt tag](http://i.imgur.com/LpQ2x7V.png)
+<img src="https://i.imgur.com/rxsERtw.png" alt="Delete Movies" width="329" height="585">
 
 ### Database
 
