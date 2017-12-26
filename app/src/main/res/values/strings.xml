@@ -37,7 +37,7 @@
 	<string name="OpcLista2">Remove</string>
     <string name="MenuAbout">About</string>
     <string name="MenuQuit">Quit</string>
-    <string name="MenuSearch">Search</string>
+    <string name="MenuSearch">Search/Add</string>
     <string name="alreadySaved">was already saved!</string>
 
     <string name="notAviableTrailer">Not available trailer</string>
