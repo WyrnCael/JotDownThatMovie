@@ -33,6 +33,11 @@
                   android:windowSoftInputMode="stateVisible" >
  
         </activity>
+
+        <activity android:name=".About"
+            android:label="@string/about" >
+
+        </activity>
         
         <activity
             android:name=".search.ActivitySearch"
