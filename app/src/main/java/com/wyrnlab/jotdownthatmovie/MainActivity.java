@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 		switch (item.getItemId()) {
 			case R.id.action_about:
 				// Set about visible
-				FrameLayout frameLayout = (FrameLayout ) findViewById(R.id.about_frame);
+				/*FrameLayout frameLayout = (FrameLayout ) findViewById(R.id.about_frame);
 				frameLayout.setVisibility(View.VISIBLE);
 				frameLayout.setClickable(false);
 
@@ -185,7 +185,9 @@ public class MainActivity extends AppCompatActivity {
 
 						refreshList();
 					}
-				});
+				});*/
+				Intent intentAbout =  new Intent(MainActivity.this, About.class);
+				startActivity(intentAbout);
 				return true;
 
 			case R.id.action_quit:
