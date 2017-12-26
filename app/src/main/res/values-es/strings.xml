@@ -38,7 +38,7 @@
 	<string name="OpcLista2">Eliminar</string>
     <string name="MenuAbout">Acerca de</string>
     <string name="MenuQuit">Salir</string>
-    <string name="MenuSearch">Buscar</string>
+    <string name="MenuSearch">Buscar/Añadir</string>
 
     <string name="notAviableTrailer">Trailer no disponible</string>
 	

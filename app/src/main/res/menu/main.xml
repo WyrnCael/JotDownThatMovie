@@ -1,20 +1,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_search"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:title="@string/MenuSearch"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.BaseActivity">
 
     <item
-        android:id="@+id/action_about"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:title="@string/MenuAbout"/>
+        android:id="@+id/action_menu"
+        android:icon="@drawable/ic_menu"
+        android:title="action_notification"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_search"
+                android:orderInCategory="100"
+                android:icon="@drawable/ic_search"
+                app:showAsAction="never"
+                android:title="@string/MenuSearch"/>
 
-    <item
-        android:id="@+id/action_quit"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:title="@string/MenuQuit"/>
+            <item
+                android:id="@+id/action_about"
+                android:orderInCategory="100"
+                android:icon="@drawable/ic_info"
+                app:showAsAction="never"
+                android:title="@string/MenuAbout"/>
+
+            <item
+                android:id="@+id/action_quit"
+                android:orderInCategory="100"
+                android:icon="@drawable/ic_quit"
+                app:showAsAction="never"
+                android:title="@string/MenuQuit"/>
+        </menu>
+    </item>
 </menu>
