@@ -30,7 +30,7 @@ Jot down movies recommended by friends.
 
 All the movies information are provided by [TheMovieDB](https://www.themoviedb.org/)
 
-[![alt tag](https://www.themoviedb.org/assets/static_cache/41bdcf10bbf6f84c0fc73f27b2180b95/images/v4/logos/91x81.png)](https://www.themoviedb.org/)
+<a href="https://www.themoviedb.org/"><img src="https://www.themoviedb.org/assets/static_cache/9b3f9c24d9fd5f297ae433eb33d93514/images/v4/logos/408x161-powered-by-rectangle-green.png" alt="TheMovieDB" width="204" height="81"></a>
 
 ### Resources
 
