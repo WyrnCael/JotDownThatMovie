@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Jot Down That Movie</string>
+    <string name="provider">All the movies information are provided by TheMovieDB:</string>
+    <string name="about">About</string>
+    <string name="follow_git">Follow the project on GitHub:</string>
     <string name="action_settings">Settings</string>
     <string name="hola">Search</string>
     <string name="nombre">Movie name:</string>
