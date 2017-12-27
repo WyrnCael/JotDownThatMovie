@@ -47,7 +47,20 @@
         <activity android:name=".mostrarPelicula.InfoMovieSearch"
                   android:label="@string/title_activity_info"
                   android:configChanges="keyboardHidden|orientation|screenSize" >
- 
+
+        </activity>
+
+        <activity android:name=".mostrarPelicula.InfoMovieShared"
+            android:label="@string/title_activity_info"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="www.themoviedb.org" />
+                <data android:scheme="https" />
+                <data android:pathPattern="/movie/.*" />
+            </intent-filter>
         </activity>
         
         <activity android:name=".mostrarPelicula.InfoMovieDatabase"
