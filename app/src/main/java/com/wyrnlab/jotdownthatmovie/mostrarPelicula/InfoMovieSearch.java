@@ -23,6 +23,9 @@ import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
+
+import api.search.AsyncResponse;
+import api.search.SearchInfoMovie;
 import data.General;
 import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
 import com.wyrnlab.jotdownthatmovie.R;
@@ -55,7 +58,7 @@ import android.widget.Toast;
 import api.search.Pelicula;
 import data.SetTheLanguages;
 
-public class InfoMovieSearch extends AppCompatActivity {
+public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse {
 
 	ProgressDialog pDialog;
 	Pelicula pelicula;
@@ -79,7 +82,8 @@ public class InfoMovieSearch extends AppCompatActivity {
         Intent i = getIntent();
         pelicula = (Pelicula)i.getSerializableExtra("Pelicula");
         
-        SearchInfoMovie searchorMovie = new SearchInfoMovie(this);
+        SearchInfoMovie searchorMovie = new SearchInfoMovie(this, pelicula.getId());
+		searchorMovie.delegate = this;
         searchorMovie.execute();
         
         setContentView(R.layout.movie_info);
@@ -97,17 +101,16 @@ public class InfoMovieSearch extends AppCompatActivity {
         botonVolver = (Button)findViewById(R.id.BtnAtras);
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
         
-      //Recuperamos la información pasada en el intent
+      //Recuperamos la informaciÃ³n pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
  
         titulo.setText(pelicula.getTitulo());
         anyo.setText("	" + pelicula.getAnyo());
         
-        //Implementamos el evento “click” del botón
+        //Implementamos el evento click del botÃ³n
         botonAnadir.setOnClickListener(new OnClickListener() {
              @Override
              public void onClick(View v) {
-
 				 if(DAO.getInstance().insert(InfoMovieSearch.this, pelicula)){
 					 Toast toast = Toast.makeText(getApplicationContext(),
 							 getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!",
@@ -129,7 +132,7 @@ public class InfoMovieSearch extends AppCompatActivity {
              }
         });
         
-      //Implementamos el evento “click” del botón
+      //Implementamos el evento ï¿½clickï¿½ del botï¿½n
         botonVolver.setOnClickListener(new OnClickListener() {
              @Override
              public void onClick(View v) {  
@@ -180,9 +183,16 @@ public class InfoMovieSearch extends AppCompatActivity {
         ImageLoader imageLoader = new ImageLoader(this);
         imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
     }
+
+	//this override the implemented method from asyncTask
+	@Override
+	public void processFinish(Object result){
+		this.pelicula = (Pelicula) result;
+		actualiza();
+	}
 	
 	public void actualiza(){
-		// Añadir generos
+		// Aï¿½adir generos
         String gene = "";
         for (int j = 0; j < pelicula.getGeneros().size() ; j++){
         	if ( j > 0){
@@ -193,7 +203,7 @@ public class InfoMovieSearch extends AppCompatActivity {
         }
         genero.setText("	" + gene);
 
-        //Añadir directores
+        //Aï¿½adir directores
         String direc = "";
         for (int d = 0; d < pelicula.getDirectores().size() ; d++){
         	if (d > 0){
@@ -214,203 +224,7 @@ public class InfoMovieSearch extends AppCompatActivity {
 	  //setContentView(R.layout.movie_info);
 	}
 	
-	public class SearchInfoMovie extends AsyncTask<String, Integer, List<Pelicula>> {
 
-    	private HttpsURLConnection yc;
-    	Context context;
-    	
-    	public SearchInfoMovie(Context context){
-    		this.context = context;
-    	}   	
-    	
-    	@Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            
-            pDialog = new ProgressDialog(context);
-            pDialog.setMessage(getResources().getString(R.string.searching));
-            pDialog.setCancelable(true);
-            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pDialog.show();	             
-        }    	
-
-    	@Override
-    	protected List<Pelicula> doInBackground(String... params) {
-    		try {
-    			getSinopsisPelicula();	
-    			getCreditsPelicula();
-                getImage();
-    		} catch (IOException e) {
-    			
-    		}
-    		return null;
-    		
-    	}
-    	
-    	@Override
-    	protected void onPostExecute(List<Pelicula> result)
-    	{
-    		super.onPostExecute(result);
-    		pDialog.dismiss();
-    		actualiza();
-    	}   	
-    	
-    	
-    	
-    	private void getSinopsisPelicula() throws IOException{
-    		String web = null;
-    		
-    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
-    		
-    		URL oracle = new URL(url);
-    	    yc = (HttpsURLConnection) oracle.openConnection();
-    	    String json = "";
-    		
-    		//yc.setDoOutput(true);
-    		yc.setDoInput(true);
-    		yc.setInstanceFollowRedirects(false);
-    		yc.setRequestMethod("GET");
-    		//yc.setUseCaches (true);	
-    		yc.setRequestProperty("Accept", "application/json");
-    		
-    		yc.connect();
-    		
-    		InputStream is = null;
-    		try {
-    		    is = yc.getInputStream();
-    		} catch (IOException ioe) {
-    		    if (yc instanceof HttpsURLConnection) {
-    		        HttpsURLConnection httpConn = (HttpsURLConnection) yc;
-    		        int statusCode = httpConn.getResponseCode();
-    		        if (statusCode != 200) {
-    		            is = httpConn.getErrorStream();
-    		        }
-    		    }
-    		}
-    		
-    		InputStreamReader isReader = new InputStreamReader(is); 
-    		//put output stream into a string
-    		BufferedReader br = new BufferedReader(isReader );
-            String inputLine;
-            while ((inputLine = br.readLine()) != null) 
-                web += inputLine;
-            br.close();
-            yc.disconnect();      
-            
-            yc.disconnect();
-            
-            json = web.substring(4);    
-            
-            leerJSONSinopsis(json);
-    	}
-    	
-    	private void leerJSONSinopsis(String json) throws IOException{
-    		JsonObject info = JsonObject.readFrom( json );     
-    		if(info.get("overview").isNull()){
-    			pelicula.setDescripcion("");
-    		}
-    		else{
-    			pelicula.setDescripcion(info.get("overview").asString());
-    		}
-    		
-    		JsonArray aux = info.get("genres").asArray();
-    		for (int i = 0; i < aux.size() ; i++){
-    			JsonObject genero = aux.get(i).asObject();
-    			pelicula.addGeneros(genero.get("name").asString());
-    		}
-    	}
-    	
-    	private void getCreditsPelicula() throws IOException{
-    		String web = null;
-    		
-    		String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
-    		
-    		URL oracle = new URL(url);
-    	    yc = (HttpsURLConnection) oracle.openConnection();
-    	    String json = "";
-    		
-    		//yc.setDoOutput(true);
-    		yc.setDoInput(true);
-    		yc.setInstanceFollowRedirects(false);
-    		yc.setRequestMethod("GET");
-    		//yc.setUseCaches (true);	
-    		yc.setRequestProperty("Accept", "application/json");
-    		
-    		yc.connect();
-    		
-    		InputStream is = null;
-    		try {
-    		    is = yc.getInputStream();
-    		} catch (IOException ioe) {
-    		    if (yc instanceof HttpsURLConnection) {
-    		        HttpsURLConnection httpConn = (HttpsURLConnection) yc;
-    		        int statusCode = httpConn.getResponseCode();
-    		        if (statusCode != 200) {
-    		            is = httpConn.getErrorStream();
-    		        }
-    		    }
-    		}
-    		
-    		InputStreamReader isReader = new InputStreamReader(is); 
-    		//put output stream into a string
-    		BufferedReader br = new BufferedReader(isReader );
-            String inputLine;
-            while ((inputLine = br.readLine()) != null) 
-                web += inputLine;
-            br.close();
-            yc.disconnect();      
-            
-            yc.disconnect();
-            
-            json = web.substring(4);    
-            
-            leerJSONCredits(json);
-    	}
-    	
-    	private void leerJSONCredits(String json) throws IOException{
-    		JsonObject info = JsonObject.readFrom( json );    
-    		JsonArray aux = info.get("crew").asArray();
-    		String[] directores = new String[aux.size()];    		
-    		for (int i = 0; i < aux.size() ; i++){
-    			JsonObject person = aux.get(i).asObject();
-    			try{
-	    			if (person.get("job").asString().equalsIgnoreCase("Director")){
-	    				pelicula.addDirectores(person.get("name").asString());
-	    			}
-    			} catch (NullPointerException e){
-    				
-    			}
-    		}
-    	}
-
-    	private void getImage(){
-            // Convertiomos la imagen a BLOB
-            byte[] image = null;
-            try {
-                URL url = new URL(General.base_url + "w500" + pelicula.getImagePath());
-				URLConnection ucon = url.openConnection();
-
-				InputStream is = ucon.getInputStream();
-				BufferedInputStream bis = new BufferedInputStream(is);
-
-				ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-				//We create an array of bytes
-				byte[] data = new byte[50];
-				int current = 0;
-
-				while((current = bis.read(data,0,data.length)) != -1){
-					buffer.write(data,0,current);
-				}
-
-				pelicula.setImage(buffer.toByteArray());
-			} catch (Exception e) {
-				Log.d("ImageManager", "Error: " + e.toString());
-				Bitmap b = BitmapFactory.decodeResource(getResources(),
-						R.drawable.stub);
-				pelicula.setImage(ImageHandler.getBytes(b));
-			}
-        }
-    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
