@@ -233,7 +233,6 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
         byte[] image = null;
         try {
             URL url = new URL(General.base_url + "w500" + pelicula.getImagePath());
-            Log.d( "IMAGES",General.base_url + "w500" + pelicula.getImagePath());
             URLConnection ucon = url.openConnection();
 
             InputStream is = ucon.getInputStream();
