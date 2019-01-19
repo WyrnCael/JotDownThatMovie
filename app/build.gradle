@@ -20,7 +20,7 @@ android {
     buildToolsVersion '28.0.3'
     compileOptions.encoding = 'ISO-8859-1'
     defaultConfig {
-        applicationId "WyrnLab.JotDownThatMovie"
+        applicationId "com.wyrnLabs.jotdownthatmovie"
         minSdkVersion 14
         targetSdkVersion 28
     }
