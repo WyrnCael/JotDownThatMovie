@@ -16,23 +16,24 @@ Jot down movies recommended by friends.
 
 ### Screenshots
 
-<img src="https://i.imgur.com/DE185oI.png" alt="Main View" width="329" height="585">
+<img src="https://i.imgur.com/YuZayyf.png" alt="Main View" width="329" height="585">
 
-<img src="https://i.imgur.com/UzfF1Uj.png" alt="Search Movies" width="329" height="585">
+<img src="https://i.imgur.com/XnbIikC.png" alt="Search Movies" width="329" height="585">
 
-<img src="https://i.imgur.com/qVHYbWR.png" alt="Browse Results" width="329" height="585">
+<img src="https://i.imgur.com/ZOBsQJU.png" alt="Browse Results" width="329" height="585">
 
-<img src="https://i.imgur.com/PwKR9cQ.png" alt="Movie Info" width="329" height="585">
+<img src="https://i.imgur.com/HUO6dqS.png" alt="Movie Info" width="329" height="585">
 
-<img src="https://i.imgur.com/rxsERtw.png" alt="Delete Movies" width="329" height="585">
+<img src="https://i.imgur.com/N6VaXgs.png" alt="Delete Movies" width="329" height="585">
 
 ### Database
 
 All the movies information are provided by [TheMovieDB](https://www.themoviedb.org/)
 
-<a href="https://www.themoviedb.org/"><img src="https://www.themoviedb.org/assets/static_cache/9b3f9c24d9fd5f297ae433eb33d93514/images/v4/logos/408x161-powered-by-rectangle-green.png" alt="TheMovieDB" width="204" height="81"></a>
+<a href="https://www.themoviedb.org/"><img src="https://github.com/WyrnCael/JotDownThatMovie/blob/master/app/src/main/res/drawable/provider.png?raw=true" alt="TheMovieDB" width="204" height="81"></a>
 
 ### Resources
 
+ - Icon made by <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com
  - [Youtube Api](https://developers.google.com/youtube/android/player/?hl=es-419)
  - [LazyList](https://github.com/thest1/LazyList)
