@@ -89,7 +89,6 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         setContentView(R.layout.movie_info);
         
       //Obtenemos una referencia a los controles de la interfaz
-        TextView titulo = (TextView)findViewById(R.id.titulo);
         TextView anyo = (TextView)findViewById(R.id.Anyo);
         genero = (TextView)findViewById(R.id.genero);
         director = (TextView)findViewById(R.id.director);
@@ -103,8 +102,10 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         
       //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
- 
-        titulo.setText(pelicula.getTitulo());
+
+		// Title
+		getSupportActionBar().setTitle(pelicula.getTitulo());
+
         anyo.setText("	" + pelicula.getAnyo());
         
         //Implementamos el evento click del botón

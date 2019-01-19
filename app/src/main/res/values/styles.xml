@@ -17,4 +17,14 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="GreenButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/blanco</item>
+        <item name="colorButtonNormal">@color/verde</item>
+    </style>
+
+    <style name="RedButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/blanco</item>
+        <item name="colorButtonNormal">@color/rojo</item>
+    </style>
+
 </resources>

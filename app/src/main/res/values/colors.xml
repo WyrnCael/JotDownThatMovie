@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gris_claro">#D8D8D8</color>
-    <color name="gris_oscuro">#A4A4A4</color>
+    <color name="gris_claro">#CBCBCB</color>
+    <color name="gris_oscuro">#000000</color>
+    <color name="gris_claro_borders">#ECB100</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="negro">#000000</color>
+    <color name="texto_info">#DAB600</color>
+    <color name="verde">#009688</color>
+    <color name="rojo">#cc0000</color>
+
 </resources>

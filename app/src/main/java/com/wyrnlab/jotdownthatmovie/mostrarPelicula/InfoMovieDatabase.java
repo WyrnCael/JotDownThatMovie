@@ -61,7 +61,6 @@ public class InfoMovieDatabase extends AppCompatActivity {
         setContentView(R.layout.movie_info_db);
         
       //Obtenemos una referencia a los controles de la interfaz
-        TextView titulo = (TextView)findViewById(R.id.titulo);
         TextView anyo = (TextView)findViewById(R.id.Anyo);
         genero = (TextView)findViewById(R.id.genero);
         director = (TextView)findViewById(R.id.director);
@@ -75,8 +74,10 @@ public class InfoMovieDatabase extends AppCompatActivity {
         
       //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
- 
-        titulo.setText(pelicula.getTitulo());
+
+        // Title
+        getSupportActionBar().setTitle(pelicula.getTitulo());
+
         anyo.setText("	" + pelicula.getAnyo());
         if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
         if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
