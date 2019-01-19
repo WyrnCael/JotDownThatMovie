@@ -40,3 +40,4 @@ captures/
 *.jks
 
 release.properties
+app/release/output.json

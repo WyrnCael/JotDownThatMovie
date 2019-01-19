@@ -27,7 +27,10 @@ import com.wyrnlab.jotdownthatmovie.search.CustomListViewAdapter;
 import com.wyrnlab.jotdownthatmovie.search.RowItem;
 import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -38,6 +41,7 @@ import android.graphics.Color;
 import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -73,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mostrar_peliculas);
 
+		isStoragePermissionGranted();
+
 		// Vaciar cache imagenes
 		ImageLoader imageLoader = new ImageLoader(this);
 		imageLoader.clearCache();
@@ -100,6 +106,34 @@ public class MainActivity extends AppCompatActivity {
 
 		refreshList();
 
+	}
+
+	public  boolean isStoragePermissionGranted() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+					== PackageManager.PERMISSION_GRANTED) {
+				Log.v("TAG","Permission is granted");
+				return true;
+			} else {
+
+				Log.v("TAG","Permission is revoked");
+				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+				return false;
+			}
+		}
+		else { //permission is automatically granted on sdk<23 upon installation
+			Log.v("TAG","Permission is granted");
+			return true;
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+			Log.v("TAG","Permission: "+permissions[0]+ "was "+grantResults[0]);
+			//resume tasks needing this permission
+		}
 	}
 
 	private void refreshList(){
