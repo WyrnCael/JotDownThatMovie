@@ -96,7 +96,6 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
         setContentView(R.layout.movie_info);
 
         //Obtenemos una referencia a los controles de la interfaz
-        titulo = (TextView)findViewById(R.id.titulo);
         anyo = (TextView)findViewById(R.id.Anyo);
         genero = (TextView)findViewById(R.id.genero);
         director = (TextView)findViewById(R.id.director);
