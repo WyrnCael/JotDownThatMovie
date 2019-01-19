@@ -62,7 +62,7 @@
                             android:id="@+id/AnyoLab"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="Año:" />
+                            android:text="@string/anyo" />
 
                         <TextView
                             android:id="@+id/Anyo"
@@ -74,7 +74,7 @@
                             android:id="@+id/generoLab"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Genero: " />
+                            android:text="@string/gender" />
 
                         <TextView
                             android:id="@+id/genero"
@@ -86,7 +86,7 @@
                             android:id="@+id/directorLAb"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Director: " />
+                            android:text="@string/director" />
 
                         <TextView
                             android:id="@+id/director"
@@ -98,7 +98,7 @@
                             android:id="@+id/valoracionLab"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Valoracion: " />
+                            android:text="@string/valoracion" />
 
                         <TextView
                             android:id="@+id/valoracion"
