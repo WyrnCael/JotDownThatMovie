@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +44,6 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
 
     ProgressDialog pDialog;
     Pelicula pelicula;
-    TextView titulo;
     TextView anyo;
     TextView valoracion;
     TextView descripcion;
@@ -191,8 +191,11 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
     public void actualiza(){
         setShareIntent();
 
+        // Title
+        getSupportActionBar().setTitle(pelicula.getTitulo());
+        
+        Log.d("AA", Double.toString(pelicula.getRating()));
         valoracion.setText("	" + Double.toString(pelicula.getRating()));
-        titulo.setText(pelicula.getTitulo());
         anyo.setText("	" + pelicula.getAnyo());
         // A?adir generos
         String gene = "";
