@@ -28,6 +28,8 @@
     <string name="title_activity_info">Movie info</string>
     <string name="removed">removed</string>
     <string name="Movie">Movie</string>
+    <string name="Sinopsis">Synopsis:</string>
+    <string name="IconCredits">Icon made by <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
     <string name="without_results">No results founds.</string>
