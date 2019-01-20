@@ -33,6 +33,9 @@ public class InfoMovieDatabase extends AppCompatActivity {
 
 	ProgressDialog pDialog;
     AudiovisualInterface pelicula;
+    TextView anyo;
+    TextView valoracion;
+    TextView seasons;
 	TextView descripcion;
 	TextView genero;
 	TextView director;
@@ -52,36 +55,56 @@ public class InfoMovieDatabase extends AppCompatActivity {
         
         Intent i = getIntent();
         pelicula = (AudiovisualInterface)i.getSerializableExtra("Pelicula");
-        
-        setContentView(R.layout.movie_info_db);
-        
-      //Obtenemos una referencia a los controles de la interfaz
-        TextView anyo = (TextView)findViewById(R.id.Anyo);
-        genero = (TextView)findViewById(R.id.genero);
-        director = (TextView)findViewById(R.id.director);
-        TextView valoracion = (TextView)findViewById(R.id.valoracion);
-        descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
-        generoLab = (TextView)findViewById(R.id.generoLab);
-        directorLab = (TextView)findViewById(R.id.directorLAb);
-        botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
-        botonTrailer = (Button)findViewById(R.id.BtnTrailer);
-        botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
-        
-      //Recuperamos la información pasada en el intent
+
+        //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
+
+        if(pelicula.getTipo() == null || pelicula.getTipo().equalsIgnoreCase("Movie")){
+            setContentView(R.layout.movie_info_db);
+
+            //Obtenemos una referencia a los controles de la interfaz
+             anyo = (TextView)findViewById(R.id.Anyo);
+            genero = (TextView)findViewById(R.id.genero);
+            director = (TextView)findViewById(R.id.director);
+            valoracion = (TextView)findViewById(R.id.valoracion);
+            descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
+            generoLab = (TextView)findViewById(R.id.generoLab);
+            directorLab = (TextView)findViewById(R.id.directorLAb);
+            botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
+            botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+            botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
+
+            if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
+        } else {
+            setContentView(R.layout.show_info_db);
+
+            //Obtenemos una referencia a los controles de la interfaz
+             anyo = (TextView)findViewById(R.id.Anyo);
+            genero = (TextView)findViewById(R.id.genero);
+            director = (TextView)findViewById(R.id.director);
+            valoracion = (TextView)findViewById(R.id.valoracion);
+            descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
+            generoLab = (TextView)findViewById(R.id.generoLab);
+            directorLab = (TextView)findViewById(R.id.directorLAb);
+            botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
+            botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+            botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
+            seasons = (TextView)findViewById(R.id.seasons);
+
+            seasons.setText("	" + pelicula.getSeasons());
+        }
 
         // Title
         getSupportActionBar().setTitle(pelicula.getTitulo());
 
         anyo.setText("	" + pelicula.getAnyo());
         if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
-        if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
         if(pelicula.getRating() == 0.0){
             valoracion.setText("	" + getResources().getString(R.string.notavailable));
         }else{
             valoracion.setText("	" + Double.toString(pelicula.getRating()));
         }
-        descripcion.setText(pelicula.getDescripcion());        
+        descripcion.setText(pelicula.getDescripcion());
         ImageView image = (ImageView)findViewById(R.id.poster);
         image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
         
