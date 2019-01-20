@@ -1,11 +1,14 @@
 package data;
 
-import java.util.Arrays;
+import android.provider.MediaStore;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import api.search.Pelicula;
+import api.search.AudiovisualInterface;
+import api.search.Movies.Pelicula;
+import api.search.TVShows.TVShow;
 
 public class General {
 	public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
@@ -13,6 +16,8 @@ public class General {
 	public final static String YAPIKEY = "AIzaSyC1yfVSgg9_qqxh1nfjA6zIACzO9kU53b8";
 	public static String base_url = null;
 	public static List<Pelicula> peliculasBuscadas;
+	public static List<TVShow> showsBuscados;
+	public static List<AudiovisualInterface> searchResults;
 	
 	public static void setPeliculasBuscadas(List<Pelicula> peliculas){
 		peliculasBuscadas = peliculas;
@@ -27,5 +32,32 @@ public class General {
 	public static List<Pelicula> getPeliculasBuscadas(){
 		return peliculasBuscadas;
 	}
-	
+
+	public static void setshowsBuscados(List<TVShow> shows){
+		showsBuscados = shows;
+		Collections.sort(showsBuscados, new Comparator<TVShow>(){
+			public int compare(TVShow mov1, TVShow mov2) {
+				// ## Ascending order
+				return mov2.getAnyo().compareToIgnoreCase(mov1.getAnyo());
+			}
+		});
+	}
+
+	public static List<TVShow> getShowsBuscados(){
+		return showsBuscados;
+	}
+
+	public static void setSearchResults(List<AudiovisualInterface> results){
+		searchResults = results;
+		Collections.sort(searchResults, new Comparator<AudiovisualInterface>(){
+			public int compare(AudiovisualInterface mov1, AudiovisualInterface mov2) {
+				// ## Ascending order
+				return mov2.getAnyo().compareToIgnoreCase(mov1.getAnyo());
+			}
+		});
+	}
+
+	public static List<AudiovisualInterface> getsSarchResults(){
+		return searchResults;
+	}
 }

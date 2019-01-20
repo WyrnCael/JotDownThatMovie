@@ -14,7 +14,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import api.search.Pelicula;
+import api.search.Movies.Pelicula;
 import data.General;
 
 /**

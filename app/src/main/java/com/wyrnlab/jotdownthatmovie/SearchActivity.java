@@ -1,57 +1,43 @@
 package com.wyrnlab.jotdownthatmovie;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
 
 import api.conexion.SearchBaseUrl;
 import api.search.AsyncResponse;
-import api.search.Search;
+import api.search.AudiovisualInterface;
+import api.search.TVShows.TVShow;
 import data.General;
-import com.wyrnlab.jotdownthatmovie.search.ActivitySearch;
+import com.wyrnlab.jotdownthatmovie.search.Search;
 import com.wyrnlab.jotdownthatmovie.search.CheckInternetConection;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import api.search.Pelicula;
-import data.SetTheLanguages;
+import api.search.Movies.Pelicula;
 
-public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
+public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 
 	String textoABuscar = "";
+	String searchMode = "Movie";
 	SearchView txtNombre;
 	Button btnHola;
 	final int REQUEST_CODE_LISTABUSCADAS = 1;
@@ -67,7 +53,29 @@ public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
         //Obtenemos una referencia a los controles de la interfaz
         txtNombre = (SearchView) findViewById(R.id.TxtNombre);
         btnHola = (Button)findViewById(R.id.BtnHola);
-        
+		Spinner dropdown = findViewById(R.id.spinner);
+
+		// Dropdown
+		String[] items = new String[]{getResources().getString(R.string.Movies), getResources().getString(R.string.TVShows)};
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+		dropdown.setAdapter(adapter);
+		dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				if(position == 0) {
+					searchMode = "Movie";
+				}
+				else{
+					searchMode = "Show";
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// your code here
+			}
+
+		});
 
 
 		txtNombre.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -95,7 +103,7 @@ public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
 		txtNombre.setIconified(false);
         txtNombre.requestFocus();
 
-		if(!CheckInternetConection.isConnectingToInternet(AnadirPelicula.this)){
+		if(!CheckInternetConection.isConnectingToInternet(SearchActivity.this)){
 			Toast toast = Toast.makeText(getApplicationContext(),
 					getResources().getString(R.string.not_internet),
 					Toast.LENGTH_SHORT);
@@ -115,16 +123,24 @@ public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
 	public void pulsado(String query){
 		textoABuscar = query;
 
-		if(!CheckInternetConection.isConnectingToInternet(AnadirPelicula.this)){
+		if(!CheckInternetConection.isConnectingToInternet(SearchActivity.this)){
             Toast toast = Toast.makeText(getApplicationContext(),
 					getResources().getString(R.string.not_internet),
 					Toast.LENGTH_SHORT);
 			toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 			toast.show();
 		} else {
-            Search searchor = new Search(AnadirPelicula.this);
-			searchor.delegate = this;
-			searchor.execute(textoABuscar);
+			if(searchMode.equalsIgnoreCase("Movie")){
+				api.search.Movies.Search searchor = new api.search.Movies.Search(SearchActivity.this);
+				searchor.delegate = this;
+				searchor.execute(textoABuscar);
+			}
+			else{
+				api.search.TVShows.SearchShow searchor = new api.search.TVShows.SearchShow(SearchActivity.this);
+				searchor.delegate = this;
+				searchor.execute(textoABuscar);
+			}
+
 		}
 	}
 
@@ -159,13 +175,16 @@ public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
 	//this override the implemented method from asyncTask
 	@Override
 	public void processFinish(Object result){
-		muestralo((List<Pelicula>) result);
+		muestralo(result);
 	}
 	
-	public void muestralo(List<Pelicula> result){
-		
-		General.peliculasBuscadas = new ArrayList<Pelicula>();
-		if(result != null) General.setPeliculasBuscadas(result);
+	public void muestralo(Object result){
+
+		General.searchResults = new ArrayList<>();
+
+		if(result != null){
+			General.setSearchResults((List<AudiovisualInterface>) result);
+		}
 
 		if(result == null){
 			Toast toast = Toast.makeText(getApplicationContext(),
@@ -173,14 +192,15 @@ public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
 					Toast.LENGTH_SHORT);
 			toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 			toast.show();
-		} else if(result.size() == 0){
+		} else if( ((List<AudiovisualInterface>) result).size() == 0) {
             Toast toast = Toast.makeText(getApplicationContext(),
                     getResources().getString(R.string.without_results),
                     Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
         } else {
-            Intent intent =  new Intent(AnadirPelicula.this, ActivitySearch.class);
+            Intent intent =  new Intent(SearchActivity.this, Search.class);
+            intent.putExtra("Type", searchMode);
             startActivityForResult(intent, REQUEST_CODE_LISTABUSCADAS);
         }
 
