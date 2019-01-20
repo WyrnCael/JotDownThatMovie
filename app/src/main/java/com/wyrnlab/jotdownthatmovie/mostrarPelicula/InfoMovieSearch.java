@@ -1,51 +1,28 @@
 package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
 import com.fedorvlasov.lazylist.ImageLoader;
 
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 
 import api.search.AsyncResponse;
-import api.search.SearchInfoMovie;
+import api.search.AudiovisualInterface;
+import api.search.Movies.SearchInfoMovie;
+import api.search.TVShows.SearchInfoShow;
 import data.General;
-import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
+
 import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,13 +32,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import api.search.Pelicula;
-import data.SetTheLanguages;
+import api.search.Movies.Pelicula;
 
 public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse {
 
 	ProgressDialog pDialog;
-	Pelicula pelicula;
+	String type;
+	AudiovisualInterface pelicula;
 	TextView descripcion;
 	TextView genero;
 	TextView director;
@@ -80,12 +57,19 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent i = getIntent();
-        pelicula = (Pelicula)i.getSerializableExtra("Pelicula");
-        
-        SearchInfoMovie searchorMovie = new SearchInfoMovie(this, pelicula.getId());
-		searchorMovie.delegate = this;
-        searchorMovie.execute();
-        
+        pelicula = (AudiovisualInterface)i.getSerializableExtra("Pelicula");
+        type = i.getStringExtra("Type");
+
+        if(type.equalsIgnoreCase("Movie")) {
+			SearchInfoMovie searchorMovie = new SearchInfoMovie(this, pelicula.getId());
+			searchorMovie.delegate = this;
+			searchorMovie.execute();
+		} else {
+			SearchInfoShow searchorShow = new SearchInfoShow(this, pelicula.getId());
+			searchorShow.delegate = this;
+			searchorShow.execute();
+		}
+
         setContentView(R.layout.movie_info);
         
       //Obtenemos una referencia a los controles de la interfaz
@@ -192,7 +176,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 	//this override the implemented method from asyncTask
 	@Override
 	public void processFinish(Object result){
-		this.pelicula = (Pelicula) result;
+		this.pelicula = (AudiovisualInterface) result;
 		actualiza();
 	}
 	
@@ -253,7 +237,11 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 		if (mShareActionProvider != null) {
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
-			sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/movie/" + pelicula.getId());
+			if(type.equalsIgnoreCase("Movie")){
+				sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/movie/" + pelicula.getId());
+			} else {
+				sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/tv/" + pelicula.getId());
+			}
 			sendIntent.setType("text/plain");
 			mShareActionProvider.setShareIntent(sendIntent);
 		}

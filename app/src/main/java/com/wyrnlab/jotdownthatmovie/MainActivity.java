@@ -1,73 +1,39 @@
 package com.wyrnlab.jotdownthatmovie;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import com.eclipsesource.json.JsonObject;
-
-import data.General;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.mostrarPelicula.InfoMovieDatabase;
-import com.wyrnlab.jotdownthatmovie.mostrarPelicula.InfoMovieShared;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.ReadExternalStorage;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.WriteExternalStorage;
 import com.wyrnlab.jotdownthatmovie.search.CustomListViewAdapter;
 import com.wyrnlab.jotdownthatmovie.search.RowItem;
-import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.view.View;
-import api.search.Pelicula;
-import data.SetTheLanguages;
+
+import api.search.AudiovisualInterface;
+import api.search.Movies.Pelicula;
 
 public class MainActivity extends AppCompatActivity {
 
 	public final static int REQUEST_CODE_A = 1;
-	private List<Pelicula> movies;
+	private List<AudiovisualInterface> movies;
 	ListView listView;
 	List<RowItem> rowItems;
 
@@ -97,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 			public void onClick(View view) {
 				/*Snackbar.make(view, "Se presionó el FAB", Snackbar.LENGTH_LONG)
 						.setAction("Action", null).show();*/
-				Intent intent =  new Intent(MainActivity.this, AnadirPelicula.class);
+				Intent intent =  new Intent(MainActivity.this, SearchActivity.class);
 				startActivityForResult(intent, REQUEST_CODE_A);
 			}
 		});
@@ -133,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 				Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
-				Pelicula search = movies.get(position);
-				Pelicula pelicula = DAO.getInstance().readFromSQL(MainActivity.this, search.getTitulo(), search.getAnyo());
+				AudiovisualInterface search = movies.get(position);
+				AudiovisualInterface pelicula = DAO.getInstance().readFromSQL(MainActivity.this, search.getTitulo(), search.getAnyo());
 				intent.putExtra("Pelicula", pelicula);
 				startActivityForResult(intent, REQUEST_CODE_A);
 			}
@@ -201,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 				return true;
 
 			case R.id.action_search:
-				Intent intent =  new Intent(MainActivity.this, AnadirPelicula.class);
+				Intent intent =  new Intent(MainActivity.this, SearchActivity.class);
 				startActivityForResult(intent, REQUEST_CODE_A);
 				return true;
 
@@ -221,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
 		switch (item.getItemId()) {
 			case R.id.CtxLstOpc2:
-				Pelicula selected = movies.get(info.position);
+				AudiovisualInterface selected = movies.get(info.position);
 
 				DAO.getInstance().delete(MainActivity.this, selected.getTitulo(), selected.getAnyo());
 

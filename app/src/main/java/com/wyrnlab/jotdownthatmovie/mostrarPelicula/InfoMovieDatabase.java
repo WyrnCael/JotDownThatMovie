@@ -1,12 +1,9 @@
 package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
 
-import com.fedorvlasov.lazylist.ImageLoader;
-
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
-import data.General;
 import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -16,15 +13,12 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import android.widget.TextView;
@@ -32,12 +26,13 @@ import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
-import api.search.Pelicula;
+import api.search.AudiovisualInterface;
+import api.search.Movies.Pelicula;
 
 public class InfoMovieDatabase extends AppCompatActivity {
 
 	ProgressDialog pDialog;
-	Pelicula pelicula;
+    AudiovisualInterface pelicula;
 	TextView descripcion;
 	TextView genero;
 	TextView director;
@@ -56,7 +51,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent i = getIntent();
-        pelicula = (Pelicula)i.getSerializableExtra("Pelicula");
+        pelicula = (AudiovisualInterface)i.getSerializableExtra("Pelicula");
         
         setContentView(R.layout.movie_info_db);
         

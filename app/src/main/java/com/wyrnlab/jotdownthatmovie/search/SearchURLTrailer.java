@@ -2,7 +2,6 @@ package com.wyrnlab.jotdownthatmovie.search;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -16,7 +15,8 @@ import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import api.search.Pelicula;
+import api.search.AudiovisualInterface;
+import api.search.Movies.Pelicula;
 import data.General;
 import data.SetTheLanguages;
 
@@ -28,10 +28,10 @@ public class SearchURLTrailer extends AsyncTask<String, Integer, String> {
 
     private HttpsURLConnection yc;
     Context context;
-    Pelicula pelicula;
+    AudiovisualInterface pelicula;
     String trailerId = null;
 
-    public SearchURLTrailer(Context context, Pelicula pelicula){
+    public SearchURLTrailer(Context context, AudiovisualInterface pelicula){
         this.context = context;
         this.pelicula = pelicula;
     }
