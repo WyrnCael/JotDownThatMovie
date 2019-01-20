@@ -163,7 +163,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
             JsonObject genero = aux.get(i).asObject();
             tvShow.addGeneros(genero.get("name").asString());
         }
-
+        tvShow.setSeasons(String.valueOf(info.get("number_of_seasons").asInt()));
         tvShow.setTipo("Show");
     }
 

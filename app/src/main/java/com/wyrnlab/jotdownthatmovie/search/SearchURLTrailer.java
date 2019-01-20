@@ -62,7 +62,13 @@ public class SearchURLTrailer extends AsyncTask<String, Integer, String> {
     private void getURLPelicula() throws IOException{
         String web = null;
 
-        String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url;
+        if(pelicula.getTipo() == null || pelicula.getTipo().equalsIgnoreCase("Movie")) {
+            url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        } else {
+            url = General.URLPRINCIPAL + "3/tv/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        }
+
 
         URL oracle = new URL(url);
         yc = (HttpsURLConnection) oracle.openConnection();

@@ -16,6 +16,15 @@ public abstract class AudiovisualInterface implements Serializable {
     private List<String> Generos;
     private List<String> Directores;
     private String Tipo;
+    private String Seasons;
+
+    public String getSeasons() {
+        return Seasons;
+    }
+
+    public void setSeasons(String seasons) {
+        Seasons = seasons;
+    }
 
     public String getTipo() {
         return Tipo;
