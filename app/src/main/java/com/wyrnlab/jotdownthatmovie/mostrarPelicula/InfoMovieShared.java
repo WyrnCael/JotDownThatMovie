@@ -193,9 +193,14 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
 
         // Title
         getSupportActionBar().setTitle(pelicula.getTitulo());
-        
+
         Log.d("AA", Double.toString(pelicula.getRating()));
-        valoracion.setText("	" + Double.toString(pelicula.getRating()));
+        if(pelicula.getRating() == 0.0){
+            valoracion.setText("	" + getResources().getString(R.string.notavailable));
+        }else{
+            valoracion.setText("	" + Double.toString(pelicula.getRating()));
+        }
+
         anyo.setText("	" + pelicula.getAnyo());
         // A?adir generos
         String gene = "";

@@ -2,6 +2,8 @@
 
 Jot down movies recommended by friends.
 
+Now aviable at [Google Play](https://play.google.com/store/apps/details?id=com.wyrnLabs.jotdownthatmovie)! 
+
 ### Functions
 
  - Search a film.

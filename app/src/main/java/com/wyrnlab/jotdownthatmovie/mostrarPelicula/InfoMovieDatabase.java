@@ -81,7 +81,11 @@ public class InfoMovieDatabase extends AppCompatActivity {
         anyo.setText("	" + pelicula.getAnyo());
         if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
         if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
-        valoracion.setText("	" + Double.toString(pelicula.getRating()));
+        if(pelicula.getRating() == 0.0){
+            valoracion.setText("	" + getResources().getString(R.string.notavailable));
+        }else{
+            valoracion.setText("	" + Double.toString(pelicula.getRating()));
+        }
         descripcion.setText(pelicula.getDescripcion());        
         ImageView image = (ImageView)findViewById(R.id.poster);
         image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
