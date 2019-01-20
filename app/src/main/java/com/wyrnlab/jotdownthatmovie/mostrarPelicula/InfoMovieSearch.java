@@ -176,9 +176,13 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
                 }
             }
        });
-        
-        
-        valoracion.setText("	" + Double.toString(pelicula.getRating()));
+
+
+		if(pelicula.getRating() == 0.0){
+			valoracion.setText("	" +  getResources().getString(R.string.notavailable));
+		}else{
+			valoracion.setText("	" + Double.toString(pelicula.getRating()));
+		}
         
         ImageView image = (ImageView)findViewById(R.id.poster);
         ImageLoader imageLoader = new ImageLoader(this);

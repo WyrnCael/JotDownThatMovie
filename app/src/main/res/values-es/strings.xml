@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Anota Esa Pelicula</string>
-    <string name="provider">Toda la información de las películas es proporcionada por de TheMovieDB:</string>
+    <string name="provider">Toda la información de las películas es proporcionada por TheMovieDB:</string>
     <string name="about">Acerca de</string>
     <string name="follow_git">Sigue el proyecto en GitHub:</string>
     <string name="action_settings">Ajustes</string>
