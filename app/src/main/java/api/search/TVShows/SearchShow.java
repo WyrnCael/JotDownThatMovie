@@ -3,6 +3,8 @@ package api.search.TVShows;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Debug;
+import android.util.Log;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;

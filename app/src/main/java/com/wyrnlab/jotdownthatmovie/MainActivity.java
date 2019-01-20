@@ -98,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-				Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
 				AudiovisualInterface search = movies.get(position);
 				AudiovisualInterface pelicula = DAO.getInstance().readFromSQL(MainActivity.this, search.getTitulo(), search.getAnyo());
+				Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
 				intent.putExtra("Pelicula", pelicula);
 				startActivityForResult(intent, REQUEST_CODE_A);
 			}

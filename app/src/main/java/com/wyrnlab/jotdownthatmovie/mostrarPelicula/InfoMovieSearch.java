@@ -39,9 +39,12 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 	ProgressDialog pDialog;
 	String type;
 	AudiovisualInterface pelicula;
+	TextView anyo;
+	TextView valoracion;
 	TextView descripcion;
 	TextView genero;
 	TextView director;
+	TextView seasons;
 	TextView generoLab;
 	TextView directorLab;
 	Button botonAnadir;
@@ -64,25 +67,41 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 			SearchInfoMovie searchorMovie = new SearchInfoMovie(this, pelicula.getId());
 			searchorMovie.delegate = this;
 			searchorMovie.execute();
+
+			setContentView(R.layout.movie_info);
+
+			//Obtenemos una referencia a los controles de la interfaz
+			anyo = (TextView)findViewById(R.id.Anyo);
+			genero = (TextView)findViewById(R.id.genero);
+			director = (TextView)findViewById(R.id.director);
+			valoracion = (TextView)findViewById(R.id.valoracion);
+			descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
+			generoLab = (TextView)findViewById(R.id.generoLab);
+			directorLab = (TextView)findViewById(R.id.directorLAb);
+			botonAnadir = (Button)findViewById(R.id.BtnAnadir);
+			botonVolver = (Button)findViewById(R.id.BtnAtras);
+			botonTrailer = (Button)findViewById(R.id.BtnTrailer);
 		} else {
 			SearchInfoShow searchorShow = new SearchInfoShow(this, pelicula.getId());
 			searchorShow.delegate = this;
 			searchorShow.execute();
+
+			setContentView(R.layout.show_info);
+
+			//Obtenemos una referencia a los controles de la interfaz
+			anyo = (TextView)findViewById(R.id.Anyo);
+			genero = (TextView)findViewById(R.id.genero);
+			seasons = (TextView)findViewById(R.id.seasons);
+			valoracion = (TextView)findViewById(R.id.valoracion);
+			descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
+			generoLab = (TextView)findViewById(R.id.generoLab);
+			directorLab = (TextView)findViewById(R.id.directorLAb);
+			botonAnadir = (Button)findViewById(R.id.BtnAnadir);
+			botonVolver = (Button)findViewById(R.id.BtnAtras);
+			botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+			seasons = (TextView)findViewById(R.id.seasons);
 		}
 
-        setContentView(R.layout.movie_info);
-        
-      //Obtenemos una referencia a los controles de la interfaz
-        TextView anyo = (TextView)findViewById(R.id.Anyo);
-        genero = (TextView)findViewById(R.id.genero);
-        director = (TextView)findViewById(R.id.director);
-        TextView valoracion = (TextView)findViewById(R.id.valoracion);
-        descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
-        generoLab = (TextView)findViewById(R.id.generoLab);
-        directorLab = (TextView)findViewById(R.id.directorLAb);
-        botonAnadir = (Button)findViewById(R.id.BtnAnadir);
-        botonVolver = (Button)findViewById(R.id.BtnAtras);
-        botonTrailer = (Button)findViewById(R.id.BtnTrailer);
         
       //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
@@ -201,7 +220,11 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         	}
         	else direc += pelicula.getDirectores().get(d);
         }
-        director.setText("	" + direc);        
+        if(pelicula.getTipo() == null || pelicula.getTipo().equalsIgnoreCase("Movie")){
+			director.setText("	" + direc);
+		} else {
+        	seasons.setText("	" + pelicula.getSeasons());
+		}
         
         descripcion.setText(pelicula.getDescripcion());
         
