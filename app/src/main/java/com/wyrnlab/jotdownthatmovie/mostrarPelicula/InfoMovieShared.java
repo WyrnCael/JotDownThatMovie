@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fedorvlasov.lazylist.ImageLoader;
-import com.wyrnlab.jotdownthatmovie.AnadirPelicula;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.MainActivity;
 import com.wyrnlab.jotdownthatmovie.R;
@@ -32,8 +31,9 @@ import java.util.concurrent.ExecutionException;
 
 import api.conexion.SearchBaseUrl;
 import api.search.AsyncResponse;
-import api.search.Pelicula;
-import api.search.SearchInfoMovie;
+import api.search.AudiovisualInterface;
+import api.search.Movies.Pelicula;
+import api.search.Movies.SearchInfoMovie;
 import data.General;
 
 /**
@@ -43,7 +43,7 @@ import data.General;
 public class InfoMovieShared extends AppCompatActivity implements AsyncResponse {
 
     ProgressDialog pDialog;
-    Pelicula pelicula;
+    AudiovisualInterface pelicula;
     TextView anyo;
     TextView valoracion;
     TextView descripcion;
@@ -184,7 +184,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
     //this override the implemented method from asyncTask
     @Override
     public void processFinish(Object result){
-        this.pelicula = (Pelicula) result;
+        this.pelicula = (AudiovisualInterface) result;
         actualiza();
     }
 

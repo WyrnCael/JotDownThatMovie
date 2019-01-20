@@ -10,7 +10,8 @@ import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import api.search.Pelicula;
+import api.search.AudiovisualInterface;
+import api.search.Movies.Pelicula;
 
 /**
  * Created by Jota on 13/12/2017.
@@ -19,6 +20,7 @@ import api.search.Pelicula;
 public class DAO {
 
     private static DAO instance = null;
+    private static Integer DatabaseVersion = 2;
 
     public static synchronized DAO getInstance(){
         if(instance == null)
@@ -26,10 +28,10 @@ public class DAO {
         return instance;
     }
 
-    public Pelicula readFromSQL(Context context, String title, String year){
-        Pelicula pelicula = null;
+    public AudiovisualInterface readFromSQL(Context context, String title, String year){
+        AudiovisualInterface pelicula = null;
 
-        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, 1);
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
         SQLiteDatabase db = usdbh.getWritableDatabase();
         Cursor c = db.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating FROM Peliculas WHERE titulo = ? AND anyo = ?", new String[]{ title, year });
@@ -59,7 +61,7 @@ public class DAO {
 
     public void delete(Context context, String nombre, String anyo){
         //Abrimos la base de datos 'DBUsuarios' en modo escritura
-        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, 1);
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
         SQLiteDatabase db = usdbh.getWritableDatabase();
 
@@ -75,9 +77,9 @@ public class DAO {
         db.close();
     }
 
-    public List<Pelicula> readAll(Context context){
-        List<Pelicula> result = new ArrayList<Pelicula>();
-        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, 1);
+    public List<AudiovisualInterface> readAll(Context context){
+        List<AudiovisualInterface> result = new ArrayList<AudiovisualInterface>();
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
         SQLiteDatabase dba = usdbh.getWritableDatabase();
         Cursor c = dba.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating FROM Peliculas ", null);
@@ -106,14 +108,14 @@ public class DAO {
         return result;
     }
 
-    public boolean insert(Context context, Pelicula pelicula){
+    public boolean insert(Context context, AudiovisualInterface pelicula){
         // Comprobamos si la pelicula ya existe
-        Pelicula result = readFromSQL(context, pelicula.getTitulo(), pelicula.getAnyo());
+        AudiovisualInterface result = readFromSQL(context, pelicula.getTitulo(), pelicula.getAnyo());
         if(result != null)
             return false;
 
         //Abrimos la base de datos 'DBUsuarios' en modo escritura
-        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, 1);
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
         SQLiteDatabase db = usdbh.getWritableDatabase();
 

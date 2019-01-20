@@ -1,4 +1,4 @@
-package api.search;
+package api.search.Movies;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,11 +20,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import api.search.AsyncResponse;
 import data.General;
 import data.SetTheLanguages;
 
@@ -163,6 +163,8 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
             JsonObject genero = aux.get(i).asObject();
             pelicula.addGeneros(genero.get("name").asString());
         }
+
+        pelicula.setTipo("Movie");
     }
 
     private void getCreditsPelicula() throws IOException{

@@ -7,7 +7,7 @@
     <string name="follow_git">Follow the project on GitHub:</string>
     <string name="action_settings">Settings</string>
     <string name="hola">Search</string>
-    <string name="nombre">Movie name:</string>
+    <string name="nombre">Name:</string>
     <string name="anyo">Year:</string>
     <string name="director">Director:</string>
     <string name="directors">Directors:</string>
@@ -30,6 +30,9 @@
     <string name="Movie">Movie</string>
     <string name="Sinopsis">Synopsis:</string>
     <string name="IconCredits">Icon made by <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="Movies">Movies</string>
+    <string name="TVShows">TV Shows</string>
+    <string name="SearchType">Search Type:</string>
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
     <string name="without_results">No results founds.</string>

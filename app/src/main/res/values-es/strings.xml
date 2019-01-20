@@ -31,6 +31,9 @@
     <string name="alreadySaved">ya estaba guardada!</string>
     <string name="Sinopsis">Sinopsis:</string>
     <string name="IconCredits">Icono creado por <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="Movies">Películas</string>
+    <string name="TVShows">Series</string>
+    <string name="SearchType">Tipo de búsqueda:</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>

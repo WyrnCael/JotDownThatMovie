@@ -1,4 +1,4 @@
-package api.search;
+package api.search.Movies;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import api.search.AsyncResponse;
 import data.General;
 import data.SetTheLanguages;
 
@@ -128,6 +129,7 @@ public class Search extends AsyncTask<String, Integer, List<Pelicula>> {
                     getOtrosPosters();
                 }
                 pelicula.setRating(results.get("vote_average").asDouble());
+                pelicula.setTipo("Movie");
                 this.peliculas.add(pelicula);
             }
         } else {

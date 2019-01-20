@@ -27,7 +27,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebSettings.PluginState;
 import android.widget.Toast;
-import api.search.Pelicula;
+import api.search.Movies.Pelicula;
 import data.SetTheLanguages;
 
 public class GetVideoURL extends Activity{

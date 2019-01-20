@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
  
-        <activity android:name=".AnadirPelicula"
+        <activity android:name=".SearchActivity"
                   android:label="@string/title_activity_saludo"
                   android:windowSoftInputMode="stateVisible" >
  
@@ -39,7 +39,7 @@
         </activity>
         
         <activity
-            android:name=".search.ActivitySearch"
+            android:name=".search.Search"
             android:label="@string/title_activity_results">
         </activity>
 
