@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -51,7 +52,7 @@ import data.SetTheLanguages;
 public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
 
 	String textoABuscar = "";
-	EditText txtNombre;
+	SearchView txtNombre;
 	Button btnHola;
 	final int REQUEST_CODE_LISTABUSCADAS = 1;
 	
@@ -64,49 +65,34 @@ public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         //Obtenemos una referencia a los controles de la interfaz
-        txtNombre = (EditText)findViewById(R.id.TxtNombre);
+        txtNombre = (SearchView) findViewById(R.id.TxtNombre);
         btnHola = (Button)findViewById(R.id.BtnHola);
         
-        //Implementamos el evento “click” del botón
-        txtNombre.setOnKeyListener(new View.OnKeyListener() {
-             @Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-            	 if (event.getAction() == KeyEvent.ACTION_DOWN)
-                 {
-                     switch (keyCode)
-                     {
-                         case KeyEvent.KEYCODE_DPAD_CENTER:
-                         case KeyEvent.KEYCODE_ENTER:
-                             pulsado();
-                             return true;
-                         default:
-                             break;
-                     }
-                 }
-                 return false;
+
+
+		txtNombre.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				pulsado(query);
+				return true;
 			}
-        });
-        
-        txtNombre.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                   pulsado();
-                    return true;
-                }
-                return false;
-            }
-        });
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+		});
 
         
        //Implementamos el evento “click” del botón
         btnHola.setOnClickListener(new OnClickListener() {
              @Override
-             public void onClick(View v) {            	 
-            	 pulsado();            	 
+             public void onClick(View v) {
+            	 pulsado(String.valueOf(txtNombre.getQuery()));
              }
         });
-        
+
+		txtNombre.setIconified(false);
         txtNombre.requestFocus();
 
 		if(!CheckInternetConection.isConnectingToInternet(AnadirPelicula.this)){
@@ -126,8 +112,8 @@ public class AnadirPelicula extends AppCompatActivity implements AsyncResponse {
 		isStoragePermissionGranted();
 	}
 	
-	public void pulsado(){
-		textoABuscar = txtNombre.getText().toString();
+	public void pulsado(String query){
+		textoABuscar = query;
 
 		if(!CheckInternetConection.isConnectingToInternet(AnadirPelicula.this)){
             Toast toast = Toast.makeText(getApplicationContext(),
