@@ -35,6 +35,9 @@
     <string name="TVShows">Series</string>
     <string name="SearchType">Tipo de búsqueda:</string>
     <string name="Seasons">Temporadas:</string>
+    <string name="Show">Serie</string>
+    <string name="Filter">Filtrar</string>
+    <string name="Search">Buscar</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>

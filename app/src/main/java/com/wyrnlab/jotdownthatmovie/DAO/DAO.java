@@ -135,7 +135,7 @@ public class DAO {
             String descripcion = pelicula.getDescripcion();
             String imagePath = pelicula.getImagePath();
             String tipo = pelicula.getTipo();
-            String temporadas = pelicula.getSeasons();
+            String temporadas = pelicula.getSeasons() == null ? "0" : pelicula.getSeasons();
 
             String directores = "";
             if(pelicula.getDirectores().size() > 0){

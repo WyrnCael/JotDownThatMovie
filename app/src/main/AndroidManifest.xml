@@ -39,17 +39,17 @@
         </activity>
         
         <activity
-            android:name=".search.Search"
+            android:name=".search.SearchResultActivity"
             android:label="@string/title_activity_results">
         </activity>
 
-        <activity android:name=".mostrarPelicula.InfoMovieSearch"
+        <activity android:name=".ShowInfo.mostrarPelicula.InfoMovieSearch"
                   android:label="@string/title_activity_info"
                   android:configChanges="keyboardHidden|orientation|screenSize" >
 
         </activity>
 
-        <activity android:name=".mostrarPelicula.InfoMovieShared"
+        <activity android:name=".ShowInfo.mostrarPelicula.InfoMovieShared"
             android:label="@string/title_activity_info"
             android:configChanges="keyboardHidden|orientation|screenSize" >
             <intent-filter >
@@ -62,10 +62,35 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".mostrarPelicula.InfoMovieDatabase"
+        <activity android:name=".ShowInfo.mostrarPelicula.InfoMovieDatabase"
                   android:label="@string/title_activity_info"
                   android:configChanges="keyboardHidden|orientation|screenSize" >
  
+        </activity>
+
+        <activity android:name=".ShowInfo.showTVShow.InfoTVShowSearch"
+            android:label="@string/title_activity_info"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+
+        </activity>
+
+        <activity android:name=".ShowInfo.showTVShow.InfoTVShowShared"
+            android:label="@string/title_activity_info"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="www.themoviedb.org" />
+                <data android:scheme="https" />
+                <data android:pathPattern="/tv/.*" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ShowInfo.showTVShow.InfoTVShowDatabase"
+            android:label="@string/title_activity_info"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+
         </activity>
 
         <activity android:name=".video.YoutubeApi.YoutubeActivityView"
