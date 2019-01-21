@@ -1,4 +1,4 @@
-package com.wyrnlab.jotdownthatmovie.search;
+package api.search.TVShows;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -16,7 +16,6 @@ import java.util.Locale;
 import javax.net.ssl.HttpsURLConnection;
 
 import api.search.AudiovisualInterface;
-import api.search.Movies.Pelicula;
 import data.General;
 import data.SetTheLanguages;
 
@@ -24,14 +23,14 @@ import data.SetTheLanguages;
  * Created by Jota on 04/03/2017.
  */
 
-public class SearchURLTrailer extends AsyncTask<String, Integer, String> {
+public class SearchShowURLTrailer extends AsyncTask<String, Integer, String> {
 
     private HttpsURLConnection yc;
     Context context;
     AudiovisualInterface pelicula;
     String trailerId = null;
 
-    public SearchURLTrailer(Context context, AudiovisualInterface pelicula){
+    public SearchShowURLTrailer(Context context, AudiovisualInterface pelicula){
         this.context = context;
         this.pelicula = pelicula;
     }
@@ -62,13 +61,7 @@ public class SearchURLTrailer extends AsyncTask<String, Integer, String> {
     private void getURLPelicula() throws IOException{
         String web = null;
 
-        String url;
-        if(pelicula.getTipo() == null || pelicula.getTipo().equalsIgnoreCase("Movie")) {
-            url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
-        } else {
-            url = General.URLPRINCIPAL + "3/tv/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
-        }
-
+        String url = General.URLPRINCIPAL + "3/tv/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
 
         URL oracle = new URL(url);
         yc = (HttpsURLConnection) oracle.openConnection();

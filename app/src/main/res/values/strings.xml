@@ -34,6 +34,9 @@
     <string name="TVShows">TV Shows</string>
     <string name="SearchType">Search Type:</string>
     <string name="Seasons">Seasons:</string>
+    <string name="Show">TV Show</string>
+    <string name="Filter">Filter</string>
+    <string name="Search">Search</string>
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
     <string name="without_results">No results founds.</string>

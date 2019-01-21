@@ -1,11 +1,11 @@
-package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
+package com.wyrnlab.jotdownthatmovie.ShowInfo.mostrarPelicula;
 
 import java.util.concurrent.ExecutionException;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
+import api.search.Movies.SearchMovieURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 
 import api.search.AsyncResponse;
@@ -32,7 +32,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import api.search.Movies.Pelicula;
 
 public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse {
 
@@ -63,46 +62,24 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         pelicula = (AudiovisualInterface)i.getSerializableExtra("Pelicula");
         type = i.getStringExtra("Type");
 
-        if(type.equalsIgnoreCase("Movie")) {
-			SearchInfoMovie searchorMovie = new SearchInfoMovie(this, pelicula.getId());
-			searchorMovie.delegate = this;
-			searchorMovie.execute();
+        SearchInfoMovie searchorMovie = new SearchInfoMovie(this, pelicula.getId());
+		searchorMovie.delegate = this;
+		searchorMovie.execute();
 
-			setContentView(R.layout.movie_info);
+		setContentView(R.layout.movie_info);
 
-			//Obtenemos una referencia a los controles de la interfaz
-			anyo = (TextView)findViewById(R.id.Anyo);
-			genero = (TextView)findViewById(R.id.genero);
-			director = (TextView)findViewById(R.id.director);
-			valoracion = (TextView)findViewById(R.id.valoracion);
-			descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
-			generoLab = (TextView)findViewById(R.id.generoLab);
-			directorLab = (TextView)findViewById(R.id.directorLAb);
-			botonAnadir = (Button)findViewById(R.id.BtnAnadir);
-			botonVolver = (Button)findViewById(R.id.BtnAtras);
-			botonTrailer = (Button)findViewById(R.id.BtnTrailer);
-		} else {
-			SearchInfoShow searchorShow = new SearchInfoShow(this, pelicula.getId());
-			searchorShow.delegate = this;
-			searchorShow.execute();
+		//Obtenemos una referencia a los controles de la interfaz
+		anyo = (TextView)findViewById(R.id.Anyo);
+		genero = (TextView)findViewById(R.id.genero);
+		director = (TextView)findViewById(R.id.director);
+		valoracion = (TextView)findViewById(R.id.valoracion);
+		descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
+		generoLab = (TextView)findViewById(R.id.generoLab);
+		directorLab = (TextView)findViewById(R.id.directorLAb);
+		botonAnadir = (Button)findViewById(R.id.BtnAnadir);
+		botonVolver = (Button)findViewById(R.id.BtnAtras);
+		botonTrailer = (Button)findViewById(R.id.BtnTrailer);
 
-			setContentView(R.layout.show_info);
-
-			//Obtenemos una referencia a los controles de la interfaz
-			anyo = (TextView)findViewById(R.id.Anyo);
-			genero = (TextView)findViewById(R.id.genero);
-			seasons = (TextView)findViewById(R.id.seasons);
-			valoracion = (TextView)findViewById(R.id.valoracion);
-			descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
-			generoLab = (TextView)findViewById(R.id.generoLab);
-			directorLab = (TextView)findViewById(R.id.directorLAb);
-			botonAnadir = (Button)findViewById(R.id.BtnAnadir);
-			botonVolver = (Button)findViewById(R.id.BtnAtras);
-			botonTrailer = (Button)findViewById(R.id.BtnTrailer);
-			seasons = (TextView)findViewById(R.id.seasons);
-		}
-
-        
       //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
 
@@ -154,7 +131,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
                 pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 pDialog.show();
 
-                SearchURLTrailer searchorMovie = new SearchURLTrailer(InfoMovieSearch.this, pelicula);
+                SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieSearch.this, pelicula);
                 try {
                     String trailerId = searchorMovie.execute().get();
                     if(trailerId == null){
@@ -220,11 +197,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         	}
         	else direc += pelicula.getDirectores().get(d);
         }
-        if(pelicula.getTipo() == null || pelicula.getTipo().equalsIgnoreCase("Movie")){
-			director.setText("	" + direc);
-		} else {
-        	seasons.setText("	" + pelicula.getSeasons());
-		}
+        director.setText("	" + direc);
         
         descripcion.setText(pelicula.getDescripcion());
         
@@ -260,11 +233,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 		if (mShareActionProvider != null) {
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
-			if(type.equalsIgnoreCase("Movie")){
-				sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/movie/" + pelicula.getId());
-			} else {
-				sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/tv/" + pelicula.getId());
-			}
+			sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/movie/" + pelicula.getId());
 			sendIntent.setType("text/plain");
 			mShareActionProvider.setShareIntent(sendIntent);
 		}

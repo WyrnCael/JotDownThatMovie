@@ -1,8 +1,8 @@
-package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
+package com.wyrnlab.jotdownthatmovie.ShowInfo.mostrarPelicula;
 
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
-import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
+import api.search.Movies.SearchMovieURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
@@ -27,7 +27,6 @@ import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
 import api.search.AudiovisualInterface;
-import api.search.Movies.Pelicula;
 
 public class InfoMovieDatabase extends AppCompatActivity {
 
@@ -59,40 +58,19 @@ public class InfoMovieDatabase extends AppCompatActivity {
         //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
 
-        if(pelicula.getTipo() == null || pelicula.getTipo().equalsIgnoreCase("Movie")){
-            setContentView(R.layout.movie_info_db);
+        setContentView(R.layout.movie_info_db);
 
-            //Obtenemos una referencia a los controles de la interfaz
-             anyo = (TextView)findViewById(R.id.Anyo);
-            genero = (TextView)findViewById(R.id.genero);
-            director = (TextView)findViewById(R.id.director);
-            valoracion = (TextView)findViewById(R.id.valoracion);
-            descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
-            generoLab = (TextView)findViewById(R.id.generoLab);
-            directorLab = (TextView)findViewById(R.id.directorLAb);
-            botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
-            botonTrailer = (Button)findViewById(R.id.BtnTrailer);
-            botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
-
-            if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
-        } else {
-            setContentView(R.layout.show_info_db);
-
-            //Obtenemos una referencia a los controles de la interfaz
-             anyo = (TextView)findViewById(R.id.Anyo);
-            genero = (TextView)findViewById(R.id.genero);
-            director = (TextView)findViewById(R.id.director);
-            valoracion = (TextView)findViewById(R.id.valoracion);
-            descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
-            generoLab = (TextView)findViewById(R.id.generoLab);
-            directorLab = (TextView)findViewById(R.id.directorLAb);
-            botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
-            botonTrailer = (Button)findViewById(R.id.BtnTrailer);
-            botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
-            seasons = (TextView)findViewById(R.id.seasons);
-
-            seasons.setText("	" + pelicula.getSeasons());
-        }
+        //Obtenemos una referencia a los controles de la interfaz
+         anyo = (TextView)findViewById(R.id.Anyo);
+        genero = (TextView)findViewById(R.id.genero);
+        director = (TextView)findViewById(R.id.director);
+        valoracion = (TextView)findViewById(R.id.valoracion);
+        descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
+        generoLab = (TextView)findViewById(R.id.generoLab);
+        directorLab = (TextView)findViewById(R.id.directorLAb);
+        botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
+        botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+        botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
 
         // Title
         getSupportActionBar().setTitle(pelicula.getTitulo());
@@ -107,6 +85,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
         descripcion.setText(pelicula.getDescripcion());
         ImageView image = (ImageView)findViewById(R.id.poster);
         image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
+        if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
         
       //Implementamos el evento “click” del botón
         botonVolver.setOnClickListener(new OnClickListener() {
@@ -127,7 +106,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.show();
 
-            SearchURLTrailer searchorMovie = new SearchURLTrailer(InfoMovieDatabase.this, pelicula);
+            SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieDatabase.this, pelicula);
                 try {
                     String trailerId = searchorMovie.execute().get();
                     if(trailerId == null){

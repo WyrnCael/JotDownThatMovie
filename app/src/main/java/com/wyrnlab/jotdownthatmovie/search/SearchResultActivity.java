@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import api.search.AudiovisualInterface;
-import api.search.TVShows.TVShow;
 import data.General;
-import com.wyrnlab.jotdownthatmovie.mostrarPelicula.InfoMovieSearch;
+import com.wyrnlab.jotdownthatmovie.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.ShowInfo.showTVShow.InfoTVShowSearch;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import api.search.Movies.Pelicula;
- 
-public class Search extends AppCompatActivity implements
+public class SearchResultActivity extends AppCompatActivity implements
         OnItemClickListener {
  
 		ListView listView;
@@ -50,9 +49,9 @@ public class Search extends AppCompatActivity implements
             RowItem item;
 
         	if(results.get(i).getRating() == 0.0)
-        		item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)) );
+        		item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), results.get(i).getTipo() );
 			else
-				item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + results.get(i).getRating()) );
+				item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + results.get(i).getRating()), results.get(i).getTipo() );
             rowItems.add(item);
         }
         
@@ -67,11 +66,17 @@ public class Search extends AppCompatActivity implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
             long id) {
-        
-    	Intent intent =  new Intent(Search.this, InfoMovieSearch.class);
+
+        Intent intent;
+        if(type.equalsIgnoreCase("Movie")) {
+            intent = new Intent(SearchResultActivity.this, InfoMovieSearch.class);
+
+        } else {
+            intent = new Intent(SearchResultActivity.this, InfoTVShowSearch.class);
+        }
         intent.putExtra("Pelicula", this.results.get(position));
         intent.putExtra("Type", type);
-		startActivityForResult(intent, REQUEST_CODE_PELIBUSCADA); 	
+        startActivityForResult(intent, REQUEST_CODE_PELIBUSCADA);
         
         // finish();
     }

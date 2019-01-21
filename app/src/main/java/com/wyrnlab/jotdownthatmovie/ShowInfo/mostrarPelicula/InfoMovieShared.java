@@ -1,4 +1,4 @@
-package com.wyrnlab.jotdownthatmovie.mostrarPelicula;
+package com.wyrnlab.jotdownthatmovie.ShowInfo.mostrarPelicula;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -24,7 +24,7 @@ import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.MainActivity;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.search.CheckInternetConection;
-import com.wyrnlab.jotdownthatmovie.search.SearchURLTrailer;
+import api.search.Movies.SearchMovieURLTrailer;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 
 import java.util.concurrent.ExecutionException;
@@ -32,7 +32,6 @@ import java.util.concurrent.ExecutionException;
 import api.conexion.SearchBaseUrl;
 import api.search.AsyncResponse;
 import api.search.AudiovisualInterface;
-import api.search.Movies.Pelicula;
 import api.search.Movies.SearchInfoMovie;
 import data.General;
 
@@ -154,7 +153,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
                 pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 pDialog.show();
 
-                SearchURLTrailer searchorMovie = new SearchURLTrailer(InfoMovieShared.this, pelicula);
+                SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieShared.this, pelicula);
                 try {
                     String trailerId = searchorMovie.execute().get();
                     if(trailerId == null){
