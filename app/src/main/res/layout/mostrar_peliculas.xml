@@ -27,14 +27,37 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabSearch"
+        android:layout_width="@dimen/standard_45"
+        android:layout_height="@dimen/standard_45"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/standard_30"
+        app:fabCustomSize="@dimen/standard_45"
+        android:tint="@android:color/white"
+        app:srcCompat="@android:drawable/ic_search_category_default"
+        android:elevation="0dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabFilter"
+        android:layout_width="@dimen/standard_45"
+        android:layout_height="@dimen/standard_45"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/standard_30"
+        app:fabCustomSize="@dimen/standard_45"
+        android:tint="@android:color/white"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size"
+        android:elevation="0dp" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         app:borderWidth="0dp"
         android:layout_gravity="bottom|end"
-        android:backgroundTint="#00E517"
-        android:src="@drawable/ic_search_add" />
+        android:src="@android:drawable/ic_dialog_dialer"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:elevation="4dp"/>
 </android.support.design.widget.CoordinatorLayout>
 
 <!-- 

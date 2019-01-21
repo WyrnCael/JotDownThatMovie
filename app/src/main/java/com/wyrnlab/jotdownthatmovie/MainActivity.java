@@ -12,16 +12,18 @@ import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.WriteExternalStorage
 import com.wyrnlab.jotdownthatmovie.search.CustomListViewAdapter;
 import com.wyrnlab.jotdownthatmovie.search.RowItem;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,9 +36,18 @@ import api.search.AudiovisualInterface;
 public class MainActivity extends AppCompatActivity {
 
 	public final static int REQUEST_CODE_A = 1;
+	FloatingActionButton fab;
+	FloatingActionButton fabFilter;
+	FloatingActionButton fabSearch;
+	Boolean isFABOpen = false;
 	private List<AudiovisualInterface> movies;
 	ListView listView;
 	List<RowItem> rowItems;
+	private static String FILTER_ALL = "All";
+	private static String FILTER_MOVIE = "Movie";
+	private static String FILTER_TVSHOW = "Show";
+	String filter;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -57,6 +68,18 @@ public class MainActivity extends AppCompatActivity {
 		//Localizar los controles
 		listView = (ListView) findViewById( R.id.mainListView );
 
+		listView.setOnScrollListener(new AbsListView.OnScrollListener(){
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+				if(isFABOpen){
+					closeFABMenu();
+				}
+			}
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+			}
+		});
+
 		/*// Boton buscar
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		fab.setOnClickListener(new View.OnClickListener() {
@@ -70,27 +93,93 @@ public class MainActivity extends AppCompatActivity {
 		});
 		*/
 
-		refreshList();
+		// Floating menu
+		fab = (FloatingActionButton) findViewById(R.id.fab);
+		fabFilter = (FloatingActionButton) findViewById(R.id.fabFilter);
+		fabFilter.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				String[] filters = {getResources().getString(R.string.FilterAll), getResources().getString(R.string.FilterMovie), getResources().getString(R.string.FilterTVShow)};
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setTitle(getResources().getString(R.string.SelectFilter));
+				builder.setItems(filters, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// the user clicked on colors[which]
+						switch (which){
+							case 0:
+								refreshList(FILTER_ALL);
+								break;
+							case 1:
+								refreshList(FILTER_MOVIE);
+								break;
+							case 2:
+								refreshList(FILTER_TVSHOW);
+								break;
+						}
+					}
+				});
+				builder.show();
+			}
+		});
+		fabSearch = (FloatingActionButton) findViewById(R.id.fabSearch);
+		fabSearch.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				/*Snackbar.make(view, "Se presionó el FAB", Snackbar.LENGTH_LONG)
+						.setAction("Action", null).show();*/
+				Intent intent =  new Intent(MainActivity.this, SearchActivity.class);
+				startActivityForResult(intent, REQUEST_CODE_A);
+			}
+		});
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if(!isFABOpen){
+					showFABMenu();
+				}else{
+					closeFABMenu();
+				}
+			}
+		});
+
+		refreshList(FILTER_ALL);
 
 	}
 
-	private void refreshList(){
+	private void showFABMenu(){
+		isFABOpen=true;
+		fabFilter.animate().translationY(-getResources().getDimension(R.dimen.standard_58));
+		fabSearch.animate().translationY(-getResources().getDimension(R.dimen.standard_108));
+	}
 
+	private void closeFABMenu(){
+		isFABOpen=false;
+		fabFilter.animate().translationY(0);
+		fabSearch.animate().translationY(0);
+	}
+
+
+
+	private void refreshList(String typeFilter){
+		closeFABMenu();
 		movies = DAO.getInstance().readAll(MainActivity.this);
 
 		rowItems = new ArrayList<RowItem>();
 		RowItem item;
 
 		for (int i = 0; i < movies.size(); i++) {
-			if(movies.get(i).getRating() == 0.0)
-				item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), movies.get(i).getTipo()  );
-			else
-				item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movies.get(i).getRating()), movies.get(i).getTipo() );
-			rowItems.add(item);
+			if( typeFilter == FILTER_ALL || (typeFilter == FILTER_MOVIE && movies.get(i).getTipo() == null) || (movies.get(i).getTipo() != null && movies.get(i).getTipo().equalsIgnoreCase(typeFilter)) ) {
+				if (movies.get(i).getRating() == 0.0)
+					item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), movies.get(i).getTipo());
+				else
+					item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movies.get(i).getRating()), movies.get(i).getTipo());
+				rowItems.add(item);
+			}
 		}
 
 
-		listView = (ListView) findViewById(R.id.mainListView);
 		CustomListViewAdapter adapter;
 		adapter = new CustomListViewAdapter(this,
 				R.layout.list_item, rowItems);
@@ -135,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == REQUEST_CODE_A) {
-			refreshList();
+			refreshList(FILTER_ALL);
 		}
 	}
 
@@ -202,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
 				Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + selected.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
 
-				refreshList();
+				refreshList(filter);
 
 				return true;
 			default:
@@ -213,6 +302,10 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	public void onBackPressed()
 	{
-		finish();
+		if(!isFABOpen){
+			finish();
+		}else{
+			closeFABMenu();
+		}
 	}
 }
