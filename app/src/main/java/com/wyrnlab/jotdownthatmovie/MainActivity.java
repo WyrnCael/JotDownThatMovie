@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.mostrarPelicula.InfoMovieDatabase;
+import com.wyrnlab.jotdownthatmovie.ShowInfo.mostrarPelicula.InfoMovieDatabase;
+import com.wyrnlab.jotdownthatmovie.ShowInfo.showTVShow.InfoTVShowDatabase;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.ReadExternalStorage;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.WriteExternalStorage;
 import com.wyrnlab.jotdownthatmovie.search.CustomListViewAdapter;
@@ -14,6 +15,7 @@ import com.wyrnlab.jotdownthatmovie.search.RowItem;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -28,7 +30,6 @@ import android.widget.Toast;
 import android.view.View;
 
 import api.search.AudiovisualInterface;
-import api.search.Movies.Pelicula;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,17 +57,18 @@ public class MainActivity extends AppCompatActivity {
 		//Localizar los controles
 		listView = (ListView) findViewById( R.id.mainListView );
 
-		// Boton buscar
+		/*// Boton buscar
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				/*Snackbar.make(view, "Se presionó el FAB", Snackbar.LENGTH_LONG)
 						.setAction("Action", null).show();*/
-				Intent intent =  new Intent(MainActivity.this, SearchActivity.class);
+				/*Intent intent =  new Intent(MainActivity.this, SearchActivity.class);
 				startActivityForResult(intent, REQUEST_CODE_A);
 			}
 		});
+		*/
 
 		refreshList();
 
@@ -78,11 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
 		rowItems = new ArrayList<RowItem>();
 		RowItem item;
+
 		for (int i = 0; i < movies.size(); i++) {
 			if(movies.get(i).getRating() == 0.0)
-				item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)) );
+				item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), movies.get(i).getTipo()  );
 			else
-				item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movies.get(i).getRating()) );
+				item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movies.get(i).getRating()), movies.get(i).getTipo() );
 			rowItems.add(item);
 		}
 
@@ -100,7 +103,13 @@ public class MainActivity extends AppCompatActivity {
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 				AudiovisualInterface search = movies.get(position);
 				AudiovisualInterface pelicula = DAO.getInstance().readFromSQL(MainActivity.this, search.getTitulo(), search.getAnyo());
-				Intent intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
+
+				Intent intent;
+				if(pelicula.getTipo() == null || pelicula.getTipo().equalsIgnoreCase("Movie")){
+					intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
+				} else {
+					intent =  new Intent(MainActivity.this, InfoTVShowDatabase.class);
+				}
 				intent.putExtra("Pelicula", pelicula);
 				startActivityForResult(intent, REQUEST_CODE_A);
 			}

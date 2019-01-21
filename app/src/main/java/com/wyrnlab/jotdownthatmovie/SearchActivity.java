@@ -6,9 +6,8 @@ import java.util.List;
 import api.conexion.SearchBaseUrl;
 import api.search.AsyncResponse;
 import api.search.AudiovisualInterface;
-import api.search.TVShows.TVShow;
 import data.General;
-import com.wyrnlab.jotdownthatmovie.search.Search;
+import com.wyrnlab.jotdownthatmovie.search.SearchResultActivity;
 import com.wyrnlab.jotdownthatmovie.search.CheckInternetConection;
 
 import android.Manifest;
@@ -17,7 +16,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -32,8 +30,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import api.search.Movies.Pelicula;
-
 public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 
 	String textoABuscar = "";
@@ -45,7 +41,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.search);
 
 		// Back button
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -199,7 +195,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
             toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
         } else {
-            Intent intent =  new Intent(SearchActivity.this, Search.class);
+            Intent intent =  new Intent(SearchActivity.this, SearchResultActivity.class);
             intent.putExtra("Type", searchMode);
             startActivityForResult(intent, REQUEST_CODE_LISTABUSCADAS);
         }
