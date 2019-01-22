@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'uk.co.samuelwall:material-tap-target-prompt:2.14.0'
     }
 }
 allprojects {
