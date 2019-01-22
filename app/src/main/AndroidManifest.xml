@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wyrnlab.jotdownthatmovie"
-    android:versionCode="5"
-    android:versionName="1.03" >
+    android:versionCode="7"
+    android:versionName="1.1" >
 
     <uses-permission android:name="android.permission.INTERNET" />    
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -18,7 +18,7 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         android:networkSecurityConfig="@xml/network_security_config" >
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
@@ -27,13 +27,13 @@
             </intent-filter>
         </activity>
  
-        <activity android:name=".SearchActivity"
+        <activity android:name=".Activities.SearchActivity"
                   android:label="@string/title_activity_saludo"
                   android:windowSoftInputMode="stateVisible" >
  
         </activity>
 
-        <activity android:name=".About"
+        <activity android:name=".Activities.About"
             android:label="@string/about" >
 
         </activity>
@@ -43,13 +43,13 @@
             android:label="@string/title_activity_results">
         </activity>
 
-        <activity android:name=".ShowInfo.mostrarPelicula.InfoMovieSearch"
+        <activity android:name=".Activities.ShowInfo.mostrarPelicula.InfoMovieSearch"
                   android:label="@string/title_activity_info"
                   android:configChanges="keyboardHidden|orientation|screenSize" >
 
         </activity>
 
-        <activity android:name=".ShowInfo.mostrarPelicula.InfoMovieShared"
+        <activity android:name=".Activities.ShowInfo.mostrarPelicula.InfoMovieShared"
             android:label="@string/title_activity_info"
             android:configChanges="keyboardHidden|orientation|screenSize" >
             <intent-filter >
@@ -62,19 +62,19 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ShowInfo.mostrarPelicula.InfoMovieDatabase"
+        <activity android:name=".Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase"
                   android:label="@string/title_activity_info"
                   android:configChanges="keyboardHidden|orientation|screenSize" >
  
         </activity>
 
-        <activity android:name=".ShowInfo.showTVShow.InfoTVShowSearch"
+        <activity android:name=".Activities.ShowInfo.showTVShow.InfoTVShowSearch"
             android:label="@string/title_activity_info"
             android:configChanges="keyboardHidden|orientation|screenSize" >
 
         </activity>
 
-        <activity android:name=".ShowInfo.showTVShow.InfoTVShowShared"
+        <activity android:name=".Activities.ShowInfo.showTVShow.InfoTVShowShared"
             android:label="@string/title_activity_info"
             android:configChanges="keyboardHidden|orientation|screenSize" >
             <intent-filter >
@@ -87,7 +87,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ShowInfo.showTVShow.InfoTVShowDatabase"
+        <activity android:name=".Activities.ShowInfo.showTVShow.InfoTVShowDatabase"
             android:label="@string/title_activity_info"
             android:configChanges="keyboardHidden|orientation|screenSize" >
 

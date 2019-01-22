@@ -9,11 +9,8 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.video.alter.VideoEnabledWebView;
 
-import java.security.Provider;
-
-import data.General;
+import com.wyrnlab.jotdownthatmovie.data.General;
 
 /**
  * Created by Jota on 03/03/2017.
