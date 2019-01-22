@@ -3,11 +3,11 @@ package com.wyrnlab.jotdownthatmovie.search;
 import java.util.ArrayList;
 import java.util.List;
 
-import api.search.AudiovisualInterface;
-import data.General;
-import com.wyrnlab.jotdownthatmovie.ShowInfo.mostrarPelicula.InfoMovieSearch;
+import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.data.General;
+import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.ShowInfo.showTVShow.InfoTVShowSearch;
+import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.showTVShow.InfoTVShowSearch;
 
 import android.app.Activity;
 import android.content.Intent;
