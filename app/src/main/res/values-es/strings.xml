@@ -23,7 +23,7 @@
     <string name="deleteButton">Eliminar</string>
     <string name="searching">Buscando</string>
 	<string name="title_activity_main">Peliculas por ver</string>
-	<string name="title_activity_saludo">Búsqueda de película</string>
+	<string name="title_activity_saludo">Búsqueda</string>
     <string name="title_activity_results">Resultados de la búsqueda</string>
     <string name="title_activity_info">Información de la pelicula</string>
     <string name="removed">eliminada</string>
@@ -31,6 +31,23 @@
     <string name="alreadySaved">ya estaba guardada!</string>
     <string name="Sinopsis">Sinopsis:</string>
     <string name="IconCredits">Icono creado por <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconCameraCredits">Icono de camara creado por <string name="Chris Veigt"><a href="http://chrisveigt.com/">Chris Veigt</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconTVCredits">Icono de television creado por <string name="Freepic"><a href="http://chrisveigt.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="Movies">Películas</string>
+    <string name="TVShows">Series</string>
+    <string name="SearchType">Tipo de búsqueda:</string>
+    <string name="Seasons">Temporadas:</string>
+    <string name="Show">Serie</string>
+    <string name="Filter">Filtrar</string>
+    <string name="Search">Buscar</string>
+    <string name="FilterAll">Todo</string>
+    <string name="FilterMovie">Peliculas</string>
+    <string name="FilterTVShow">Series</string>
+    <string name="SelectFilter">Selecciona el tipo de filro</string>
+    <string name="StartPrimaryText">¡Empieza aquí!</string>
+    <string name="StartSecondaryText">Empieza pulsando aquí</string>
+    <string name="SearchPrimaryText">Busca algo</string>
+    <string name="SearchSecondaryText">Busca una película o una serie</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>

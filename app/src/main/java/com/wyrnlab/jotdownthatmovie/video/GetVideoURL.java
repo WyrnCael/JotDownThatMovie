@@ -15,7 +15,7 @@ import com.wyrnlab.jotdownthatmovie.R;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 
-import data.General;
+import com.wyrnlab.jotdownthatmovie.data.General;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,8 +27,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebSettings.PluginState;
 import android.widget.Toast;
-import api.search.Pelicula;
-import data.SetTheLanguages;
+import com.wyrnlab.jotdownthatmovie.api.search.Movies.Pelicula;
+import com.wyrnlab.jotdownthatmovie.data.SetTheLanguages;
 
 public class GetVideoURL extends Activity{
 
