@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
- 
+
+import org.w3c.dom.Text;
+
 public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
  
 	Context context;
@@ -36,6 +38,7 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
         ImageView imageView;
         TextView txtTitle;
         TextView txtDesc;
+        ImageView icon;
     }
      
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -51,6 +54,7 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
             holder.txtDesc = (TextView) convertView.findViewById(R.id.desc);
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
             holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
+            holder.icon = (ImageView) convertView.findViewById(R.id.iconType);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
@@ -58,6 +62,12 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
         holder.imageView.setTag(rowItem.getImageId());
         holder.txtDesc.setText(rowItem.getDesc());
         holder.txtTitle.setText(rowItem.getTitle());
+
+        if(rowItem.getType() == null || rowItem.getType().equalsIgnoreCase("Movie")){
+            holder.icon.setImageResource(R.drawable.video_camera);
+        } else {
+            holder.icon.setImageResource(R.drawable.tv);
+        }
 
         if(rowItem.getImageId() instanceof  String)
             imageLoader.DisplayImage((String) rowItem.getImageId(), holder.imageView);

@@ -5,12 +5,14 @@ public class RowItem {
     private Object imageId;
     private String title;
     private String desc;
+    private String type;
      
-    public RowItem(int id, Object imageId, String title, String desc) {
+    public RowItem(int id, Object imageId, String title, String desc, String type) {
     	this.id = id;
         this.imageId = imageId;
         this.title = title;
         this.desc = desc;
+        this.type = type;
     }
     public int getId(){
     	return this.id;
@@ -39,5 +41,7 @@ public class RowItem {
     @Override
     public String toString() {
         return title + "\n" + desc;
-    }   
+    }
+    public String getType() { return type; }
+    public void setType(Object icon) { this.type = type; }
 }
