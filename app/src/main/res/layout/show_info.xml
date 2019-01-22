@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blanco"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayout1"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/blanco">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <!-- Row 1 with single column -->
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco"
+                android:gravity="center_horizontal" />
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/blanco"
+                    android:orientation="horizontal"
+                    android:padding="10px">
+
+                    <ImageView
+                        android:id="@+id/poster"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:adjustViewBounds= "true"
+                        android:maxHeight="138px" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/AnyoLab"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/anyo"
+                            android:textColor="?attr/colorAccent"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/Anyo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            android:textColor="@color/negro"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/generoLab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gender"
+                            android:textColor="?attr/colorAccent"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/genero"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            android:textColor="@color/negro"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/seasonsLab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Seasons"
+                            android:textColor="?attr/colorAccent"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/seasons"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            android:textColor="@color/negro"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/valoracionLab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/valoracion"
+                            android:textColor="?attr/colorAccent"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/valoracion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            android:textColor="@color/negro"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+                    </LinearLayout>
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco">
+
+                <TextView
+                    android:id="@+id/sinopsis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/Sinopsis"
+                    android:textColor="@color/verde"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/raleway" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco">
+
+                <TextView
+                    android:id="@+id/toda_la_descripcion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:text="TextView"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blanco"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/BtnAnadir"
+            android:theme="@style/GreenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/addButton" />
+
+        <Button
+            android:id="@+id/BtnTrailer"
+            android:theme="@style/GreenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Trailer" />
+
+        <Button
+            android:id="@+id/BtnAtras"
+            android:theme="@style/GreenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="@string/backButton" />
+    </RelativeLayout>
+
+</RelativeLayout>
