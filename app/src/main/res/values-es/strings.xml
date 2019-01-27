@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Anota Esa Pelicula</string>
-    <string name="provider">Toda la información de las películas es proporcionada por TheMovieDB:</string>
+    <string name="provider">Toda la información de las películas y series es proporcionada por TheMovieDB:</string>
     <string name="about">Acerca de</string>
     <string name="follow_git">Sigue el proyecto en GitHub:</string>
     <string name="action_settings">Ajustes</string>
@@ -43,7 +43,7 @@
     <string name="FilterAll">Todo</string>
     <string name="FilterMovie">Peliculas</string>
     <string name="FilterTVShow">Series</string>
-    <string name="SelectFilter">Selecciona el tipo de filro</string>
+    <string name="SelectFilter">Selecciona el tipo de filtro</string>
     <string name="StartPrimaryText">¡Empieza aquí!</string>
     <string name="StartSecondaryText">Empieza pulsando aquí</string>
     <string name="SearchPrimaryText">Busca algo</string>

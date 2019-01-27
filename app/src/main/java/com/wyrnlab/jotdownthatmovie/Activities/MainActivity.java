@@ -17,15 +17,20 @@ import android.animation.Animator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -36,6 +41,8 @@ import android.view.View;
 
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -197,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
 							.setCaptureTouchEventOutsidePrompt(true)
 							.setCaptureTouchEventOutsidePrompt(true)
 							.setAutoDismiss(false)
+							.setClipToView(getWindow().getDecorView())
 							.setBackgroundColour(Color.parseColor("#ffff4444"))
 							.setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener()
 							{
@@ -295,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
 				.setBackButtonDismissEnabled(false)
 				.setCaptureTouchEventOutsidePrompt(true)
 				.setCaptureTouchEventOutsidePrompt(true)
+				.setClipToView(getWindow().getDecorView())
 				.setAutoDismiss(false)
 				.setBackgroundColour(Color.parseColor("#009688"))
 				.show();
