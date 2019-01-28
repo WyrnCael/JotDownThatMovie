@@ -24,6 +24,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -402,6 +403,18 @@ public class MainActivity extends AppCompatActivity {
 				return super.onContextItemSelected(item);
 		}
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+			Intent intent =  new Intent(MainActivity.this, SearchActivity.class);
+			startActivityForResult(intent, REQUEST_CODE_A);
+			return true;
+		}
+
+		return super.onKeyDown(keyCode, event);
+	}
+
 
 	@Override
 	public void onBackPressed() {
