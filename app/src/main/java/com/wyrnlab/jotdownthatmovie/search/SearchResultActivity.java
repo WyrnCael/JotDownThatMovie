@@ -3,7 +3,12 @@ package com.wyrnlab.jotdownthatmovie.search;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wyrnlab.jotdownthatmovie.Activities.MainActivity;
+import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.api.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.api.search.Movies.SearchInfoMovie;
+import com.wyrnlab.jotdownthatmovie.api.search.TVShows.SearchInfoShow;
 import com.wyrnlab.jotdownthatmovie.data.General;
 import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.R;
@@ -13,14 +18,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class SearchResultActivity extends AppCompatActivity implements
-        OnItemClickListener {
+        OnItemClickListener, AsyncResponse {
  
 		ListView listView;
         String type;
@@ -61,6 +69,8 @@ public class SearchResultActivity extends AppCompatActivity implements
         		R.layout.list_item, rowItems);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        registerForContextMenu(listView);
+
     }
  
     @Override
@@ -92,6 +102,55 @@ public class SearchResultActivity extends AppCompatActivity implements
 	            break;
 	    }
 	}
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater inflater = getMenuInflater();
+
+        AdapterView.AdapterContextMenuInfo info =
+                (AdapterView.AdapterContextMenuInfo)menuInfo;
+
+        // Si no es añadir
+        menu.setHeaderTitle(listView.getAdapter().getItem(info.position).toString());
+        inflater.inflate(R.menu.menu_pelicula_busqueda, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
+            case R.id.CtxAdd:
+                AudiovisualInterface selected = General.getsSarchResults().get(info.position);
+
+                if(type.equalsIgnoreCase("Movie")) {
+                    SearchInfoMovie searchorMovie = new SearchInfoMovie(this, selected.getId());
+                    searchorMovie.delegate = SearchResultActivity.this;
+                    searchorMovie.execute();
+
+                } else {
+                    SearchInfoShow searchorShow = new SearchInfoShow(this, selected.getId());
+                    searchorShow.delegate = SearchResultActivity.this;
+                    searchorShow.execute();
+                }
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
+    public void processFinish(Object result){
+        DAO.getInstance().insert(SearchResultActivity.this, (AudiovisualInterface) result);
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + ((AudiovisualInterface) result).getTitulo() + "\" " + getResources().getString(R.string.added) + "!", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onBackPressed() {
