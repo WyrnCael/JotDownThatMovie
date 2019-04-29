@@ -57,9 +57,9 @@ public class SearchResultActivity extends AppCompatActivity implements
             RowItem item;
 
         	if(results.get(i).getRating() == 0.0)
-        		item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), results.get(i).getTipo() );
+        		item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), results.get(i).getTipo(), results.get(i) );
 			else
-				item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + results.get(i).getRating()), results.get(i).getTipo() );
+				item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + results.get(i).getRating()), results.get(i).getTipo(), results.get(i) );
             rowItems.add(item);
         }
         
