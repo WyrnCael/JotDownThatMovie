@@ -3,6 +3,22 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="wrap_content">
+
+	<Button
+		android:id="@+id/swipe_button1"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/ic_menu" />
+
+	<Button
+		android:id="@+id/swipe_button3"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/ic_search" />
   <ImageView
   	  android:id="@+id/image"
 	  android:layout_width="50dip"

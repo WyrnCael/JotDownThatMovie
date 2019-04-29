@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 	Boolean firstTime = true;
 	Boolean dontExit = false;
 	Boolean searcBtnhUp = false;
+	CustomListViewAdapter adapter;
 
 
 	@Override
@@ -83,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
 		//Localizar los controles
 		listView = (ListView) findViewById( R.id.mainListView );
+		adapter = new CustomListViewAdapter(this,
+				R.layout.list_item, new ArrayList<RowItem>());
+		listView.setAdapter(adapter);
+		registerForContextMenu(listView);
 
 		listView.setOnScrollListener(new AbsListView.OnScrollListener(){
 			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -248,33 +253,25 @@ public class MainActivity extends AppCompatActivity {
 
 	private void refreshList(String typeFilter){
 		closeFABMenu();
+		adapter.clear();
 		movies = DAO.getInstance().readAll(MainActivity.this);
-
-		rowItems = new ArrayList<RowItem>();
-		RowItem item;
 
 		for (int i = 0; i < movies.size(); i++) {
 			if( typeFilter == FILTER_ALL || (typeFilter == FILTER_MOVIE && movies.get(i).getTipo() == null) || (movies.get(i).getTipo() != null && movies.get(i).getTipo().equalsIgnoreCase(typeFilter)) ) {
 				if (movies.get(i).getRating() == 0.0)
-					item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), movies.get(i).getTipo());
+					adapter.insert( new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), movies.get(i).getTipo(), movies.get(i)), adapter.getCount());
 				else
-					item = new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movies.get(i).getRating()), movies.get(i).getTipo());
-				rowItems.add(item);
+					adapter.insert( new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movies.get(i).getRating()), movies.get(i).getTipo(), movies.get(i)), adapter.getCount());
+				//rowItems.add(item);
 			}
 		}
 
-
-		CustomListViewAdapter adapter;
-		adapter = new CustomListViewAdapter(this,
-				R.layout.list_item, rowItems);
-		listView.setAdapter(adapter);
-
-		registerForContextMenu(listView);
+		adapter.notifyDataSetChanged();
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-				AudiovisualInterface search = movies.get(position);
+				AudiovisualInterface search = (AudiovisualInterface) ((RowItem)listView.getAdapter().getItem(position)).getObject();
 				AudiovisualInterface pelicula = DAO.getInstance().readFromSQL(MainActivity.this, search.getTitulo(), search.getAnyo());
 
 				Intent intent;
@@ -390,7 +387,7 @@ public class MainActivity extends AppCompatActivity {
 
 		switch (item.getItemId()) {
 			case R.id.CtxLstOpc2:
-				AudiovisualInterface selected = movies.get(info.position);
+				AudiovisualInterface selected = (AudiovisualInterface) ((RowItem)listView.getAdapter().getItem(info.position)).getObject();
 
 				DAO.getInstance().delete(MainActivity.this, selected.getTitulo(), selected.getAnyo());
 

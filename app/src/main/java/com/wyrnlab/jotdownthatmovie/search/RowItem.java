@@ -6,13 +6,15 @@ public class RowItem {
     private String title;
     private String desc;
     private String type;
+    private Object object;
      
-    public RowItem(int id, Object imageId, String title, String desc, String type) {
+    public RowItem(int id, Object imageId, String title, String desc, String type, Object object) {
     	this.id = id;
         this.imageId = imageId;
         this.title = title;
         this.desc = desc;
         this.type = type;
+        this.object = object;
     }
     public int getId(){
     	return this.id;
@@ -44,4 +46,9 @@ public class RowItem {
     }
     public String getType() { return type; }
     public void setType(Object icon) { this.type = type; }
+
+    public Object getObject() { return object; }
+    public void setObject(Object object) { this.object = object; }
+
+
 }
