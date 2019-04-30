@@ -12,6 +12,9 @@ public class General {
 	public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
 	public final static String APIKEY = "/*YOUR_TMDB_APIKEY*/";
 	public final static String YAPIKEY = "/*YOUR_YOUTUBE_APIKEY*/";
+	public final static String ALL_TYPE = "All";
+	public final static String MOVIE_TYPE = "Movie";
+	public final static String TVSHOW_TYPE = "Show";
 	public static String base_url = null;
 	public static List<Pelicula> peliculasBuscadas;
 	public static List<TVShow> showsBuscados;
