@@ -2,6 +2,7 @@ package com.wyrnlab.jotdownthatmovie.Activities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
@@ -20,7 +21,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 	FloatingActionButton fabFilter;
 	FloatingActionButton fabSearch;
 	Boolean isFABOpen = false;
-	private List<AudiovisualInterface> movies;
+	private Map<String, List<AudiovisualInterface>> moviesByType;
 	ListView listView;
 	List<RowItem> rowItems;
 	private static String FILTER_ALL = "All";
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 	Boolean dontExit = false;
 	Boolean searcBtnhUp = false;
 	CustomListViewAdapter adapter;
+	TabLayout tabLayout;
 
 
 	@Override
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.mostrar_peliculas);
+		moviesByType = DAO.getInstance().readAll(MainActivity.this);
 
 		// Vaciar cache imagenes
 		ImageLoader imageLoader = new ImageLoader(this);
@@ -88,6 +93,39 @@ public class MainActivity extends AppCompatActivity {
 				R.layout.list_item, new ArrayList<RowItem>());
 		listView.setAdapter(adapter);
 		registerForContextMenu(listView);
+
+		// TabLayout
+		tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FilterAll) + " (" + moviesByType.get(FILTER_ALL).size() + ")"));
+		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FilterMovie) + " (" + moviesByType.get(FILTER_MOVIE).size() + ")"));
+		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FilterTVShow) + " (" + moviesByType.get(FILTER_TVSHOW).size() + ")"));
+		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+				switch (tab.getPosition()){
+					case 0:
+						refreshList(FILTER_ALL);
+						break;
+					case 1:
+						refreshList(FILTER_MOVIE);
+						break;
+					case 2:
+						refreshList(FILTER_TVSHOW);
+						break;
+				}
+			}
+
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+
+			}
+		});
 
 		listView.setOnScrollListener(new AbsListView.OnScrollListener(){
 			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -115,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
 		*/
 
 		// Floating menu
-		fab = (FloatingActionButton) findViewById(R.id.fab);
-		fabFilter = (FloatingActionButton) findViewById(R.id.fabFilter);
+		//fab = (FloatingActionButton) findViewById(R.id.fab);
+		/*fabFilter = (FloatingActionButton) findViewById(R.id.fabFilter);
 		fabFilter.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -146,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 				});
 				builder.show();
 			}
-		});
+		});*/
 		fabSearch = (FloatingActionButton) findViewById(R.id.fabSearch);
 		fabSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -174,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-		fab.setOnClickListener(new View.OnClickListener() {
+		/*fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if(!isFABOpen){
@@ -183,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
 					closeFABMenu();
 				}
 			}
-		});
+		});*/
 
 		refreshList(FILTER_ALL);
 
@@ -191,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
 	private void showFABMenu(){
 		isFABOpen=true;
-		fabFilter.animate().translationY(-getResources().getDimension(R.dimen.standard_58));
+		/*fabFilter.animate().translationY(-getResources().getDimension(R.dimen.standard_58));
 		fabSearch.animate().translationY(-getResources().getDimension(R.dimen.standard_108)).setListener(new Animator.AnimatorListener() {
 			@Override
 			public void onAnimationStart(Animator animation) {
@@ -239,24 +277,36 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		}).start();
-		searcBtnhUp = true;
+		searcBtnhUp = true;*/
 	}
 
 	private void closeFABMenu(){
 		isFABOpen=false;
-		fabFilter.animate().translationY(0);
+		/*fabFilter.animate().translationY(0);
 		fabSearch.animate().translationY(0);
-		searcBtnhUp = false;
+		searcBtnhUp = false;*/
 	}
 
 
 
 	private void refreshList(String typeFilter){
 		closeFABMenu();
+		filter = typeFilter;
 		adapter.clear();
-		movies = DAO.getInstance().readAll(MainActivity.this);
+		moviesByType = DAO.getInstance().readAll(MainActivity.this);
 
-		for (int i = 0; i < movies.size(); i++) {
+		for (AudiovisualInterface movie : moviesByType.get(typeFilter)) {
+			if (movie.getRating() == 0.0)
+				adapter.insert(new RowItem(1, movie.getImage(), movie.getTitulo(), (getResources().getString(R.string.anyo) + " " + movie.getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), movie.getTipo(), movie), adapter.getCount());
+			else
+				adapter.insert(new RowItem(1, movie.getImage(), movie.getTitulo(), (getResources().getString(R.string.anyo) + " " + movie.getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movie.getRating()), movie.getTipo(), movie), adapter.getCount());
+		}
+
+		tabLayout.getTabAt(0).setText(getString(R.string.FilterAll) + " (" + moviesByType.get(FILTER_ALL).size() + ")");
+		tabLayout.getTabAt(1).setText(getString(R.string.FilterMovie) + " (" + moviesByType.get(FILTER_MOVIE).size() + ")");
+		tabLayout.getTabAt(2).setText(getString(R.string.FilterTVShow) + " (" + moviesByType.get(FILTER_TVSHOW).size() + ")");
+
+		/*for (int i = 0; i < movies.size(); i++) {
 			if( typeFilter == FILTER_ALL || (typeFilter == FILTER_MOVIE && movies.get(i).getTipo() == null) || (movies.get(i).getTipo() != null && movies.get(i).getTipo().equalsIgnoreCase(typeFilter)) ) {
 				if (movies.get(i).getRating() == 0.0)
 					adapter.insert( new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), movies.get(i).getTipo(), movies.get(i)), adapter.getCount());
@@ -264,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
 					adapter.insert( new RowItem(1, movies.get(i).getImage(), movies.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + movies.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + movies.get(i).getRating()), movies.get(i).getTipo(), movies.get(i)), adapter.getCount());
 				//rowItems.add(item);
 			}
-		}
+		}*/
 
 		adapter.notifyDataSetChanged();
 
@@ -285,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-		if(movies.size() == 0) {
+		if(moviesByType.get(FILTER_ALL).size() == 0) {
 			firstTime = true;
 			showTutorialSearch();
 		} else {
@@ -294,7 +344,21 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void showTutorialSearch(){
-		new MaterialTapTargetPrompt.Builder(this)
+		if(firstTime) {
+			new MaterialTapTargetPrompt.Builder(MainActivity.this)
+					.setTarget(fabSearch)
+					.setPrimaryText(getResources().getString(R.string.SearchPrimaryText))
+					.setSecondaryText(getResources().getString(R.string.SearchSecondaryText))
+					//.setBackButtonDismissEnabled(false)
+					.setCaptureTouchEventOutsidePrompt(true)
+					.setCaptureTouchEventOutsidePrompt(true)
+					.setAutoDismiss(false)
+					.setClipToView(getWindow().getDecorView())
+					.setBackgroundColour(Color.parseColor("#009688"))
+					.show();
+		}
+
+		/*new MaterialTapTargetPrompt.Builder(this)
 				.setTarget(R.id.fab)
 				.setPrimaryText(getResources().getString(R.string.StartPrimaryText))
 				.setSecondaryText(getResources().getString(R.string.StartSecondaryText))
@@ -304,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
 				.setClipToView(getWindow().getDecorView())
 				.setAutoDismiss(false)
 				.setBackgroundColour(Color.parseColor("#009688"))
-				.show();
+				.show();*/
 	}
 
 	@Override
@@ -326,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == REQUEST_CODE_A) {
-			refreshList(FILTER_ALL);
+			refreshList(filter);
 		}
 	}
 

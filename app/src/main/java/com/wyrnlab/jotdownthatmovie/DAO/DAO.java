@@ -5,10 +5,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import com.wyrnlab.jotdownthatmovie.data.General;
 import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.api.search.Movies.Pelicula;
@@ -20,7 +23,7 @@ import com.wyrnlab.jotdownthatmovie.api.search.Movies.Pelicula;
 public class DAO {
 
     private static DAO instance = null;
-    private static Integer DatabaseVersion = 2;
+    private static Integer DatabaseVersion = 3;
 
     public static synchronized DAO getInstance(){
         if(instance == null)
@@ -79,8 +82,12 @@ public class DAO {
         db.close();
     }
 
-    public List<AudiovisualInterface> readAll(Context context){
-        List<AudiovisualInterface> result = new ArrayList<AudiovisualInterface>();
+    public Map<String, List<AudiovisualInterface>> readAll(Context context){
+        Map<String, List<AudiovisualInterface>> audiovisualByType = new HashMap<String, List<AudiovisualInterface>>();
+        audiovisualByType.put(General.ALL_TYPE, new ArrayList<AudiovisualInterface>());
+        audiovisualByType.put(General.MOVIE_TYPE, new ArrayList<AudiovisualInterface>());
+        audiovisualByType.put(General.TVSHOW_TYPE, new ArrayList<AudiovisualInterface>());
+
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
         SQLiteDatabase dba = usdbh.getWritableDatabase();
@@ -103,13 +110,15 @@ public class DAO {
                 pelicula.setRating(Double.parseDouble(c.getString(9)));
                 pelicula.setTipo(c.getString(10));
                 pelicula.setSeasons(c.getString(11));
-                result.add(pelicula);
+
+                audiovisualByType.get(pelicula.getTipo()).add(pelicula);
+                audiovisualByType.get(General.ALL_TYPE).add(pelicula);
             } while(c.moveToNext());
         }
 
         dba.close();
 
-        return result;
+        return audiovisualByType;
     }
 
     public boolean insert(Context context, AudiovisualInterface pelicula){
