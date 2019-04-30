@@ -38,22 +38,25 @@ public class PeliculasSQLiteHelper extends SQLiteOpenHelper {
 
         int version = versionAnterior;
 
-        switch (version) {
-            case 1:
-                // Version 2 added column for session feedback URL.
-                db.execSQL("ALTER TABLE Peliculas ADD COLUMN tipo TEXT");
-                db.execSQL("ALTER TABLE Peliculas ADD COLUMN emision TEXT");
-                db.execSQL("ALTER TABLE Peliculas ADD COLUMN temporadas TEXT");
-                db.execSQL("ALTER TABLE Peliculas ADD COLUMN capitulos TEXT");
-                version = 2;
+        if(version == 1) {
+            // Version 2 added column for session feedback URL.
+            db.execSQL("ALTER TABLE Peliculas ADD COLUMN tipo TEXT");
+            db.execSQL("ALTER TABLE Peliculas ADD COLUMN emision TEXT");
+            db.execSQL("ALTER TABLE Peliculas ADD COLUMN temporadas TEXT");
+            db.execSQL("ALTER TABLE Peliculas ADD COLUMN capitulos TEXT");
+            version = 2;
+        } if(version == 2) {
+            // Version 3, actualizar las versiones antiguas que no tuviesen tipo
+            db.execSQL("UPDATE Peliculas SET tipo = coalesce(tipo, \"Movie\")");
+            version = 3;
         }
 
-        if (version != 2) {
+        /*if (version != 2) {
              db.execSQL("DROP TABLE IF EXISTS Peliculas");
 
             // ... delete all your tables ...
 
             onCreate(db);
-        }
+        }*/
     }
 }
