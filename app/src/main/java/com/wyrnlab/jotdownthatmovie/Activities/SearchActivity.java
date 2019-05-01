@@ -183,11 +183,10 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 
 		if(result != null){
 			General.setSearchResults((List<AudiovisualInterface>) result);
+			// Analytics
+			SearchAnalytics analytics = new SearchAnalytics(this, textoABuscar, searchMode, ((List<AudiovisualInterface>) result).size());
+			MyUtils.execute(analytics);
 		}
-
-		// Analytics
-		SearchAnalytics analytics = new SearchAnalytics(this, textoABuscar, searchMode, ((List<AudiovisualInterface>) result).size());
-		MyUtils.execute(analytics);
 
 		if(result == null){
 			Toast toast = Toast.makeText(getApplicationContext(),
