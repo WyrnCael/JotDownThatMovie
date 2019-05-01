@@ -3,7 +3,9 @@ package com.wyrnlab.jotdownthatmovie.Activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wyrnlab.jotdownthatmovie.Analytics.SearchAnalytics;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.api.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.api.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
@@ -109,7 +111,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 		} else {
 			if(General.base_url == null){
 				SearchBaseUrl searchor = new SearchBaseUrl(this);
-				searchor.execute();
+				MyUtils.execute(searchor);
 			}
 
 		}
@@ -182,6 +184,10 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 		if(result != null){
 			General.setSearchResults((List<AudiovisualInterface>) result);
 		}
+
+		// Analytics
+		SearchAnalytics analytics = new SearchAnalytics(this, textoABuscar, searchMode, ((List<AudiovisualInterface>) result).size());
+		MyUtils.execute(analytics);
 
 		if(result == null){
 			Toast toast = Toast.makeText(getApplicationContext(),

@@ -15,6 +15,7 @@ import com.wyrnlab.jotdownthatmovie.R;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.data.General;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -45,7 +46,7 @@ public class GetVideoURL extends Activity{
         setContentView(R.layout.video_player);        
         
         SearchURLMovie searchorMovie = new SearchURLMovie(this);
-        searchorMovie.execute();
+		MyUtils.execute(searchorMovie);
 	}
 	
 	public void noEncontrada(){

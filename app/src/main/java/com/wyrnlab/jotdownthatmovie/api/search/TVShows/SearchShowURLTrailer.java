@@ -15,6 +15,7 @@ import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.data.General;
 import com.wyrnlab.jotdownthatmovie.data.SetTheLanguages;
@@ -23,7 +24,7 @@ import com.wyrnlab.jotdownthatmovie.data.SetTheLanguages;
  * Created by Jota on 04/03/2017.
  */
 
-public class SearchShowURLTrailer extends AsyncTask<String, Integer, String> {
+public abstract class SearchShowURLTrailer extends AsyncTask<String, Integer, String> implements ICallback {
 
     private HttpsURLConnection yc;
     Context context;
@@ -55,6 +56,7 @@ public class SearchShowURLTrailer extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String result)
     {
         super.onPostExecute(result);
+        onResponseReceived(trailerId);
     }
 
 
@@ -117,4 +119,6 @@ public class SearchShowURLTrailer extends AsyncTask<String, Integer, String> {
             }
         }
     }
+
+    public abstract void onResponseReceived(Object result);
 }
