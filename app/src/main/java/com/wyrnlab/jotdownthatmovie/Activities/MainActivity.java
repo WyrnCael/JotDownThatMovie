@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.fedorvlasov.lazylist.ImageLoader;
+import com.wyrnlab.jotdownthatmovie.Analytics.OpenApp;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
 import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.showTVShow.InfoTVShowDatabase;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.ReadExternalStorage;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.WriteExternalStorage;
 import com.wyrnlab.jotdownthatmovie.search.CustomListViewAdapter;
@@ -73,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+		OpenApp analytic = new OpenApp(this);
+		MyUtils.execute(analytic);
 
 		setContentView(R.layout.mostrar_peliculas);
 		moviesByType = DAO.getInstance().readAll(MainActivity.this);

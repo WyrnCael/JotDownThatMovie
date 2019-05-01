@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.wyrnlab.jotdownthatmovie.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.api.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.api.search.Movies.SearchInfoMovie;
@@ -132,12 +133,12 @@ public class SearchResultActivity extends AppCompatActivity implements
                 if(type.equalsIgnoreCase("Movie")) {
                     SearchInfoMovie searchorMovie = new SearchInfoMovie(this, selected.getId());
                     searchorMovie.delegate = SearchResultActivity.this;
-                    searchorMovie.execute();
+                    MyUtils.execute(searchorMovie);
 
                 } else {
                     SearchInfoShow searchorShow = new SearchInfoShow(this, selected.getId());
                     searchorShow.delegate = SearchResultActivity.this;
-                    searchorShow.execute();
+                    MyUtils.execute(searchorShow);
                 }
 
                 return true;

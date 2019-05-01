@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.fedorvlasov.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 
 import java.util.concurrent.ExecutionException;
@@ -61,7 +62,7 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 
         SearchInfoShow searchorShow = new SearchInfoShow(this, pelicula.getId());
 		searchorShow.delegate = this;
-		searchorShow.execute();
+		MyUtils.execute(searchorShow);
 
 		setContentView(R.layout.show_info);
 
@@ -129,29 +130,27 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
                 pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 pDialog.show();
 
-                SearchShowURLTrailer searchorShow = new SearchShowURLTrailer(InfoTVShowSearch.this, pelicula);
-                try {
-                    String trailerId = searchorShow.execute().get();
-                    if(trailerId == null){
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                getResources().getString(R.string.notAviableTrailer),
-                                Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-                        toast.show();
-                    }
-                    else {
-                        pDialog.dismiss();
-                        Intent intent =  new Intent(InfoTVShowSearch.this, YoutubeActivityView.class);
-                        intent.putExtra("TrailerId", trailerId);
-                        startActivityForResult(intent, 1);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } finally {
-                    pDialog.dismiss();
-                }
+				SearchShowURLTrailer searchorShow = new SearchShowURLTrailer(InfoTVShowSearch.this, pelicula) {
+					@Override
+					public void onResponseReceived(Object result) {
+						String trailerId = (String) result;
+						if(trailerId == null){
+							Toast toast = Toast.makeText(getApplicationContext(),
+									getResources().getString(R.string.notAviableTrailer),
+									Toast.LENGTH_SHORT);
+							toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+							toast.show();
+						}
+						else {
+							pDialog.dismiss();
+							Intent intent =  new Intent(InfoTVShowSearch.this, YoutubeActivityView.class);
+							intent.putExtra("TrailerId", trailerId);
+							startActivityForResult(intent, 1);
+						}
+						pDialog.dismiss();
+					}
+				};
+				MyUtils.execute(searchorShow);
             }
        });
 
