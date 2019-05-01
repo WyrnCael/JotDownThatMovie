@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fedorvlasov.lazylist.ImageLoader;
+import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.mostrarPelicula.InfoMovieShared;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.R;
@@ -148,33 +149,40 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         botonTrailer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pDialog = new ProgressDialog(InfoTVShowShared.this);
-                pDialog.setMessage(getResources().getString(R.string.searching));
-                pDialog.setCancelable(true);
-                pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                pDialog.show();
+                if(!CheckInternetConection.isConnectingToInternet(InfoTVShowShared.this)){
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.not_internet),
+                            Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
+                } else {
+                    pDialog = new ProgressDialog(InfoTVShowShared.this);
+                    pDialog.setMessage(getResources().getString(R.string.searching));
+                    pDialog.setCancelable(true);
+                    pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    pDialog.show();
 
-                SearchShowURLTrailer searchorShow = new SearchShowURLTrailer(InfoTVShowShared.this, pelicula) {
-                    @Override
-                    public void onResponseReceived(Object result) {
-                        String trailerId = (String) result;
-                        if(trailerId == null){
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.notAviableTrailer),
-                                    Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-                            toast.show();
-                        }
-                        else {
+                    SearchShowURLTrailer searchorShow = new SearchShowURLTrailer(InfoTVShowShared.this, pelicula) {
+                        @Override
+                        public void onResponseReceived(Object result) {
+                            String trailerId = (String) result;
+                            if (trailerId == null) {
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        getResources().getString(R.string.notAviableTrailer),
+                                        Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                toast.show();
+                            } else {
+                                pDialog.dismiss();
+                                Intent intent = new Intent(InfoTVShowShared.this, YoutubeActivityView.class);
+                                intent.putExtra("TrailerId", trailerId);
+                                startActivityForResult(intent, 1);
+                            }
                             pDialog.dismiss();
-                            Intent intent =  new Intent(InfoTVShowShared.this, YoutubeActivityView.class);
-                            intent.putExtra("TrailerId", trailerId);
-                            startActivityForResult(intent, 1);
                         }
-                        pDialog.dismiss();
-                    }
-                };
-                MyUtils.execute(searchorShow);
+                    };
+                    MyUtils.execute(searchorShow);
+                }
             }
         });
     }

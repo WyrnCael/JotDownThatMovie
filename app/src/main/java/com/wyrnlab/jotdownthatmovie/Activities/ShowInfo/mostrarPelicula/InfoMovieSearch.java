@@ -7,6 +7,7 @@ import com.fedorvlasov.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.api.search.Movies.SearchMovieURLTrailer;
+import com.wyrnlab.jotdownthatmovie.search.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 
 import com.wyrnlab.jotdownthatmovie.api.search.AsyncResponse;
@@ -126,33 +127,40 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         botonTrailer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                pDialog = new ProgressDialog(InfoMovieSearch.this);
-                pDialog.setMessage(getResources().getString(R.string.searching));
-                pDialog.setCancelable(true);
-                pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                pDialog.show();
+				if(!CheckInternetConection.isConnectingToInternet(InfoMovieSearch.this)){
+					Toast toast = Toast.makeText(getApplicationContext(),
+							getResources().getString(R.string.not_internet),
+							Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+					toast.show();
+				} else {
+					pDialog = new ProgressDialog(InfoMovieSearch.this);
+					pDialog.setMessage(getResources().getString(R.string.searching));
+					pDialog.setCancelable(true);
+					pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+					pDialog.show();
 
-				SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieSearch.this, pelicula) {
-					@Override
-					public void onResponseReceived(Object result) {
-						String trailerId = (String) result;
-						if(trailerId == null){
-							Toast toast = Toast.makeText(getApplicationContext(),
-									getResources().getString(R.string.notAviableTrailer),
-									Toast.LENGTH_SHORT);
-							toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-							toast.show();
-						}
-						else {
+					SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieSearch.this, pelicula) {
+						@Override
+						public void onResponseReceived(Object result) {
+							String trailerId = (String) result;
+							if (trailerId == null) {
+								Toast toast = Toast.makeText(getApplicationContext(),
+										getResources().getString(R.string.notAviableTrailer),
+										Toast.LENGTH_SHORT);
+								toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+								toast.show();
+							} else {
+								pDialog.dismiss();
+								Intent intent = new Intent(InfoMovieSearch.this, YoutubeActivityView.class);
+								intent.putExtra("TrailerId", trailerId);
+								startActivityForResult(intent, 1);
+							}
 							pDialog.dismiss();
-							Intent intent =  new Intent(InfoMovieSearch.this, YoutubeActivityView.class);
-							intent.putExtra("TrailerId", trailerId);
-							startActivityForResult(intent, 1);
 						}
-						pDialog.dismiss();
-					}
-				};
-				MyUtils.execute(searchorMovie);
+					};
+					MyUtils.execute(searchorMovie);
+				}
 			}
        });
 

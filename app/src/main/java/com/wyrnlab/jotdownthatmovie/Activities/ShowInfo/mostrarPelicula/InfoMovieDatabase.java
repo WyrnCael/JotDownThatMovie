@@ -4,6 +4,7 @@ import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.images.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.api.search.Movies.SearchMovieURLTrailer;
+import com.wyrnlab.jotdownthatmovie.search.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.video.YoutubeApi.YoutubeActivityView;
 import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
@@ -100,34 +101,40 @@ public class InfoMovieDatabase extends AppCompatActivity {
         botonTrailer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!CheckInternetConection.isConnectingToInternet(InfoMovieDatabase.this)) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.not_internet),
+                            Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
+                } else {
+                    pDialog = new ProgressDialog(InfoMovieDatabase.this);
+                    pDialog.setMessage(getResources().getString(R.string.searching));
+                    pDialog.setCancelable(true);
+                    pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    pDialog.show();
 
-            pDialog = new ProgressDialog(InfoMovieDatabase.this);
-            pDialog.setMessage(getResources().getString(R.string.searching));
-            pDialog.setCancelable(true);
-            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pDialog.show();
-
-            SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieDatabase.this, pelicula) {
+                    SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieDatabase.this, pelicula) {
                         @Override
                         public void onResponseReceived(Object result) {
                             String trailerId = (String) result;
-                            if(trailerId == null){
+                            if (trailerId == null) {
                                 Toast toast = Toast.makeText(getApplicationContext(),
                                         getResources().getString(R.string.notAviableTrailer),
                                         Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+                                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                                 toast.show();
-                            }
-                            else {
+                            } else {
                                 pDialog.dismiss();
-                                Intent intent =  new Intent(InfoMovieDatabase.this, YoutubeActivityView.class);
+                                Intent intent = new Intent(InfoMovieDatabase.this, YoutubeActivityView.class);
                                 intent.putExtra("TrailerId", trailerId);
                                 startActivityForResult(intent, 1);
                             }
                             pDialog.dismiss();
                         }
                     };
-                MyUtils.execute(searchorMovie);
+                    MyUtils.execute(searchorMovie);
+                }
             }
         });
 
