@@ -132,6 +132,7 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
                 tvShow.setRating(results.get("vote_average").asDouble());
                 tvShow.setTipo("Show");
                 this.shows.add(tvShow);
+                tvShow.setSource(General.NET_SOURCE);
             }
         } else {
             this.shows = null;

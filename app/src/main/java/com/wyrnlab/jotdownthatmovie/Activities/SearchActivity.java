@@ -11,7 +11,6 @@ import com.wyrnlab.jotdownthatmovie.api.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.data.General;
 
-import com.wyrnlab.jotdownthatmovie.search.SearchResultActivity;
 import com.wyrnlab.jotdownthatmovie.search.CheckInternetConection;
 
 import android.Manifest;

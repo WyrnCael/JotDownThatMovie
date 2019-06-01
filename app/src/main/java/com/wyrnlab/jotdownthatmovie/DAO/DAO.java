@@ -56,6 +56,7 @@ public class DAO {
                 pelicula.setRating(Double.parseDouble(c.getString(9)));
                 pelicula.setTipo(c.getString(10));
                 pelicula.setSeasons(c.getString(11));
+                pelicula.setSource(General.DB_SOURCE);
             } while(c.moveToNext());
         }
 
@@ -110,6 +111,7 @@ public class DAO {
                 pelicula.setRating(Double.parseDouble(c.getString(9)));
                 pelicula.setTipo(c.getString(10));
                 pelicula.setSeasons(c.getString(11));
+                pelicula.setSource(General.DB_SOURCE);
 
                 audiovisualByType.get(pelicula.getTipo()).add(pelicula);
                 audiovisualByType.get(General.ALL_TYPE).add(pelicula);

@@ -165,6 +165,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
         }
         tvShow.setSeasons(String.valueOf(info.get("number_of_seasons").asInt()));
         tvShow.setTipo("Show");
+        tvShow.setSource(General.NET_SOURCE);
     }
 
     private void getCreditsTVShow() throws IOException{
