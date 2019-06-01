@@ -1,10 +1,10 @@
-package com.wyrnlab.jotdownthatmovie.search;
+package com.wyrnlab.jotdownthatmovie.Activities;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wyrnlab.jotdownthatmovie.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.MovieRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.api.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
@@ -14,29 +14,30 @@ import com.wyrnlab.jotdownthatmovie.data.General;
 import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.showTVShow.InfoTVShowSearch;
+import com.wyrnlab.jotdownthatmovie.search.RowItem;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class SearchResultActivity extends AppCompatActivity implements
-        OnItemClickListener, AsyncResponse {
- 
-		ListView listView;
-        String type;
-		List<RowItem> rowItems;
-		List<AudiovisualInterface> results;
-		CustomListViewAdapter adapter;
-		final int REQUEST_CODE_PELIBUSCADA = 5;
+        AsyncResponse {
+
+    RecyclerView listView;
+    String type;
+    List<RowItem> rowItems;
+    List<AudiovisualInterface> results;
+    MovieRecyclerViewAdapter adapter;
  
     /** Called when the activity is first created. */
     @Override
@@ -52,29 +53,21 @@ public class SearchResultActivity extends AppCompatActivity implements
 
         results = (List<AudiovisualInterface>) General.getsSarchResults();
     	rowItems = new ArrayList<RowItem>();
-        for (int i = 0; i < results.size(); i++) {
-        	// Insertar imagen
-			String img = General.base_url + "w92" +  results.get(i).getImagePath();
-            RowItem item;
-
-        	if(results.get(i).getRating() == 0.0)
-        		item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + getResources().getString(R.string.notavailable)), results.get(i).getTipo(), results.get(i) );
-			else
-				item = new RowItem(1, img, results.get(i).getTitulo(), (getResources().getString(R.string.anyo) + " " + results.get(i).getAnyo() + " " + getResources().getString(R.string.valoracion) + " " + results.get(i).getRating()), results.get(i).getTipo(), results.get(i) );
-            rowItems.add(item);
+        for (AudiovisualInterface movie : results) {
+        	rowItems.add(new RowItem(SearchResultActivity.this, movie));
         }
         
  
-        listView = (ListView) findViewById(R.id.list);
-        adapter = new CustomListViewAdapter(this,
+        listView = (RecyclerView) findViewById(R.id.list);
+        adapter = new MovieRecyclerViewAdapter(this,
         		R.layout.list_item, rowItems);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        listView.setLayoutManager(new LinearLayoutManager(this));
         registerForContextMenu(listView);
 
     }
  
-    @Override
+    /*@Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
             long id) {
 
@@ -87,15 +80,15 @@ public class SearchResultActivity extends AppCompatActivity implements
         }
         intent.putExtra("Pelicula", this.results.get(position));
         intent.putExtra("Type", type);
-        startActivityForResult(intent, REQUEST_CODE_PELIBUSCADA);
+        startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
         
         // finish();
-    }
+    }*/
     
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    switch(requestCode) {
-	        case REQUEST_CODE_PELIBUSCADA:
+	        case General.REQUEST_CODE_PELIBUSCADA:
 	        	if(resultCode == Activity.RESULT_OK){
 	        		setResult(Activity.RESULT_OK);
 	        		finish();
@@ -116,7 +109,7 @@ public class SearchResultActivity extends AppCompatActivity implements
                 (AdapterView.AdapterContextMenuInfo)menuInfo;
 
         // Si no es añadir
-        menu.setHeaderTitle(listView.getAdapter().getItem(info.position).toString());
+        rowItems.get(info.position).toString();
         inflater.inflate(R.menu.menu_pelicula_busqueda, menu);
     }
 
