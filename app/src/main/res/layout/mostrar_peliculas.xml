@@ -27,7 +27,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/mainListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

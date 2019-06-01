@@ -165,6 +165,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
         }
 
         pelicula.setTipo("Movie");
+        pelicula.setSource(General.NET_SOURCE);
     }
 
     private void getCreditsPelicula() throws IOException{

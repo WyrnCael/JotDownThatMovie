@@ -132,6 +132,7 @@ public class Search extends AsyncTask<String, Integer, List<Pelicula>> {
                 }
                 pelicula.setRating(results.get("vote_average").asDouble());
                 pelicula.setTipo("Movie");
+                pelicula.setSource(General.NET_SOURCE);
                 this.peliculas.add(pelicula);
             }
         } else {

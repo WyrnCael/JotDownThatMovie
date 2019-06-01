@@ -39,7 +39,7 @@
         </activity>
         
         <activity
-            android:name=".search.SearchResultActivity"
+            android:name=".Activities.SearchResultActivity"
             android:label="@string/title_activity_results">
         </activity>
 

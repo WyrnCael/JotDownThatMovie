@@ -18,15 +18,15 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
+public class CustomListViewAdapterDEPRECATED extends ArrayAdapter<RowItem> {
  
 	Context context;
 	List<RowItem> items;
     ViewHolder holder;
     ImageLoader imageLoader;
  
-    public CustomListViewAdapter(Context context, int resourceId,
-            List<RowItem> items) {
+    public CustomListViewAdapterDEPRECATED(Context context, int resourceId,
+                                           List<RowItem> items) {
         super(context, resourceId, items);
         this.context = context;
         this.items = items;
