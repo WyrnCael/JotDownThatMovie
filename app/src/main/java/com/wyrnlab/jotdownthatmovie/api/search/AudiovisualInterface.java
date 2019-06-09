@@ -24,11 +24,11 @@ public abstract class AudiovisualInterface implements Serializable {
     }
 
     public void setSource(String source) {
-        this.source = source;
+        this.source = source == null ? "" : source;
     }
 
     public void setGeneros(List<String> generos) {
-        Generos = generos;
+        Generos = generos == null ? new ArrayList<String>() : generos;
     }
 
     public String getSeasons() {
@@ -36,7 +36,7 @@ public abstract class AudiovisualInterface implements Serializable {
     }
 
     public void setSeasons(String seasons) {
-        Seasons = seasons;
+        Seasons = seasons == null ? "" : seasons;
     }
 
     public String getTipo() {
@@ -44,7 +44,7 @@ public abstract class AudiovisualInterface implements Serializable {
     }
 
     public void setTipo(String tipo) {
-        Tipo = tipo;
+        Tipo = tipo == null ? "" : tipo;
     }
 
     public AudiovisualInterface(){
@@ -61,23 +61,23 @@ public abstract class AudiovisualInterface implements Serializable {
     }
 
     public void setTitulo(String nombre){
-        this.Titulo = nombre;
+        this.Titulo = nombre == null ? "" : nombre;
     }
 
     public void setTituloOriginal(String nombre){
-        this.TituloOriginal = nombre;
+        this.TituloOriginal = nombre == null ? "" : nombre;
     }
 
     public void setImagePath(String imgp){
-        this.Image_path = imgp;
+        this.Image_path = imgp == null ? "" : imgp;
     }
 
     public void setAnyo(String an){
-        this.Anyo = an;
+        this.Anyo = an == null ? "" : an;
     }
 
     public void setDescripcion(String desc){
-        this.Descripcion = desc;
+        this.Descripcion = desc == null ? "" : desc;
     }
 
     public void addGeneros(String genero){

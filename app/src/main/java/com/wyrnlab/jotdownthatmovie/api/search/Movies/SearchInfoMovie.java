@@ -35,6 +35,7 @@ import com.wyrnlab.jotdownthatmovie.data.SetTheLanguages;
 public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
 
     public AsyncResponse delegate = null;
+    public int position;
     private HttpsURLConnection yc;
     Context context;
     ProgressDialog pDialog;
@@ -77,7 +78,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
     {
         super.onPostExecute(result);
         pDialog.dismiss();
-        delegate.processFinish(result);
+        delegate.processFinish(result, position);
     }
 
 
@@ -144,6 +145,8 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
                 anyo = "N/D";
             }
             pelicula.setAnyo(anyo);
+        } else {
+            pelicula.setAnyo("N/D");
         }
         if (info.get("poster_path").isString()) {
             pelicula.setImagePath(info.get("poster_path").asString());

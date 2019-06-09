@@ -5,5 +5,5 @@ package com.wyrnlab.jotdownthatmovie.api.search;
  */
 
 public interface AsyncResponse {
-    void processFinish(Object result);
+    void processFinish(Object result, int position);
 }
