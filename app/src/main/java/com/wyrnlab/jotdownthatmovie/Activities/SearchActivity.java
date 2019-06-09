@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.wyrnlab.jotdownthatmovie.Analytics.SearchAnalytics;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.AdapterCallback;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.api.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.api.search.AsyncResponse;
@@ -12,6 +13,7 @@ import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.data.General;
 
 import com.wyrnlab.jotdownthatmovie.search.CheckInternetConection;
+import com.wyrnlab.jotdownthatmovie.search.RowItem;
 
 import android.Manifest;
 import android.app.Activity;
