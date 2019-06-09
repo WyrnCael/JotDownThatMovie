@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.AdapterCallback;
 import com.wyrnlab.jotdownthatmovie.Recyclerviews.MovieRecyclerViewAdapter;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.RecyclerViewClickListener;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.api.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
@@ -31,13 +33,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class SearchResultActivity extends AppCompatActivity implements
-        AsyncResponse {
+        AsyncResponse, AdapterCallback, RecyclerViewClickListener {
 
     RecyclerView listView;
     String type;
     List<RowItem> rowItems;
     List<AudiovisualInterface> results;
     MovieRecyclerViewAdapter adapter;
+    int longClickPosition;
  
     /** Called when the activity is first created. */
     @Override
@@ -60,7 +63,7 @@ public class SearchResultActivity extends AppCompatActivity implements
  
         listView = (RecyclerView) findViewById(R.id.list);
         adapter = new MovieRecyclerViewAdapter(this,
-        		R.layout.list_item, rowItems);
+        		R.layout.list_item, rowItems, this);
         listView.setAdapter(adapter);
         listView.setLayoutManager(new LinearLayoutManager(this));
         registerForContextMenu(listView);
@@ -98,30 +101,21 @@ public class SearchResultActivity extends AppCompatActivity implements
 	}
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo)
-    {
+    public void recylerViewCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo, int position) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         MenuInflater inflater = getMenuInflater();
 
-        AdapterView.AdapterContextMenuInfo info =
-                (AdapterView.AdapterContextMenuInfo)menuInfo;
-
-        // Si no es añadir
-        rowItems.get(info.position).toString();
+        rowItems.get(position).toString();
         inflater.inflate(R.menu.menu_pelicula_busqueda, menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
-        AdapterView.AdapterContextMenuInfo info =
-                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
         switch (item.getItemId()) {
             case R.id.CtxAdd:
-                AudiovisualInterface selected = General.getsSarchResults().get(info.position);
+                AudiovisualInterface selected = General.getsSarchResults().get(longClickPosition);
 
                 if(type.equalsIgnoreCase("Movie")) {
                     SearchInfoMovie searchorMovie = new SearchInfoMovie(this, selected.getId());
@@ -162,5 +156,30 @@ public class SearchResultActivity extends AppCompatActivity implements
                 return super.onOptionsItemSelected(item);
         }
     }
-    
+
+    @Override
+    public void removeCallback(int position) {
+
+    }
+
+    @Override
+    public void recyclerViewListClicked(View v, int position) {
+        AudiovisualInterface pelicula = (AudiovisualInterface) ((RowItem)rowItems.get(position)).getObject();
+
+        Intent intent;
+        if(pelicula.getTipo().equalsIgnoreCase(General.MOVIE_TYPE)) {
+            intent = new Intent(SearchResultActivity.this, InfoMovieSearch.class);
+
+        } else {
+            intent = new Intent(SearchResultActivity.this, InfoTVShowSearch.class);
+        }
+        intent.putExtra("Pelicula", pelicula);
+        intent.putExtra("Type", pelicula.getTipo());
+        startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
+    }
+
+    @Override
+    public void recyclerViewListLongClicked(View v, int position) {
+        longClickPosition = position;
+    }
 }

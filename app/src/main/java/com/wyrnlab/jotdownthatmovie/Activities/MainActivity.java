@@ -5,15 +5,23 @@ import java.util.List;
 import java.util.Map;
 
 import com.fedorvlasov.lazylist.ImageLoader;
+import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
+import com.wyrnlab.jotdownthatmovie.Activities.ShowInfo.showTVShow.InfoTVShowDatabase;
 import com.wyrnlab.jotdownthatmovie.Analytics.OpenApp;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.AdapterCallback;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemDecorationHelper;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemTouchHelper;
 import com.wyrnlab.jotdownthatmovie.Recyclerviews.MovieRecyclerViewAdapter;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.RecyclerViewClickListener;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.data.General;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.ReadExternalStorage;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.WriteExternalStorage;
 import com.wyrnlab.jotdownthatmovie.search.RowItem;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.content.Intent;
@@ -22,6 +30,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -36,7 +45,7 @@ import android.view.View;
 import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewClickListener, AdapterCallback {
 
 	public final static int REQUEST_CODE_A = 1;
 	FloatingActionButton fab;
@@ -44,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 	FloatingActionButton fabSearch;
 	Boolean isFABOpen = false;
 	private Map<String, List<AudiovisualInterface>> moviesByType;
-	RecyclerView listView;
+	public RecyclerView listView;
 	List<RowItem> rowItems;
 	private static String FILTER_ALL = "All";
 	private static String FILTER_MOVIE = "Movie";
@@ -55,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 	Boolean searcBtnhUp = false;
 	MovieRecyclerViewAdapter adapter;
 	TabLayout tabLayout;
+	private int longClickPosition;
 
 
 	@Override
@@ -81,10 +91,16 @@ public class MainActivity extends AppCompatActivity {
 		//Localizar los controles
 		listView = (RecyclerView) findViewById( R.id.mainListView );
 		rowItems = new ArrayList<RowItem>();
-		adapter = new MovieRecyclerViewAdapter(this, R.layout.list_item, rowItems);
+		adapter = new MovieRecyclerViewAdapter(this, R.layout.list_item, rowItems, this);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 		registerForContextMenu(listView);
+
+		//Swipe
+		ItemTouchHelper simpleItemTouchCallback = new ItemTouchHelper(0, android.support.v7.widget.helper.ItemTouchHelper.LEFT, MainActivity.this);
+		android.support.v7.widget.helper.ItemTouchHelper mItemTouchHelper = new android.support.v7.widget.helper.ItemTouchHelper(simpleItemTouchCallback);
+		mItemTouchHelper.attachToRecyclerView(listView);
+		listView.addItemDecoration(new ItemDecorationHelper());
 
 		// TabLayout
 		tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -161,18 +177,23 @@ public class MainActivity extends AppCompatActivity {
 	private void refreshList(String typeFilter){
 		closeFABMenu();
 		filter = typeFilter;
+
 		adapter.clear();
+		listView.setAdapter(null);
+
+		adapter = new MovieRecyclerViewAdapter(this, R.layout.list_item, rowItems, this);
+		listView.setAdapter(adapter);
+		listView.setLayoutManager(new LinearLayoutManager(this));
+
 		moviesByType = DAO.getInstance().readAll(MainActivity.this);
 
 		for (AudiovisualInterface movie : moviesByType.get(typeFilter)) {
 			rowItems.add(new RowItem(MainActivity.this, movie));
 		}
 
-
-		tabLayout.getTabAt(0).setText(getString(R.string.FilterAll) + " (" + moviesByType.get(FILTER_ALL).size() + ")");
-		tabLayout.getTabAt(1).setText(getString(R.string.FilterMovie) + " (" + moviesByType.get(FILTER_MOVIE).size() + ")");
-		tabLayout.getTabAt(2).setText(getString(R.string.FilterTVShow) + " (" + moviesByType.get(FILTER_TVSHOW).size() + ")");
 		adapter.notifyDataSetChanged();
+
+		refreshTabs();
 
 		if(moviesByType.get(FILTER_ALL).size() == 0) {
 			firstTime = true;
@@ -180,6 +201,12 @@ public class MainActivity extends AppCompatActivity {
 		} else {
 			firstTime = false;
 		}
+	}
+
+	public void refreshTabs(){
+		tabLayout.getTabAt(0).setText(getString(R.string.FilterAll) + " (" + moviesByType.get(FILTER_ALL).size() + ")");
+		tabLayout.getTabAt(1).setText(getString(R.string.FilterMovie) + " (" + moviesByType.get(FILTER_MOVIE).size() + ")");
+		tabLayout.getTabAt(2).setText(getString(R.string.FilterTVShow) + " (" + moviesByType.get(FILTER_TVSHOW).size() + ")");
 	}
 
 	public void showTutorialSearch(){
@@ -202,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 									ContextMenuInfo menuInfo)
 	{
-		super.onCreateContextMenu(menu, v, menuInfo);
+		/*super.onCreateContextMenu(menu, v, menuInfo);
 
 		MenuInflater inflater = getMenuInflater();
 
@@ -211,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
 
 		// Si no es añadir
 		menu.setHeaderTitle(rowItems.get(info.position).toString());
-		inflater.inflate(R.menu.menu_pelicula_lista, menu);
+		inflater.inflate(R.menu.menu_pelicula_lista, menu);*/
 	}
 
 	@Override
@@ -219,12 +246,6 @@ public class MainActivity extends AppCompatActivity {
 		if(requestCode == REQUEST_CODE_A) {
 			refreshList(filter);
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
 	}
 
 	@Override
@@ -259,23 +280,31 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 
-		AdapterContextMenuInfo info =
-				(AdapterContextMenuInfo) item.getMenuInfo();
-
 		switch (item.getItemId()) {
 			case R.id.CtxLstOpc2:
-				AudiovisualInterface selected = (AudiovisualInterface) ((RowItem)rowItems.get(info.position)).getObject();
-
-				DAO.getInstance().delete(MainActivity.this, selected.getTitulo(), selected.getAnyo());
-
-				Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + selected.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
-
-				refreshList(filter);
+				removeItemFromList(longClickPosition);
 
 				return true;
 			default:
 				return super.onContextItemSelected(item);
 		}
+	}
+
+	public void removeItemFromList(int position){
+
+		AudiovisualInterface selected = (AudiovisualInterface) ((RowItem)rowItems.get(position)).getObject();
+		DAO.getInstance().delete(MainActivity.this, selected.getTitulo(), selected.getAnyo());
+
+		Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + selected.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
+
+		adapter.remove(position);
+		moviesByType.get(selected.getTipo()).remove(selected);
+		moviesByType.get(FILTER_ALL).remove(selected);
+		refreshTabs();
+
+		adapter.notifyItemRemoved(position);
+
+		refreshTabs();
 	}
 
 	@Override
@@ -299,5 +328,40 @@ public class MainActivity extends AppCompatActivity {
 		}else{
 			closeFABMenu();
 		}
+	}
+
+	@Override
+	public void recyclerViewListLongClicked(View v, int position) {
+		longClickPosition = position;
+	}
+
+	@Override
+	public void recylerViewCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo, int position) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		MenuInflater inflater = getMenuInflater();
+
+		menu.setHeaderTitle(rowItems.get(position).toString());
+		inflater.inflate(R.menu.menu_pelicula_lista, menu);
+	}
+
+	@Override
+	public void recyclerViewListClicked(View v, int position) {
+
+		AudiovisualInterface pelicula = (AudiovisualInterface) ((RowItem)rowItems.get(position)).getObject();
+
+		Intent intent;
+		if(pelicula.getTipo() == null || pelicula.getTipo().equalsIgnoreCase(General.MOVIE_TYPE)){
+			intent =  new Intent(MainActivity.this, InfoMovieDatabase.class);
+		} else {
+			intent =  new Intent(MainActivity.this, InfoTVShowDatabase.class);
+		}
+		intent.putExtra("Pelicula", pelicula);
+		startActivityForResult(intent, REQUEST_CODE_A);
+	}
+
+	@Override
+	public void removeCallback(int position) {
+		removeItemFromList(position);
 	}
 }

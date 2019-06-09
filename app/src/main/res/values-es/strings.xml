@@ -48,6 +48,7 @@
     <string name="StartSecondaryText">Empieza pulsando aquí</string>
     <string name="SearchPrimaryText">Busca algo</string>
     <string name="SearchSecondaryText">Busca una película o una serie</string>
+    <string name="button_undo">Deshacer</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>
