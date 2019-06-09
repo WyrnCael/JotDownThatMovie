@@ -124,6 +124,8 @@ public class Search extends AsyncTask<String, Integer, List<Pelicula>> {
                         anyo = "N/D";
                     }
                     pelicula.setAnyo(anyo);
+                } else {
+                    pelicula.setAnyo("N/D");
                 }
                 if (results.get("poster_path").isString()) {
                     pelicula.setImagePath(results.get("poster_path").asString());
@@ -158,7 +160,7 @@ public class Search extends AsyncTask<String, Integer, List<Pelicula>> {
     {
         pDialog.dismiss();
         super.onPostExecute(result);
-        delegate.processFinish(result);
+        delegate.processFinish(result, 0);
     }
 
 

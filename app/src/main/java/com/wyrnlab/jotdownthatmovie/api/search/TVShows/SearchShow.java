@@ -123,6 +123,8 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
                         anyo = "N/D";
                     }
                     tvShow.setAnyo(anyo);
+                } else {
+                    tvShow.setAnyo("N/D");
                 }
                 if (results.get("poster_path").isString()) {
                     tvShow.setImagePath(results.get("poster_path").asString());
@@ -157,7 +159,7 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
     {
         pDialog.dismiss();
         super.onPostExecute(result);
-        delegate.processFinish(result);
+        delegate.processFinish(result, 0);
     }
 
 

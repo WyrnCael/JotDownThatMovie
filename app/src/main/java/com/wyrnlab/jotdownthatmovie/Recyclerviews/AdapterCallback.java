@@ -6,5 +6,5 @@ import com.wyrnlab.jotdownthatmovie.search.RowItem;
 import java.util.List;
 
 public interface AdapterCallback  {
-    public void removeCallback(int position);
+    public void swipeCallback(int position);
 }

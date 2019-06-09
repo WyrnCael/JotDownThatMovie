@@ -178,7 +178,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 
 	//this override the implemented method from asyncTask
 	@Override
-	public void processFinish(Object result){
+	public void processFinish(Object result, int position){
 		this.pelicula = (AudiovisualInterface) result;
 		actualiza();
 	}

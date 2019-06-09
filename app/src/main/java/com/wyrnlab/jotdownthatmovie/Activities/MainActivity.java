@@ -11,8 +11,8 @@ import com.wyrnlab.jotdownthatmovie.Analytics.OpenApp;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Recyclerviews.AdapterCallback;
-import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemDecorationHelper;
-import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemTouchHelper;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemDecorationRemoveHelper;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemTouchRemoveHelper;
 import com.wyrnlab.jotdownthatmovie.Recyclerviews.MovieRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.Recyclerviews.RecyclerViewClickListener;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
@@ -21,7 +21,6 @@ import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.ReadExternalStorage;
 import com.wyrnlab.jotdownthatmovie.permisionsexecutiontime.WriteExternalStorage;
 import com.wyrnlab.jotdownthatmovie.search.RowItem;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.content.Intent;
@@ -30,15 +29,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Toast;
 import android.view.View;
 
@@ -97,10 +92,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		registerForContextMenu(listView);
 
 		//Swipe
-		ItemTouchHelper simpleItemTouchCallback = new ItemTouchHelper(0, android.support.v7.widget.helper.ItemTouchHelper.LEFT, MainActivity.this);
+		ItemTouchRemoveHelper simpleItemTouchCallback = new ItemTouchRemoveHelper(0, android.support.v7.widget.helper.ItemTouchHelper.LEFT, MainActivity.this);
 		android.support.v7.widget.helper.ItemTouchHelper mItemTouchHelper = new android.support.v7.widget.helper.ItemTouchHelper(simpleItemTouchCallback);
 		mItemTouchHelper.attachToRecyclerView(listView);
-		listView.addItemDecoration(new ItemDecorationHelper());
+		listView.addItemDecoration(new ItemDecorationRemoveHelper());
 
 		// TabLayout
 		tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -302,8 +297,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		moviesByType.get(FILTER_ALL).remove(selected);
 		refreshTabs();
 
-		adapter.notifyItemRemoved(position);
-
 		refreshTabs();
 	}
 
@@ -361,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	}
 
 	@Override
-	public void removeCallback(int position) {
+	public void swipeCallback(int position) {
 		removeItemFromList(position);
 	}
 }

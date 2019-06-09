@@ -1,5 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.Recyclerviews;
 
+import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -7,12 +9,19 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class ItemDecorationHelper extends RecyclerView.ItemDecoration {
+import com.wyrnlab.jotdownthatmovie.R;
+
+public class ItemDecorationAddHelper extends RecyclerView.ItemDecoration {
     Drawable background;
     boolean initiated;
+    Activity context;
+
+    public ItemDecorationAddHelper(Activity context){
+        this.context = context;
+    }
 
     private void init() {
-        background = new ColorDrawable(Color.RED);
+        background = new ColorDrawable(context.getResources().getColor(R.color.verde));
         initiated = true;
     }
 
