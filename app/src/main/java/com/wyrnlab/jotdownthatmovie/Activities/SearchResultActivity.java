@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.Recyclerviews.AdapterCallback;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemDecorationAddHelper;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemDecorationRemoveHelper;
+import com.wyrnlab.jotdownthatmovie.Recyclerviews.ItemTouchAddHelper;
 import com.wyrnlab.jotdownthatmovie.Recyclerviews.MovieRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.Recyclerviews.RecyclerViewClickListener;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
@@ -28,14 +31,12 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class SearchResultActivity extends AppCompatActivity implements
         AsyncResponse, AdapterCallback, RecyclerViewClickListener {
 
-    RecyclerView listView;
+    public RecyclerView listView;
     String type;
     List<RowItem> rowItems;
     List<AudiovisualInterface> results;
@@ -67,6 +68,12 @@ public class SearchResultActivity extends AppCompatActivity implements
         listView.setAdapter(adapter);
         listView.setLayoutManager(new LinearLayoutManager(this));
         registerForContextMenu(listView);
+
+        //Swipe
+        ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, android.support.v7.widget.helper.ItemTouchHelper.LEFT, SearchResultActivity.this);
+        android.support.v7.widget.helper.ItemTouchHelper mItemTouchHelper = new android.support.v7.widget.helper.ItemTouchHelper(simpleItemTouchCallback);
+        mItemTouchHelper.attachToRecyclerView(listView);
+        listView.addItemDecoration(new ItemDecorationAddHelper(SearchResultActivity.this));
 
     }
  
@@ -115,18 +122,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 
         switch (item.getItemId()) {
             case R.id.CtxAdd:
-                AudiovisualInterface selected = General.getsSarchResults().get(longClickPosition);
-
-                if(type.equalsIgnoreCase("Movie")) {
-                    SearchInfoMovie searchorMovie = new SearchInfoMovie(this, selected.getId());
-                    searchorMovie.delegate = SearchResultActivity.this;
-                    MyUtils.execute(searchorMovie);
-
-                } else {
-                    SearchInfoShow searchorShow = new SearchInfoShow(this, selected.getId());
-                    searchorShow.delegate = SearchResultActivity.this;
-                    MyUtils.execute(searchorShow);
-                }
+                addItem(longClickPosition);
 
                 return true;
             default:
@@ -135,9 +131,11 @@ public class SearchResultActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void processFinish(Object result){
+    public void processFinish(Object result, int position){
         DAO.getInstance().insert(SearchResultActivity.this, (AudiovisualInterface) result);
-        Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + ((AudiovisualInterface) result).getTitulo() + "\" " + getResources().getString(R.string.added) + "!", Toast.LENGTH_SHORT).show();
+        String type = ((AudiovisualInterface) result).getTipo()  == General.MOVIE_TYPE ? getResources().getString(R.string.Movie) : getResources().getString(R.string.Show);
+        Toast.makeText(getApplicationContext(),  type + " \"" + ((AudiovisualInterface) result).getTitulo() + "\" " + getResources().getString(R.string.added) + "!", Toast.LENGTH_SHORT).show();
+        adapter.remove(position);
     }
 
     @Override
@@ -158,8 +156,8 @@ public class SearchResultActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void removeCallback(int position) {
-
+    public void swipeCallback(int position) {
+        addItem(position);
     }
 
     @Override
@@ -176,6 +174,23 @@ public class SearchResultActivity extends AppCompatActivity implements
         intent.putExtra("Pelicula", pelicula);
         intent.putExtra("Type", pelicula.getTipo());
         startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
+    }
+
+    public void addItem(int position){
+        AudiovisualInterface selected = (AudiovisualInterface) rowItems.get(position).getObject();
+
+        if(type.equalsIgnoreCase("Movie")) {
+            SearchInfoMovie searchorMovie = new SearchInfoMovie(this, selected.getId());
+            searchorMovie.position = position;
+            searchorMovie.delegate = SearchResultActivity.this;
+            MyUtils.execute(searchorMovie);
+
+        } else {
+            SearchInfoShow searchorShow = new SearchInfoShow(this, selected.getId());
+            searchorShow.position = position;
+            searchorShow.delegate = SearchResultActivity.this;
+            MyUtils.execute(searchorShow);
+        }
     }
 
     @Override

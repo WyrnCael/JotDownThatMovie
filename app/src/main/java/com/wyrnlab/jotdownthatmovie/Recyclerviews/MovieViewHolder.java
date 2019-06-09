@@ -83,7 +83,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     @Override
     public void onClick(View v) {
-        itemListener.recyclerViewListClicked(v, getAdapterPosition());
+        itemListener.recyclerViewListClicked(v, getLayoutPosition());
     }
 
     public void clearCache(){
@@ -92,13 +92,13 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        itemListener.recylerViewCreateContextMenu(menu, v, menuInfo, getAdapterPosition());
+        itemListener.recylerViewCreateContextMenu(menu, v, menuInfo, getLayoutPosition());
     }
 
 
     @Override
     public boolean onLongClick(View v) {
-        itemListener.recyclerViewListLongClicked(v, getAdapterPosition());
+        itemListener.recyclerViewListLongClicked(v, getLayoutPosition());
         return false;
     }
 }

@@ -14,14 +14,14 @@ import android.view.View;
 import com.wyrnlab.jotdownthatmovie.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.R;
 
-public class ItemTouchHelper extends android.support.v7.widget.helper.ItemTouchHelper.SimpleCallback {
+public class ItemTouchRemoveHelper extends android.support.v7.widget.helper.ItemTouchHelper.SimpleCallback {
     Drawable background;
     Drawable xMark;
     int xMarkMargin;
     boolean initiated;
     Context context;
 
-    public ItemTouchHelper(int dragDirs, int swipeDirs, Activity context){
+    public ItemTouchRemoveHelper(int dragDirs, int swipeDirs, Activity context){
         super(dragDirs, swipeDirs);
         this.context = context;
     }

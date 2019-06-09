@@ -10,9 +10,9 @@ import com.wyrnlab.jotdownthatmovie.api.search.TVShows.TVShow;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
-    public final static String APIKEY = "15ff919fb76802006d34be91f8ecdc3f";
-    public final static String YAPIKEY = "AIzaSyC1yfVSgg9_qqxh1nfjA6zIACzO9kU53b8";
-    public final static String ANALYTICS_APIKEY = "uIuFHU8GEv3XXQ7YkuzsRFTS3p3D1QJy";
+    public final static String APIKEY = /*YOUR THE MOVIE DB API KEY */;	    public final static String APIKEY = "15ff919fb76802006d34be91f8ecdc3f";
+    public final static String YAPIKEY = /*YOUR YOUTUBE API KEY */;	    public final static String YAPIKEY = "AIzaSyC1yfVSgg9_qqxh1nfjA6zIACzO9kU53b8";
+    public final static String ANALYTICS_APIKEY = /* YOUR NODE APPLICATION, NOT NEEDED */;
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";

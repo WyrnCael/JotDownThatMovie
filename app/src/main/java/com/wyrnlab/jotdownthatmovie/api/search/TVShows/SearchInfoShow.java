@@ -35,6 +35,7 @@ import com.wyrnlab.jotdownthatmovie.data.SetTheLanguages;
 public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
 
     public AsyncResponse delegate = null;
+    public int position;
     private HttpsURLConnection yc;
     Context context;
     ProgressDialog pDialog;
@@ -77,7 +78,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
     {
         super.onPostExecute(result);
         pDialog.dismiss();
-        delegate.processFinish(result);
+        delegate.processFinish(result, position);
     }
 
 
@@ -130,6 +131,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
     }
 
     private void leerJSONSinopsis(String json) throws IOException{
+        Log.d("JSON" , json);
         JsonObject info = JsonObject.readFrom( json );
         tvShow.setTituloOriginal(info.get("original_name").asString());
         tvShow.setTitulo(info.get("name").asString());
@@ -144,6 +146,8 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
                 anyo = "N/D";
             }
             tvShow.setAnyo(anyo);
+        } else {
+            tvShow.setAnyo("N/D");
         }
         if (info.get("poster_path").isString()) {
             tvShow.setImagePath(info.get("poster_path").asString());

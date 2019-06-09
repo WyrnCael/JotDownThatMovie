@@ -1,22 +1,16 @@
 package com.wyrnlab.jotdownthatmovie.Recyclerviews;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
-import com.fedorvlasov.lazylist.MainActivity;
-import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.data.General;
 import com.wyrnlab.jotdownthatmovie.search.RowItem;
 
 import java.util.ArrayList;
@@ -29,7 +23,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
 	private static RecyclerViewClickListener itemListener;
 	Context context;
 	AdapterCallback adapterCallback;
-	List<RowItem> items;
+	public List<RowItem> items;
     List<RowItem> itemsPendingRemoval;
 	int resourceId;
 	MovieViewHolder holderAdapter;
@@ -69,7 +63,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
             // we need to show the "undo" state of the row
             holder.itemView.setOnClickListener(null);
             holder.itemView.setOnClickListener(null);
-            holder.itemView.setBackgroundColor(Color.RED);
+            holder.itemView.setBackgroundColor(context instanceof MainActivity ? Color.RED : context.getResources().getColor(R.color.verde));
 
             holder.imageView.setVisibility(View.GONE);
             holder.txtTitle.setVisibility(View.GONE);
@@ -150,7 +144,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
             Runnable pendingRemovalRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    adapterCallback.removeCallback(items.indexOf(item));
+                    adapterCallback.swipeCallback(items.indexOf(item));
                 }
             };
             handler.postDelayed(pendingRemovalRunnable, PENDING_REMOVAL_TIMEOUT);
