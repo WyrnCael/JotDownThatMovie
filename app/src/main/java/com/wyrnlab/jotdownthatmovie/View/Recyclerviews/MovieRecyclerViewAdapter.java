@@ -1,13 +1,17 @@
 package com.wyrnlab.jotdownthatmovie.View.Recyclerviews;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
@@ -29,6 +33,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
     boolean undoOn = true;
     private Handler handler = new Handler();
     HashMap<Integer, Runnable> pendingRunnables = new HashMap<>();
+    View parentView;
 
     public MovieRecyclerViewAdapter(Context context, int resourceId,
                                     List<RowItem> items, RecyclerViewClickListener itemListener) {
@@ -43,6 +48,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        this.parentView = parent;
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(this.resourceId, parent, false);
         this.holderAdapter = new MovieViewHolder(this.context, view);
@@ -52,50 +58,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         final RowItem row = this.items.get(position);
-
-        //holder.setMovieRow(row, i, itemListener);
-
-        final Integer item = items.get(position).getId();
-
-
-        if (itemsPendingRemoval.contains(row)) {
-            // we need to show the "undo" state of the row
-            holder.itemView.setOnClickListener(null);
-            holder.itemView.setOnClickListener(null);
-            holder.itemView.setBackgroundColor(context instanceof MainActivity ? Color.RED : context.getResources().getColor(R.color.verde));
-
-            holder.imageView.setVisibility(View.GONE);
-            holder.txtTitle.setVisibility(View.GONE);
-            holder.txtDesc.setVisibility(View.GONE);
-            holder.icon.setVisibility(View.GONE);
-
-            holder.undoButton.setVisibility(View.VISIBLE);
-
-            holder.undoButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // user wants to undo the removal, let's cancel the pending task
-                    Runnable pendingRemovalRunnable = pendingRunnables.get(item);
-                    pendingRunnables.remove(item);
-                    if (pendingRemovalRunnable != null) handler.removeCallbacks(pendingRemovalRunnable);
-                    itemsPendingRemoval.remove(row);
-                    // this will rebind the row in "normal" state
-                    notifyItemChanged(items.indexOf(row));
-                }
-            });
-        } else {
-            holder.setMovieRow(row, position, itemListener);
-            // we need to show the "normal" state
-            holder.itemView.setBackgroundColor(Color.WHITE);
-
-            holder.imageView.setVisibility(View.VISIBLE);
-            holder.txtTitle.setVisibility(View.VISIBLE);
-            holder.txtDesc.setVisibility(View.VISIBLE);
-            holder.icon.setVisibility(View.VISIBLE);
-
-            holder.undoButton.setVisibility(View.GONE);
-            holder.undoButton.setOnClickListener(null);
-        }
+        holder.setMovieRow(row, position, itemListener);
     }
 
     @Override
@@ -134,25 +97,47 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
     }
 
     public void pendingRemoval(int position) {
-        final RowItem item = items.get(position);
-        if (!itemsPendingRemoval.contains(item)) {
-            itemsPendingRemoval.add(item);
-            // this will redraw row in "undo" state
-            notifyItemChanged(position);
-            // let's create, store and post a runnable to remove the item
+        final RowItem row = items.get(position);
+        final Integer itemId = items.get(position).getId();
+        final Integer itemPosition = items.indexOf(row);
+        if (!itemsPendingRemoval.contains(row)) {
+            itemsPendingRemoval.add(row);
+
+            // let's create, store and post a runnable to remove the itemId
             Runnable pendingRemovalRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    adapterCallback.swipeCallback(items.indexOf(item));
+                    adapterCallback.removeCallback((AudiovisualInterface) row.getObject());
                 }
             };
+
+            items.remove(row);
+            notifyItemRemoved(itemPosition);
+            adapterCallback.swipeCallback((AudiovisualInterface) row.getObject());
+
             handler.postDelayed(pendingRemovalRunnable, PENDING_REMOVAL_TIMEOUT);
-            pendingRunnables.put(item.getId(), pendingRemovalRunnable);
+            pendingRunnables.put(row.getId(), pendingRemovalRunnable);
+            Snackbar.make(this.parentView, row.getTitle() + " " + context.getResources().getString(R.string.removed), PENDING_REMOVAL_TIMEOUT)
+                    .setAction(context.getString(R.string.button_undo), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            items.add(itemPosition, row);
+                            adapterCallback.undoCallback((AudiovisualInterface) row.getObject());
+
+                            Runnable pendingRemovalRunnable = pendingRunnables.get(itemId);
+                            pendingRunnables.remove(itemId);
+                            if (pendingRemovalRunnable != null) handler.removeCallbacks(pendingRemovalRunnable);
+                            itemsPendingRemoval.remove(row);
+                            // this will rebind the row in "normal" state
+                            notifyDataSetChanged();
+                        }
+                    })
+                    .show();
         }
     }
 
     public void remove(int position) {
-        RowItem item = items.get(position);
+        final RowItem item = items.get(position);
         if (itemsPendingRemoval.contains(item)) {
             itemsPendingRemoval.remove(item);
         }
@@ -160,6 +145,8 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
             items.remove(position);
             notifyItemRemoved(position);
         }
+
+        adapterCallback.removeCallback((AudiovisualInterface) item.getObject());
     }
 
     public boolean isPendingRemoval(int position) {

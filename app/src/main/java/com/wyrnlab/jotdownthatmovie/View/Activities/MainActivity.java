@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -277,27 +278,21 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 		switch (item.getItemId()) {
 			case R.id.CtxLstOpc2:
-				removeItemFromList(longClickPosition);
+				final RowItem row = rowItems.get(longClickPosition);
+				final AudiovisualInterface movie = (AudiovisualInterface) row.getObject();
+				removeItemFromDB((AudiovisualInterface) row.getObject());
+				adapter.remove(longClickPosition);
 
+				Snackbar.make(listView, row.getTitle() + " " + getResources().getString(R.string.removed), Snackbar.LENGTH_LONG)
+						.show();
 				return true;
 			default:
 				return super.onContextItemSelected(item);
 		}
 	}
 
-	public void removeItemFromList(int position){
-
-		AudiovisualInterface selected = (AudiovisualInterface) ((RowItem)rowItems.get(position)).getObject();
-		DAO.getInstance().delete(MainActivity.this, selected.getTitulo(), selected.getAnyo());
-
-		Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + selected.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
-
-		adapter.remove(position);
-		moviesByType.get(selected.getTipo()).remove(selected);
-		moviesByType.get(FILTER_ALL).remove(selected);
-		refreshTabs();
-
-		refreshTabs();
+	public void removeItemFromDB(AudiovisualInterface item){
+		DAO.getInstance().delete(MainActivity.this, item.getId());
 	}
 
 	@Override
@@ -354,7 +349,21 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	}
 
 	@Override
-	public void swipeCallback(int position) {
-		removeItemFromList(position);
+	public void removeCallback(AudiovisualInterface item) {
+		removeItemFromDB(item);
+	}
+
+	@Override
+	public void undoCallback(AudiovisualInterface item) {
+		moviesByType.get(item.getTipo()).add(item);
+		moviesByType.get(FILTER_ALL).add(item);
+		refreshTabs();
+	}
+
+	@Override
+	public void swipeCallback(AudiovisualInterface item){
+		moviesByType.get(item.getTipo()).remove(item);
+		moviesByType.get(FILTER_ALL).remove(item);
+		refreshTabs();
 	}
 }

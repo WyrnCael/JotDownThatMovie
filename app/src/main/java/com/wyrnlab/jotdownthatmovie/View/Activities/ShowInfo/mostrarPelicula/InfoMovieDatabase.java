@@ -139,7 +139,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
         botonRemove.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                DAO.getInstance().delete(InfoMovieDatabase.this, pelicula.getTitulo(), pelicula.getAnyo());
+                DAO.getInstance().delete(InfoMovieDatabase.this, pelicula.getId());
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.Movie) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_OK);
                 finish();

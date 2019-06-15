@@ -23,6 +23,7 @@ import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,7 @@ public class SearchResultActivity extends AppCompatActivity implements
     String type;
     List<RowItem> rowItems;
     List<AudiovisualInterface> results;
+    List<AudiovisualInterface> rowsToSave;
     MovieRecyclerViewAdapter adapter;
     int longClickPosition;
  
@@ -54,6 +56,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 
         type = getIntent().getStringExtra("Type");
 
+        rowsToSave = new ArrayList<AudiovisualInterface>();
         results = (List<AudiovisualInterface>) General.getsSarchResults();
     	rowItems = new ArrayList<RowItem>();
         for (AudiovisualInterface movie : results) {
@@ -121,7 +124,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 
         switch (item.getItemId()) {
             case R.id.CtxAdd:
-                addItem(longClickPosition);
+                //addItem(item);
 
                 return true;
             default:
@@ -130,11 +133,11 @@ public class SearchResultActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void processFinish(Object result, int position){
+    public void processFinish(Object result){
         DAO.getInstance().insert(SearchResultActivity.this, (AudiovisualInterface) result);
         String type = ((AudiovisualInterface) result).getTipo()  == General.MOVIE_TYPE ? getResources().getString(R.string.Movie) : getResources().getString(R.string.Show);
-        Toast.makeText(getApplicationContext(),  type + " \"" + ((AudiovisualInterface) result).getTitulo() + "\" " + getResources().getString(R.string.added) + "!", Toast.LENGTH_SHORT).show();
-        adapter.remove(position);
+        Snackbar.make(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.added), Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override
@@ -155,11 +158,6 @@ public class SearchResultActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void swipeCallback(int position) {
-        addItem(position);
-    }
-
-    @Override
     public void recyclerViewListClicked(View v, int position) {
         AudiovisualInterface pelicula = (AudiovisualInterface) ((RowItem)rowItems.get(position)).getObject();
 
@@ -175,18 +173,16 @@ public class SearchResultActivity extends AppCompatActivity implements
         startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
     }
 
-    public void addItem(int position){
-        AudiovisualInterface selected = (AudiovisualInterface) rowItems.get(position).getObject();
-
+    public void addItem(AudiovisualInterface item){
         if(type.equalsIgnoreCase("Movie")) {
-            SearchInfoMovie searchorMovie = new SearchInfoMovie(this, selected.getId());
-            searchorMovie.position = position;
+            SearchInfoMovie searchorMovie = new SearchInfoMovie(this, item.getId());
+            //searchorMovie.position = item;
             searchorMovie.delegate = SearchResultActivity.this;
             MyUtils.execute(searchorMovie);
 
         } else {
-            SearchInfoShow searchorShow = new SearchInfoShow(this, selected.getId());
-            searchorShow.position = position;
+            SearchInfoShow searchorShow = new SearchInfoShow(this, item.getId());
+            //searchorShow.position = item;
             searchorShow.delegate = SearchResultActivity.this;
             MyUtils.execute(searchorShow);
         }
@@ -195,5 +191,20 @@ public class SearchResultActivity extends AppCompatActivity implements
     @Override
     public void recyclerViewListLongClicked(View v, int position) {
         longClickPosition = position;
+    }
+
+    @Override
+    public void swipeCallback(AudiovisualInterface item) {
+        //rowsToSave.add(item);
+    }
+
+    @Override
+    public void removeCallback(AudiovisualInterface item) {
+        addItem(item);
+    }
+
+    @Override
+    public void undoCallback(AudiovisualInterface item) {
+        //rowsToSave.remove(item);
     }
 }

@@ -21,7 +21,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
     ImageView icon;
     Context context;
     ImageLoader imageLoader;
-    Button undoButton;
     RowItem item;
     RecyclerViewClickListener itemListener;
     int position;
@@ -36,10 +35,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         this.imageView = (ImageView) itemView.findViewById(R.id.icon);
         this.icon = (ImageView) itemView.findViewById(R.id.iconType);
         this.imageLoader=new ImageLoader(context);
-        undoButton = (Button) itemView.findViewById(R.id.undo_button);
-
-
-
         this.itemView = itemView;
         itemView.setOnCreateContextMenuListener(this);
     }

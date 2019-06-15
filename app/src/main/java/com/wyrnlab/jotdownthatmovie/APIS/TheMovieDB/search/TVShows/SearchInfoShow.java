@@ -79,7 +79,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
     {
         super.onPostExecute(result);
         pDialog.dismiss();
-        delegate.processFinish(result, position);
+        delegate.processFinish(result);
     }
 
 
