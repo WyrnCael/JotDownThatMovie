@@ -55,11 +55,11 @@ public class ItemTouchAddHelper extends android.support.v7.widget.helper.ItemTou
         int swipedPosition = viewHolder.getAdapterPosition();
         MovieRecyclerViewAdapter adapter = (MovieRecyclerViewAdapter) ((SearchResultActivity)context).listView.getAdapter();
         boolean undoOn = adapter.isUndoOn();
-        if (undoOn) {
+        /*if (undoOn) {
             adapter.pendingRemoval(swipedPosition);
-        } else {
+        } else {*/
             adapter.remove(swipedPosition);
-        }
+        //}
     }
 
     @Override

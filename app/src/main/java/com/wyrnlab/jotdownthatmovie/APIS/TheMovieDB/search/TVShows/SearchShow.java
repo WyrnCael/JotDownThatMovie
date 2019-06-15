@@ -160,7 +160,7 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
     {
         pDialog.dismiss();
         super.onPostExecute(result);
-        delegate.processFinish(result, 0);
+        delegate.processFinish(result);
     }
 
 

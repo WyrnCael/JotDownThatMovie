@@ -5,5 +5,5 @@ package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search;
  */
 
 public interface AsyncResponse {
-    void processFinish(Object result, int position);
+    void processFinish(Object result);
 }

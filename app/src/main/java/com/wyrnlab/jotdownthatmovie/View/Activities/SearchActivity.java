@@ -172,7 +172,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 
 	//this override the implemented method from asyncTask
 	@Override
-	public void processFinish(Object result, int position){
+	public void processFinish(Object result){
 		muestralo(result);
 	}
 	
