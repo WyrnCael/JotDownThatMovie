@@ -6,9 +6,9 @@ import java.util.List;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
-    public final static String APIKEY = /*YOUR THE MOVIE DB API KEY */;	    public final static String APIKEY = "/*YOUR_TMDB_APIKEY*/";
-    public final static String YAPIKEY = /*YOUR YOUTUBE API KEY */;	    public final static String YAPIKEY = "/*YOUR_YOUTUBE_APIKEY*/";
-    public final static String ANALYTICS_APIKEY = /* YOUR NODE APPLICATION, NOT NEEDED */;
+    public final static String APIKEY = /*YOUR THE MOVIE DB API KEY */;
+    public final static String YAPIKEY = /*YOUR YOUTUBE API KEY */;
+    public final static String ANALYTICS_APIKEY = /* YOUR NODE APPLICATION, OPTIONAL, NOT NEEDED */;
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
