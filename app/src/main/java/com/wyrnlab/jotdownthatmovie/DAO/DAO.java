@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.text.TextUtils;
 
 import com.wyrnlab.jotdownthatmovie.Model.General;
 
@@ -64,7 +65,7 @@ public class DAO {
         return pelicula;
     }
 
-    public void delete(Context context, String nombre, String anyo){
+    public void delete(Context context, Integer id){
         //Abrimos la base de datos 'DBUsuarios' en modo escritura
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
@@ -74,8 +75,32 @@ public class DAO {
         if(db != null)
         {
             //Insertamos los datos en la tabla Peliculas
-            db.execSQL("DELETE FROM Peliculas WHERE nombre=? AND anyo=?",
-                    new Object[]{ nombre, anyo });
+            db.execSQL("DELETE FROM Peliculas WHERE filmId = ?",
+                    new Object[]{ id });
+        }
+
+        //Cerramos la base de datos
+        db.close();
+    }
+
+    public void deleteFromList(Context context, List<AudiovisualInterface> records){
+        //Abrimos la base de datos 'DBUsuarios' en modo escritura
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
+
+        SQLiteDatabase db = usdbh.getWritableDatabase();
+
+        //Si hemos abierto correctamente la base de datos
+        if(db != null)
+        {
+            List<Integer> ids = new ArrayList<Integer>();
+            for(AudiovisualInterface record : records){
+                ids.add(record.getId());
+            }
+
+            String args = TextUtils.join(", ", ids);
+
+            //Insertamos los datos en la tabla Peliculas
+            db.execSQL(String.format("DELETE FROM rows WHERE filmId IN (%s);", args));
         }
 
         //Cerramos la base de datos

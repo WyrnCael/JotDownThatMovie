@@ -138,7 +138,7 @@ public class InfoTVShowDatabase extends AppCompatActivity {
         botonRemove.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                DAO.getInstance().delete(InfoTVShowDatabase.this, pelicula.getTitulo(), pelicula.getAnyo());
+                DAO.getInstance().delete(InfoTVShowDatabase.this, pelicula.getId());
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.Show) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_OK);
                 finish();

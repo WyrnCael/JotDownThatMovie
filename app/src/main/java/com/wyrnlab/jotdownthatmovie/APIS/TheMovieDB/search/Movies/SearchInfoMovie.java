@@ -79,7 +79,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
     {
         super.onPostExecute(result);
         pDialog.dismiss();
-        delegate.processFinish(result, position);
+        delegate.processFinish(result);
     }
 
 
