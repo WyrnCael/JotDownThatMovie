@@ -5,16 +5,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.wyrnlab.jotdownthatmovie.data.General;
-import com.wyrnlab.jotdownthatmovie.sql.PeliculasSQLiteHelper;
+import com.wyrnlab.jotdownthatmovie.Model.General;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wyrnlab.jotdownthatmovie.api.search.AudiovisualInterface;
-import com.wyrnlab.jotdownthatmovie.api.search.Movies.Pelicula;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 
 /**
  * Created by Jota on 13/12/2017.
