@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 		registerForContextMenu(listView);
+
+		if(getIntent().getStringExtra("Name") != null) MyUtils.showSnacknar(listView, "\"" + getIntent().getStringExtra("Name") + "\" " + getResources().getString(R.string.added) + "!");
 
 		//Swipe
 		ItemTouchRemoveHelper simpleItemTouchCallback = new ItemTouchRemoveHelper(0, android.support.v7.widget.helper.ItemTouchHelper.LEFT, MainActivity.this);
@@ -236,8 +239,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == REQUEST_CODE_A) {
-			refreshList(filter);
+		switch (resultCode){
+			case General.RESULT_CODE_REMOVED:
+				adapter.pendingRemoval(data.getIntExtra("Position", 0));
+				break;
+			case General.RESULT_CODE_ADD:
+				adapter.items.add(new RowItem(MainActivity.this, (AudiovisualInterface)data.getExtras().getSerializable("Pelicula")));
+				adapter.notifyDataSetChanged();
+				MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), "\"" + data.getStringExtra("Name") + "\" " + getResources().getString(R.string.added) + "!");
+				break;
+			case General.RESULT_CODE_FROM_SEARCH:
+				refreshList(filter);
+				break;
 		}
 	}
 
@@ -341,6 +354,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 			intent =  new Intent(MainActivity.this, InfoTVShowDatabase.class);
 		}
 		intent.putExtra("Pelicula", pelicula);
+		intent.putExtra("Position", position);
 		startActivityForResult(intent, REQUEST_CODE_A);
 	}
 

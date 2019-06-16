@@ -47,6 +47,7 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 	Button botonVolver;
 	Button botonTrailer;
 	private ShareActionProvider mShareActionProvider;
+	int position;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,9 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
         Intent i = getIntent();
         pelicula = (AudiovisualInterface)i.getSerializableExtra("Pelicula");
         type = i.getStringExtra("Type");
+		position = i.getIntExtra("Position", 0);
 
-        SearchInfoShow searchorShow = new SearchInfoShow(this, pelicula.getId());
+        SearchInfoShow searchorShow = new SearchInfoShow(this, pelicula.getId(), getString(R.string.searching));
 		searchorShow.delegate = this;
 		MyUtils.execute(searchorShow);
 
@@ -90,16 +92,11 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
         botonAnadir.setOnClickListener(new OnClickListener() {
              @Override
              public void onClick(View v) {
-				 if(DAO.getInstance().insert(InfoTVShowSearch.this, pelicula)){
-					 MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!");
-
-					 setResult(Activity.RESULT_OK);
-					 finish();
-				 } else {
-					 MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!");
-				 }
-            	 
-
+				 Intent resultIntent = new Intent();
+				 resultIntent.putExtra("Name", pelicula.getTitulo());
+				 resultIntent.putExtra("Position", position);
+				 setResult(General.RESULT_CODE_ADD, resultIntent);
+				 finish();
              }
         });
         

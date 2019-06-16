@@ -122,6 +122,9 @@ public class SearchResultActivity extends AppCompatActivity implements
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    switch(requestCode) {
 	        case General.REQUEST_CODE_PELIBUSCADA:
+	            if (resultCode == General.RESULT_CODE_ADD) {
+                    adapter.remove(data.getIntExtra("Position", 0));
+                }
 	        	if(resultCode == Activity.RESULT_OK){
 	        		setResult(Activity.RESULT_OK);
 	        		finish();
@@ -156,11 +159,12 @@ public class SearchResultActivity extends AppCompatActivity implements
     @Override
     public void processFinish(Object result){
         if(result instanceof AudiovisualInterface) {
-            DAO.getInstance().insert(SearchResultActivity.this, (AudiovisualInterface) result);
-            String type = ((AudiovisualInterface) result).getTipo() == General.MOVIE_TYPE ? getResources().getString(R.string.Movie) : getResources().getString(R.string.Show);
-            MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.added));
+            if(DAO.getInstance().insert(SearchResultActivity.this, (AudiovisualInterface) result)){
+                MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.added));
+            } else {
+                MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.alreadySaved));
+            }
         } else {
-            Log.d("RESULTADOS", String.valueOf(((List<AudiovisualInterface>) result).size()));
             results.addAll((List<AudiovisualInterface>) result);
             for (AudiovisualInterface movie : ((List<AudiovisualInterface>) result)) {
                 rowItems.add(new RowItem(SearchResultActivity.this, movie));
@@ -199,18 +203,19 @@ public class SearchResultActivity extends AppCompatActivity implements
         }
         intent.putExtra("Pelicula", pelicula);
         intent.putExtra("Type", pelicula.getTipo());
+        intent.putExtra("Position", position);
         startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
     }
 
     public void addItem(AudiovisualInterface item){
         if(type.equalsIgnoreCase("Movie")) {
-            SearchInfoMovie searchorMovie = new SearchInfoMovie(this, item.getId());
+            SearchInfoMovie searchorMovie = new SearchInfoMovie(this, item.getId(), getString(R.string.saving));
             //searchorMovie.position = item;
             searchorMovie.delegate = SearchResultActivity.this;
             MyUtils.execute(searchorMovie);
 
         } else {
-            SearchInfoShow searchorShow = new SearchInfoShow(this, item.getId());
+            SearchInfoShow searchorShow = new SearchInfoShow(this, item.getId(), getString(R.string.saving));
             //searchorShow.position = item;
             searchorShow.delegate = SearchResultActivity.this;
             MyUtils.execute(searchorShow);

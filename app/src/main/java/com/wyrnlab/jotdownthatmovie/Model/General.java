@@ -16,6 +16,9 @@ public class General {
     public final static String NET_SOURCE = "NET";
     public final static String SHARE_SOURCE = "SHARE";
     public final static int REQUEST_CODE_PELIBUSCADA = 5;
+    public final static int RESULT_CODE_ADD = 10001;
+    public final static int RESULT_CODE_REMOVED = 10002;
+    public final static int RESULT_CODE_FROM_SEARCH = 10003;
     public static String base_url = null;
     private static List<Pelicula> peliculasBuscadas;
     private static List<TVShow> showsBuscados;
