@@ -43,7 +43,7 @@ public class ItemTouchAddHelper extends android.support.v7.widget.helper.ItemTou
     @Override
     public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         int position = viewHolder.getAdapterPosition();
-        MovieRecyclerViewAdapter testAdapter = (MovieRecyclerViewAdapter)recyclerView.getAdapter();
+        RecyclerViewAdapter testAdapter = (RecyclerViewAdapter)recyclerView.getAdapter();
         if (testAdapter.isUndoOn() && testAdapter.isPendingRemoval(position)) {
             return 0;
         }
@@ -53,7 +53,7 @@ public class ItemTouchAddHelper extends android.support.v7.widget.helper.ItemTou
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
         int swipedPosition = viewHolder.getAdapterPosition();
-        MovieRecyclerViewAdapter adapter = (MovieRecyclerViewAdapter) ((SearchResultActivity)context).listView.getAdapter();
+        RecyclerViewAdapter adapter = (RecyclerViewAdapter) ((SearchResultActivity)context).listView.getAdapter();
         boolean undoOn = adapter.isUndoOn();
         /*if (undoOn) {
             adapter.pendingRemoval(swipedPosition);

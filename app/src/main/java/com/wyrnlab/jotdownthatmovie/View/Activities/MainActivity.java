@@ -31,7 +31,7 @@ import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVSh
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.AdapterCallback;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemDecorationRemoveHelper;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchRemoveHelper;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.MovieRecyclerViewAdapter;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	Boolean firstTime = true;
 	Boolean dontExit = false;
 	Boolean searcBtnhUp = false;
-	MovieRecyclerViewAdapter adapter;
+	RecyclerViewAdapter adapter;
 	TabLayout tabLayout;
 	private int longClickPosition;
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		//Localizar los controles
 		listView = (RecyclerView) findViewById( R.id.mainListView );
 		rowItems = new ArrayList<RowItem>();
-		adapter = new MovieRecyclerViewAdapter(this, R.layout.list_item, rowItems, this);
+		adapter = new RecyclerViewAdapter(this, R.layout.list_item, rowItems, this);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 		registerForContextMenu(listView);
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		adapter.clear();
 		listView.setAdapter(null);
 
-		adapter = new MovieRecyclerViewAdapter(this, R.layout.list_item, rowItems, this);
+		adapter = new RecyclerViewAdapter(this, R.layout.list_item, rowItems, this);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 
