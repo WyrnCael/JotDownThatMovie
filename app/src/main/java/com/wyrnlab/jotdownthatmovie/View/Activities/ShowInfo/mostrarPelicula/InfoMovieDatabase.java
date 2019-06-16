@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +20,15 @@ import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchMovieURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
+
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class InfoMovieDatabase extends AppCompatActivity {
 
@@ -74,14 +79,21 @@ public class InfoMovieDatabase extends AppCompatActivity {
 
         anyo.setText("	" + pelicula.getAnyo());
         if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
-        if(pelicula.getRating() == 0.0){
-            valoracion.setText("	" + getResources().getString(R.string.notavailable));
-        }else{
-            valoracion.setText("	" + Double.toString(pelicula.getRating()));
-        }
+        valoracion.setText(pelicula.getRating() == 0.0 ? "	" + getResources().getString(R.string.notavailable) : "	" + Double.toString(pelicula.getRating()));
         descripcion.setText(pelicula.getDescripcion());
         ImageView image = (ImageView)findViewById(R.id.poster);
         image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
+        Bitmap stub = BitmapFactory.decodeResource(getResources(), R.drawable.stub);
+        if(ImageHandler.getImage(pelicula.getImage()) != stub){
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Code to show image in full screen:
+                    new PhotoFullPopupWindow(InfoMovieDatabase.this, R.layout.popup_photo_full, view, null, ImageHandler.getImage(pelicula.getImage()));
+
+                }
+            });
+        }
         if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
         
       //Implementamos el evento “click” del botón

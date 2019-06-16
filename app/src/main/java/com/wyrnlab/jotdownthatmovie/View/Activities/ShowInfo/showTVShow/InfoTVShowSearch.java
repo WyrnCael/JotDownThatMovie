@@ -20,12 +20,15 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
+import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
 public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse {
@@ -148,9 +151,7 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 			valoracion.setText("	" + Double.toString(pelicula.getRating()));
 		}
         
-        ImageView image = (ImageView)findViewById(R.id.poster);
-        ImageLoader imageLoader = new ImageLoader(this);
-        imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
+
     }
 
 	//this override the implemented method from asyncTask
@@ -184,6 +185,18 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
         seasons.setText("	" + pelicula.getSeasons());
         
         descripcion.setText(pelicula.getDescripcion());
+
+		ImageView image = (ImageView)findViewById(R.id.poster);
+		ImageLoader imageLoader = new ImageLoader(this);
+		imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
+		image.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Code to show image in full screen:
+				new PhotoFullPopupWindow(InfoTVShowSearch.this, R.layout.popup_photo_full, view, null, pelicula.getImagePath() == null ? null : ImageHandler.getImage(pelicula.getImage()));
+
+			}
+		});
         
 	}
 	
