@@ -50,6 +50,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 	Button botonTrailer;
 	ImageView image;
 	private ShareActionProvider mShareActionProvider;
+	int position;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,8 +62,9 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         Intent i = getIntent();
         pelicula = (AudiovisualInterface)i.getSerializableExtra("Pelicula");
         type = i.getStringExtra("Type");
+        position = i.getIntExtra("Position", 0);
 
-        SearchInfoMovie searchorMovie = new SearchInfoMovie(this, pelicula.getId());
+        SearchInfoMovie searchorMovie = new SearchInfoMovie(this, pelicula.getId(), getString(R.string.searching));
 		searchorMovie.delegate = this;
 		MyUtils.execute(searchorMovie);
 
@@ -92,16 +94,11 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         botonAnadir.setOnClickListener(new OnClickListener() {
              @Override
              public void onClick(View v) {
-				 if(DAO.getInstance().insert(InfoMovieSearch.this, pelicula)){
-					 MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!");
-
-					 setResult(Activity.RESULT_OK);
-					 finish();
-				 } else {
-					 MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!");
-				 }
-            	 
-
+				 Intent resultIntent = new Intent();
+				 resultIntent.putExtra("Name", pelicula.getTitulo());
+				 resultIntent.putExtra("Position", position);
+				 setResult(General.RESULT_CODE_ADD, resultIntent);
+				 finish();
              }
         });
         

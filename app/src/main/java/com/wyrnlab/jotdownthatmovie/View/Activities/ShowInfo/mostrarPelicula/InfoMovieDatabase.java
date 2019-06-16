@@ -22,6 +22,7 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchMovieURL
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
@@ -46,6 +47,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
 	Button botonTrailer;
     Button botonRemove;
     private ShareActionProvider mShareActionProvider;
+    Integer position;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
         
         Intent i = getIntent();
         pelicula = (AudiovisualInterface)i.getSerializableExtra("Pelicula");
+        position = i.getIntExtra("Position", 0);
 
         //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
@@ -140,9 +143,9 @@ public class InfoMovieDatabase extends AppCompatActivity {
         botonRemove.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                DAO.getInstance().delete(InfoMovieDatabase.this, pelicula.getId());
-                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.Movie) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!");
-                setResult(Activity.RESULT_OK);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("Position", position);
+                setResult(General.RESULT_CODE_REMOVED, resultIntent);
                 finish();
             }
         });

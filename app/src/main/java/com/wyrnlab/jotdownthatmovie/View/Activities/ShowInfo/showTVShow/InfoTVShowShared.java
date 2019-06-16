@@ -84,7 +84,7 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         else
             id = Integer.valueOf(link.substring(link.indexOf("tv/") + 3, link.indexOf("-")));
 
-        SearchInfoShow searchorShow = new SearchInfoShow(this, id);
+        SearchInfoShow searchorShow = new SearchInfoShow(this, id, getString(R.string.searching));
         searchorShow.delegate = this;
         MyUtils.execute(searchorShow);
 
@@ -108,16 +108,13 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
             @Override
             public void onClick(View v) {
                 if(DAO.getInstance().insert(InfoTVShowShared.this, pelicula)){
-                    MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!");
-
                     Intent intent = new Intent(InfoTVShowShared.this, MainActivity.class);
+                    intent.putExtra("Name", pelicula.getTitulo());
                     startActivity(intent);
                     finish();
                 } else {
                     MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!");
                 }
-
-
             }
         });
 

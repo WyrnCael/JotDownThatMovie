@@ -41,10 +41,12 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
     ProgressDialog pDialog;
     int Id;
     Pelicula pelicula;
+    String text;
 
-    public SearchInfoMovie(Context context, int id){
+    public SearchInfoMovie(Context context, int id, String text){
         this.context = context;
         this.Id = id;
+        this.text = text;
         pelicula = new Pelicula();
         pelicula.setId(id);
     }
@@ -54,7 +56,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
         super.onPreExecute();
 
         pDialog = new ProgressDialog(context);
-        pDialog.setMessage(context.getString(R.string.searching));
+        pDialog.setMessage(text);
         pDialog.setCancelable(true);
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.show();

@@ -84,7 +84,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
         else
             id = Integer.valueOf(link.substring(link.indexOf("movie/") + 6, link.indexOf("-")));
 
-        SearchInfoMovie searchorMovie = new SearchInfoMovie(this, id);
+        SearchInfoMovie searchorMovie = new SearchInfoMovie(this, id, getString(R.string.searching));
         searchorMovie.delegate = this;
         MyUtils.execute(searchorMovie);
 
@@ -110,16 +110,13 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
             @Override
             public void onClick(View v) {
                 if(DAO.getInstance().insert(InfoMovieShared.this, pelicula)){
-                    MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!");
-
                     Intent intent = new Intent(InfoMovieShared.this, MainActivity.class);
+                    intent.putExtra("Name", pelicula.getTitulo());
                     startActivity(intent);
                     finish();
                 } else {
                     MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!");
                 }
-
-
             }
         });
 

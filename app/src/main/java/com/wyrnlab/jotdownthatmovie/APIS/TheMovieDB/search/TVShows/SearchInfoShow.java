@@ -41,10 +41,12 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
     ProgressDialog pDialog;
     int Id;
     TVShow tvShow;
+    String text;
 
-    public SearchInfoShow(Context context, int id){
+    public SearchInfoShow(Context context, int id, String text){
         this.context = context;
         this.Id = id;
+        this.text = text;
         tvShow = new TVShow();
         tvShow.setId(id);
     }
@@ -54,7 +56,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
         super.onPreExecute();
 
         pDialog = new ProgressDialog(context);
-        pDialog.setMessage(context.getString(R.string.searching));
+        pDialog.setMessage(text);
         pDialog.setCancelable(true);
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.show();
