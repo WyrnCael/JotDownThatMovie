@@ -39,12 +39,11 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-import com.wyrnlab.jotdownthatmovie.R;
-
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.MaterialTapTargetPrompt;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.ResourceFinder;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.backgrounds.CirclePromptBackground;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.focals.CirclePromptFocal;
+import com.wyrnlab.jotdownthatmovie.R;
 
 /**
  * Contains all the settings for creating a prompt.

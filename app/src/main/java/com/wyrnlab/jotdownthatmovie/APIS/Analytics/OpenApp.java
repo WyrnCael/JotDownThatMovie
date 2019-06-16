@@ -4,17 +4,16 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 
+import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Utils.Http;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-
-import com.wyrnlab.jotdownthatmovie.Utils.Http;
-import com.wyrnlab.jotdownthatmovie.Model.General;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by Jota on 27/12/2017.

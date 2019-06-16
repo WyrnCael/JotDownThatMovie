@@ -1,11 +1,12 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
-import com.wyrnlab.jotdownthatmovie.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
+
+import com.wyrnlab.jotdownthatmovie.R;
 
 public class VideoPlayer extends Activity {
 

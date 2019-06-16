@@ -1,45 +1,42 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowDatabase;
-import com.wyrnlab.jotdownthatmovie.APIS.Analytics.OpenApp;
-import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.AdapterCallback;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemDecorationRemoveHelper;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchRemoveHelper;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.MovieRecyclerViewAdapter;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
-import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
-import com.wyrnlab.jotdownthatmovie.Model.General;
-import com.wyrnlab.jotdownthatmovie.Utils.permisionsexecutiontime.ReadExternalStorage;
-import com.wyrnlab.jotdownthatmovie.Utils.permisionsexecutiontime.WriteExternalStorage;
-import com.wyrnlab.jotdownthatmovie.Model.RowItem;
-
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.MenuInflater;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
-import android.widget.Toast;
 import android.view.View;
 
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.APIS.Analytics.OpenApp;
+import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.MaterialTapTargetPrompt;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.Utils.permisionsexecutiontime.ReadExternalStorage;
+import com.wyrnlab.jotdownthatmovie.Utils.permisionsexecutiontime.WriteExternalStorage;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowDatabase;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.AdapterCallback;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemDecorationRemoveHelper;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchRemoveHelper;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.MovieRecyclerViewAdapter;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewClickListener, AdapterCallback {
 
@@ -283,8 +280,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 				removeItemFromDB((AudiovisualInterface) row.getObject());
 				adapter.remove(longClickPosition);
 
-				Snackbar.make(listView, row.getTitle() + " " + getResources().getString(R.string.removed), Snackbar.LENGTH_LONG)
-						.show();
+				MyUtils.showSnacknar(listView, row.getTitle() + " " + getResources().getString(R.string.removed));
 				return true;
 			default:
 				return super.onContextItemSelected(item);

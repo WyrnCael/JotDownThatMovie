@@ -10,29 +10,26 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
-import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
-import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
-import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchMovieURLTrailer;
-import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchMovieURLTrailer;
+import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
+import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
 /**
  * Created by Jota on 27/12/2017.
@@ -58,15 +55,13 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.movie_info);
+
         // Back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if(!CheckInternetConection.isConnectingToInternet(InfoMovieShared.this)){
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    getResources().getString(R.string.not_internet),
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
+            MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.not_internet));
         } else {
             if(General.base_url == null){
                 SearchBaseUrl searchor = new SearchBaseUrl(this);
@@ -91,7 +86,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
         searchorMovie.delegate = this;
         MyUtils.execute(searchorMovie);
 
-        setContentView(R.layout.movie_info);
+
 
         //Obtenemos una referencia a los controles de la interfaz
         anyo = (TextView)findViewById(R.id.Anyo);
@@ -113,21 +108,13 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
             @Override
             public void onClick(View v) {
                 if(DAO.getInstance().insert(InfoMovieShared.this, pelicula)){
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!",
-                            Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
+                    MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!");
 
                     Intent intent = new Intent(InfoMovieShared.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!",
-                            Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
+                    MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!");
                 }
 
 
@@ -147,11 +134,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
             @Override
             public void onClick(View v) {
                 if(!CheckInternetConection.isConnectingToInternet(InfoMovieShared.this)){
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.not_internet),
-                            Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
+                    MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.not_internet));
                 } else {
                     pDialog = new ProgressDialog(InfoMovieShared.this);
                     pDialog.setMessage(getResources().getString(R.string.searching));
@@ -164,11 +147,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
                         public void onResponseReceived(Object result) {
                             String trailerId = (String) result;
                             if (trailerId == null) {
-                                Toast toast = Toast.makeText(getApplicationContext(),
-                                        getResources().getString(R.string.notAviableTrailer),
-                                        Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                toast.show();
+                                MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.notAviableTrailer));
                             } else {
                                 pDialog.dismiss();
                                 Intent intent = new Intent(InfoMovieShared.this, YoutubeActivityView.class);

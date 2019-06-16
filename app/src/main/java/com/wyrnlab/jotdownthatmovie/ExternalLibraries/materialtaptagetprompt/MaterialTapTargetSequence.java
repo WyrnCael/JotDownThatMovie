@@ -19,14 +19,14 @@ package com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.PromptOptions;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.sequence.SequenceItem;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.sequence.SequenceItemShowFor;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.sequence.SequenceState;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.sequence.SequenceStatePromptOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Sequence of prompts to be shown one after another
