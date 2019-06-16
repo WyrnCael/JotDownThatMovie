@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 
-import com.wyrnlab.jotdownthatmovie.Utils.Http;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Utils.Http;
 
 import org.json.JSONException;
 import org.json.JSONObject;

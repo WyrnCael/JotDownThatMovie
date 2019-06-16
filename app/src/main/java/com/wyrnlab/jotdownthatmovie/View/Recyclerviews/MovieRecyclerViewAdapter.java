@@ -1,20 +1,16 @@
 package com.wyrnlab.jotdownthatmovie.View.Recyclerviews;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
-import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
-import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,6 +113,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
 
             handler.postDelayed(pendingRemovalRunnable, PENDING_REMOVAL_TIMEOUT);
             pendingRunnables.put(row.getId(), pendingRemovalRunnable);
+
             Snackbar.make(this.parentView, row.getTitle() + " " + context.getResources().getString(R.string.removed), PENDING_REMOVAL_TIMEOUT)
                     .setAction(context.getString(R.string.button_undo), new View.OnClickListener() {
                         @Override
