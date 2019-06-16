@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
-    private static final int PENDING_REMOVAL_TIMEOUT = 3000;
-	private static RecyclerViewClickListener itemListener;
+    protected static final int PENDING_REMOVAL_TIMEOUT = 3000;
+    protected static RecyclerViewClickListener itemListener;
 	Context context;
 	AdapterCallback adapterCallback;
 	public List<RowItem> items;
@@ -27,12 +27,12 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHold
 	int resourceId;
 	MovieViewHolder holderAdapter;
     boolean undoOn = true;
-    private Handler handler = new Handler();
+    protected Handler handler = new Handler();
     HashMap<Integer, Runnable> pendingRunnables = new HashMap<>();
     View parentView;
 
-    public MovieRecyclerViewAdapter(Context context, int resourceId,
-                                    List<RowItem> items, RecyclerViewClickListener itemListener) {
+    public RecyclerViewAdapter(Context context, int resourceId,
+                               List<RowItem> items, RecyclerViewClickListener itemListener) {
         this.context = context;
         this.adapterCallback = (AdapterCallback) context;
         this.resourceId = resourceId;

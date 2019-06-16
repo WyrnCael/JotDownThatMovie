@@ -184,6 +184,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
         } else {
             Intent intent =  new Intent(SearchActivity.this, SearchResultActivity.class);
             intent.putExtra("Type", searchMode);
+			intent.putExtra("TextoABuscar", textoABuscar);
             startActivityForResult(intent, REQUEST_CODE_LISTABUSCADAS);
         }
 
