@@ -4,6 +4,8 @@ Jot down movies or TV Shows recommended by friends.
 
 Now aviable at [Google Play](https://play.google.com/store/apps/details?id=com.wyrnLabs.jotdownthatmovie)! 
 
+<a  href='https://play.google.com/store/apps/details?id=com.wyrnLabs.jotdownthatmovie'><img alt='Get it on Google Play' width="150" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
 ### Functions
 
  - Search a film or TV Show.
