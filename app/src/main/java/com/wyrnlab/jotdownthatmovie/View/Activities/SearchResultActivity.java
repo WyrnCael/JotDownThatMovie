@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,9 +24,10 @@ import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowSearch;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.AdapterCallback;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.EndlessRecyclerViewScrollListener;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemDecorationAddHelper;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchAddHelper;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.MovieRecyclerViewAdapter;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
 
 import java.util.ArrayList;
@@ -39,9 +41,11 @@ public class SearchResultActivity extends AppCompatActivity implements
     List<RowItem> rowItems;
     List<AudiovisualInterface> results;
     List<AudiovisualInterface> rowsToSave;
-    MovieRecyclerViewAdapter adapter;
+    RecyclerViewAdapter adapter;
     int longClickPosition;
- 
+    private EndlessRecyclerViewScrollListener scrollListener;
+    String searchText;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class SearchResultActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         type = getIntent().getStringExtra("Type");
+        searchText = getIntent().getStringExtra("TextoABuscar");
 
         rowsToSave = new ArrayList<AudiovisualInterface>();
         results = (List<AudiovisualInterface>) General.getsSarchResults();
@@ -63,11 +68,29 @@ public class SearchResultActivity extends AppCompatActivity implements
         
  
         listView = (RecyclerView) findViewById(R.id.list);
-        adapter = new MovieRecyclerViewAdapter(this,
+        adapter = new RecyclerViewAdapter(this,
         		R.layout.list_item, rowItems, this);
         listView.setAdapter(adapter);
-        listView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        listView.setLayoutManager(linearLayoutManager);
         registerForContextMenu(listView);
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if(type.equalsIgnoreCase("Movie")) {
+                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchByPage searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchByPage(SearchResultActivity.this, page);
+                    searchor.delegate = SearchResultActivity.this;
+                    searchor.execute(searchText);
+
+                } else {
+                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowByPage searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowByPage(SearchResultActivity.this, page);
+                    searchor.delegate = SearchResultActivity.this;
+                    searchor.execute(searchText);
+                }
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        listView.addOnScrollListener(scrollListener);
 
         //Swipe
         ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, android.support.v7.widget.helper.ItemTouchHelper.LEFT, SearchResultActivity.this);
@@ -132,9 +155,18 @@ public class SearchResultActivity extends AppCompatActivity implements
 
     @Override
     public void processFinish(Object result){
-        DAO.getInstance().insert(SearchResultActivity.this, (AudiovisualInterface) result);
-        String type = ((AudiovisualInterface) result).getTipo()  == General.MOVIE_TYPE ? getResources().getString(R.string.Movie) : getResources().getString(R.string.Show);
-        MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.added));
+        if(result instanceof AudiovisualInterface) {
+            DAO.getInstance().insert(SearchResultActivity.this, (AudiovisualInterface) result);
+            String type = ((AudiovisualInterface) result).getTipo() == General.MOVIE_TYPE ? getResources().getString(R.string.Movie) : getResources().getString(R.string.Show);
+            MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.added));
+        } else {
+            Log.d("RESULTADOS", String.valueOf(((List<AudiovisualInterface>) result).size()));
+            results.addAll((List<AudiovisualInterface>) result);
+            for (AudiovisualInterface movie : ((List<AudiovisualInterface>) result)) {
+                rowItems.add(new RowItem(SearchResultActivity.this, movie));
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
