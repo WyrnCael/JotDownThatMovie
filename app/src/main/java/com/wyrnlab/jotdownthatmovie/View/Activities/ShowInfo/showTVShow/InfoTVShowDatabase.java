@@ -115,7 +115,7 @@ public class InfoTVShowDatabase extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!CheckInternetConection.isConnectingToInternet(InfoTVShowDatabase.this)){
-                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
+                    MyUtils.showSnacknar(findViewById(R.id.scrollView1), getResources().getString(R.string.not_internet));
                 } else {
                     pDialog = new ProgressDialog(InfoTVShowDatabase.this);
                     pDialog.setMessage(getResources().getString(R.string.searching));
@@ -128,7 +128,7 @@ public class InfoTVShowDatabase extends AppCompatActivity {
                         public void onResponseReceived(Object result) {
                             String trailerId = (String) result;
                             if (trailerId == null) {
-                                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.notAviableTrailer));
+                                MyUtils.showSnacknar(findViewById(R.id.scrollView1), getResources().getString(R.string.notAviableTrailer));
                             } else {
                                 pDialog.dismiss();
                                 Intent intent = new Intent(InfoTVShowDatabase.this, YoutubeActivityView.class);

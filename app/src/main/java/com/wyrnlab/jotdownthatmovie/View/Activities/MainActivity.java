@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		closeFABMenu();
 		filter = typeFilter;
 
+		if(adapter.snackbar != null && adapter.snackbar.isShown()){ adapter.snackbar.dismiss(); }
 		adapter.clear();
 		listView.setAdapter(null);
 

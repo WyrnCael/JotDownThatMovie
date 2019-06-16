@@ -1,6 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.View.Recyclerviews;
 
 import android.content.Context;
+import android.inputmethodservice.Keyboard;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     protected Handler handler = new Handler();
     HashMap<Integer, Runnable> pendingRunnables = new HashMap<>();
     View parentView;
+    public Snackbar snackbar;
 
     public RecyclerViewAdapter(Context context, int resourceId,
                                List<RowItem> items, RecyclerViewClickListener itemListener) {
@@ -70,8 +72,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     public void clear() {
         for(Runnable r : pendingRunnables.values()){
-           if (r != null) handler.removeCallbacks(r);
+            if (r != null) handler.removeCallbacks(r);
         }
+
+        for(RowItem row : itemsPendingRemoval){
+            adapterCallback.removeCallback((AudiovisualInterface) row.getObject());
+        }
+
         pendingRunnables.clear();
         itemsPendingRemoval.clear();
 
@@ -113,9 +120,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
             handler.postDelayed(pendingRemovalRunnable, PENDING_REMOVAL_TIMEOUT);
             pendingRunnables.put(row.getId(), pendingRemovalRunnable);
-
-            Snackbar.make(this.parentView, row.getTitle() + " " + context.getResources().getString(R.string.removed), PENDING_REMOVAL_TIMEOUT)
-                    .setAction(context.getString(R.string.button_undo), new View.OnClickListener() {
+            this.snackbar = Snackbar.make(this.parentView, row.getTitle() + " " + context.getResources().getString(R.string.removed), PENDING_REMOVAL_TIMEOUT);
+            this.snackbar.setAction(context.getString(R.string.button_undo), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             items.add(itemPosition, row);
