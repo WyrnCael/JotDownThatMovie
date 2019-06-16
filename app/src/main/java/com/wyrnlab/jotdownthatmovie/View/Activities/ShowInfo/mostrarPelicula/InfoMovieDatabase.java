@@ -97,7 +97,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!CheckInternetConection.isConnectingToInternet(InfoMovieDatabase.this)) {
-                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfo), getResources().getString(R.string.not_internet));
+                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
                 } else {
                     pDialog = new ProgressDialog(InfoMovieDatabase.this);
                     pDialog.setMessage(getResources().getString(R.string.searching));
@@ -110,7 +110,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
                         public void onResponseReceived(Object result) {
                             String trailerId = (String) result;
                             if (trailerId == null) {
-                                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfo), getResources().getString(R.string.notAviableTrailer));
+                                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.notAviableTrailer));
                             } else {
                                 pDialog.dismiss();
                                 Intent intent = new Intent(InfoMovieDatabase.this, YoutubeActivityView.class);
@@ -129,7 +129,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DAO.getInstance().delete(InfoMovieDatabase.this, pelicula.getId());
-                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfo), getResources().getString(R.string.Movie) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!");
+                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.Movie) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!");
                 setResult(Activity.RESULT_OK);
                 finish();
             }
