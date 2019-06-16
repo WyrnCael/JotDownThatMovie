@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +22,13 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchMovieURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
+import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
@@ -44,6 +48,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 	Button botonAnadir;
 	Button botonVolver;
 	Button botonTrailer;
+	ImageView image;
 	private ShareActionProvider mShareActionProvider;
 	
 	@Override
@@ -148,9 +153,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 			valoracion.setText("	" + Double.toString(pelicula.getRating()));
 		}
         
-        ImageView image = (ImageView)findViewById(R.id.poster);
-        ImageLoader imageLoader = new ImageLoader(this);
-        imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
+
     }
 
 	//this override the implemented method from asyncTask
@@ -184,6 +187,18 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         director.setText("	" + direc);
         
         descripcion.setText(pelicula.getDescripcion());
+
+		image = (ImageView)findViewById(R.id.poster);
+		final ImageLoader imageLoader = new ImageLoader(this);
+		imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
+		image.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Code to show image in full screen:
+				new PhotoFullPopupWindow(InfoMovieSearch.this, R.layout.popup_photo_full, view, null, pelicula.getImagePath() == null ? null : ImageHandler.getImage(pelicula.getImage()));
+
+			}
+		});
         
 	}
 	
@@ -213,7 +228,6 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 	}
 
 	private void setShareIntent() {
-		System.out.println("aqui");
 		if (mShareActionProvider != null) {
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
