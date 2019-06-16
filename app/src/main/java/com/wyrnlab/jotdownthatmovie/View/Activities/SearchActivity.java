@@ -192,12 +192,20 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 		// finish();		
 		
 	}
+
+	@Override
+	public void onBackPressed()
+	{
+		setResult(General.RESULT_CODE_FROM_SEARCH);
+		super.onBackPressed();
+	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    switch(requestCode) {
 	        case REQUEST_CODE_LISTABUSCADAS:
 	        	if(resultCode == Activity.RESULT_OK){
+	        		setResult(General.RESULT_CODE_FROM_SEARCH);
 	        		finish();
 	        	}
 		        
