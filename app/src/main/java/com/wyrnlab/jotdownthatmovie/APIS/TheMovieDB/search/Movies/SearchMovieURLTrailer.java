@@ -5,6 +5,10 @@ import android.os.AsyncTask;
 
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,12 +18,6 @@ import java.net.URL;
 import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
-
-import com.wyrnlab.jotdownthatmovie.Model.General;
-import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 /**
  * Created by Jota on 04/03/2017.

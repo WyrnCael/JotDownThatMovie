@@ -11,8 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.wyrnlab.jotdownthatmovie.View.Activities.SearchResultActivity;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.View.Activities.SearchResultActivity;
 
 public class ItemTouchAddHelper extends android.support.v7.widget.helper.ItemTouchHelper.SimpleCallback {
     Drawable background;

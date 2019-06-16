@@ -1,17 +1,16 @@
 package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion;
 
+import android.os.AsyncTask;
+
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
+import com.wyrnlab.jotdownthatmovie.Model.General;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import android.os.AsyncTask;
-
-import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
-
-import com.wyrnlab.jotdownthatmovie.Model.General;
 
 public class Connect extends AsyncTask<String, Integer, Integer> {
 

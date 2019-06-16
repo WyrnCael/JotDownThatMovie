@@ -3,6 +3,8 @@ package com.wyrnlab.jotdownthatmovie.Utils;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 public class MyUtils {
 
@@ -13,5 +15,10 @@ public class MyUtils {
         } else {
             task.execute(params);
         }
+    }
+
+    public static void showSnacknar(View view, String text) {
+        Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+                .show();
     }
 }

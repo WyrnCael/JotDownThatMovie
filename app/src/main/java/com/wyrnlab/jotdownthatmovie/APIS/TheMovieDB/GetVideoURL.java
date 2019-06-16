@@ -1,5 +1,25 @@
 package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings.PluginState;
+import android.webkit.WebView;
+import android.widget.Toast;
+
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
+import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
+import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,27 +29,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import com.wyrnlab.jotdownthatmovie.R;
-
-import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
-import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
-
-import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
-import com.wyrnlab.jotdownthatmovie.Model.General;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebSettings.PluginState;
-import android.widget.Toast;
-import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
-import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 public class GetVideoURL extends Activity{
 
@@ -42,7 +41,7 @@ public class GetVideoURL extends Activity{
         
         Intent i = getIntent();
         pelicula = (Pelicula)i.getSerializableExtra("Pelicula");
-        
+
         setContentView(R.layout.video_player);        
         
         SearchURLMovie searchorMovie = new SearchURLMovie(this);

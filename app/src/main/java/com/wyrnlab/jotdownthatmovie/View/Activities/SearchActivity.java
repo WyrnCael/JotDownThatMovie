@@ -1,18 +1,5 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.wyrnlab.jotdownthatmovie.APIS.Analytics.SearchAnalytics;
-import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
-import com.wyrnlab.jotdownthatmovie.Model.General;
-
-import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -23,15 +10,25 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View.OnClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.wyrnlab.jotdownthatmovie.APIS.Analytics.SearchAnalytics;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 
@@ -102,11 +99,8 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
         txtSearchName.requestFocus();
 
 		if(!CheckInternetConection.isConnectingToInternet(SearchActivity.this)){
-			Toast toast = Toast.makeText(getApplicationContext(),
-					getResources().getString(R.string.not_internet),
-					Toast.LENGTH_SHORT);
-			toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-			toast.show();
+			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.not_internet));
+
 		} else {
 			if(General.base_url == null){
 				SearchBaseUrl searchor = new SearchBaseUrl(this);
@@ -122,11 +116,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 		textoABuscar = query;
 
 		if(!CheckInternetConection.isConnectingToInternet(SearchActivity.this)){
-            Toast toast = Toast.makeText(getApplicationContext(),
-					getResources().getString(R.string.not_internet),
-					Toast.LENGTH_SHORT);
-			toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-			toast.show();
+			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.not_internet));
 		} else {
 			if(searchMode.equalsIgnoreCase("Movie")){
 				com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchActivity.this);
@@ -188,17 +178,9 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 		}
 
 		if(result == null){
-			Toast toast = Toast.makeText(getApplicationContext(),
-					getResources().getString(R.string.empty_search),
-					Toast.LENGTH_SHORT);
-			toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-			toast.show();
+			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.empty_search));
 		} else if( ((List<AudiovisualInterface>) result).size() == 0) {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    getResources().getString(R.string.without_results),
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
+			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.without_results));
         } else {
             Intent intent =  new Intent(SearchActivity.this, SearchResultActivity.class);
             intent.putExtra("Type", searchMode);

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
+import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,9 +15,6 @@ import java.net.URL;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
-import com.wyrnlab.jotdownthatmovie.Model.General;
 
 /**
  * Created by Jota on 27/12/2017.

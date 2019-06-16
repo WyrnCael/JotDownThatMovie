@@ -6,15 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.text.TextUtils;
 
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
-import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 
 /**
  * Created by Jota on 13/12/2017.

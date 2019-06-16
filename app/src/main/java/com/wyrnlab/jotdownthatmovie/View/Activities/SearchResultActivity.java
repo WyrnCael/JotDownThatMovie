@@ -1,29 +1,8 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.AdapterCallback;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemDecorationAddHelper;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchAddHelper;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.MovieRecyclerViewAdapter;
-import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
-import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
-import com.wyrnlab.jotdownthatmovie.Model.General;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
-import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowSearch;
-import com.wyrnlab.jotdownthatmovie.Model.RowItem;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +10,26 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
+import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowSearch;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.AdapterCallback;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemDecorationAddHelper;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchAddHelper;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.MovieRecyclerViewAdapter;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchResultActivity extends AppCompatActivity implements
         AsyncResponse, AdapterCallback, RecyclerViewClickListener {
@@ -136,8 +134,7 @@ public class SearchResultActivity extends AppCompatActivity implements
     public void processFinish(Object result){
         DAO.getInstance().insert(SearchResultActivity.this, (AudiovisualInterface) result);
         String type = ((AudiovisualInterface) result).getTipo()  == General.MOVIE_TYPE ? getResources().getString(R.string.Movie) : getResources().getString(R.string.Show);
-        Snackbar.make(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.added), Snackbar.LENGTH_LONG)
-                .show();
+        MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.added));
     }
 
     @Override

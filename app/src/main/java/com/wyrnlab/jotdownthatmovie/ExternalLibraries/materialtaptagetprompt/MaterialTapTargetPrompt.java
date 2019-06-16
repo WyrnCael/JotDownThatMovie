@@ -44,9 +44,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import com.wyrnlab.jotdownthatmovie.R;
-
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.PromptOptions;
+import com.wyrnlab.jotdownthatmovie.R;
 
 /**
  * A Material Design tap target onboarding implementation.

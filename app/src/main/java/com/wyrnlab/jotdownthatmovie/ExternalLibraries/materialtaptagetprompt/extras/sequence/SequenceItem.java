@@ -19,11 +19,11 @@ package com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.ex
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.MaterialTapTargetPrompt;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.MaterialTapTargetSequence;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a prompt to display in a sequence.

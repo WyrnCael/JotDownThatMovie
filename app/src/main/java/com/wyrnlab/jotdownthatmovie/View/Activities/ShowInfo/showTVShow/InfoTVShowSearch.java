@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,20 +15,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
-import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
-import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
-import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowURLTrailer;
+import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
 public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse {
 
@@ -91,20 +88,12 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
              @Override
              public void onClick(View v) {
 				 if(DAO.getInstance().insert(InfoTVShowSearch.this, pelicula)){
-					 Toast toast = Toast.makeText(getApplicationContext(),
-							 getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!",
-							 Toast.LENGTH_SHORT);
-					 toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-					 toast.show();
+					 MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.added) + "!");
 
 					 setResult(Activity.RESULT_OK);
 					 finish();
 				 } else {
-					 Toast toast = Toast.makeText(getApplicationContext(),
-							 getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!",
-							 Toast.LENGTH_SHORT);
-					 toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-					 toast.show();
+					 MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!");
 				 }
             	 
 
@@ -124,11 +113,7 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
             @Override
             public void onClick(View v) {
 				if(!CheckInternetConection.isConnectingToInternet(InfoTVShowSearch.this)){
-					Toast toast = Toast.makeText(getApplicationContext(),
-							getResources().getString(R.string.not_internet),
-							Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-					toast.show();
+					MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), getResources().getString(R.string.not_internet));
 				} else {
 					pDialog = new ProgressDialog(InfoTVShowSearch.this);
 					pDialog.setMessage(getResources().getString(R.string.searching));
@@ -141,11 +126,7 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 						public void onResponseReceived(Object result) {
 							String trailerId = (String) result;
 							if (trailerId == null) {
-								Toast toast = Toast.makeText(getApplicationContext(),
-										getResources().getString(R.string.notAviableTrailer),
-										Toast.LENGTH_SHORT);
-								toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-								toast.show();
+								MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), getResources().getString(R.string.notAviableTrailer));
 							} else {
 								pDialog.dismiss();
 								Intent intent = new Intent(InfoTVShowSearch.this, YoutubeActivityView.class);

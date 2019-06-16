@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,17 +15,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.R;
-import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
-import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
-import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
-import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
-
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowURLTrailer;
+import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
+import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
 public class InfoTVShowDatabase extends AppCompatActivity {
 
@@ -99,11 +96,7 @@ public class InfoTVShowDatabase extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!CheckInternetConection.isConnectingToInternet(InfoTVShowDatabase.this)){
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.not_internet),
-                            Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
+                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
                 } else {
                     pDialog = new ProgressDialog(InfoTVShowDatabase.this);
                     pDialog.setMessage(getResources().getString(R.string.searching));
@@ -116,11 +109,7 @@ public class InfoTVShowDatabase extends AppCompatActivity {
                         public void onResponseReceived(Object result) {
                             String trailerId = (String) result;
                             if (trailerId == null) {
-                                Toast toast = Toast.makeText(getApplicationContext(),
-                                        getResources().getString(R.string.notAviableTrailer),
-                                        Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                toast.show();
+                                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.notAviableTrailer));
                             } else {
                                 pDialog.dismiss();
                                 Intent intent = new Intent(InfoTVShowDatabase.this, YoutubeActivityView.class);
@@ -139,7 +128,7 @@ public class InfoTVShowDatabase extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DAO.getInstance().delete(InfoTVShowDatabase.this, pelicula.getId());
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Show) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!", Toast.LENGTH_SHORT).show();
+                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.Show) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.removed) + "!");
                 setResult(Activity.RESULT_OK);
                 finish();
             }
