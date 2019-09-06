@@ -3,6 +3,7 @@ package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
@@ -103,6 +104,7 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
     }
 
     private void leerJSONBuscar(String json) throws IOException{
+        Log.d("JSON", json);
         JsonObject respuestaTotal = JsonObject.readFrom( json );
         if(respuestaTotal.get("results") != null) {
             JsonArray res = respuestaTotal.get("results").asArray();
@@ -112,7 +114,8 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
                 tvShow.setTituloOriginal(results.get("original_name").asString());
                 tvShow.setTitulo(results.get("name").asString());
                 tvShow.setId(results.get("id").asInt());
-                if (!results.get("first_air_date").isNull()) {
+                // TODO: Remove .isNull and test all
+                if (results.get("first_air_date") != null && !results.get("first_air_date").isNull()) {
                     // Recortar año
                     String an = results.get("first_air_date").asString();
                     String anyo;

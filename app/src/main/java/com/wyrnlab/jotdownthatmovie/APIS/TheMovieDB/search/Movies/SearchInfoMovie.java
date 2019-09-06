@@ -137,7 +137,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
         pelicula.setTituloOriginal(info.get("original_title").asString());
         pelicula.setTitulo(info.get("title").asString());
         pelicula.setId(info.get("id").asInt());
-        if (!info.get("release_date").isNull()) {
+        if (info.get("release_date") != null && !info.get("release_date").isNull()) {
             // Recortar año
             String an = info.get("release_date").asString();
             String anyo;
@@ -156,7 +156,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
             getOtrosPosters();
         }
         pelicula.setRating(info.get("vote_average").asDouble());
-        if(info.get("overview").isNull()){
+        if(info.get("overview") == null || info.get("overview").isNull()){
             pelicula.setDescripcion("");
         }
         else{

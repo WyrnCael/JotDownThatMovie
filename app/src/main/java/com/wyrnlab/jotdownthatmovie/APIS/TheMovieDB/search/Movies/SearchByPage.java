@@ -116,7 +116,7 @@ public class SearchByPage extends AsyncTask<String, Integer, List<Pelicula>> {
                 pelicula.setTituloOriginal(results.get("original_title").asString());
                 pelicula.setTitulo(results.get("title").asString());
                 pelicula.setId(results.get("id").asInt());
-                if (!results.get("release_date").isNull()) {
+                if (results.get("release_date") != null && !results.get("release_date").isNull()) {
                     // Recortar año
                     String an = results.get("release_date").asString();
                     String anyo;

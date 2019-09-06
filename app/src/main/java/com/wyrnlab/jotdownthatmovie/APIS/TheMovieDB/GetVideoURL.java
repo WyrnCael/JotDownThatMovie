@@ -157,7 +157,7 @@ public class GetVideoURL extends Activity{
     		
     		JsonObject info = JsonObject.readFrom( json );
     		JsonArray results = info.get("results").asArray();
-    		if(!results.isNull()){
+    		if(results != null && !results.isNull()){
     			if(results.size() > 0){
 		    		for (int i = 0; i < 1 ; i++){
 		    			JsonObject video = results.get(i).asObject();

@@ -114,7 +114,7 @@ public class SearchShowByPage extends AsyncTask<String, Integer, List<TVShow>> {
                 tvShow.setTituloOriginal(results.get("original_name").asString());
                 tvShow.setTitulo(results.get("name").asString());
                 tvShow.setId(results.get("id").asInt());
-                if (!results.get("first_air_date").isNull()) {
+                if (results.get("first_air_date") != null && !results.get("first_air_date").isNull()) {
                     // Recortar año
                     String an = results.get("first_air_date").asString();
                     String anyo;
