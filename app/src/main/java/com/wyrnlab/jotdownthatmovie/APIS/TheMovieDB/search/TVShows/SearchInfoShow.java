@@ -138,7 +138,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
         tvShow.setTituloOriginal(info.get("original_name").asString());
         tvShow.setTitulo(info.get("name").asString());
         tvShow.setId(info.get("id").asInt());
-        if (!info.get("first_air_date").isNull()) {
+        if (info.get("first_air_date") != null && !info.get("first_air_date").isNull()) {
             // Recortar año
             String an = info.get("first_air_date").asString();
             String anyo;
@@ -157,7 +157,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
             getOtrosPosters();
         }
         tvShow.setRating(info.get("vote_average").asDouble());
-        if(info.get("overview").isNull()){
+        if(info.get("overview") == null || info.get("overview").isNull()){
             tvShow.setDescripcion("");
         }
         else{
