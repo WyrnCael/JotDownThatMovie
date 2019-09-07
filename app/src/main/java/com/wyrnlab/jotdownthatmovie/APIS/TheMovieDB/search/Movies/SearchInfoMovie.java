@@ -7,21 +7,23 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCredits;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelMovie;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Locale;
@@ -86,152 +88,32 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
 
 
     private void getSinopsisPelicula() throws IOException{
-        String web = null;
-
         String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
 
-        URL oracle = new URL(url);
-        yc = (HttpsURLConnection) oracle.openConnection();
-        String json = "";
-
-        //yc.setDoOutput(true);
-        yc.setDoInput(true);
-        yc.setInstanceFollowRedirects(false);
-        yc.setRequestMethod("GET");
-        //yc.setUseCaches (true);
-        yc.setRequestProperty("Accept", "application/json");
-
-        yc.connect();
-
-        InputStream is = null;
-        try {
-            is = yc.getInputStream();
-        } catch (IOException ioe) {
-            if (yc instanceof HttpsURLConnection) {
-                HttpsURLConnection httpConn = (HttpsURLConnection) yc;
-                int statusCode = httpConn.getResponseCode();
-                if (statusCode != 200) {
-                    is = httpConn.getErrorStream();
-                }
-            }
-        }
-
-        InputStreamReader isReader = new InputStreamReader(is);
-        //put output stream into a string
-        BufferedReader br = new BufferedReader(isReader );
-        String inputLine;
-        while ((inputLine = br.readLine()) != null)
-            web += inputLine;
-        br.close();
-        yc.disconnect();
-
-        yc.disconnect();
-
-        json = web.substring(4);
-
-        leerJSONSinopsis(json);
+        leerJSONSinopsis(MyUtils.getHttpRequest(url));
     }
 
     private void leerJSONSinopsis(String json) throws IOException{
-        JsonObject info = JsonObject.readFrom( json );
-        pelicula.setTituloOriginal(info.get("original_title").asString());
-        pelicula.setTitulo(info.get("title").asString());
-        pelicula.setId(info.get("id").asInt());
-        if (info.get("release_date") != null && !info.get("release_date").isNull()) {
-            // Recortar año
-            String an = info.get("release_date").asString();
-            String anyo;
-            if (an.length() > 0) {
-                anyo = an.substring(0, 4);
-            } else {
-                anyo = "N/D";
-            }
-            pelicula.setAnyo(anyo);
-        } else {
-            pelicula.setAnyo("N/D");
-        }
-        if (info.get("poster_path").isString()) {
-            pelicula.setImagePath(info.get("poster_path").asString());
-        } else {
+
+        ModelMovie movie = new Gson().fromJson(json, ModelMovie.class);
+        pelicula.setDataFromJson(movie);
+        if(pelicula.getImagePath() == null) {
             getOtrosPosters();
         }
-        pelicula.setRating(info.get("vote_average").asDouble());
-        if(info.get("overview") == null || info.get("overview").isNull()){
-            pelicula.setDescripcion("");
-        }
-        else{
-            pelicula.setDescripcion(info.get("overview").asString());
-        }
-
-        JsonArray aux = info.get("genres").asArray();
-        for (int i = 0; i < aux.size() ; i++){
-            JsonObject genero = aux.get(i).asObject();
-            pelicula.addGeneros(genero.get("name").asString());
-        }
-
-        pelicula.setTipo("Movie");
-        pelicula.setSource(General.NET_SOURCE);
     }
 
     private void getCreditsPelicula() throws IOException{
-        String web = null;
-
         String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
 
-        URL oracle = new URL(url);
-        yc = (HttpsURLConnection) oracle.openConnection();
-        String json = "";
-
-        //yc.setDoOutput(true);
-        yc.setDoInput(true);
-        yc.setInstanceFollowRedirects(false);
-        yc.setRequestMethod("GET");
-        //yc.setUseCaches (true);
-        yc.setRequestProperty("Accept", "application/json");
-
-        yc.connect();
-
-        InputStream is = null;
-        try {
-            is = yc.getInputStream();
-        } catch (IOException ioe) {
-            if (yc instanceof HttpsURLConnection) {
-                HttpsURLConnection httpConn = (HttpsURLConnection) yc;
-                int statusCode = httpConn.getResponseCode();
-                if (statusCode != 200) {
-                    is = httpConn.getErrorStream();
-                }
-            }
-        }
-
-        InputStreamReader isReader = new InputStreamReader(is);
-        //put output stream into a string
-        BufferedReader br = new BufferedReader(isReader );
-        String inputLine;
-        while ((inputLine = br.readLine()) != null)
-            web += inputLine;
-        br.close();
-        yc.disconnect();
-
-        yc.disconnect();
-
-        json = web.substring(4);
-
-        leerJSONCredits(json);
+        leerJSONCredits(MyUtils.getHttpRequest(url));
     }
 
     private void leerJSONCredits(String json) throws IOException{
-        JsonObject info = JsonObject.readFrom( json );
-        JsonArray aux = info.get("crew").asArray();
-        String[] directores = new String[aux.size()];
-        for (int i = 0; i < aux.size() ; i++){
-            JsonObject person = aux.get(i).asObject();
-            try{
-                if (person.get("job").asString().equalsIgnoreCase("Director")){
-                    pelicula.addDirectores(person.get("name").asString());
-                }
-            } catch (NullPointerException e){
+        ModelCredits results = new Gson().fromJson(json, ModelCredits.class);
 
+        for (ModelCredits.ModelCrew model : results.crew){
+            if (model.job.equalsIgnoreCase("Director")){
+                    pelicula.addDirectores(model.name);
             }
         }
     }
@@ -265,50 +147,9 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
     }
 
     private void getOtrosPosters() throws IOException{
-        String web = null;
-
         String url = General.URLPRINCIPAL + "/3/movie/" + pelicula.getId() + "/images?api_key=" + General.APIKEY;
 
-        URL oracle = new URL(url);
-        yc = (HttpsURLConnection) oracle.openConnection();
-        String json = "";
-
-        //yc.setDoOutput(true);
-        yc.setDoInput(true);
-        yc.setInstanceFollowRedirects(false);
-        yc.setRequestMethod("GET");
-        //yc.setUseCaches (true);
-        yc.setRequestProperty("Accept", "application/json");
-
-        yc.connect();
-
-        InputStream is = null;
-        try {
-            is = yc.getInputStream();
-        } catch (IOException ioe) {
-            if (yc instanceof HttpsURLConnection) {
-                HttpsURLConnection httpConn = (HttpsURLConnection) yc;
-                int statusCode = httpConn.getResponseCode();
-                if (statusCode != 200) {
-                    is = httpConn.getErrorStream();
-                }
-            }
-        }
-
-        InputStreamReader isReader = new InputStreamReader(is);
-        //put output stream into a string
-        BufferedReader br = new BufferedReader(isReader );
-        String inputLine;
-        while ((inputLine = br.readLine()) != null)
-            web += inputLine;
-        br.close();
-        yc.disconnect();
-
-        yc.disconnect();
-
-        json = web.substring(4);
-
-        leerJSONOtrosPosters(json);
+        leerJSONOtrosPosters(MyUtils.getHttpRequest(url));
     }
 
     private void leerJSONOtrosPosters(String json) throws IOException{

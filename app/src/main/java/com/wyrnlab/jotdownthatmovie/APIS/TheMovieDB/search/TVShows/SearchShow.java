@@ -3,21 +3,20 @@ package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
+import com.google.gson.Gson;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.JSOMModels.TVShows.ModelSearchTVShow;
+import com.wyrnlab.jotdownthatmovie.Model.JSOMModels.TVShows.ModelShow;
 import com.wyrnlab.jotdownthatmovie.Model.TVShow;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +36,12 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
     ProgressDialog pDialog;
     Context context;
     TVShow tvShow;
+    Integer page;
 
-    public SearchShow(Context context){
+    public SearchShow(Context context, Integer page){
         this.shows = new ArrayList<TVShow>();
         this.context = context;
+        this.page = page;
     }
 
     @Override
@@ -52,95 +53,6 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
         pDialog.setCancelable(true);
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.show();
-    }
-
-    public List<TVShow> buscar(String nombre)  throws IOException {
-        String web = null;
-
-        @SuppressWarnings("deprecation")
-        String url = General.URLPRINCIPAL + "3/search/tv?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()) + "&query=" + URLEncoder.encode(nombre) ;
-        URL oracle = new URL(url);
-        yc = (HttpsURLConnection) oracle.openConnection();
-        String json = "";
-
-        //yc.setDoOutput(true);
-        yc.setDoInput(true);
-        yc.setInstanceFollowRedirects(false);
-        yc.setRequestMethod("GET");
-        //yc.setUseCaches (false);
-        yc.setRequestProperty("Accept", "application/json");
-
-        yc.connect();
-
-        InputStream is = null;
-        try {
-            is = yc.getInputStream();
-        } catch (IOException ioe) {
-            if (yc instanceof HttpsURLConnection) {
-                HttpsURLConnection httpConn = (HttpsURLConnection) yc;
-                int statusCode = httpConn.getResponseCode();
-                if (statusCode != 200) {
-                    is = httpConn.getErrorStream();
-                }
-            }
-        }
-
-        InputStreamReader isReader = new InputStreamReader(is);
-        //put output stream into a string
-        BufferedReader br = new BufferedReader(isReader );
-        String inputLine;
-        while ((inputLine = br.readLine()) != null)
-            web += inputLine;
-        br.close();
-        yc.disconnect();
-
-        yc.disconnect();
-
-        json = web.substring(4);
-
-        leerJSONBuscar(json);
-
-        return this.shows;
-    }
-
-    private void leerJSONBuscar(String json) throws IOException{
-        Log.d("JSON", json);
-        JsonObject respuestaTotal = JsonObject.readFrom( json );
-        if(respuestaTotal.get("results") != null) {
-            JsonArray res = respuestaTotal.get("results").asArray();
-            for (int i = 0; i < res.size(); i++) {
-                tvShow = new TVShow();
-                JsonObject results = JsonObject.readFrom(res.get(i).toString());
-                tvShow.setTituloOriginal(results.get("original_name").asString());
-                tvShow.setTitulo(results.get("name").asString());
-                tvShow.setId(results.get("id").asInt());
-                // TODO: Remove .isNull and test all
-                if (results.get("first_air_date") != null && !results.get("first_air_date").isNull()) {
-                    // Recortar año
-                    String an = results.get("first_air_date").asString();
-                    String anyo;
-                    if (an.length() > 0) {
-                        anyo = an.substring(0, 4);
-                    } else {
-                        anyo = "N/D";
-                    }
-                    tvShow.setAnyo(anyo);
-                } else {
-                    tvShow.setAnyo("N/D");
-                }
-                if (results.get("poster_path").isString()) {
-                    tvShow.setImagePath(results.get("poster_path").asString());
-                } else {
-                    getOtrosPosters();
-                }
-                tvShow.setRating(results.get("vote_average").asDouble());
-                tvShow.setTipo("Show");
-                this.shows.add(tvShow);
-                tvShow.setSource(General.NET_SOURCE);
-            }
-        } else {
-            this.shows = null;
-        }
     }
 
     @Override
@@ -164,53 +76,35 @@ public class SearchShow extends AsyncTask<String, Integer, List<TVShow>> {
         delegate.processFinish(result);
     }
 
+    public List<TVShow> buscar(String nombre)  throws IOException {
+        String url = General.URLPRINCIPAL + "3/search/tv?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()) + "&query=" + URLEncoder.encode(nombre) ;
+        url += this.page == null ? "" : "&page=" + this.page;
 
+        leerJSONBuscar(MyUtils.getHttpRequest(url));
 
-    private void getOtrosPosters() throws IOException{
-        String web = null;
+        return this.shows;
+    }
 
-        String url = General.URLPRINCIPAL + "/3/tv/" + tvShow.getId() + "/images?api_key=" + General.APIKEY;
+    private void leerJSONBuscar(String json) throws IOException{
 
-        URL oracle = new URL(url);
-        yc = (HttpsURLConnection) oracle.openConnection();
-        String json = "";
+        ModelSearchTVShow results = new Gson().fromJson(json, ModelSearchTVShow.class);
 
-        //yc.setDoOutput(true);
-        yc.setDoInput(true);
-        yc.setInstanceFollowRedirects(false);
-        yc.setRequestMethod("GET");
-        //yc.setUseCaches (true);
-        yc.setRequestProperty("Accept", "application/json");
-
-        yc.connect();
-
-        InputStream is = null;
-        try {
-            is = yc.getInputStream();
-        } catch (IOException ioe) {
-            if (yc instanceof HttpsURLConnection) {
-                HttpsURLConnection httpConn = (HttpsURLConnection) yc;
-                int statusCode = httpConn.getResponseCode();
-                if (statusCode != 200) {
-                    is = httpConn.getErrorStream();
+        if(results.results.length > 0) {
+            for (ModelShow model : results.results) {
+                tvShow = new TVShow();
+                tvShow.setDataFromJson(model);
+                if(tvShow.getImagePath() == null) {
+                    getOtrosPosters();
                 }
+                this.shows.add(tvShow);
             }
         }
+    }
 
-        InputStreamReader isReader = new InputStreamReader(is);
-        //put output stream into a string
-        BufferedReader br = new BufferedReader(isReader );
-        String inputLine;
-        while ((inputLine = br.readLine()) != null)
-            web += inputLine;
-        br.close();
-        yc.disconnect();
+    private void getOtrosPosters() throws IOException{
+        String url = General.URLPRINCIPAL + "/3/tv/" + tvShow.getId() + "/images?api_key=" + General.APIKEY;
 
-        yc.disconnect();
-
-        json = web.substring(4);
-
-        leerJSONOtrosPosters(json);
+        leerJSONOtrosPosters(MyUtils.getHttpRequest(url));
     }
 
     private void leerJSONOtrosPosters(String json) throws IOException{

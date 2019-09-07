@@ -119,12 +119,12 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.not_internet));
 		} else {
 			if(searchMode.equalsIgnoreCase("Movie")){
-				com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchActivity.this);
+				com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchActivity.this, null);
 				searchor.delegate = this;
 				searchor.execute(textoABuscar);
 			}
 			else{
-				com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow(SearchActivity.this);
+				com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow(SearchActivity.this, null);
 				searchor.delegate = this;
 				searchor.execute(textoABuscar);
 			}

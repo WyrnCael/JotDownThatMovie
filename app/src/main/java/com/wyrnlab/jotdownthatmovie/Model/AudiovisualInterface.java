@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AudiovisualInterface implements Serializable {
-    private int Id;
-    private double Rating;
-    private String Titulo;
-    private String TituloOriginal;
-    private String Image_path;
-    private byte[] image;
-    private String Anyo;
-    private String Descripcion;
-    private List<String> Generos;
-    private List<String> Directores;
-    private String Tipo;
-    private String Seasons;
-    private String source;
+    protected int Id;
+    protected double Rating;
+    protected String Titulo;
+    protected String TituloOriginal;
+    protected String Image_path;
+    protected byte[] image;
+    protected String Anyo;
+    protected String Descripcion;
+    protected List<String> Generos;
+    protected List<String> Directores;
+    protected String Tipo;
+    protected String Seasons;
+    protected String source;
 
    public String getSource() {
         return source;

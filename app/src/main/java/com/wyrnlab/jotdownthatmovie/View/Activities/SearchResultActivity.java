@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -78,12 +77,12 @@ public class SearchResultActivity extends AppCompatActivity implements
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 if(type.equalsIgnoreCase("Movie")) {
-                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchByPage searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchByPage(SearchResultActivity.this, page);
+                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchResultActivity.this, page);
                     searchor.delegate = SearchResultActivity.this;
                     searchor.execute(searchText);
 
                 } else {
-                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowByPage searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowByPage(SearchResultActivity.this, page);
+                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow(SearchResultActivity.this, page);
                     searchor.delegate = SearchResultActivity.this;
                     searchor.execute(searchText);
                 }
