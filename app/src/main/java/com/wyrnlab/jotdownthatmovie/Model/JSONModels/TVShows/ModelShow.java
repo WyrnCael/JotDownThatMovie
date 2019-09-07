@@ -1,4 +1,4 @@
-package com.wyrnlab.jotdownthatmovie.Model.JSOMModels.TVShows;
+package com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows;
 
 import com.wyrnlab.jotdownthatmovie.Model.ModelGenres;
 
