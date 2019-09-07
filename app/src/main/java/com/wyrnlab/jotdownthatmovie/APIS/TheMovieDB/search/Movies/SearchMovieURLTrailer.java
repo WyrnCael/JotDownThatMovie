@@ -8,13 +8,10 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
+import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -60,50 +57,9 @@ public abstract class SearchMovieURLTrailer extends AsyncTask<String, Integer, S
 
 
     private void getURLPelicula() throws IOException{
-        String web = null;
-
         String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
 
-        URL oracle = new URL(url);
-        yc = (HttpsURLConnection) oracle.openConnection();
-        String json = "";
-
-        //yc.setDoOutput(true);
-        yc.setDoInput(true);
-        yc.setInstanceFollowRedirects(false);
-        yc.setRequestMethod("GET");
-        //yc.setUseCaches (true);
-        yc.setRequestProperty("Accept", "application/json");
-
-        yc.connect();
-
-        InputStream is = null;
-        try {
-            is = yc.getInputStream();
-        } catch (IOException ioe) {
-            if (yc instanceof HttpsURLConnection) {
-                HttpsURLConnection httpConn = (HttpsURLConnection) yc;
-                int statusCode = httpConn.getResponseCode();
-                if (statusCode != 200) {
-                    is = httpConn.getErrorStream();
-                }
-            }
-        }
-
-        InputStreamReader isReader = new InputStreamReader(is);
-        //put output stream into a string
-        BufferedReader br = new BufferedReader(isReader );
-        String inputLine;
-        while ((inputLine = br.readLine()) != null)
-            web += inputLine;
-        br.close();
-        yc.disconnect();
-
-        yc.disconnect();
-
-        json = web.substring(4);
-
-        leerJSONUrl(json);
+        leerJSONUrl(MyUtils.getHttpRequest(url));
     }
 
     private void leerJSONUrl(String json) throws IOException{
