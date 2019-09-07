@@ -1,4 +1,4 @@
-package com.wyrnlab.jotdownthatmovie.Model.JSOMModels.TVShows;
+package com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows;
 
 public class ModelSearchTVShow {
     public Integer page;
