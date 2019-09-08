@@ -1,6 +1,6 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
-import com.wyrnlab.jotdownthatmovie.Model.JSOMModels.TVShows.ModelShow;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelShow;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 
 import java.io.Serializable;

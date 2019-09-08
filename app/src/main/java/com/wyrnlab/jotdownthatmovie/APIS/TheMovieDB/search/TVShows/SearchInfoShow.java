@@ -12,7 +12,7 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
 import com.wyrnlab.jotdownthatmovie.Model.General;
-import com.wyrnlab.jotdownthatmovie.Model.JSOMModels.TVShows.ModelShow;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelShow;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCredits;
 import com.wyrnlab.jotdownthatmovie.Model.TVShow;
 import com.wyrnlab.jotdownthatmovie.R;
