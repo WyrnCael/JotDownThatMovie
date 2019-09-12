@@ -290,11 +290,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		switch (item.getItemId()) {
 			case R.id.CtxLstOpc2:
 				final RowItem row = rowItems.get(longClickPosition);
-				final AudiovisualInterface movie = (AudiovisualInterface) row.getObject();
-				removeItemFromDB((AudiovisualInterface) row.getObject());
-				adapter.remove(longClickPosition);
-
-				MyUtils.showSnacknar(listView, row.getTitle() + " " + getResources().getString(R.string.removed));
+				adapter.pendingRemoval(longClickPosition);
 				return true;
 			default:
 				return super.onContextItemSelected(item);
