@@ -148,7 +148,7 @@ public class SearchResultActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.CtxAdd:
                 //addItem(item);
-
+                adapter.remove(longClickPosition);
                 return true;
             default:
                 return super.onContextItemSelected(item);
