@@ -7,9 +7,9 @@ import java.util.List;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
-    public final static String APIKEY = "15ff919fb76802006d34be91f8ecdc3f";
-    public final static String YAPIKEY = "AIzaSyC1yfVSgg9_qqxh1nfjA6zIACzO9kU53b8";
-    public final static String ANALYTICS_APIKEY = "uIuFHU8GEv3XXQ7YkuzsRFTS3p3D1QJy";
+    public final static String APIKEY = ""/**/;
+    public final static String YAPIKEY = ""/**/;
+    public final static String ANALYTICS_APIKEY = ""/**/;
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
