@@ -13,11 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:background="@null"
-        android:elevation="5dp"
-        android:padding="3dp"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+        android:background="@android:color/transparent"
+        android:stateListAnimator="@null"
+        android:elevation="1dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_close"
+        app:srcCompat="@drawable/ic_close" />
 
 
 
@@ -38,13 +39,16 @@
                     android:id="@+id/similar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:text="@string/SimilarMovies"
                     android:textAlignment="center"
                     android:textColor="@color/blanco"
+                    android:textSize="24sp"
                     android:textStyle="bold"
-                    app:fontFamily="@font/raleway" />
+                    app:fontFamily="@font/raleway"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp" />
             </TableRow>
 
             <TableRow

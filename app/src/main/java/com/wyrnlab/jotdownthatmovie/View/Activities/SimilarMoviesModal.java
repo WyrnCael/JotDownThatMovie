@@ -2,6 +2,7 @@ package com.wyrnlab.jotdownthatmovie.View.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -17,8 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroupOverlay;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
@@ -67,7 +71,7 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.similar_list, null);
+        final View popupView = inflater.inflate(R.layout.similar_list, null);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -83,7 +87,7 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.setElevation(20);
         popupWindow.setWidth(widthS-80);
-        popupWindow.setHeight(heightS-80);
+        popupWindow.setHeight(heightS-180);
 
         Drawable dim = new ColorDrawable(Color.BLACK);
         ViewGroup root = (ViewGroup) activity.getWindow().getDecorView().getRootView();
@@ -111,6 +115,15 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
             @Override
             public void onDismiss() {
                 activity.getWindow().getDecorView().getRootView().getOverlay().clear();
+            }
+        });
+
+        ImageButton close = (ImageButton) popupView.findViewById(R.id.ib_close);
+        close.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
             }
         });
     }
