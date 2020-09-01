@@ -1,14 +1,15 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
-    public final static String APIKEY = /*YOUR THE MOVIE DB API KEY */;
-    public final static String YAPIKEY = /*YOUR YOUTUBE API KEY */;
-    public final static String ANALYTICS_APIKEY = /* YOUR NODE APPLICATION, OPTIONAL, NOT NEEDED */;
+    public final static String APIKEY = "/*YOUR_TMDB_APIKEY*/";
+    public final static String YAPIKEY = "/*YOUR_YOUTUBE_APIKEY*/";
+    public final static String ANALYTICS_APIKEY = "uIuFHU8GEv3XXQ7YkuzsRFTS3p3D1QJy";
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
@@ -18,8 +19,9 @@ public class General {
     public final static int REQUEST_CODE_PELIBUSCADA = 5;
     public final static int RESULT_CODE_ADD = 10001;
     public final static int RESULT_CODE_REMOVED = 10002;
-    public final static int RESULT_CODE_FROM_SEARCH = 10003;
+    public final static int RESULT_CODE_NEEDS_REFRESH = 10003;
     public static String base_url = null;
+    private static List<String> MovieIdsInDB = new ArrayList<>();
     private static List<Pelicula> peliculasBuscadas;
     private static List<TVShow> showsBuscados;
     public static List<AudiovisualInterface> searchResults;

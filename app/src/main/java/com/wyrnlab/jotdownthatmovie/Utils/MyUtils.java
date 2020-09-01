@@ -1,10 +1,21 @@
 package com.wyrnlab.jotdownthatmovie.Utils;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
+
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
+import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.View.Activities.SearchActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -81,5 +92,45 @@ public class MyUtils {
         yc.disconnect();
 
         return response;
+    }
+
+    public static void checkInternetConectionAndStoragePermission(Context context){
+        if(!CheckInternetConection.isConnectingToInternet(context)){
+            MyUtils.showSnacknar(((Activity)context).findViewById(R.id.LinearLayout1), context.getResources().getString(R.string.not_internet));
+
+        }
+
+        MyUtils.isStoragePermissionGranted(context);
+    }
+
+    public static void getGeneralURL(Context context){
+        if(General.base_url == null){
+            SearchBaseUrl searchor = new SearchBaseUrl(context) {
+                @Override
+                public void onResponseReceived(Object result) {
+
+                }
+            };
+            MyUtils.execute(searchor);
+        }
+    }
+
+    public static boolean isStoragePermissionGranted(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (context.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG","Permission is granted");
+                return true;
+            } else {
+
+                Log.v("TAG","Permission is revoked");
+                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TAG","Permission is granted");
+            return true;
+        }
     }
 }

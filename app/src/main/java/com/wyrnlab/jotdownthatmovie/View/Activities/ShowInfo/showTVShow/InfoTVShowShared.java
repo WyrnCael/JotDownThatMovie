@@ -66,8 +66,13 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
             MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), getResources().getString(R.string.not_internet));
         } else {
             if(General.base_url == null){
-                SearchBaseUrl searchor = new SearchBaseUrl(this);
-                MyUtils.execute(searchor);
+                SearchBaseUrl searchor = new SearchBaseUrl(this) {
+                    @Override
+                    public void onResponseReceived(Object result) {
+
+                    }
+                };
+
             }
 
         }

@@ -2,14 +2,17 @@ package com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,20 +21,30 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.GetSimilarMovies;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchMovieURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.View.Activities.SearchActivity;
+import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
-public class InfoMovieDatabase extends AppCompatActivity {
+public class InfoMovieDatabase extends AppCompatActivity implements AsyncResponse {
 
 	ProgressDialog pDialog;
     AudiovisualInterface pelicula;
@@ -45,9 +58,12 @@ public class InfoMovieDatabase extends AppCompatActivity {
 	TextView directorLab;
 	Button botonVolver;
 	Button botonTrailer;
+    Button botonSimilars;
     Button botonRemove;
     private ShareActionProvider mShareActionProvider;
     Integer position;
+    SimilarMoviesModal similarMoviesModal;
+    Context context;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +91,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
         directorLab = (TextView)findViewById(R.id.directorLAb);
         botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+        botonSimilars = (Button)findViewById(R.id.BtnSimilars);
         botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
 
         // Title
@@ -103,7 +120,7 @@ public class InfoMovieDatabase extends AppCompatActivity {
         botonVolver.setOnClickListener(new OnClickListener() {
              @Override
              public void onClick(View v) {  
-            	 setResult(Activity.RESULT_CANCELED);
+            	 setResult(General.RESULT_CODE_NEEDS_REFRESH);
     	         finish();
              }
         });
@@ -140,6 +157,25 @@ public class InfoMovieDatabase extends AppCompatActivity {
             }
         });
 
+        context = InfoMovieDatabase.this;
+        botonSimilars.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyUtils.checkInternetConectionAndStoragePermission(InfoMovieDatabase.this);
+                if(General.base_url == null){
+                    SearchBaseUrl searchor = new SearchBaseUrl(InfoMovieDatabase.this){
+                        @Override
+                        public void onResponseReceived(Object result){
+                            searchSimilars();
+                        }
+                    };
+                    MyUtils.execute(searchor);
+                } else {
+                    searchSimilars();
+                }
+            }
+        });
+
         botonRemove.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +185,18 @@ public class InfoMovieDatabase extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void searchSimilars(){
+        GetSimilarMovies searchorSimilars = new GetSimilarMovies(context, pelicula.getId(), null) {
+            @Override
+            public void onResponseReceived(Object result) {
+                pelicula.setSimilars((List<AudiovisualInterface>) result);
+                similarMoviesModal = new SimilarMoviesModal(pelicula, InfoMovieDatabase.this, InfoMovieDatabase.this);
+                similarMoviesModal.createView();
+            }
+        };
+        searchorSimilars.execute(String.valueOf(pelicula.getId()));
     }
 	
 	@Override
@@ -193,5 +241,34 @@ public class InfoMovieDatabase extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void processFinish(Object result) {
+        if( ((List<AudiovisualInterface>) result).size() == 0) {
+            MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.without_results));
+        } else {
+            this.pelicula.setSimilars((List<AudiovisualInterface>) result);
+            similarMoviesModal.createView();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    Log.d("Activity result", "eso");
+        switch(requestCode) {
+            case General.REQUEST_CODE_PELIBUSCADA:
+                Log.d("Result code", String.valueOf(resultCode));
+                if (resultCode == General.RESULT_CODE_ADD) {
+                    similarMoviesModal.removeAndSaveItem(data);
+                }
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        setResult(General.RESULT_CODE_NEEDS_REFRESH);
+        super.onBackPressed();
     }
 }

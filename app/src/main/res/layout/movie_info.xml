@@ -168,42 +168,98 @@
                     android:textColor="@color/negro"
                     app:fontFamily="@font/raleway" />
             </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco">
+
+                <TextView
+                    android:id="@+id/similar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/SimilarMovies"
+                    android:textColor="@color/verde"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/raleway" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco">
+                <include
+                    android:id="@+id/listSimilarResults"
+                    layout="@layout/search_principal"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </TableRow>
         </TableLayout>
+
+
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relativeLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/blanco"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/BtnAnadir"
-            android:theme="@style/GreenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
-            android:text="@string/addButton" />
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_add_black_24dp"
+            android:stateListAnimator="@null"
+            android:text="@string/addButton"
+            android:textColor="#000000"
+            android:theme="@style/GreenButton" />
 
         <Button
             android:id="@+id/BtnTrailer"
-            android:theme="@style/GreenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Trailer" />
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_trailer"
+            android:stateListAnimator="@null"
+            android:text="Trailer"
+            android:textColor="#000000"
+            android:theme="@style/GreenButton" />
+
+        <Button
+            android:id="@+id/BtnSimilars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_similar"
+            android:stateListAnimator="@null"
+            android:text="@string/Similars"
+            android:textColor="#000000"
+            android:theme="@style/GreenButton" />
 
         <Button
             android:id="@+id/BtnAtras"
-            android:theme="@style/GreenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:text="@string/backButton" />
-    </RelativeLayout>
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_arrow_back_black_24dp"
+            android:stateListAnimator="@null"
+            android:text="@string/backButton"
+            android:textColor="#000000"
+            android:theme="@style/GreenButton" />
+    </LinearLayout>
 
 </RelativeLayout>

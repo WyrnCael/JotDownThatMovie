@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/realtiveLayoutMovieInfo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@drawable/round_corners_white_bg"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/ib_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:elevation="5dp"
+        android:padding="3dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <!-- Row 1 with single column -->
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/verde">
+
+                <TextView
+                    android:id="@+id/similar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/SimilarMovies"
+                    android:textAlignment="center"
+                    android:textColor="@color/blanco"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/raleway" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/blanco">
+
+                <ScrollView
+                    android:id="@+id/scrollView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/relativeLayout1"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/blanco">
+
+                        <include
+                            android:id="@+id/listSimilarResults"
+                            layout="@layout/search_principal"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                </ScrollView>
+            </TableRow>
+        </TableLayout>
+
+
+</RelativeLayout>

@@ -1,12 +1,9 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -19,7 +16,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.wyrnlab.jotdownthatmovie.APIS.Analytics.SearchAnalytics;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
@@ -98,18 +94,8 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 		txtSearchName.setIconified(false);
         txtSearchName.requestFocus();
 
-		if(!CheckInternetConection.isConnectingToInternet(SearchActivity.this)){
-			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.not_internet));
-
-		} else {
-			if(General.base_url == null){
-				SearchBaseUrl searchor = new SearchBaseUrl(this);
-				MyUtils.execute(searchor);
-			}
-
-		}
-
-		isStoragePermissionGranted();
+		MyUtils.checkInternetConectionAndStoragePermission(SearchActivity.this);
+		MyUtils.getGeneralURL(SearchActivity.this);
 	}
 	
 	public void pulsado(String query){
@@ -129,25 +115,6 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 				searchor.execute(textoABuscar);
 			}
 
-		}
-	}
-
-	public  boolean isStoragePermissionGranted() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-					== PackageManager.PERMISSION_GRANTED) {
-				Log.v("TAG","Permission is granted");
-				return true;
-			} else {
-
-				Log.v("TAG","Permission is revoked");
-				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-				return false;
-			}
-		}
-		else { //permission is automatically granted on sdk<23 upon installation
-			Log.v("TAG","Permission is granted");
-			return true;
 		}
 	}
 
@@ -196,7 +163,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 	@Override
 	public void onBackPressed()
 	{
-		setResult(General.RESULT_CODE_FROM_SEARCH);
+		setResult(General.RESULT_CODE_NEEDS_REFRESH);
 		super.onBackPressed();
 	}
 	
@@ -205,7 +172,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 	    switch(requestCode) {
 	        case REQUEST_CODE_LISTABUSCADAS:
 	        	if(resultCode == Activity.RESULT_OK){
-	        		setResult(General.RESULT_CODE_FROM_SEARCH);
+	        		setResult(General.RESULT_CODE_NEEDS_REFRESH);
 	        		finish();
 	        	}
 		        
