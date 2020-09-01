@@ -11,9 +11,11 @@ import com.google.gson.Gson;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
+import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCredits;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelMovie;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelSearchMovie;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
@@ -26,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -70,6 +74,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
             getSinopsisPelicula();
             getCreditsPelicula();
             getImage();
+            getSimilars();
         } catch (IOException e) {
 
         }
@@ -98,7 +103,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
         ModelMovie movie = new Gson().fromJson(json, ModelMovie.class);
         pelicula.setDataFromJson(movie);
         if(pelicula.getImagePath() == null) {
-            getOtrosPosters();
+            getOtrosPosters(pelicula);
         }
     }
 
@@ -146,18 +151,44 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
         }
     }
 
-    private void getOtrosPosters() throws IOException{
-        String url = General.URLPRINCIPAL + "/3/movie/" + pelicula.getId() + "/images?api_key=" + General.APIKEY;
+    private void getOtrosPosters(AudiovisualInterface movie) throws IOException{
+        String url = General.URLPRINCIPAL + "/3/movie/" + movie.getId() + "/images?api_key=" + General.APIKEY;
 
-        leerJSONOtrosPosters(MyUtils.getHttpRequest(url));
+        leerJSONOtrosPosters(movie, MyUtils.getHttpRequest(url));
     }
 
-    private void leerJSONOtrosPosters(String json) throws IOException{
+    private void leerJSONOtrosPosters(AudiovisualInterface movie, String json) throws IOException{
         JsonObject info = JsonObject.readFrom( json );
         JsonArray aux = info.get("posters").asArray();
         if(aux.size() > 0){
             JsonObject poster = aux.get(0).asObject();
-            pelicula.setImagePath(poster.get("file_path").asString());
+            movie.setImagePath(poster.get("file_path").asString());
         }
+    }
+
+    private void getSimilars() throws IOException{
+        String url = General.URLPRINCIPAL + "3/movie/" + this.pelicula.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+
+        readJSONSimilars(MyUtils.getHttpRequest(url));
+    }
+
+    private void readJSONSimilars(String json) throws IOException{
+        Log.d("SIMILARS: " , json);
+        ModelSearchMovie results = new Gson().fromJson(json, ModelSearchMovie.class);
+
+        List<AudiovisualInterface> similars = new ArrayList<AudiovisualInterface>();
+
+        if(results.results.length > 0) {
+            for (ModelMovie model : results.results) {
+                Pelicula movie = new Pelicula();
+                movie.setDataFromJson(model);
+                if(pelicula.getImagePath() == null) {
+                    getOtrosPosters(movie);
+                }
+                similars.add(movie);
+            }
+        }
+
+        this.pelicula.setSimilars(similars);
     }
 }
