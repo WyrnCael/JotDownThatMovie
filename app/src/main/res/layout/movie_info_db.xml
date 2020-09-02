@@ -171,13 +171,14 @@
         </TableLayout>
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relativeLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/blanco"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/BtnAtrasDB"
@@ -185,7 +186,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_arrow_back_black_24dp"
+            android:stateListAnimator="@null"
             android:text="@string/backButton"
+            android:textColor="#000000"
             android:theme="@style/GreenButton" />
 
         <Button
@@ -193,8 +198,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_delete_forever_red"
+            android:stateListAnimator="@null"
             android:text="@string/deleteButton"
+            android:textColor="#CC0000"
             android:theme="@style/RedButton" />
+
+        <Button
+            android:id="@+id/BtnSimilars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_similar"
+            android:stateListAnimator="@null"
+            android:text="@string/Similars"
+            android:textColor="#000000"
+            android:theme="@style/GreenButton" />
 
         <Button
             android:id="@+id/BtnTrailer"
@@ -202,9 +223,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_trailer"
+            android:stateListAnimator="@null"
             android:text="Trailer"
+            android:textColor="#000000"
             android:theme="@style/GreenButton" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

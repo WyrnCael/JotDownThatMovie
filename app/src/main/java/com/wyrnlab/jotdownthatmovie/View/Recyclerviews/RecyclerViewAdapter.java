@@ -33,10 +33,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     View parentView;
     public Snackbar snackbar;
 
-    public RecyclerViewAdapter(Context context, int resourceId,
+    public RecyclerViewAdapter(Context context, AdapterCallback adapterCallback, int resourceId,
                                List<RowItem> items, RecyclerViewClickListener itemListener) {
         this.context = context;
-        this.adapterCallback = (AdapterCallback) context;
+        this.adapterCallback = adapterCallback;
         this.resourceId = resourceId;
         this.items = items;
         this.itemListener = itemListener;
