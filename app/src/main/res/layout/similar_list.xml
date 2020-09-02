@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:text="@string/SimilarMovies"
+                    android:text="@string/Similars"
                     android:textAlignment="center"
                     android:textColor="@color/blanco"
                     android:textSize="24sp"

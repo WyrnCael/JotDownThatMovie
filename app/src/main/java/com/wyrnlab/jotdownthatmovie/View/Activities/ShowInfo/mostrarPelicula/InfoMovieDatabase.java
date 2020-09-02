@@ -255,10 +255,8 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    Log.d("Activity result", "eso");
-        switch(requestCode) {
+	    switch(requestCode) {
             case General.REQUEST_CODE_PELIBUSCADA:
-                Log.d("Result code", String.valueOf(resultCode));
                 if (resultCode == General.RESULT_CODE_ADD) {
                     similarMoviesModal.removeAndSaveItem(data);
                 }
