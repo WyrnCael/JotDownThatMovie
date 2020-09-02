@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
+import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Jota on 27/12/2017.
  */
 
-public class SearchBaseUrl extends AsyncTask<String, Integer, List<Pelicula>> {
+public abstract class SearchBaseUrl extends AsyncTask<String, Integer, List<Pelicula>> implements ICallback {
 
     private HttpsURLConnection yc;
     Context context;
@@ -44,6 +45,7 @@ public class SearchBaseUrl extends AsyncTask<String, Integer, List<Pelicula>> {
     @Override
     protected void onPostExecute(List<Pelicula> result)
     {
+        onResponseReceived(result);
         super.onPostExecute(result);
     }
 
@@ -102,4 +104,6 @@ public class SearchBaseUrl extends AsyncTask<String, Integer, List<Pelicula>> {
             e.printStackTrace();
         }
     }
+
+    public abstract void onResponseReceived(Object result);
 }
