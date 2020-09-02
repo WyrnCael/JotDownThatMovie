@@ -2,6 +2,7 @@ package com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.GetSimilarTVShows;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
@@ -31,7 +33,11 @@ import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieShared;
+import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
+
+import java.util.List;
 
 /**
  * Created by Jota on 27/12/2017.
@@ -51,7 +57,10 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
     Button botonAnadir;
     Button botonVolver;
     Button botonTrailer;
+    Button botonSimilars;
     private ShareActionProvider mShareActionProvider;
+    SimilarMoviesModal similarMoviesModal;
+    Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +112,7 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         botonAnadir = (Button)findViewById(R.id.BtnAnadir);
         botonVolver = (Button)findViewById(R.id.BtnAtras);
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+        botonSimilars = (Button)findViewById(R.id.BtnSimilars);
         season = (TextView)findViewById(R.id.seasons);
 
         //Recuperamos la información pasada en el intent
@@ -163,6 +173,37 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
                 }
             }
         });
+
+        context = InfoTVShowShared.this;
+        botonSimilars.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyUtils.checkInternetConectionAndStoragePermission(InfoTVShowShared.this);
+                if(General.base_url == null){
+                    SearchBaseUrl searchor = new SearchBaseUrl(InfoTVShowShared.this){
+                        @Override
+                        public void onResponseReceived(Object result){
+                            searchSimilars();
+                        }
+                    };
+                    MyUtils.execute(searchor);
+                } else {
+                    searchSimilars();
+                }
+            }
+        });
+    }
+
+    private void searchSimilars(){
+        GetSimilarTVShows searchorSimilars = new GetSimilarTVShows(context, pelicula.getId(), null) {
+            @Override
+            public void onResponseReceived(Object result) {
+                pelicula.setSimilars((List<AudiovisualInterface>) result);
+                similarMoviesModal = new SimilarMoviesModal(pelicula, InfoTVShowShared.this, InfoTVShowShared.this);
+                similarMoviesModal.createView();
+            }
+        };
+        searchorSimilars.execute(String.valueOf(pelicula.getId()));
     }
 
     //this override the implemented method from asyncTask
@@ -274,5 +315,15 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         Intent intent = new Intent(InfoTVShowShared.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case General.REQUEST_CODE_PELIBUSCADA:
+                if (resultCode == General.RESULT_CODE_ADD) {
+                    similarMoviesModal.removeAndSaveItem(data);
+                }
+        }
     }
 }

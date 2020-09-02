@@ -62,7 +62,6 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
 
     public void createView(){
         results = pelicula.getSimilars();
-        Log.d("Pelicula", pelicula.getTitulo());
         rowItems = new ArrayList<RowItem>();
         for (AudiovisualInterface movie : results) {
             rowItems.add(new RowItem(context, movie));
@@ -138,7 +137,7 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
 
     @Override
     public void removeCallback(AudiovisualInterface item) {
-        SaveAudiovisual.saveItem(context, this, item, "Movie");
+        SaveAudiovisual.saveItem(context, this, item, item.getTipo());
     }
 
     @Override

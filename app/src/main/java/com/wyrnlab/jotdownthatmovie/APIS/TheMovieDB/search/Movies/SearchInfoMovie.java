@@ -182,7 +182,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> {
             for (ModelMovie model : results.results) {
                 Pelicula movie = new Pelicula();
                 movie.setDataFromJson(model);
-                if(pelicula.getImagePath() == null) {
+                if(movie.getImagePath() == null) {
                     getOtrosPosters(movie);
                 }
                 similars.add(movie);
