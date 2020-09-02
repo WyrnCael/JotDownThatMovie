@@ -2,6 +2,7 @@ package com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -18,6 +19,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.GetSimilarTVShows;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
@@ -29,9 +33,12 @@ import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
+import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
-public class InfoTVShowDatabase extends AppCompatActivity {
+import java.util.List;
+
+public class InfoTVShowDatabase extends AppCompatActivity implements AsyncResponse {
 
 	ProgressDialog pDialog;
     AudiovisualInterface pelicula;
@@ -44,9 +51,12 @@ public class InfoTVShowDatabase extends AppCompatActivity {
 	TextView directorLab;
 	Button botonVolver;
 	Button botonTrailer;
+    Button botonSimilars;
     Button botonRemove;
     private ShareActionProvider mShareActionProvider;
     Integer position;
+    SimilarMoviesModal similarMoviesModal;
+    Context context;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +83,7 @@ public class InfoTVShowDatabase extends AppCompatActivity {
         directorLab = (TextView)findViewById(R.id.directorLAb);
         botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+        botonSimilars = (Button)findViewById(R.id.BtnSimilars);
         botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
         seasons = (TextView)findViewById(R.id.seasons);
 
@@ -106,7 +117,7 @@ public class InfoTVShowDatabase extends AppCompatActivity {
         botonVolver.setOnClickListener(new OnClickListener() {
              @Override
              public void onClick(View v) {  
-            	 setResult(Activity.RESULT_CANCELED);
+            	 setResult(General.RESULT_CODE_NEEDS_REFRESH);
     	         finish();
              }
         });
@@ -143,6 +154,25 @@ public class InfoTVShowDatabase extends AppCompatActivity {
             }
         });
 
+        context = InfoTVShowDatabase.this;
+        botonSimilars.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyUtils.checkInternetConectionAndStoragePermission(InfoTVShowDatabase.this);
+                if(General.base_url == null){
+                    SearchBaseUrl searchor = new SearchBaseUrl(InfoTVShowDatabase.this){
+                        @Override
+                        public void onResponseReceived(Object result){
+                            searchSimilars();
+                        }
+                    };
+                    MyUtils.execute(searchor);
+                } else {
+                    searchSimilars();
+                }
+            }
+        });
+
         botonRemove.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,6 +182,18 @@ public class InfoTVShowDatabase extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void searchSimilars(){
+        GetSimilarTVShows searchorSimilars = new GetSimilarTVShows(context, pelicula.getId(), null) {
+            @Override
+            public void onResponseReceived(Object result) {
+                pelicula.setSimilars((List<AudiovisualInterface>) result);
+                similarMoviesModal = new SimilarMoviesModal(pelicula, InfoTVShowDatabase.this, InfoTVShowDatabase.this);
+                similarMoviesModal.createView();
+            }
+        };
+        searchorSimilars.execute(String.valueOf(pelicula.getId()));
     }
 	
 	@Override
@@ -196,5 +238,32 @@ public class InfoTVShowDatabase extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void processFinish(Object result) {
+        if( ((List<AudiovisualInterface>) result).size() == 0) {
+            MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.without_results));
+        } else {
+            this.pelicula.setSimilars((List<AudiovisualInterface>) result);
+            similarMoviesModal.createView();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case General.REQUEST_CODE_PELIBUSCADA:
+                if (resultCode == General.RESULT_CODE_ADD) {
+                    similarMoviesModal.removeAndSaveItem(data);
+                }
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        setResult(General.RESULT_CODE_NEEDS_REFRESH);
+        super.onBackPressed();
     }
 }

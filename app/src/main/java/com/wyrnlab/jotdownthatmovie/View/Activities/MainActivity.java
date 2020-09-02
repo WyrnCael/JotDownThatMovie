@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		//Localizar los controles
 		listView = (RecyclerView) findViewById( R.id.mainListView );
 		rowItems = new ArrayList<RowItem>();
-		adapter = new RecyclerViewAdapter(this, R.layout.list_item, rowItems, this);
+		adapter = new RecyclerViewAdapter(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 		registerForContextMenu(listView);
@@ -178,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		adapter.clear();
 		listView.setAdapter(null);
 
-		adapter = new RecyclerViewAdapter(this, R.layout.list_item, rowItems, this);
+		adapter = new RecyclerViewAdapter(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 				adapter.notifyDataSetChanged();
 				MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), "\"" + data.getStringExtra("Name") + "\" " + getResources().getString(R.string.added) + "!");
 				break;
-			case General.RESULT_CODE_FROM_SEARCH:
+			case General.RESULT_CODE_NEEDS_REFRESH:
 				refreshList(filter);
 				break;
 		}

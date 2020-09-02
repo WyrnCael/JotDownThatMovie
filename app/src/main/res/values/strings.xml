@@ -49,6 +49,8 @@
     <string name="SearchPrimaryText">Find something</string>
     <string name="SearchSecondaryText">Find a movie or a TV Show</string>
     <string name="button_undo">Undo</string>
+    <string name="SimilarMovies">Similar movies:</string>
+    <string name="Similars">Similars</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>

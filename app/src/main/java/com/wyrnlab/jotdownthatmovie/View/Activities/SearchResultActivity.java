@@ -15,6 +15,7 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
+import com.wyrnlab.jotdownthatmovie.JavaClasses.SaveAudiovisual;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
@@ -67,7 +68,7 @@ public class SearchResultActivity extends AppCompatActivity implements
         
  
         listView = (RecyclerView) findViewById(R.id.list);
-        adapter = new RecyclerViewAdapter(this,
+        adapter = new RecyclerViewAdapter(this, (AdapterCallback) this,
         		R.layout.list_item, rowItems, this);
         listView.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -206,21 +207,6 @@ public class SearchResultActivity extends AppCompatActivity implements
         startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
     }
 
-    public void addItem(AudiovisualInterface item){
-        if(type.equalsIgnoreCase("Movie")) {
-            SearchInfoMovie searchorMovie = new SearchInfoMovie(this, item.getId(), getString(R.string.saving));
-            //searchorMovie.position = item;
-            searchorMovie.delegate = SearchResultActivity.this;
-            MyUtils.execute(searchorMovie);
-
-        } else {
-            SearchInfoShow searchorShow = new SearchInfoShow(this, item.getId(), getString(R.string.saving));
-            //searchorShow.position = item;
-            searchorShow.delegate = SearchResultActivity.this;
-            MyUtils.execute(searchorShow);
-        }
-    }
-
     @Override
     public void recyclerViewListLongClicked(View v, int position) {
         longClickPosition = position;
@@ -233,7 +219,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 
     @Override
     public void removeCallback(AudiovisualInterface item) {
-        addItem(item);
+        SaveAudiovisual.saveItem(SearchResultActivity.this, SearchResultActivity.this, item, type);
     }
 
     @Override

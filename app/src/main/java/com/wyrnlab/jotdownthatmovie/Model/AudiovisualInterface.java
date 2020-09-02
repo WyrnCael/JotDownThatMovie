@@ -18,8 +18,17 @@ public abstract class AudiovisualInterface implements Serializable {
     protected String Tipo;
     protected String Seasons;
     protected String source;
+    protected List<AudiovisualInterface> similars;
 
-   public String getSource() {
+    public List<AudiovisualInterface> getSimilars() {
+        return similars;
+    }
+
+    public void setSimilars(List<AudiovisualInterface> similars) {
+        this.similars = similars;
+    }
+
+    public String getSource() {
         return source;
     }
 
