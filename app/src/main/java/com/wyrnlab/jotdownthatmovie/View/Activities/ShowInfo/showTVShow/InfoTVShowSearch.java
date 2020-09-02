@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,12 +25,17 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupW
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
+import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
+
+import java.util.List;
 
 public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse {
 
@@ -46,8 +52,17 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 	Button botonAnadir;
 	Button botonVolver;
 	Button botonTrailer;
+	Button botonSimilars;
 	private ShareActionProvider mShareActionProvider;
 	int position;
+
+	public RecyclerView listView;
+	List<RowItem> rowItems;
+	List<AudiovisualInterface> results;
+	RecyclerViewAdapter adapter;
+	int longClickPosition;
+
+	SimilarMoviesModal similarMoviesModal;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +93,7 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 		botonAnadir = (Button)findViewById(R.id.BtnAnadir);
 		botonVolver = (Button)findViewById(R.id.BtnAtras);
 		botonTrailer = (Button)findViewById(R.id.BtnTrailer);
+		botonSimilars = (Button)findViewById(R.id.BtnSimilars);
 
         
       //Recuperamos la información pasada en el intent
@@ -108,6 +124,14 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 		        finish();
              }
         });
+
+		similarMoviesModal = new SimilarMoviesModal(pelicula, InfoTVShowSearch.this, InfoTVShowSearch.this);
+		botonSimilars.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				similarMoviesModal.createView();
+			}
+		});
         
         botonTrailer.setOnClickListener(new OnClickListener() {
             @Override
@@ -194,7 +218,18 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 
 			}
 		});
-        
+
+		similarMoviesModal.pelicula = this.pelicula;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch(requestCode) {
+			case General.REQUEST_CODE_PELIBUSCADA:
+				if (resultCode == General.RESULT_CODE_ADD) {
+					similarMoviesModal.removeAndSaveItem(data);
+				}
+		}
 	}
 	
 	@Override
