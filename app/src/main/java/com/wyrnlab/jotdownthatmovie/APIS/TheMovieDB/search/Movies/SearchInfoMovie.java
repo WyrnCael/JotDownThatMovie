@@ -177,7 +177,6 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
     }
 
     private void readJSONSimilars(String json) throws IOException{
-        Log.d("SIMILARS: " , json);
         ModelSearchMovie results = new Gson().fromJson(json, ModelSearchMovie.class);
 
         List<AudiovisualInterface> similars = new ArrayList<AudiovisualInterface>();
