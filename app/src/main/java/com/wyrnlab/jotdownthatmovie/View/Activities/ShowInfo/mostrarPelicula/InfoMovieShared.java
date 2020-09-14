@@ -32,11 +32,13 @@ import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Jota on 27/12/2017.
@@ -155,7 +157,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
                     pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     pDialog.show();
 
-                    SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieShared.this, pelicula) {
+                    SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieShared.this, SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula) {
                         @Override
                         public void onResponseReceived(Object result) {
                             String trailerId = (String) result;

@@ -52,6 +52,13 @@
     <string name="button_undo">Deshacer</string>
     <string name="SimilarMovies">Peliculas similares:</string>
     <string name="Similars">Similares</string>
+    <string name="AvailableTrailers">Trailers disponibles</string>
+    <string name="OriginalTitle">Título original</string>
+    <string name="OriginalLanguage">Idioma original</string>
+    <string name="Refresh">Actualizar</string>
+    <string name="NeedsRefresh">Necesario actualizar</string>
+    <string name="RefreshedSuccess">!Actualizado correctamente!</string>
+    <string name="RefreshedError">Ha ocurrido un error actualizando, vuelva a intentarlo mas tarde</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>

@@ -15,6 +15,7 @@ public class TVShow  extends AudiovisualInterface  implements Serializable {
         super.Image_path = model.poster_path;
         super.Rating = model.vote_average;
         super.Descripcion = model.overview == null ? "" : model.overview;
+        super.originalLanguage = model.original_language;
 
         for(ModelGenres genres : model.genres){
             super.addGeneros(genres.name);

@@ -1,12 +1,14 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -31,16 +33,21 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupW
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
+import com.wyrnlab.jotdownthatmovie.Model.Trailer;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SearchActivity;
+import com.wyrnlab.jotdownthatmovie.View.Activities.SearchResultActivity;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
+import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
@@ -56,7 +63,10 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
 	TextView director;
 	TextView generoLab;
 	TextView directorLab;
+    TextView originalTitle;
+    TextView originalLanguage;
 	Button botonVolver;
+    Button botonRefresh;
 	Button botonTrailer;
     Button botonSimilars;
     Button botonRemove;
@@ -93,28 +103,12 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
         botonSimilars = (Button)findViewById(R.id.BtnSimilars);
         botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
+        botonRefresh = (Button)findViewById(R.id.BtnRefresh);
+        originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
+        originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
 
-        // Title
-        getSupportActionBar().setTitle(pelicula.getTitulo());
 
-        anyo.setText("	" + pelicula.getAnyo());
-        if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
-        valoracion.setText(pelicula.getRating() == 0.0 ? "	" + getResources().getString(R.string.notavailable) : "	" + Double.toString(pelicula.getRating()));
-        descripcion.setText(pelicula.getDescripcion());
-        ImageView image = (ImageView)findViewById(R.id.poster);
-        image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
-        Bitmap stub = BitmapFactory.decodeResource(getResources(), R.drawable.stub);
-        if(ImageHandler.getImage(pelicula.getImage()) != stub){
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Code to show image in full screen:
-                    new PhotoFullPopupWindow(InfoMovieDatabase.this, R.layout.popup_photo_full, view, null, ImageHandler.getImage(pelicula.getImage()));
-
-                }
-            });
-        }
-        if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
+        actualiza();
         
       //Implementamos el evento “click” del botón
         botonVolver.setOnClickListener(new OnClickListener() {
@@ -137,17 +131,16 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
                     pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     pDialog.show();
 
-                    SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieDatabase.this, pelicula) {
+                    SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieDatabase.this, SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula) {
                         @Override
                         public void onResponseReceived(Object result) {
-                            String trailerId = (String) result;
-                            if (trailerId == null) {
+                            List<Trailer> trailers = (List<Trailer>) result;
+                            if (trailers.isEmpty()) {
                                 MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.notAviableTrailer));
                             } else {
                                 pDialog.dismiss();
-                                Intent intent = new Intent(InfoMovieDatabase.this, YoutubeActivityView.class);
-                                intent.putExtra("TrailerId", trailerId);
-                                startActivityForResult(intent, 1);
+                                AlertDialog.Builder builder = new TrailerDialog(InfoMovieDatabase.this, trailers);
+                                builder.show();
                             }
                             pDialog.dismiss();
                         }
@@ -185,6 +178,79 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
                 finish();
             }
         });
+
+        botonVolver.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(General.RESULT_CODE_NEEDS_REFRESH);
+                finish();
+            }
+        });
+
+        botonRefresh.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyUtils.checkInternetConectionAndStoragePermission(InfoMovieDatabase.this);
+                if(General.base_url == null){
+                    SearchBaseUrl searchor = new SearchBaseUrl(InfoMovieDatabase.this){
+                        @Override
+                        public void onResponseReceived(Object result){
+                            refreshSearch();
+                        }
+                    };
+                    MyUtils.execute(searchor);
+                } else {
+                    refreshSearch();
+                }
+            }
+        });
+    }
+
+    private void actualiza(){
+        getSupportActionBar().setTitle(pelicula.getTitulo());
+
+        anyo.setText("	" + pelicula.getAnyo());
+        if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
+        valoracion.setText(pelicula.getRating() == 0.0 ? "	" + getResources().getString(R.string.notavailable) : "	" + Double.toString(pelicula.getRating()));
+        descripcion.setText(pelicula.getDescripcion());
+        if(pelicula.getOriginalLanguage() == null){
+            originalLanguage.setText(getString(R.string.NeedsRefresh));
+            originalLanguage.setTextColor(Color.RED);
+        } else {
+            originalLanguage.setText(General.getLanguageTranslations(pelicula.getOriginalLanguage()));
+            originalLanguage.setTextColor(Color.BLACK);
+        }
+        originalTitle.setText(pelicula.getTituloOriginal());
+        ImageView image = (ImageView)findViewById(R.id.poster);
+        image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
+        Bitmap stub = BitmapFactory.decodeResource(getResources(), R.drawable.stub);
+        if(ImageHandler.getImage(pelicula.getImage()) != stub){
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Code to show image in full screen:
+                    new PhotoFullPopupWindow(InfoMovieDatabase.this, R.layout.popup_photo_full, view, null, ImageHandler.getImage(pelicula.getImage()));
+
+                }
+            });
+        }
+        if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
+    }
+
+    private void refreshSearch(){
+        SearchInfoMovie searchorMovie = new SearchInfoMovie(InfoMovieDatabase.this, pelicula.getId(), getString(R.string.searching)){
+            @Override
+            public void onResponseReceived(Object result) {
+                pelicula = (AudiovisualInterface) result;
+                actualiza();
+                if(DAO.getInstance().update(InfoMovieDatabase.this, (AudiovisualInterface) result)){
+                    MyUtils.showSnacknar(((Activity)InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.RefreshedSuccess));
+                } else {
+                    MyUtils.showSnacknar(((Activity)InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.RefreshedError));
+                }
+            }
+        };
+        searchorMovie.execute();
     }
 
     private void searchSimilars(){
