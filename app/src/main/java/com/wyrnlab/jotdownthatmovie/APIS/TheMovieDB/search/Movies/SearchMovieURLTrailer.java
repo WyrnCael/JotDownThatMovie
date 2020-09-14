@@ -69,6 +69,8 @@ public abstract class SearchMovieURLTrailer extends AsyncTask<String, Integer, L
     private void getURLPelicula() throws IOException{
         String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + language;
 
+        Log.d("url", url);
+
         leerJSONUrl(MyUtils.getHttpRequest(url));
     }
 
@@ -79,7 +81,6 @@ public abstract class SearchMovieURLTrailer extends AsyncTask<String, Integer, L
             if(results.size() > 0){
                 for (JsonValue result : results){
                     Trailer trailer = new Gson().fromJson(result.toString(), Trailer.class);
-                    Log.d("trailer", trailer.getKey());
                     if(trailer.getSite().equalsIgnoreCase("YouTube")){
                         trailers.add(trailer);
                     }

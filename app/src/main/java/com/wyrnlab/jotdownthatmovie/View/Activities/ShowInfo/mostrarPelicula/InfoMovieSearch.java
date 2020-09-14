@@ -1,6 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -33,6 +34,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
+import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
 import java.util.List;
 import java.util.Locale;
@@ -121,7 +123,11 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 		botonSimilars.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				similarMoviesModal.createView();
+				if(pelicula.getSimilars().isEmpty()){
+					MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.noSimilarMovies));
+				} else {
+					similarMoviesModal.createView();
+				}
 			}
 		});
         
@@ -137,31 +143,11 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
         botonTrailer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-				if(!CheckInternetConection.isConnectingToInternet(InfoMovieSearch.this)){
+				if (!CheckInternetConection.isConnectingToInternet(InfoMovieSearch.this)) {
 					MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.not_internet));
 				} else {
-					pDialog = new ProgressDialog(InfoMovieSearch.this);
-					pDialog.setMessage(getResources().getString(R.string.searching));
-					pDialog.setCancelable(true);
-					pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-					pDialog.show();
-
-					SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieSearch.this, SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula) {
-						@Override
-						public void onResponseReceived(Object result) {
-							String trailerId = (String) result;
-							if (trailerId == null) {
-								MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.notAviableTrailer));
-							} else {
-								pDialog.dismiss();
-								Intent intent = new Intent(InfoMovieSearch.this, YoutubeActivityView.class);
-								intent.putExtra("TrailerId", trailerId);
-								startActivityForResult(intent, 1);
-							}
-							pDialog.dismiss();
-						}
-					};
-					MyUtils.execute(searchorMovie);
+					AlertDialog.Builder builder = new TrailerDialog(InfoMovieSearch.this, pelicula.getOriginalLanguage(),SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula);
+					builder.show();
 				}
 			}
        });

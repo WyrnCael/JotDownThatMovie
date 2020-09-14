@@ -2,11 +2,15 @@ package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
+import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonValue;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Trailer;
 import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
@@ -15,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -23,46 +29,51 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Jota on 04/03/2017.
  */
 
-public abstract class SearchShowURLTrailer extends AsyncTask<String, Integer, String> implements ICallback {
+public abstract class SearchShowURLTrailer extends AsyncTask<String, Integer, List<Trailer>> implements ICallback {
 
     private HttpsURLConnection yc;
     Context context;
     AudiovisualInterface pelicula;
+    List<Trailer> trailers;
     String trailerId = null;
+    String language;
 
-    public SearchShowURLTrailer(Context context, AudiovisualInterface pelicula){
+    public SearchShowURLTrailer(Context context, String language, AudiovisualInterface pelicula){
         this.context = context;
         this.pelicula = pelicula;
+        this.language = language;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        trailers = new ArrayList<Trailer>();
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected List<Trailer> doInBackground(String... params) {
         try {
             getURLPelicula();
         } catch (IOException e) {
 
         }
-        return trailerId;
+        return trailers;
 
     }
 
     @Override
-    protected void onPostExecute(String result)
+    protected void onPostExecute(List<Trailer> result)
     {
-        super.onPostExecute(result);
-        onResponseReceived(trailerId);
+        super.onPostExecute(trailers);
+        onResponseReceived(trailers);
     }
 
 
     private void getURLPelicula() throws IOException{
         String web = null;
 
-        String url = General.URLPRINCIPAL + "3/tv/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url = General.URLPRINCIPAL + "3/tv/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + language;
+        Log.d("url", url);
 
         URL oracle = new URL(url);
         yc = (HttpsURLConnection) oracle.openConnection();
@@ -111,9 +122,11 @@ public abstract class SearchShowURLTrailer extends AsyncTask<String, Integer, St
         JsonArray results = info.get("results").asArray();
         if(results != null && !results.isNull()){
             if(results.size() > 0){
-                for (int i = 0; i < 1 ; i++){
-                    JsonObject video = results.get(i).asObject();
-                    trailerId = video.get("key").asString();
+                for (JsonValue result : results){
+                    Trailer trailer = new Gson().fromJson(result.toString(), Trailer.class);
+                    if(trailer.getSite().equalsIgnoreCase("YouTube")){
+                        trailers.add(trailer);
+                    }
                 }
             }
         }

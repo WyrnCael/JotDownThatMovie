@@ -21,6 +21,7 @@ import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCredits;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.Model.TVShow;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
@@ -41,7 +42,7 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Jota on 27/12/2017.
  */
 
-public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
+public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implements ICallback {
 
     public AsyncResponse delegate = null;
     public int position;
@@ -90,7 +91,10 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
     {
         super.onPostExecute(result);
         pDialog.dismiss();
-        delegate.processFinish(result);
+        if(delegate != null) {
+            delegate.processFinish(result);
+        }
+        onResponseReceived(result);
     }
 
 
@@ -192,5 +196,10 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> {
         }
 
         this.tvShow.setSimilars(similars);
+    }
+
+    @Override
+    public void onResponseReceived(Object result){
+
     }
 }

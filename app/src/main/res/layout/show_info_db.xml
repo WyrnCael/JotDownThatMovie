@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayoutTVInfoDB"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blanco"
@@ -135,6 +136,78 @@
             </TableRow>
 
             <TableRow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/OriginalTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/OriginalTitle"
+                            android:textColor="@color/verde"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/OriginalTitleText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="TextView"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/negro"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/OriginalLanguge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/OriginalLanguage"
+                            android:textColor="@color/verde"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/OriginalLangugeText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="TextView"
+                            android:textColor="@color/negro"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+                    </LinearLayout>
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/blanco">
@@ -181,10 +254,9 @@
 
         <Button
             android:id="@+id/BtnAtrasDB"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/standard_58"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/ic_arrow_back_black_24dp"
             android:stateListAnimator="@null"
@@ -221,11 +293,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/ic_trailer"
             android:stateListAnimator="@null"
             android:text="Trailer"
+            android:textColor="#000000"
+            android:theme="@style/GreenButton" />
+
+        <Button
+            android:id="@+id/BtnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_refresh"
+            android:stateListAnimator="@null"
+            android:text="@string/Refresh"
             android:textColor="#000000"
             android:theme="@style/GreenButton" />
 
