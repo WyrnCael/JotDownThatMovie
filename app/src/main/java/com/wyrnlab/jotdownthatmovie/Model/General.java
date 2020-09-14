@@ -25,6 +25,7 @@ public class General {
     private static List<Pelicula> peliculasBuscadas;
     private static List<TVShow> showsBuscados;
     public static List<AudiovisualInterface> searchResults;
+    public static Languages languageTranslations;
 
     public static void setPeliculasBuscadas(List<Pelicula> peliculas){
         peliculasBuscadas = peliculas;
@@ -66,5 +67,10 @@ public class General {
 
     public static List<AudiovisualInterface> getsSarchResults(){
         return searchResults;
+    }
+
+    public static String getLanguageTranslations(String isoCode){
+        languageTranslations = Languages.getSingleton();
+        return languageTranslations.getLanguageName(isoCode);
     }
 }

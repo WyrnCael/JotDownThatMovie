@@ -18,6 +18,7 @@ public abstract class AudiovisualInterface implements Serializable {
     protected String Tipo;
     protected String Seasons;
     protected String source;
+    protected String originalLanguage;
     protected List<AudiovisualInterface> similars;
 
     public List<AudiovisualInterface> getSimilars() {
@@ -135,6 +136,13 @@ public abstract class AudiovisualInterface implements Serializable {
 
     public byte[] getImage() { return image; }
 
-    public void setImage(byte[] image) { this.image = image;
+    public void setImage(byte[] image) { this.image = image;    }
+
+    public String getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
     }
 }

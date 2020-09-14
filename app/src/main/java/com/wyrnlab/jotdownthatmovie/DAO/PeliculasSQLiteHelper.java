@@ -48,6 +48,10 @@ public class PeliculasSQLiteHelper extends SQLiteOpenHelper {
             // Version 3, actualizar las versiones antiguas que no tuviesen tipo
             db.execSQL("UPDATE Peliculas SET tipo = coalesce(tipo, \"Movie\")");
             version = 3;
+        } if (version == 3) {
+            db.execSQL("ALTER TABLE Peliculas ADD COLUMN original_language TEXT");
+            db.execSQL("ALTER TABLE Peliculas ADD COLUMN original_tittle TEXT");
+            version = 4;
         }
 
         /*if (version != 2) {
