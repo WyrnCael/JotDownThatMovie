@@ -7,6 +7,7 @@
     <string name="follow_git">Sigue el proyecto en GitHub:</string>
     <string name="action_settings">Ajustes</string>
     <string name="hola">Buscar</string>
+    <string name="Cancel">Cancelar</string>
     <string name="nombre">Nombre:</string>
     <string name="anyo">Año:</string>
     <string name="director">Director:</string>
@@ -59,6 +60,8 @@
     <string name="NeedsRefresh">Necesario actualizar</string>
     <string name="RefreshedSuccess">!Actualizado correctamente!</string>
     <string name="RefreshedError">Ha ocurrido un error actualizando, vuelva a intentarlo mas tarde</string>
+    <string name="Spanish">Español</string>
+    <string name="English">Inglés</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>
@@ -70,7 +73,8 @@
     <string name="MenuQuit">Salir</string>
     <string name="MenuSearch">Buscar/Añadir</string>
 
-    <string name="notAviableTrailer">Trailer no disponible</string>
+    <string name="notAviableTrailer">No hay trailers disponibles, prueba con otro idioma</string>
+    <string name="noSimilarMovies">No se reconocen otras similares.</string>
 	
 	<string name="image">Thumbnail</string>
 	

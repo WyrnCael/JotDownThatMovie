@@ -1,12 +1,14 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.GetSimilarTVShows;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
@@ -31,12 +34,15 @@ import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
+import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
 import java.util.List;
+import java.util.Locale;
 
 public class InfoTVShowDatabase extends AppCompatActivity implements AsyncResponse {
 
@@ -53,6 +59,9 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
 	Button botonTrailer;
     Button botonSimilars;
     Button botonRemove;
+    Button botonRefresh;
+    TextView originalTitle;
+    TextView originalLanguage;
     private ShareActionProvider mShareActionProvider;
     Integer position;
     SimilarMoviesModal similarMoviesModal;
@@ -86,32 +95,12 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
         botonSimilars = (Button)findViewById(R.id.BtnSimilars);
         botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
         seasons = (TextView)findViewById(R.id.seasons);
+        botonRefresh = (Button)findViewById(R.id.BtnRefresh);
+        originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
+        originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
 
-        // Title
-        getSupportActionBar().setTitle(pelicula.getTitulo());
+        actualiza();
 
-        anyo.setText("	" + pelicula.getAnyo());
-        if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
-        if(pelicula.getRating() == 0.0){
-            valoracion.setText("	" + getResources().getString(R.string.notavailable));
-        }else{
-            valoracion.setText("	" + Double.toString(pelicula.getRating()));
-        }
-        descripcion.setText(pelicula.getDescripcion());
-        seasons.setText("	" + pelicula.getSeasons());
-        ImageView image = (ImageView)findViewById(R.id.poster);
-        image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
-        Bitmap stub = BitmapFactory.decodeResource(getResources(), R.drawable.stub);
-        if(ImageHandler.getImage(pelicula.getImage()) != stub){
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Code to show image in full screen:
-                    new PhotoFullPopupWindow(InfoTVShowDatabase.this, R.layout.popup_photo_full, view, null, ImageHandler.getImage(pelicula.getImage()));
-
-                }
-            });
-        }
         
       //Implementamos el evento “click” del botón
         botonVolver.setOnClickListener(new OnClickListener() {
@@ -125,31 +114,11 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
         botonTrailer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!CheckInternetConection.isConnectingToInternet(InfoTVShowDatabase.this)){
-                    MyUtils.showSnacknar(findViewById(R.id.scrollView1), getResources().getString(R.string.not_internet));
+                if (!CheckInternetConection.isConnectingToInternet(InfoTVShowDatabase.this)) {
+                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
                 } else {
-                    pDialog = new ProgressDialog(InfoTVShowDatabase.this);
-                    pDialog.setMessage(getResources().getString(R.string.searching));
-                    pDialog.setCancelable(true);
-                    pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    pDialog.show();
-
-                    SearchShowURLTrailer searchorShow = new SearchShowURLTrailer(InfoTVShowDatabase.this, pelicula) {
-                        @Override
-                        public void onResponseReceived(Object result) {
-                            String trailerId = (String) result;
-                            if (trailerId == null) {
-                                MyUtils.showSnacknar(findViewById(R.id.scrollView1), getResources().getString(R.string.notAviableTrailer));
-                            } else {
-                                pDialog.dismiss();
-                                Intent intent = new Intent(InfoTVShowDatabase.this, YoutubeActivityView.class);
-                                intent.putExtra("TrailerId", trailerId);
-                                startActivityForResult(intent, 1);
-                            }
-                            pDialog.dismiss();
-                        }
-                    };
-                    MyUtils.execute(searchorShow);
+                    AlertDialog.Builder builder = new TrailerDialog(InfoTVShowDatabase.this, pelicula.getOriginalLanguage(), SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula);
+                    builder.show();
                 }
             }
         });
@@ -182,6 +151,75 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
                 finish();
             }
         });
+
+        botonRefresh.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyUtils.checkInternetConectionAndStoragePermission(InfoTVShowDatabase.this);
+                if(General.base_url == null){
+                    SearchBaseUrl searchor = new SearchBaseUrl(InfoTVShowDatabase.this){
+                        @Override
+                        public void onResponseReceived(Object result){
+                            refreshSearch();
+                        }
+                    };
+                    MyUtils.execute(searchor);
+                } else {
+                    refreshSearch();
+                }
+            }
+        });
+    }
+
+    private void actualiza(){
+        getSupportActionBar().setTitle(pelicula.getTitulo());
+
+        anyo.setText("	" + pelicula.getAnyo());
+        if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
+        if(pelicula.getRating() == 0.0){
+            valoracion.setText("	" + getResources().getString(R.string.notavailable));
+        }else{
+            valoracion.setText("	" + Double.toString(pelicula.getRating()));
+        }
+        descripcion.setText(pelicula.getDescripcion());
+        seasons.setText("	" + pelicula.getSeasons());
+        ImageView image = (ImageView)findViewById(R.id.poster);
+        image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
+        Bitmap stub = BitmapFactory.decodeResource(getResources(), R.drawable.stub);
+        if(ImageHandler.getImage(pelicula.getImage()) != stub){
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Code to show image in full screen:
+                    new PhotoFullPopupWindow(InfoTVShowDatabase.this, R.layout.popup_photo_full, view, null, ImageHandler.getImage(pelicula.getImage()));
+
+                }
+            });
+        }
+        if(pelicula.getOriginalLanguage() == null){
+            originalLanguage.setText(getString(R.string.NeedsRefresh));
+            originalLanguage.setTextColor(Color.RED);
+        } else {
+            originalLanguage.setText(General.getLanguageTranslations(pelicula.getOriginalLanguage()));
+            originalLanguage.setTextColor(Color.BLACK);
+        }
+        originalTitle.setText(pelicula.getTituloOriginal());
+    }
+
+    private void refreshSearch(){
+        SearchInfoShow searchorMovie = new SearchInfoShow(InfoTVShowDatabase.this, pelicula.getId(), getString(R.string.searching)){
+            @Override
+            public void onResponseReceived(Object result) {
+                pelicula = (AudiovisualInterface) result;
+                actualiza();
+                if(DAO.getInstance().update(InfoTVShowDatabase.this, (AudiovisualInterface) result)){
+                    MyUtils.showSnacknar(((Activity)InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutTVInfoDB), getResources().getString(R.string.RefreshedSuccess));
+                } else {
+                    MyUtils.showSnacknar(((Activity)InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutTVInfoDB), getResources().getString(R.string.RefreshedError));
+                }
+            }
+        };
+        searchorMovie.execute();
     }
 
     private void searchSimilars(){
@@ -189,8 +227,12 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
             @Override
             public void onResponseReceived(Object result) {
                 pelicula.setSimilars((List<AudiovisualInterface>) result);
-                similarMoviesModal = new SimilarMoviesModal(pelicula, InfoTVShowDatabase.this, InfoTVShowDatabase.this);
-                similarMoviesModal.createView();
+                if(pelicula.getSimilars().isEmpty()){
+                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutTVInfoDB), getResources().getString(R.string.noSimilarMovies));
+                } else {
+                    similarMoviesModal = new SimilarMoviesModal(pelicula, InfoTVShowDatabase.this, InfoTVShowDatabase.this);
+                    similarMoviesModal.createView();
+                }
             }
         };
         searchorSimilars.execute(String.valueOf(pelicula.getId()));
