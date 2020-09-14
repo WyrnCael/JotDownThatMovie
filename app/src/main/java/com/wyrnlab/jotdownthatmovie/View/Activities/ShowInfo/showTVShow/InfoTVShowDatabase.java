@@ -54,7 +54,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
 	TextView descripcion;
 	TextView genero;
 	TextView generoLab;
-	TextView directorLab;
+	//TextView directorLab;
 	Button botonVolver;
 	Button botonTrailer;
     Button botonSimilars;
@@ -89,7 +89,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
         valoracion = (TextView)findViewById(R.id.valoracion);
         descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
         generoLab = (TextView)findViewById(R.id.generoLab);
-        directorLab = (TextView)findViewById(R.id.directorLAb);
+        //directorLab = (TextView)findViewById(R.id.directorLAb);
         botonVolver = (Button)findViewById(R.id.BtnAtrasDB);
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
         botonSimilars = (Button)findViewById(R.id.BtnSimilars);
