@@ -72,6 +72,9 @@
     <string name="MenuAbout">Acerca de</string>
     <string name="MenuQuit">Salir</string>
     <string name="MenuSearch">Buscar/Añadir</string>
+    <string name="Noresults">No hay resultados del tipo </string>
+    <string name="For">para</string>
+    <string name="Trywith">¿Quiere repetir la búsqueda para</string>
 
     <string name="notAviableTrailer">No hay trailers disponibles, prueba con otro idioma</string>
     <string name="noSimilarMovies">No se reconocen otras similares.</string>
