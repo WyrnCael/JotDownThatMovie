@@ -58,7 +58,7 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
     TextView descripcion;
     TextView genero;
     TextView generoLab;
-    TextView directorLab;
+    //TextView directorLab;
     Button botonAnadir;
     Button botonVolver;
     Button botonTrailer;
@@ -113,7 +113,7 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         valoracion = (TextView)findViewById(R.id.valoracion);
         descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
         generoLab = (TextView)findViewById(R.id.generoLab);
-        directorLab = (TextView)findViewById(R.id.directorLAb);
+        //directorLab = (TextView)findViewById(R.id.directorLAb);
         botonAnadir = (Button)findViewById(R.id.BtnAnadir);
         botonVolver = (Button)findViewById(R.id.BtnAtras);
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
@@ -228,14 +228,14 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         genero.setText("	" + gene);
 
         //A?adir directores
-        String direc = "";
+        /*String direc = "";
         for (int d = 0; d < pelicula.getDirectores().size() ; d++){
             if (d > 0){
                 direc += ", " + pelicula.getDirectores().get(d);
                 directorLab.setText(getResources().getString(R.string.directors));
             }
             else direc += pelicula.getDirectores().get(d);
-        }
+        }*/
 
         descripcion.setText(pelicula.getDescripcion());
         season.setText(pelicula.getSeasons());
