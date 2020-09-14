@@ -53,8 +53,7 @@ import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class InfoMovieDatabase extends AppCompatActivity implements AsyncResponse {
 
-	ProgressDialog pDialog;
-    AudiovisualInterface pelicula;
+	AudiovisualInterface pelicula;
     TextView anyo;
     TextView valoracion;
     TextView seasons;
@@ -125,27 +124,8 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
                 if (!CheckInternetConection.isConnectingToInternet(InfoMovieDatabase.this)) {
                     MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
                 } else {
-                    pDialog = new ProgressDialog(InfoMovieDatabase.this);
-                    pDialog.setMessage(getResources().getString(R.string.searching));
-                    pDialog.setCancelable(true);
-                    pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    pDialog.show();
-
-                    SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieDatabase.this, SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula) {
-                        @Override
-                        public void onResponseReceived(Object result) {
-                            List<Trailer> trailers = (List<Trailer>) result;
-                            if (trailers.isEmpty()) {
-                                MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.notAviableTrailer));
-                            } else {
-                                pDialog.dismiss();
-                                AlertDialog.Builder builder = new TrailerDialog(InfoMovieDatabase.this, trailers);
-                                builder.show();
-                            }
-                            pDialog.dismiss();
-                        }
-                    };
-                    MyUtils.execute(searchorMovie);
+                    AlertDialog.Builder builder = new TrailerDialog(InfoMovieDatabase.this, pelicula.getOriginalLanguage(),SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula);
+                    builder.show();
                 }
             }
         });
@@ -258,8 +238,12 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
             @Override
             public void onResponseReceived(Object result) {
                 pelicula.setSimilars((List<AudiovisualInterface>) result);
-                similarMoviesModal = new SimilarMoviesModal(pelicula, InfoMovieDatabase.this, InfoMovieDatabase.this);
-                similarMoviesModal.createView();
+                if(pelicula.getSimilars().isEmpty()){
+                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.noSimilarMovies));
+                } else {
+                    similarMoviesModal = new SimilarMoviesModal(pelicula, InfoMovieDatabase.this, InfoMovieDatabase.this);
+                    similarMoviesModal.createView();
+                }
             }
         };
         searchorSimilars.execute(String.valueOf(pelicula.getId()));
