@@ -19,7 +19,7 @@
     <string name="notavailable">N/A</string>
     <string name="addMovie">+ Add new movie...</string>
     <string name="addButton">Add</string>
-    <string name="backButton">Go Back</string>
+    <string name="backButton">Back</string>
     <string name="deleteButton">Remove</string>
     <string name="searching">Searching</string>
     <string name="saving">Saving</string>
@@ -51,6 +51,13 @@
     <string name="button_undo">Undo</string>
     <string name="SimilarMovies">Similar movies:</string>
     <string name="Similars">Similars</string>
+    <string name="AvailableTrailers">Available trailers</string>
+    <string name="OriginalTitle">Otriginal title</string>
+    <string name="OriginalLanguage">Original language</string>
+    <string name="Refresh">Refresh</string>
+    <string name="NeedsRefresh">Needs refresh</string>
+    <string name="RefreshedSuccess">Refreshed succesfully!</string>
+    <string name="RefreshedError">An error ocurred while refreshing, try again later</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>

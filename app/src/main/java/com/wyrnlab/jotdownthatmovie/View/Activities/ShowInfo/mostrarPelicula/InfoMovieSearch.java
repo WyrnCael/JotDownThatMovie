@@ -29,11 +29,13 @@ import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 
 import java.util.List;
+import java.util.Locale;
 
 public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse {
 
@@ -144,7 +146,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse 
 					pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 					pDialog.show();
 
-					SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieSearch.this, pelicula) {
+					SearchMovieURLTrailer searchorMovie = new SearchMovieURLTrailer(InfoMovieSearch.this, SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula) {
 						@Override
 						public void onResponseReceived(Object result) {
 							String trailerId = (String) result;
