@@ -2,6 +2,8 @@ package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Debug;
+import android.util.Log;
 
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
 import com.wyrnlab.jotdownthatmovie.Model.General;

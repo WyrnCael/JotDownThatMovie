@@ -58,7 +58,7 @@
     <string name="OriginalLanguage">Idioma original</string>
     <string name="Refresh">Actualizar</string>
     <string name="NeedsRefresh">Necesario actualizar</string>
-    <string name="RefreshedSuccess">!Actualizado correctamente!</string>
+    <string name="RefreshedSuccess">¡Actualizado correctamente!</string>
     <string name="RefreshedError">Ha ocurrido un error actualizando, vuelva a intentarlo mas tarde</string>
     <string name="Spanish">Español</string>
     <string name="English">Inglés</string>

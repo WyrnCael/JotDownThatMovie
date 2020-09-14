@@ -228,11 +228,6 @@ public class DAO {
     }
 
     public boolean update(Context context, AudiovisualInterface pelicula){
-        // Comprobamos si la pelicula ya existe
-        AudiovisualInterface result = readFromSQL(context, pelicula.getTitulo(), pelicula.getAnyo());
-        if(result == null)
-            return false;
-
         //Abrimos la base de datos 'DBUsuarios' en modo escritura
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
