@@ -186,16 +186,7 @@ public class DAO {
                 }
             }
 
-            String generos = "";
-            if(pelicula.getGeneros().size() > 0){
-                generos = pelicula.getGeneros().get(0);
-                for (int i = 1; i < pelicula.getGeneros().size() ; i++){
-                    if (i>0){
-                        generos += ", " + pelicula.getGeneros().get(i).toLowerCase();
-                    }
-                    else generos += pelicula.getGeneros().get(i);
-                }
-            }
+            String generos = pelicula.getGenerosToStrig();
 
             String rating = Double.toString(pelicula.getRating());
 
@@ -259,16 +250,7 @@ public class DAO {
                 }
             }
 
-            String generos = "";
-            if(pelicula.getGeneros().size() > 0){
-                generos = pelicula.getGeneros().get(0);
-                for (int i = 1; i < pelicula.getGeneros().size() ; i++){
-                    if (i>0){
-                        generos += ", " + pelicula.getGeneros().get(i).toLowerCase();
-                    }
-                    else generos += pelicula.getGeneros().get(i);
-                }
-            }
+            String generos = pelicula.getGenerosToStrig();
 
             String rating = Double.toString(pelicula.getRating());
 

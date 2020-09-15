@@ -252,12 +252,14 @@
         android:layout_alignParentBottom="true"
         android:background="@color/blanco"
         android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="4">
 
         <Button
             android:id="@+id/BtnAnadir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:background="@android:color/transparent"
@@ -271,6 +273,7 @@
             android:id="@+id/BtnTrailer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/ic_trailer"
@@ -283,6 +286,7 @@
             android:id="@+id/BtnSimilars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/ic_similar"
@@ -295,6 +299,7 @@
             android:id="@+id/BtnAtras"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
