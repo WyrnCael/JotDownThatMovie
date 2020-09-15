@@ -219,15 +219,11 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
 
         anyo.setText("	" + pelicula.getAnyo());
         // A?adir generos
-        String gene = "";
-        for (int j = 0; j < pelicula.getGeneros().size() ; j++){
-            if ( j > 0){
-                gene += ", " + pelicula.getGeneros().get(j).toLowerCase();
-                generoLab.setText(getResources().getString(R.string.genders));
-            }
-            else gene += pelicula.getGeneros().get(j);
+
+        genero.setText("	" + pelicula.getGenerosToStrig());
+        if(pelicula.getGeneros().size() > 1){
+            generoLab.setText(getResources().getString(R.string.genders));
         }
-        genero.setText("	" + gene);
 
         //A?adir directores
         /*String direc = "";

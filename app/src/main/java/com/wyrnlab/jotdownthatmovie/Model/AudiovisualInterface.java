@@ -130,6 +130,19 @@ public abstract class AudiovisualInterface implements Serializable {
         return this.Generos;
     }
 
+    public String getGenerosToStrig(){
+        String generosString = "";
+        for(String genero : this.Generos){
+            generosString += genero + ", ";
+        }
+
+        if(generosString.length() > 0){
+            generosString = generosString.substring(0, generosString.length() - 2);
+        }
+
+        return generosString;
+    }
+
     public List<String> getDirectores(){
         return this.Directores;
     }

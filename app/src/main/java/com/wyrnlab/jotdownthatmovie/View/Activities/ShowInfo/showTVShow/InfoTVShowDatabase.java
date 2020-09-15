@@ -171,7 +171,12 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
         getSupportActionBar().setTitle(pelicula.getTitulo());
 
         anyo.setText("	" + pelicula.getAnyo());
-        if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
+
+        genero.setText("	" + pelicula.getGenerosToStrig());
+        if(pelicula.getGeneros().size() > 1){
+            generoLab.setText(getResources().getString(R.string.genders));
+        }
+
         if(pelicula.getRating() == 0.0){
             valoracion.setText("	" + getResources().getString(R.string.notavailable));
         }else{

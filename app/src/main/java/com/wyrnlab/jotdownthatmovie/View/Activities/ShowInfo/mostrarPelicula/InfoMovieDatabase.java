@@ -179,7 +179,12 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
         getSupportActionBar().setTitle(pelicula.getTitulo());
 
         anyo.setText("	" + pelicula.getAnyo());
-        if (pelicula.getGeneros().size() > 0) genero.setText("	" + pelicula.getGeneros().get(0));
+
+        genero.setText("	" + pelicula.getGenerosToStrig());
+        if(pelicula.getGeneros().size() > 1){
+            generoLab.setText(getResources().getString(R.string.genders));
+        }
+
         valoracion.setText(pelicula.getRating() == 0.0 ? "	" + getResources().getString(R.string.notavailable) : "	" + Double.toString(pelicula.getRating()));
         descripcion.setText(pelicula.getDescripcion());
         if(pelicula.getOriginalLanguage() == null){
