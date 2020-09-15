@@ -172,15 +172,11 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 	
 	public void actualiza(){
 		// A�adir generos
-        String gene = "";
-        for (int j = 0; j < pelicula.getGeneros().size() ; j++){
-        	if ( j > 0){
-        		gene += ", " + pelicula.getGeneros().get(j).toLowerCase();
-        		generoLab.setText(getResources().getString(R.string.genders));
-        	}
-        	else gene += pelicula.getGeneros().get(j);        	
-        }
-        genero.setText("	" + gene);
+
+		genero.setText("	" + pelicula.getGenerosToStrig());
+		if(pelicula.getGeneros().size() > 1){
+			generoLab.setText(getResources().getString(R.string.genders));
+		}
 
         //A�adir directores
         /*String direc = "";

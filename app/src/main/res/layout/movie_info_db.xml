@@ -247,16 +247,18 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_weight="1"
         android:layout_alignParentBottom="true"
         android:background="@color/blanco"
         android:gravity="center_horizontal"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:weightSum="5.1">
 
         <Button
             android:id="@+id/BtnAtrasDB"
-            android:layout_width="@dimen/standard_58"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
@@ -264,11 +266,13 @@
             android:stateListAnimator="@null"
             android:text="@string/backButton"
             android:textColor="#000000"
-            android:theme="@style/GreenButton" />
+            android:theme="@style/GreenButton"
+            android:layout_weight="0.8"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/BtnDeleteDB"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
@@ -276,11 +280,13 @@
             android:stateListAnimator="@null"
             android:text="@string/deleteButton"
             android:textColor="#CC0000"
-            android:theme="@style/RedButton" />
+            android:theme="@style/RedButton"
+            android:layout_weight="1.1"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/BtnSimilars"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
@@ -288,11 +294,13 @@
             android:stateListAnimator="@null"
             android:text="@string/Similars"
             android:textColor="#000000"
-            android:theme="@style/GreenButton" />
+            android:theme="@style/GreenButton"
+            android:layout_weight="1.1"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/BtnTrailer"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:background="@android:color/transparent"
@@ -300,15 +308,19 @@
             android:stateListAnimator="@null"
             android:text="Trailer"
             android:textColor="#000000"
-            android:theme="@style/GreenButton" />
+            android:theme="@style/GreenButton"
+            android:layout_weight="1"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/BtnRefresh"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_weight="1.1"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/ic_refresh"
+            android:singleLine="true"
             android:stateListAnimator="@null"
             android:text="@string/Refresh"
             android:textColor="#000000"
