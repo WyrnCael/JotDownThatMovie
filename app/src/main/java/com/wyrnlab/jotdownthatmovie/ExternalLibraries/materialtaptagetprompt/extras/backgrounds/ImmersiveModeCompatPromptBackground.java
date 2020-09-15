@@ -17,7 +17,7 @@
 package com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.backgrounds;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
