@@ -3,11 +3,11 @@ package com.wyrnlab.jotdownthatmovie.View.Activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		if(getIntent().getStringExtra("Name") != null) MyUtils.showSnacknar(listView, "\"" + getIntent().getStringExtra("Name") + "\" " + getResources().getString(R.string.added) + "!");
 
 		//Swipe
-		ItemTouchRemoveHelper simpleItemTouchCallback = new ItemTouchRemoveHelper(0, android.support.v7.widget.helper.ItemTouchHelper.LEFT, MainActivity.this);
-		android.support.v7.widget.helper.ItemTouchHelper mItemTouchHelper = new android.support.v7.widget.helper.ItemTouchHelper(simpleItemTouchCallback);
+		ItemTouchRemoveHelper simpleItemTouchCallback = new ItemTouchRemoveHelper(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT, MainActivity.this);
+		androidx.recyclerview.widget.ItemTouchHelper mItemTouchHelper = new androidx.recyclerview.widget.ItemTouchHelper(simpleItemTouchCallback);
 		mItemTouchHelper.attachToRecyclerView(listView);
 		listView.addItemDecoration(new ItemDecorationRemoveHelper());
 

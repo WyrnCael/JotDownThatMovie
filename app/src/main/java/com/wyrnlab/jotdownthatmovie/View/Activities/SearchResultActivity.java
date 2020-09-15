@@ -3,17 +3,15 @@ package com.wyrnlab.jotdownthatmovie.View.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.JavaClasses.SaveAudiovisual;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
@@ -93,8 +91,8 @@ public class SearchResultActivity extends AppCompatActivity implements
         listView.addOnScrollListener(scrollListener);
 
         //Swipe
-        ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, android.support.v7.widget.helper.ItemTouchHelper.LEFT, SearchResultActivity.this);
-        android.support.v7.widget.helper.ItemTouchHelper mItemTouchHelper = new android.support.v7.widget.helper.ItemTouchHelper(simpleItemTouchCallback);
+        ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT, SearchResultActivity.this);
+        androidx.recyclerview.widget.ItemTouchHelper mItemTouchHelper = new androidx.recyclerview.widget.ItemTouchHelper(simpleItemTouchCallback);
         mItemTouchHelper.attachToRecyclerView(listView);
         listView.addItemDecoration(new ItemDecorationAddHelper(SearchResultActivity.this));
 

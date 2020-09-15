@@ -136,6 +136,78 @@
             </TableRow>
 
             <TableRow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/OriginalTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/OriginalTitle"
+                            android:textColor="@color/verde"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/OriginalTitleText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="TextView"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/negro"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/OriginalLanguge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/OriginalLanguage"
+                            android:textColor="@color/verde"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <TextView
+                            android:id="@+id/OriginalLangugeText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="TextView"
+                            android:textColor="@color/negro"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+                    </LinearLayout>
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/blanco">

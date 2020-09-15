@@ -17,8 +17,8 @@
 package com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras;
 
 import android.graphics.Canvas;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
 
 /**
  * Base interface containing common methods for UI elements in a prompt.

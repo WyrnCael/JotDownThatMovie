@@ -16,7 +16,7 @@
 
 package com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.sequence;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.MaterialTapTargetPrompt;
 

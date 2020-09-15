@@ -8,9 +8,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
+import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +23,6 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.GetSimilarTVShows;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
@@ -35,10 +34,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieShared;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
-import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
 import java.util.List;
@@ -58,6 +54,8 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
     TextView descripcion;
     TextView genero;
     TextView generoLab;
+    TextView originalTitle;
+    TextView originalLanguage;
     //TextView directorLab;
     Button botonAnadir;
     Button botonVolver;
@@ -66,6 +64,8 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
     private ShareActionProvider mShareActionProvider;
     SimilarMoviesModal similarMoviesModal;
     Context context;
+    ImageView image;
+    ImageLoader imageLoader;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,6 +119,8 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         botonTrailer = (Button)findViewById(R.id.BtnTrailer);
         botonSimilars = (Button)findViewById(R.id.BtnSimilars);
         season = (TextView)findViewById(R.id.seasons);
+        originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
+        originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
 
         //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
@@ -238,11 +240,21 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         }*/
 
         descripcion.setText(pelicula.getDescripcion());
-        season.setText(pelicula.getSeasons());
+        season.setText("	" + pelicula.getSeasons());
 
-        ImageView image = (ImageView)findViewById(R.id.poster);
-        ImageLoader imageLoader = new ImageLoader(this);
-        imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
+        image = (ImageView)findViewById(R.id.poster);
+        imageLoader = new ImageLoader(this);
+        if(General.base_url == null){
+            SearchBaseUrl searchor = new SearchBaseUrl(InfoTVShowShared.this){
+                @Override
+                public void onResponseReceived(Object result){
+                    imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
+                }
+            };
+            MyUtils.execute(searchor);
+        } else {
+            imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
+        }
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -251,6 +263,9 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
 
             }
         });
+
+        originalLanguage.setText(General.getLanguageTranslations(pelicula.getOriginalLanguage()));
+        originalTitle.setText(pelicula.getTituloOriginal());
     }
 
     @Override

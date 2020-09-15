@@ -22,8 +22,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.extras.PromptFocal;
