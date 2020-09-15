@@ -1,18 +1,9 @@
 package com.wyrnlab.jotdownthatmovie.View.Recyclerviews;
 
-import android.content.Context;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
-
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
-import com.wyrnlab.jotdownthatmovie.Model.RowItem;
-import com.wyrnlab.jotdownthatmovie.R;
-
-import java.util.List;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position

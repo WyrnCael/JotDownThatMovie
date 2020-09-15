@@ -6,10 +6,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ShareActionProvider;
+import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +20,6 @@ import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchInfoShow;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShowURLTrailer;
-import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
@@ -32,10 +30,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
-import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
@@ -54,6 +49,8 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 	TextView seasons;
 	TextView generoLab;
 	TextView directorLab;
+	TextView originalTitle;
+	TextView originalLanguage;
 	Button botonAnadir;
 	Button botonVolver;
 	Button botonTrailer;
@@ -99,6 +96,8 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 		botonVolver = (Button)findViewById(R.id.BtnAtras);
 		botonTrailer = (Button)findViewById(R.id.BtnTrailer);
 		botonSimilars = (Button)findViewById(R.id.BtnSimilars);
+		originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
+		originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
 
         
       //Recuperamos la información pasada en el intent
@@ -207,6 +206,8 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 
 			}
 		});
+		originalLanguage.setText(General.getLanguageTranslations(pelicula.getOriginalLanguage()));
+		originalTitle.setText(pelicula.getTituloOriginal());
 
 		similarMoviesModal.pelicula = this.pelicula;
 	}

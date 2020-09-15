@@ -2,19 +2,17 @@ package com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.icu.text.IDNA;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
+import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ShareActionProvider;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,29 +25,20 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.GetSimilarMovies;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchMovieURLTrailer;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
-import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
-import com.wyrnlab.jotdownthatmovie.Model.Trailer;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
-import com.wyrnlab.jotdownthatmovie.View.Activities.SearchActivity;
-import com.wyrnlab.jotdownthatmovie.View.Activities.SearchResultActivity;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
-import com.wyrnlab.jotdownthatmovie.View.Activities.YoutubeActivityView;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class InfoMovieDatabase extends AppCompatActivity implements AsyncResponse {
 
