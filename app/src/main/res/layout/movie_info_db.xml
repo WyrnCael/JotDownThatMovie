@@ -11,7 +11,7 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/relativeLayout1"
+        android:layout_above="@+id/viewedLayot"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -242,6 +242,34 @@
             </TableRow>
         </TableLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/viewedLayot"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="60dp"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blanco"
+        android:gravity="center_horizontal"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/BtnViewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_viewed"
+            android:drawablePadding="10dp"
+            android:stateListAnimator="@null"
+            android:text="@string/MarkAsViewed"
+            android:textColor="#000000"
+            android:theme="@style/GreenButton"
+            android:singleLine="true" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/relativeLayout1"

@@ -35,6 +35,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="opacityPercent" value="80" />
                                                 <entry key="paddingPercent" value="5" />
                                               </map>
                                             </option>
@@ -46,10 +47,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Jota\Downloads\television.png" />
-                                      <entry key="outputName" value="tv" />
+                                      <entry key="imageAsset" value="C:\Users\Jota\Documents\Android icons\strike-icon-300x232.png" />
+                                      <entry key="outputName" value="strike_eye_red" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="000000" />
+                                      <entry key="themeColor" value="cc0000" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -185,7 +186,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_autorenew_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_remove_red_eye_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -195,8 +196,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_refresh" />
-                            <entry key="sourceFile" value="C:\Users\Jota" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_strike_eye_24" />
+                            <entry key="sourceFile" value="C:\Users\Jota\Documents\Android icons\strike-eye_24.psd" />
                           </map>
                         </option>
                       </PersistentState>

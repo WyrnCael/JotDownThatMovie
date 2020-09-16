@@ -34,6 +34,7 @@ import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchRemoveHelper;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
 
+import java.nio.channels.FileLockInterruptionException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	private static String FILTER_ALL = "All";
 	private static String FILTER_MOVIE = "Movie";
 	private static String FILTER_TVSHOW = "Show";
+	private static String FILTER_VIEWED = General.VIEWED;
 	String filter = FILTER_ALL;
 	Boolean firstTime = true;
 	Boolean dontExit = false;
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FilterAll) + " (" + moviesByType.get(FILTER_ALL).size() + ")"));
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FilterMovie) + " (" + moviesByType.get(FILTER_MOVIE).size() + ")"));
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FilterTVShow) + " (" + moviesByType.get(FILTER_TVSHOW).size() + ")"));
+		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.Viewed) + " (" + moviesByType.get(FILTER_VIEWED).size() + ")"));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
@@ -115,6 +118,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 						break;
 					case 2:
 						refreshList(FILTER_TVSHOW);
+						break;
+					case 3:
+						refreshList(FILTER_VIEWED);
 						break;
 				}
 			}
@@ -191,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 		refreshTabs();
 
-		if(moviesByType.get(FILTER_ALL).size() == 0) {
+		if(moviesByType.get(FILTER_ALL).isEmpty() && moviesByType.get(FILTER_VIEWED).isEmpty()) {
 			firstTime = true;
 			showTutorialSearch();
 		} else {
@@ -203,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		tabLayout.getTabAt(0).setText(getString(R.string.FilterAll) + " (" + moviesByType.get(FILTER_ALL).size() + ")");
 		tabLayout.getTabAt(1).setText(getString(R.string.FilterMovie) + " (" + moviesByType.get(FILTER_MOVIE).size() + ")");
 		tabLayout.getTabAt(2).setText(getString(R.string.FilterTVShow) + " (" + moviesByType.get(FILTER_TVSHOW).size() + ")");
+		tabLayout.getTabAt(3).setText(getString(R.string.Viewed) + " (" + moviesByType.get(FILTER_VIEWED).size() + ")");
 	}
 
 	public void showTutorialSearch(){
@@ -252,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 				refreshList(filter);
 				break;
 		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override

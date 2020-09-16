@@ -13,6 +13,7 @@ public class General {
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
+    public final static String VIEWED = "Viewed";
     public final static String DB_SOURCE = "DB";
     public final static String NET_SOURCE = "NET";
     public final static String SHARE_SOURCE = "SHARE";

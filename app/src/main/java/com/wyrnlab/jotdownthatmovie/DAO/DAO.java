@@ -37,7 +37,7 @@ public class DAO {
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
         SQLiteDatabase db = usdbh.getWritableDatabase();
-        Cursor c = db.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating, tipo, temporadas, original_language FROM Peliculas WHERE titulo = ? AND anyo = ?", new String[]{ title, year });
+        Cursor c = db.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating, tipo, temporadas, original_language, viewed FROM Peliculas WHERE titulo = ? AND anyo = ?", new String[]{ title, year });
 
         //Nos aseguramos de que existe al menos un registro
         int pos = 1;
@@ -57,6 +57,7 @@ public class DAO {
                 pelicula.setTipo(c.getString(10));
                 pelicula.setSeasons(c.getString(11));
                 pelicula.setOriginalLanguage(c.getString(12));
+                pelicula.setViewed(c.getInt(13));
                 pelicula.setSource(General.DB_SOURCE);
             } while(c.moveToNext());
         }
@@ -113,11 +114,12 @@ public class DAO {
         audiovisualByType.put(General.ALL_TYPE, new ArrayList<AudiovisualInterface>());
         audiovisualByType.put(General.MOVIE_TYPE, new ArrayList<AudiovisualInterface>());
         audiovisualByType.put(General.TVSHOW_TYPE, new ArrayList<AudiovisualInterface>());
+        audiovisualByType.put(General.VIEWED, new ArrayList<AudiovisualInterface>());
 
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
         SQLiteDatabase dba = usdbh.getWritableDatabase();
-        Cursor c = dba.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating, tipo, temporadas, original_language FROM Peliculas ", null);
+        Cursor c = dba.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating, tipo, temporadas, original_language, viewed FROM Peliculas ", null);
 
         //Nos aseguramos de que existe al menos un registro
         if (c.moveToFirst()) {
@@ -137,10 +139,15 @@ public class DAO {
                 pelicula.setTipo(c.getString(10));
                 pelicula.setSeasons(c.getString(11));
                 pelicula.setOriginalLanguage(c.getString(12));
+                pelicula.setViewed(c.getInt(13));
                 pelicula.setSource(General.DB_SOURCE);
 
-                audiovisualByType.get(pelicula.getTipo()).add(pelicula);
-                audiovisualByType.get(General.ALL_TYPE).add(pelicula);
+                if(pelicula.getViewed()){
+                    audiovisualByType.get(General.VIEWED).add(pelicula);
+                } else {
+                    audiovisualByType.get(pelicula.getTipo()).add(pelicula);
+                    audiovisualByType.get(General.ALL_TYPE).add(pelicula);
+                }
             } while(c.moveToNext());
         }
 
@@ -174,20 +181,8 @@ public class DAO {
             String tipo = pelicula.getTipo();
             String temporadas = pelicula.getSeasons() == null ? "0" : pelicula.getSeasons();
             String idiomaOriginal = pelicula.getOriginalLanguage();
-
-            String directores = "";
-            if(pelicula.getDirectores().size() > 0){
-                directores = pelicula.getDirectores().get(0);
-                for (int i = 1; i < pelicula.getDirectores().size() ; i++){
-                    if (i > 0){
-                        directores += ", " + pelicula.getDirectores().get(i);
-                    }
-                    else directores += pelicula.getDirectores().get(i);
-                }
-            }
-
+            String directores = pelicula.getDirectoresToString();
             String generos = pelicula.getGenerosToStrig();
-
             String rating = Double.toString(pelicula.getRating());
 
 
@@ -238,18 +233,7 @@ public class DAO {
             String tipo = pelicula.getTipo();
             String temporadas = pelicula.getSeasons() == null ? "0" : pelicula.getSeasons();
             String idiomaOriginal = pelicula.getOriginalLanguage();
-
-            String directores = "";
-            if(pelicula.getDirectores().size() > 0){
-                directores = pelicula.getDirectores().get(0);
-                for (int i = 1; i < pelicula.getDirectores().size() ; i++){
-                    if (i > 0){
-                        directores += ", " + pelicula.getDirectores().get(i);
-                    }
-                    else directores += pelicula.getDirectores().get(i);
-                }
-            }
-
+            String directores = pelicula.getDirectoresToString();
             String generos = pelicula.getGenerosToStrig();
 
             String rating = Double.toString(pelicula.getRating());
@@ -272,6 +256,33 @@ public class DAO {
             insertStmt.bindString(11, temporadas);
             insertStmt.bindString(12, idiomaOriginal);
             insertStmt.bindString(13, id);
+
+            Log.d("Updated", String.valueOf(insertStmt.executeUpdateDelete()));
+
+            //Cerramos la base de datos
+            db.close();
+        }
+        return true;
+    }
+
+    public boolean updateAsViewed(Context context, AudiovisualInterface pelicula){
+        //Abrimos la base de datos 'DBUsuarios' en modo escritura
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
+
+        SQLiteDatabase db = usdbh.getWritableDatabase();
+
+        //Si hemos abierto correctamente la base de datos
+        if(db != null)
+        {
+            String id = Integer.toString(pelicula.getId());
+            Integer viewed = pelicula.getViewed() ? 1 : 0;
+
+            //Insertamos los datos en la tabla Peliculas
+            String sql = "UPDATE Peliculas SET viewed = ? WHERE filmId = ?";
+            SQLiteStatement insertStmt = db.compileStatement(sql);
+            insertStmt.clearBindings();
+            insertStmt.bindLong(1, viewed);
+            insertStmt.bindString(2, id);
 
             Log.d("Updated", String.valueOf(insertStmt.executeUpdateDelete()));
 
