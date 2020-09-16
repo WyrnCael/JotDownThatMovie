@@ -1,5 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.Analytics.OpenApp;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
@@ -21,6 +25,7 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.MaterialTapTargetPrompt;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
@@ -57,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	Boolean firstTime = true;
 	Boolean dontExit = false;
 	Boolean searcBtnhUp = false;
+	Menu menu;
 	RecyclerViewAdapter adapter;
 	TabLayout tabLayout;
 	private int longClickPosition;
@@ -229,22 +235,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-									ContextMenuInfo menuInfo)
-	{
-		/*super.onCreateContextMenu(menu, v, menuInfo);
-
-		MenuInflater inflater = getMenuInflater();
-
-		AdapterView.AdapterContextMenuInfo info =
-				(AdapterView.AdapterContextMenuInfo)menuInfo;
-
-		// Si no es añadir
-		menu.setHeaderTitle(rowItems.get(info.position).toString());
-		inflater.inflate(R.menu.menu_pelicula_lista, menu);*/
-	}
-
-	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (resultCode){
 			case General.RESULT_CODE_REMOVED:
@@ -293,11 +283,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-
+		final RowItem row = rowItems.get(longClickPosition);
 		switch (item.getItemId()) {
 			case R.id.CtxLstOpc2:
-				final RowItem row = rowItems.get(longClickPosition);
 				adapter.pendingRemoval(longClickPosition);
+				return true;
+			case R.id.SetAsViewed:
+				setAsViewedOrNotViewed(longClickPosition);
 				return true;
 			default:
 				return super.onContextItemSelected(item);
@@ -306,6 +298,27 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 	public void removeItemFromDB(AudiovisualInterface item){
 		DAO.getInstance().delete(MainActivity.this, item.getId());
+	}
+
+	public void setAsViewedOrNotViewed(Integer longClickPosition){
+		RowItem item = adapter.items.get(longClickPosition);
+		AudiovisualInterface pelicula = (AudiovisualInterface) item.getObject();
+		pelicula.setId(item.getId());
+		if(pelicula.getViewed()){
+			pelicula.setViewed(false);
+		} else {
+			pelicula.setViewed(true);
+		}
+
+		if(DAO.getInstance().updateAsViewed(MainActivity.this, pelicula)){
+			MyUtils.showSnacknar(((Activity)MainActivity.this).findViewById(R.id.mainListView), getResources().getString(R.string.MarkedAsViewed));
+			adapter.items.remove(longClickPosition);
+			adapter.notifyDataSetChanged();
+		} else {
+			MyUtils.showSnacknar(((Activity)MainActivity.this).findViewById(R.id.mainListView), getResources().getString(R.string.MarkAsViewedError));
+		}
+
+		refreshList(filter);
 	}
 
 	@Override
@@ -344,6 +357,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 		menu.setHeaderTitle(rowItems.get(position).toString());
 		inflater.inflate(R.menu.menu_pelicula_lista, menu);
+
+
+		MenuItem item = menu.findItem(R.id.SetAsViewed);
+		if(filter.equalsIgnoreCase(FILTER_VIEWED)){
+			item.setTitle(getString(R.string.MarkAsNOTViewed));
+		} else {
+			item.setTitle(getString(R.string.MarkAsViewed));
+		}
 	}
 
 	@Override
