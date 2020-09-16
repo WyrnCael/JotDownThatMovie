@@ -176,7 +176,11 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
 
                 if(DAO.getInstance().updateAsViewed(InfoTVShowDatabase.this, pelicula)){
                     setViewedState();
-                    MyUtils.showSnacknar(((Activity)InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsViewed));
+                    if(pelicula.getViewed()){
+                        MyUtils.showSnacknar(((Activity) InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsViewed));
+                    } else {
+                        MyUtils.showSnacknar(((Activity) InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsNOTViewed));
+                    }
                 } else {
                     MyUtils.showSnacknar(((Activity)InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkAsViewedError));
                 }
@@ -248,7 +252,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
 
     private void setViewedOption(){
         botonViewed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_viewed, 0, 0, 0);
-        botonViewed.setText(getString(R.string.MarkAsNOTViewed));
+        botonViewed.setText(getString(R.string.MarkAsViewed));
         botonViewed.setTextColor(Color.BLACK);
     }
 
