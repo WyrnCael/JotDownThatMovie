@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ShareActionProvider;
@@ -34,6 +39,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
+import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
@@ -58,6 +64,7 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
 	Button botonTrailer;
     Button botonSimilars;
     Button botonRemove;
+    Button botonViewed;
     private ShareActionProvider mShareActionProvider;
     Integer position;
     SimilarMoviesModal similarMoviesModal;
@@ -92,6 +99,7 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
         botonSimilars = (Button)findViewById(R.id.BtnSimilars);
         botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
         botonRefresh = (Button)findViewById(R.id.BtnRefresh);
+        botonViewed = (Button)findViewById(R.id.BtnViewed);
         originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
         originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
 
@@ -173,6 +181,21 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
                 }
             }
         });
+
+        botonViewed.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                pelicula.setViewed(pelicula.getViewed() ? false : true);
+
+                if(DAO.getInstance().updateAsViewed(InfoMovieDatabase.this, pelicula)){
+                    setViewedState();
+                    MyUtils.showSnacknar(((Activity)InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsViewed));
+                } else {
+                    MyUtils.showSnacknar(((Activity)InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkAsViewedError));
+                }
+            }
+        });
     }
 
     private void actualiza(){
@@ -209,6 +232,8 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
             });
         }
         if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
+
+        setViewedState();
     }
 
     private void refreshSearch(){
@@ -226,6 +251,27 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
         };
         searchorMovie.execute();
     }
+
+    private void setNotViewedOption(){
+        botonViewed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.strike_eye_red, 0, 0, 0);
+        botonViewed.setText(getString(R.string.MarkAsNOTViewed));
+        botonViewed.setTextColor(Color.parseColor("#cc0000"));
+    }
+
+    private void setViewedOption(){
+        botonViewed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_viewed, 0, 0, 0);
+        botonViewed.setText(getString(R.string.MarkAsNOTViewed));
+        botonViewed.setTextColor(Color.BLACK);
+    }
+
+    private void setViewedState(){
+        if(pelicula.getViewed()){
+            setNotViewedOption();
+        } else {
+            setViewedOption();
+        }
+    }
+
 
     private void searchSimilars(){
         GetSimilarMovies searchorSimilars = new GetSimilarMovies(context, pelicula.getId(), null) {
@@ -305,6 +351,7 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
                     similarMoviesModal.removeAndSaveItem(data);
                 }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

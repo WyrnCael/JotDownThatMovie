@@ -20,6 +20,7 @@ public abstract class AudiovisualInterface implements Serializable {
     protected String source;
     protected String originalLanguage;
     protected List<AudiovisualInterface> similars;
+    protected Boolean viewed;
 
     public List<AudiovisualInterface> getSimilars() {
         return similars;
@@ -131,16 +132,11 @@ public abstract class AudiovisualInterface implements Serializable {
     }
 
     public String getGenerosToStrig(){
-        String generosString = "";
-        for(String genero : this.Generos){
-            generosString += genero + ", ";
-        }
+        return separateByCommas(this.getGeneros());
+    }
 
-        if(generosString.length() > 0){
-            generosString = generosString.substring(0, generosString.length() - 2);
-        }
-
-        return generosString;
+    public String getDirectoresToString(){
+        return separateByCommas(this.getDirectores());
     }
 
     public List<String> getDirectores(){
@@ -157,5 +153,34 @@ public abstract class AudiovisualInterface implements Serializable {
 
     public void setOriginalLanguage(String originalLanguage) {
         this.originalLanguage = originalLanguage;
+    }
+
+    public Boolean getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(Boolean viewed) {
+        this.viewed = viewed;
+    }
+
+    public void setViewed(Integer viewed) {
+        if(viewed == 0){
+            this.viewed = false;
+        } else {
+            this.viewed = true;
+        }
+    }
+
+    private String separateByCommas(List<String> items){
+        String returnString = "";
+        for(String item : items){
+            returnString += item + ", ";
+        }
+
+        if(returnString.length() > 0){
+            returnString = returnString.substring(0, returnString.length() - 2);
+        }
+
+        return returnString;
     }
 }

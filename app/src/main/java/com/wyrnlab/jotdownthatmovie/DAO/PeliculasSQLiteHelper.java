@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class PeliculasSQLiteHelper extends SQLiteOpenHelper {
 	 
     //Sentencia SQL para crear la tabla de Usuarios
-    String sqlCreate = "CREATE TABLE Peliculas (_id integer primary key autoincrement, filmId TEXT, nombre TEXT, anyo TEXT, titulo TEXT, tituloOriginal TEXT, descripcion TEXT, image BLOB, directores TEXT, generos TEXT, rating TEXT, prioridad INTEGER, tipo TEXT, emision TEXT, temporadas TEXT, capitulos TEXT, original_language TEXT)";
+    String sqlCreate = "CREATE TABLE Peliculas (_id integer primary key autoincrement, filmId TEXT, nombre TEXT, anyo TEXT, titulo TEXT, tituloOriginal TEXT, descripcion TEXT, image BLOB, directores TEXT, generos TEXT, rating TEXT, prioridad INTEGER, tipo TEXT, emision TEXT, temporadas TEXT, capitulos TEXT, original_language TEXT, viewed INTEGER  DEFAULT 0)";
  
     public PeliculasSQLiteHelper(Context contexto, String nombre,
                                CursorFactory factory, int version) {
@@ -50,6 +50,7 @@ public class PeliculasSQLiteHelper extends SQLiteOpenHelper {
             version = 3;
         } if (version == 3) {
             db.execSQL("ALTER TABLE Peliculas ADD COLUMN original_language TEXT");
+            db.execSQL("ALTER TABLE Peliculas ADD COLUMN viewed INTEGER  DEFAULT 0");
             version = 4;
         }
 

@@ -56,6 +56,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
     Button botonSimilars;
     Button botonRemove;
     Button botonRefresh;
+    Button botonViewed;
     TextView originalTitle;
     TextView originalLanguage;
     private ShareActionProvider mShareActionProvider;
@@ -92,6 +93,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
         botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
         seasons = (TextView)findViewById(R.id.seasons);
         botonRefresh = (Button)findViewById(R.id.BtnRefresh);
+        botonViewed = (Button)findViewById(R.id.BtnViewed);
         originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
         originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
 
@@ -165,6 +167,21 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
                 }
             }
         });
+
+        botonViewed.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                pelicula.setViewed(pelicula.getViewed() ? false : true);
+
+                if(DAO.getInstance().updateAsViewed(InfoTVShowDatabase.this, pelicula)){
+                    setViewedState();
+                    MyUtils.showSnacknar(((Activity)InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsViewed));
+                } else {
+                    MyUtils.showSnacknar(((Activity)InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkAsViewedError));
+                }
+            }
+        });
     }
 
     private void actualiza(){
@@ -221,6 +238,26 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
             }
         };
         searchorMovie.execute();
+    }
+
+    private void setNotViewedOption(){
+        botonViewed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.strike_eye_red, 0, 0, 0);
+        botonViewed.setText(getString(R.string.MarkAsNOTViewed));
+        botonViewed.setTextColor(Color.parseColor("#cc0000"));
+    }
+
+    private void setViewedOption(){
+        botonViewed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_viewed, 0, 0, 0);
+        botonViewed.setText(getString(R.string.MarkAsNOTViewed));
+        botonViewed.setTextColor(Color.BLACK);
+    }
+
+    private void setViewedState(){
+        if(pelicula.getViewed()){
+            setNotViewedOption();
+        } else {
+            setViewedOption();
+        }
     }
 
     private void searchSimilars(){
@@ -301,6 +338,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
                     similarMoviesModal.removeAndSaveItem(data);
                 }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

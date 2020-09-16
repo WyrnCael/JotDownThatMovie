@@ -41,9 +41,9 @@
     <string name="Show">TV Show</string>
     <string name="Filter">Filter</string>
     <string name="Search">Search</string>
-    <string name="FilterAll">All</string>
-    <string name="FilterMovie">Movies</string>
-    <string name="FilterTVShow">TV Shows</string>
+    <string name="FilterAll">All NOT SEEN</string>
+    <string name="FilterMovie">MOVIES NOT SEEN</string>
+    <string name="FilterTVShow">TV SHOWS NOT SEEN</string>
     <string name="SelectFilter">Select a filter</string>
     <string name="StartPrimaryText">Start here!</string>
     <string name="StartSecondaryText">Welcome! Tap here to start</string>
@@ -61,6 +61,12 @@
     <string name="RefreshedError">An error ocurred while refreshing, try again later</string>
     <string name="Spanish">Spanish</string>
     <string name="English">English</string>
+    <string name="Viewed">VIEWED</string>
+    <string name="MarkAsViewed">Mark as viewed</string>
+    <string name="MarkAsNOTViewed">Mark as NOT viewed</string>
+    <string name="MarkedAsViewed">Marked as viewed!</string>
+    <string name="MarkedAsNOTViewed">Marked as NOT viewed</string>
+    <string name="MarkAsViewedError">An error ocurred while updating, try again later</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>

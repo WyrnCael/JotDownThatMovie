@@ -42,9 +42,9 @@
     <string name="Show">Serie</string>
     <string name="Filter">Filtrar</string>
     <string name="Search">Buscar</string>
-    <string name="FilterAll">Todo</string>
-    <string name="FilterMovie">Peliculas</string>
-    <string name="FilterTVShow">Series</string>
+    <string name="FilterAll">TODO POR VER</string>
+    <string name="FilterMovie">PELÍCULAS POR VER</string>
+    <string name="FilterTVShow">SERIES POR VER</string>
     <string name="SelectFilter">Selecciona el tipo de filtro</string>
     <string name="StartPrimaryText">¡Empieza aquí!</string>
     <string name="StartSecondaryText">Empieza pulsando aquí</string>
@@ -62,6 +62,12 @@
     <string name="RefreshedError">Ha ocurrido un error actualizando, vuelva a intentarlo mas tarde</string>
     <string name="Spanish">Español</string>
     <string name="English">Inglés</string>
+    <string name="Viewed">VISTAS</string>
+    <string name="MarkAsViewed">Marcar como vista</string>
+    <string name="MarkAsNOTViewed">Marcar como NO vista</string>
+    <string name="MarkedAsViewed">Marcada como vista</string>
+    <string name="MarkedAsNOTViewed">Marcada como no vista</string>
+    <string name="MarkAsViewedError">Ha ocurrido un error, vuelva a intentarlo mas tarde</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>
