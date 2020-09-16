@@ -40,6 +40,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowDatabase;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
@@ -190,7 +191,11 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
 
                 if(DAO.getInstance().updateAsViewed(InfoMovieDatabase.this, pelicula)){
                     setViewedState();
-                    MyUtils.showSnacknar(((Activity)InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsViewed));
+                    if(pelicula.getViewed()){
+                        MyUtils.showSnacknar(((Activity) InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsViewed));
+                    } else {
+                        MyUtils.showSnacknar(((Activity) InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsNOTViewed));
+                    }
                 } else {
                     MyUtils.showSnacknar(((Activity)InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkAsViewedError));
                 }
@@ -260,7 +265,7 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
 
     private void setViewedOption(){
         botonViewed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_viewed, 0, 0, 0);
-        botonViewed.setText(getString(R.string.MarkAsNOTViewed));
+        botonViewed.setText(getString(R.string.MarkAsViewed));
         botonViewed.setTextColor(Color.BLACK);
     }
 
