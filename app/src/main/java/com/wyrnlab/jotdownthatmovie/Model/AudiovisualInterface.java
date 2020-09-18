@@ -156,7 +156,7 @@ public abstract class AudiovisualInterface implements Serializable {
     }
 
     public Boolean getViewed() {
-        return viewed;
+        return viewed == null ? false : viewed; // TODO remove null comparasion when all devices has v2.0+
     }
 
     public void setViewed(Boolean viewed) {

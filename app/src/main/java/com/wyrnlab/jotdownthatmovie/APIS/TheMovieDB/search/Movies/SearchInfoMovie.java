@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
@@ -24,9 +25,11 @@ import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -131,6 +134,9 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
         // Convertiomos la imagen a BLOB
         byte[] image = null;
         try {
+            if(General.base_url == null){
+                SearchBaseUrl.getBaseUrl();
+            }
             URL url = new URL(General.base_url + "w500" + pelicula.getImagePath());
             URLConnection ucon = url.openConnection();
 

@@ -25,8 +25,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public abstract class SearchBaseUrl extends AsyncTask<String, Integer, List<Pelicula>> implements ICallback {
 
-    private HttpsURLConnection yc;
-    Context context;
+    private static HttpsURLConnection yc;
+    public static Context context;
 
     public SearchBaseUrl(Context context){
         this.context = context;
@@ -51,7 +51,7 @@ public abstract class SearchBaseUrl extends AsyncTask<String, Integer, List<Peli
         super.onPostExecute(result);
     }
 
-    private void getBaseUrl() {
+    public static void getBaseUrl() {
         String web = null;
 
         String url = General.URLPRINCIPAL + "3/configuration?api_key=" + General.APIKEY;

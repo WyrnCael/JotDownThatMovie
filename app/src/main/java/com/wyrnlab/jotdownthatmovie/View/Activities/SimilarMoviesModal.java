@@ -172,9 +172,9 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
     @Override
     public void processFinish(Object result) {
         if(DAO.getInstance().insert(context, (AudiovisualInterface) result)){
-            MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + context.getResources().getString(R.string.added));
+            MyUtils.showSnacknar(activity.getWindow().getDecorView().getRootView(), ((AudiovisualInterface) result).getTitulo() + " " + context.getResources().getString(R.string.added));
         } else {
-            MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + context.getResources().getString(R.string.alreadySaved));
+            MyUtils.showSnacknar(activity.getWindow().getDecorView().getRootView(), ((AudiovisualInterface) result).getTitulo() + " " + context.getResources().getString(R.string.alreadySaved));
         }
     }
 }
