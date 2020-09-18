@@ -325,5 +325,6 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
                     similarMoviesModal.removeAndSaveItem(data);
                 }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

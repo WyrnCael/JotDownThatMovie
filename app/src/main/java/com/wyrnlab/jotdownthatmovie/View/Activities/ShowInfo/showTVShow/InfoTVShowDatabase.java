@@ -177,12 +177,12 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
                 if(DAO.getInstance().updateAsViewed(InfoTVShowDatabase.this, pelicula)){
                     setViewedState();
                     if(pelicula.getViewed()){
-                        MyUtils.showSnacknar(((Activity) InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsViewed));
+                        MyUtils.showSnacknar(((Activity) InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutTVInfoDB), getResources().getString(R.string.MarkedAsViewed));
                     } else {
-                        MyUtils.showSnacknar(((Activity) InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkedAsNOTViewed));
+                        MyUtils.showSnacknar(((Activity) InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutTVInfoDB), getResources().getString(R.string.MarkedAsNOTViewed));
                     }
                 } else {
-                    MyUtils.showSnacknar(((Activity)InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkAsViewedError));
+                    MyUtils.showSnacknar(((Activity)InfoTVShowDatabase.this).findViewById(R.id.relativeLayoutTVInfoDB), getResources().getString(R.string.MarkAsViewedError));
                 }
             }
         });

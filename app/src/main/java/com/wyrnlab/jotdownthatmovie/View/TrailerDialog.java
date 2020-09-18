@@ -53,11 +53,13 @@ public class TrailerDialog extends AlertDialog.Builder implements DialogInterfac
         languages.put("es", context.getString(R.string.Spanish));
         languages.put("en", context.getString(R.string.English));
 
-        String originalLang = originalLanguage.substring(0,2);
-        if(localeLanguage.equalsIgnoreCase("es")){
-            languages.put(originalLang, context.getString(R.string.OriginalLanguage) + " (" + General.getLanguageTranslations(originalLang) + ")");
-        } else {
-            languages.put(originalLang, context.getString(R.string.OriginalLanguage) + " (" + General.getLanguageTranslations(originalLang) + ")");
+        if(originalLanguage != null){
+            String originalLang = originalLanguage.substring(0,2);
+            if(localeLanguage.equalsIgnoreCase("es")){
+                languages.put(originalLang, context.getString(R.string.OriginalLanguage) + " (" + General.getLanguageTranslations(originalLang) + ")");
+            } else {
+                languages.put(originalLang, context.getString(R.string.OriginalLanguage) + " (" + General.getLanguageTranslations(originalLang) + ")");
+            }
         }
 
         selectedCode = "es";

@@ -129,6 +129,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 	        	}
 	            break;
 	    }
+	    super.onActivityResult(requestCode, resultCode, data);
 	}
 
     @Override
