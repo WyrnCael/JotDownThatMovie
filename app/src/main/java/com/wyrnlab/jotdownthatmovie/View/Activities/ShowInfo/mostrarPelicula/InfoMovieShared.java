@@ -211,8 +211,6 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
 
         // Title
         getSupportActionBar().setTitle(pelicula.getTitulo());
-
-        Log.d("AA", Double.toString(pelicula.getRating()));
         if(pelicula.getRating() == 0.0){
             valoracion.setText("	" + getResources().getString(R.string.notavailable));
         }else{
@@ -324,8 +322,13 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse 
             case General.REQUEST_CODE_PELIBUSCADA:
                 if (resultCode == General.RESULT_CODE_ADD) {
                     similarMoviesModal.removeAndSaveItem(data);
+                } else if(resultCode == General.RESULT_CODE_SIMILAR_CLOSED){
+                    if(similarMoviesModal != null && similarMoviesModal.popupWindow != null){
+                        similarMoviesModal.popupWindow.dismiss();
+                    }
                 }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

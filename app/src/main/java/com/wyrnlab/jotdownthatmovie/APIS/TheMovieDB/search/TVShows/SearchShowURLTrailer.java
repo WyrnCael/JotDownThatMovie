@@ -73,7 +73,6 @@ public abstract class SearchShowURLTrailer extends AsyncTask<String, Integer, Li
         String web = null;
 
         String url = General.URLPRINCIPAL + "3/tv/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + language;
-        Log.d("url", url);
 
         URL oracle = new URL(url);
         yc = (HttpsURLConnection) oracle.openConnection();

@@ -157,7 +157,6 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
 
             tvShow.setImage(buffer.toByteArray());
         } catch (Exception e) {
-            Log.d("ImageManager", "Error: " + e.toString());
             Bitmap b = BitmapFactory.decodeResource(context.getResources(),
                     R.drawable.stub);
             tvShow.setImage(ImageHandler.getBytes(b));
@@ -186,7 +185,6 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
     }
 
     private void readJSONSimilars(String json) throws IOException{
-        Log.d("SIMILARS: " , json);
         ModelSearchTVShow results = new Gson().fromJson(json, ModelSearchTVShow.class);
 
         List<AudiovisualInterface> similars = new ArrayList<AudiovisualInterface>();
