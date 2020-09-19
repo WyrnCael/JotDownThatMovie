@@ -50,6 +50,8 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
     RecyclerViewAdapter adapter;
     int longClickPosition;
     Context context;
+    public boolean closed = false;
+    public PopupWindow popupWindow;
 
     public SimilarMoviesModal(AudiovisualInterface pelicula, Context context, Activity activity){
         this.pelicula = pelicula;
@@ -80,7 +82,7 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
         int widthS = size.x;
         int heightS = size.y;
 
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.setElevation(20);
         popupWindow.setWidth(widthS-80);
         popupWindow.setHeight(heightS-180);
@@ -110,15 +112,17 @@ public class SimilarMoviesModal implements AsyncResponse, AdapterCallback, Recyc
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                closed = true;
                 activity.getWindow().getDecorView().getRootView().getOverlay().clear();
             }
         });
 
-        ImageButton close = (ImageButton) popupView.findViewById(R.id.ib_close);
-        close.setOnClickListener(new View.OnClickListener(){
+        ImageButton closeButton = (ImageButton) popupView.findViewById(R.id.ib_close);
+        closeButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
+                closed = true;
                 popupWindow.dismiss();
             }
         });
