@@ -257,8 +257,6 @@ public class DAO {
             insertStmt.bindString(12, idiomaOriginal);
             insertStmt.bindString(13, id);
 
-            Log.d("Updated", String.valueOf(insertStmt.executeUpdateDelete()));
-
             //Cerramos la base de datos
             db.close();
         }
@@ -283,8 +281,6 @@ public class DAO {
             insertStmt.clearBindings();
             insertStmt.bindLong(1, viewed);
             insertStmt.bindString(2, id);
-
-            Log.d("Updated", String.valueOf(insertStmt.executeUpdateDelete()));
 
             //Cerramos la base de datos
             db.close();

@@ -21,6 +21,7 @@ public class General {
     public final static int RESULT_CODE_ADD = 10001;
     public final static int RESULT_CODE_REMOVED = 10002;
     public final static int RESULT_CODE_NEEDS_REFRESH = 10003;
+    public final static int RESULT_CODE_SIMILAR_CLOSED = 10004;
     public static String base_url = null;
     private static List<String> MovieIdsInDB = new ArrayList<>();
     private static List<Pelicula> peliculasBuscadas;

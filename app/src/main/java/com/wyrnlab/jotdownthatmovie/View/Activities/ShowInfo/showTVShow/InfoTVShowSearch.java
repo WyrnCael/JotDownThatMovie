@@ -123,9 +123,8 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
       //Implementamos el evento �click� del bot�n
         botonVolver.setOnClickListener(new OnClickListener() {
              @Override
-             public void onClick(View v) {  
-            	setResult(Activity.RESULT_CANCELED);
-		        finish();
+             public void onClick(View v) {
+				 backPressed();
              }
         });
 
@@ -214,8 +213,13 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 			case General.REQUEST_CODE_PELIBUSCADA:
 				if (resultCode == General.RESULT_CODE_ADD) {
 					similarMoviesModal.removeAndSaveItem(data);
+				} else if(resultCode == General.RESULT_CODE_SIMILAR_CLOSED) {
+					if (similarMoviesModal != null && similarMoviesModal.popupWindow != null) {
+						similarMoviesModal.popupWindow.dismiss();
+					}
 				}
 		}
+				super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	@Override
@@ -263,5 +267,19 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		backPressed();
+	}
+
+	private void backPressed(){
+		if(similarMoviesModal != null && similarMoviesModal.closed){
+			setResult(General.RESULT_CODE_SIMILAR_CLOSED);
+		} else {
+			setResult(Activity.RESULT_CANCELED);
+		}
+		finish();
 	}
 }

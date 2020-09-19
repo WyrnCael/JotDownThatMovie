@@ -20,7 +20,7 @@ public class ModelMovie {
     public ModelProductionCompanies[] production_companies = new ModelProductionCompanies[]{};
     public ModelProductionCountries[] production_countries = new ModelProductionCountries[]{};
     public String release_date;
-    public Integer revenue;
+    public Long revenue;
     public Integer runtime;
     public ModelSpokenLanguages[] spoken_languages = new ModelSpokenLanguages[]{};
     public String status;

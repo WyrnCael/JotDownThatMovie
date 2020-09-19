@@ -106,7 +106,6 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
     }
 
     private void leerJSONSinopsis(String json) throws IOException{
-
         ModelMovie movie = new Gson().fromJson(json, ModelMovie.class);
         pelicula.setDataFromJson(movie);
         if(pelicula.getImagePath() == null) {
@@ -154,7 +153,6 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
 
             pelicula.setImage(buffer.toByteArray());
         } catch (Exception e) {
-            Log.d("ImageManager", "Error: " + e.toString());
             Bitmap b = BitmapFactory.decodeResource(context.getResources(),
                     R.drawable.stub);
             pelicula.setImage(ImageHandler.getBytes(b));

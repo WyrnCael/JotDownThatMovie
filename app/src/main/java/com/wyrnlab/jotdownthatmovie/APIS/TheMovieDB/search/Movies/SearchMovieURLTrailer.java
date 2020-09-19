@@ -69,8 +69,6 @@ public abstract class SearchMovieURLTrailer extends AsyncTask<String, Integer, L
     private void getURLPelicula() throws IOException{
         String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + language;
 
-        Log.d("url", url);
-
         leerJSONUrl(MyUtils.getHttpRequest(url));
     }
 

@@ -340,6 +340,10 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
             case General.REQUEST_CODE_PELIBUSCADA:
                 if (resultCode == General.RESULT_CODE_ADD) {
                     similarMoviesModal.removeAndSaveItem(data);
+                } else if(resultCode == General.RESULT_CODE_SIMILAR_CLOSED){
+                    if(similarMoviesModal != null && similarMoviesModal.popupWindow != null){
+                        similarMoviesModal.popupWindow.dismiss();
+                    }
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
