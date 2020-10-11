@@ -106,6 +106,8 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 
 		if(!CheckInternetConection.isConnectingToInternet(SearchActivity.this)){
 			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.not_internet));
+		} else if (textoABuscar == null || query.length() == 0){
+			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.empty_search));
 		} else {
 			if(searchMode.equalsIgnoreCase("Movie")){
 				com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchActivity.this, null);
@@ -201,6 +203,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 		        
 	            break;
 	    }
+	    super.onActivityResult(requestCode, resultCode, data);
 	}
 
 
