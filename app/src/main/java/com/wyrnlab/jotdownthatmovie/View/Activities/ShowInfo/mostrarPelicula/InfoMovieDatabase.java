@@ -4,19 +4,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ShareActionProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,8 +23,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.StreamingAPI;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.GetSimilarMovies;
@@ -34,20 +35,21 @@ import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Streaming;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
-import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowDatabase;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class InfoMovieDatabase extends AppCompatActivity implements AsyncResponse {
+public class InfoMovieDatabase extends AppCompatActivity implements AsyncResponse, StreamingRecyclerViewAdapter.ItemClickListener {
 
 	AudiovisualInterface pelicula;
     TextView anyo;
@@ -66,10 +68,12 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
     Button botonSimilars;
     Button botonRemove;
     Button botonViewed;
+    Button botonStreaming;
     private ShareActionProvider mShareActionProvider;
     Integer position;
     SimilarMoviesModal similarMoviesModal;
     Context context;
+    StreamingRecyclerViewAdapter adapter;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,7 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
         botonRemove = (Button)findViewById(R.id.BtnDeleteDB);
         botonRefresh = (Button)findViewById(R.id.BtnRefresh);
         botonViewed = (Button)findViewById(R.id.BtnViewed);
+        botonStreaming = (Button)findViewById(R.id.BtnStreamingInfo);
         originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
         originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
 
@@ -198,6 +203,33 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
                     }
                 } else {
                     MyUtils.showSnacknar(((Activity)InfoMovieDatabase.this).findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.MarkAsViewedError));
+                }
+            }
+        });
+
+        botonStreaming.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!CheckInternetConection.isConnectingToInternet(InfoMovieDatabase.this)) {
+                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
+                } else {
+                    LinearLayout streamingRowLY = (LinearLayout) ((Activity) context).findViewById(R.id.StreamingInfoRowLY);
+
+                    Button streamingButton = (Button) ((Activity) context).findViewById(R.id.BtnStreamingInfo);
+                    streamingRowLY.removeView(streamingButton);
+
+                    StreamingAPI searchor = new StreamingAPI(InfoMovieDatabase.this, String.valueOf(pelicula.getId()), General.MOVIE_TYPE, getResources().getString(R.string.searching)) {
+                        @Override
+                        public void onResponseReceived(Object result) {
+                            RecyclerView recyclerView = findViewById(R.id.rvAnimals);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(InfoMovieDatabase.this, LinearLayoutManager.HORIZONTAL, false));
+                            adapter = new StreamingRecyclerViewAdapter(InfoMovieDatabase.this, (List<Streaming>) result);
+                            adapter.setClickListener(InfoMovieDatabase.this);
+                            recyclerView.setAdapter(adapter);
+                        }
+                    };
+                    MyUtils.execute(searchor);
                 }
             }
         });
@@ -368,5 +400,12 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
     {
         setResult(General.RESULT_CODE_NEEDS_REFRESH);
         super.onBackPressed();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Uri uri = Uri.parse(adapter.getItem(position).getUrl());
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        context.startActivity(intent);
     }
 }

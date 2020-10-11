@@ -11,14 +11,19 @@ import android.os.Bundle;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ShareActionProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.StreamingAPI;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.GetSimilarTVShows;
@@ -28,13 +33,16 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupW
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Streaming;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
 import java.util.List;
@@ -44,7 +52,7 @@ import java.util.Locale;
  * Created by Jota on 27/12/2017.
  */
 
-public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse {
+public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse, StreamingRecyclerViewAdapter.ItemClickListener {
 
     ProgressDialog pDialog;
     AudiovisualInterface pelicula;
@@ -61,11 +69,13 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
     Button botonVolver;
     Button botonTrailer;
     Button botonSimilars;
+    Button botonStreaming;
     private ShareActionProvider mShareActionProvider;
     SimilarMoviesModal similarMoviesModal;
     Context context;
     ImageView image;
     ImageLoader imageLoader;
+    StreamingRecyclerViewAdapter adapterStreaming;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +131,7 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         season = (TextView)findViewById(R.id.seasons);
         originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
         originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
+        botonStreaming = (Button)findViewById(R.id.BtnStreamingInfo);
 
         //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
@@ -176,6 +187,33 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
                     MyUtils.execute(searchor);
                 } else {
                     searchSimilars();
+                }
+            }
+        });
+
+        botonStreaming.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!CheckInternetConection.isConnectingToInternet(InfoTVShowShared.this)) {
+                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
+                } else {
+                    LinearLayout streamingRowLY = (LinearLayout) InfoTVShowShared.this.findViewById(R.id.StreamingInfoRowLY);
+
+                    Button streamingButton = (Button) InfoTVShowShared.this.findViewById(R.id.BtnStreamingInfo);
+                    streamingRowLY.removeView(streamingButton);
+
+                    StreamingAPI searchor = new StreamingAPI(InfoTVShowShared.this, String.valueOf(pelicula.getId()), General.TVSHOW_TYPE, getResources().getString(R.string.searching)) {
+                        @Override
+                        public void onResponseReceived(Object result) {
+                            RecyclerView recyclerView = findViewById(R.id.rvAnimals);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(InfoTVShowShared.this, LinearLayoutManager.HORIZONTAL, false));
+                            adapterStreaming = new StreamingRecyclerViewAdapter(InfoTVShowShared.this, (List<Streaming>) result);
+                            adapterStreaming.setClickListener(InfoTVShowShared.this);
+                            recyclerView.setAdapter(adapterStreaming);
+                        }
+                    };
+                    MyUtils.execute(searchor);
                 }
             }
         });
@@ -328,5 +366,12 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Uri uri = Uri.parse(adapterStreaming.getItem(position).getUrl());
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        InfoTVShowShared.this.startActivity(intent);
     }
 }

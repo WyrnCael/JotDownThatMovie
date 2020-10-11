@@ -24,7 +24,8 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*">
+            android:stretchColumns="*"
+            android:id="@+id/Table">
 
             <!-- Row 1 with single column -->
 
@@ -234,11 +235,67 @@
                     android:id="@+id/toda_la_descripcion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textColor="@color/negro"
                     app:fontFamily="@font/raleway" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco">
+
+                <TextView
+                    android:id="@+id/streamingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Streaming:"
+                    android:textColor="@color/verde"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/raleway" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco"
+                android:id="@+id/StreamingInfoRow">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:id="@+id/StreamingInfoRowLY"
+                        android:layout_marginLeft="15dp">
+
+                        <Button
+                            android:id="@+id/BtnStreamingInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:background="@android:color/transparent"
+                            android:drawableLeft="@drawable/ic_refresh"
+                            android:drawablePadding="10dp"
+                            android:singleLine="true"
+                            android:stateListAnimator="@null"
+                            android:text="@string/SearchStreaming"
+                            android:textColor="#000000"
+                            android:textSize="10sp"
+                            android:textStyle="italic"
+                            android:theme="@style/GreenButton" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvAnimals"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                    </LinearLayout>
             </TableRow>
         </TableLayout>
     </ScrollView>
