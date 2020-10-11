@@ -67,6 +67,8 @@
     <string name="MarkedAsViewed">Marked as viewed!</string>
     <string name="MarkedAsNOTViewed">Marked as NOT viewed</string>
     <string name="MarkAsViewedError">An error ocurred while updating, try again later</string>
+    <string name="SearchStreaming">Find streaming services</string>
+    <string name="NoStreams">W/O Data</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>

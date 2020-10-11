@@ -68,6 +68,8 @@
     <string name="MarkedAsViewed">Marcada como vista</string>
     <string name="MarkedAsNOTViewed">Marcada como no vista</string>
     <string name="MarkAsViewedError">Ha ocurrido un error, vuelva a intentarlo mas tarde</string>
+    <string name="SearchStreaming">Buscar servicios de streaming</string>
+    <string name="NoStreams">Sin datos</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/StreamingNetwork"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_marginTop="5dp">
+
+    <ImageButton
+        android:id="@+id/imageButtonStreamingNetwork"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:background="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/textViewStreamingNetwork"
+        android:layout_width="45dp"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="10sp" />
+</LinearLayout>
