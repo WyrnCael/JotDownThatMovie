@@ -19,7 +19,8 @@ public class Streaming {
                 .first()
                 .attr("href");
 
-        this.imageUrl = li
+        this.imageUrl = "https://www.themoviedb.org/" +
+                li
                 .select("img")
                 .first()
                 .attr("src");
