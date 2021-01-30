@@ -69,6 +69,11 @@
     <string name="MarkAsViewedError">An error ocurred while updating, try again later</string>
     <string name="SearchStreaming">Find streaming services</string>
     <string name="NoStreams">W/O Data</string>
+    <string name="ProvidedBy">(Provided by:</string>
+    <string name="CloseParentesis">)</string>
+    <string name="MovieInfoProvidedBy">Movie info provided by:</string>
+    <string name="ShowInfoProvidedBy">Show info provided by:</string>
+    <string name="Streaming">Streaming:</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>

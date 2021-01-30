@@ -225,6 +225,28 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
                 }
             }
         });
+
+        ImageView imdbLogo = (ImageView)findViewById(R.id.tmdbLogo);
+        imdbLogo.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.themoviedb.org/tv/" + String.valueOf(pelicula.getId())));
+                startActivity(intent);
+            }
+        });
+
+        ImageView justWatch = (ImageView)findViewById(R.id.justWatchLogo);
+        justWatch.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.themoviedb.org/tv/" + String.valueOf(pelicula.getId()) + "/watch"));
+                startActivity(intent);
+            }
+        });
     }
 
     private void actualiza(){
