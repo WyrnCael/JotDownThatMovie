@@ -248,17 +248,54 @@
                 android:layout_height="wrap_content"
                 android:background="@color/blanco">
 
-                <TextView
-                    android:id="@+id/streamingTitle"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:text="Streaming:"
-                    android:textColor="@color/verde"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/raleway" />
+                    android:id="@+id/streamingLY">
+
+                    <TextView
+                        android:id="@+id/streamingTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/Streaming"
+                        android:textColor="@color/verde"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/raleway" />
+
+                    <TextView
+                        android:id="@+id/streamingProvider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:text="@string/ProvidedBy"
+                        android:textSize="10sp"
+                        app:fontFamily="@font/raleway" />
+
+                    <ImageView
+                        android:id="@+id/justWatchLogo"
+                        android:layout_width="60dp"
+                        android:layout_height="17dp"
+                        android:paddingRight="2dp"
+                        android:paddingLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:src="@drawable/justwatch_icon" />
+
+                    <TextView
+                        android:id="@+id/streamingProvider2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/CloseParentesis"
+                        android:textSize="10sp"
+                        app:fontFamily="@font/raleway" />
+                </LinearLayout>
             </TableRow>
 
             <TableRow
@@ -280,8 +317,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:background="@android:color/transparent"
-                            android:drawableLeft="@drawable/ic_refresh"
-                            android:drawablePadding="10dp"
+                            android:drawableLeft="@drawable/search"
+                            android:drawablePadding="7dp"
+                            android:layout_marginLeft="10dp"
                             android:singleLine="true"
                             android:stateListAnimator="@null"
                             android:text="@string/SearchStreaming"
@@ -296,6 +334,52 @@
                             android:layout_height="match_parent"/>
 
                     </LinearLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/tmdb">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:id="@+id/tmdRLY">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/tmdbLY">
+
+                        <TextView
+                            android:id="@+id/tmdbText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/MovieInfoProvidedBy"
+                            android:layout_gravity="right|center_vertical"
+                            android:textColor="#CC0D253F"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/raleway" />
+
+                        <ImageView
+                            android:id="@+id/tmdbLogo"
+                            android:layout_width="100dp"
+                            android:layout_height="11dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="true"
+                            android:src="@drawable/provider_21" />
+
+                    </LinearLayout >
+                </RelativeLayout >
             </TableRow>
         </TableLayout>
     </ScrollView>
