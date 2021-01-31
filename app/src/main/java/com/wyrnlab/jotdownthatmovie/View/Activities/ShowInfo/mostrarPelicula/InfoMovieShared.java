@@ -40,7 +40,9 @@ import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
+import com.wyrnlab.jotdownthatmovie.View.Activities.WebViewActivity;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
@@ -106,11 +108,14 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse,
 
         String link = url.toString();
 
-        int id;
-        if(link.indexOf("-") == -1)
-            id = Integer.valueOf(link.substring(link.indexOf("movie/") + 6, link.length()));
-        else
-            id = Integer.valueOf(link.substring(link.indexOf("movie/") + 6, link.indexOf("-")));
+        int id = -1;
+        String linkWoMovie = link.substring(link.indexOf("movie/") + 6, link.length());
+        if(linkWoMovie.indexOf("-") == -1 && linkWoMovie.indexOf("/") == -1)
+            id = Integer.valueOf(linkWoMovie);
+        else if (linkWoMovie.indexOf("-") != -1)
+            id = Integer.valueOf(linkWoMovie.substring(0, linkWoMovie.indexOf("-")));
+        else if (linkWoMovie.indexOf("/") != -1)
+            id = Integer.valueOf(linkWoMovie.substring(0, linkWoMovie.indexOf("/")));
 
         SearchInfoMovie searchorMovie = new SearchInfoMovie(this, id, getString(R.string.searching));
         searchorMovie.delegate = this;
@@ -142,9 +147,9 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse,
             @Override
             public void onClick(View v) {
                 if(DAO.getInstance().insert(InfoMovieShared.this, pelicula)){
-                    Intent intent = new Intent(InfoMovieShared.this, MainActivity.class);
-                    intent.putExtra("Name", pelicula.getTitulo());
-                    startActivity(intent);
+                    //Intent intent = new Intent(InfoMovieShared.this, MainActivity.class);
+                    //intent.putExtra("Name", pelicula.getTitulo());
+                    //startActivity(intent);
                     finish();
                 } else {
                     MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.film) + " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!");
@@ -222,10 +227,9 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse,
         ImageView imdbLogo = (ImageView)findViewById(R.id.tmdbLogo);
         imdbLogo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId())));
+                String url = "https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId());
+                Intent intent = new Intent(InfoMovieShared.this, WebViewActivity.class);
+                intent.putExtra("url", url);
                 startActivity(intent);
             }
         });
@@ -233,10 +237,9 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse,
         ImageView justWatch = (ImageView)findViewById(R.id.justWatchLogo);
         justWatch.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId()) + "/watch"));
+                String url = "https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId()) + "/watch";
+                Intent intent = new Intent(InfoMovieShared.this, WebViewActivity.class);
+                intent.putExtra("url", url);
                 startActivity(intent);
             }
         });
@@ -248,7 +251,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse,
             public void onResponseReceived(Object result) {
                 pelicula.setSimilars((List<AudiovisualInterface>) result);
                 if(pelicula.getSimilars().isEmpty()){
-                    MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.noSimilarMovies));
+                    MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.noSimilarMovies));
                 } else {
                     similarMoviesModal = new SimilarMoviesModal(pelicula, InfoMovieShared.this, InfoMovieShared.this);
                     similarMoviesModal.createView();
@@ -370,8 +373,8 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse,
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(InfoMovieShared.this, MainActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(InfoMovieShared.this, MainActivity.class);
+        //startActivity(intent);
         finish();
     }
 
