@@ -42,6 +42,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
+import com.wyrnlab.jotdownthatmovie.View.Activities.WebViewActivity;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
@@ -107,11 +108,17 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
 
         String link = url.toString();
 
-        int id;
-        if(link.indexOf("-") == -1)
-            id = Integer.valueOf(link.substring(link.indexOf("tv/") + 3, link.length()));
-        else
-            id = Integer.valueOf(link.substring(link.indexOf("tv/") + 3, link.indexOf("-")));
+        int id = -1;
+        Log.d("link", link);
+        String linkWoTV = link.substring(link.indexOf("tv/") + 3, link.length());
+        Log.d("linkWoTV", linkWoTV);
+        if(linkWoTV.indexOf("-") == -1 && linkWoTV.indexOf("/") == -1)
+            id = Integer.valueOf(linkWoTV);
+        else if (linkWoTV.indexOf("-") != -1)
+            id = Integer.valueOf(linkWoTV.substring(0, linkWoTV.indexOf("-")));
+        else if (linkWoTV.indexOf("/") != -1)
+            id = Integer.valueOf(linkWoTV.substring(0, linkWoTV.indexOf("/")));
+        Log.d("link", String.valueOf(id));
 
         SearchInfoShow searchorShow = new SearchInfoShow(this, id, getString(R.string.searching));
         searchorShow.delegate = this;
@@ -141,9 +148,9 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
             @Override
             public void onClick(View v) {
                 if(DAO.getInstance().insert(InfoTVShowShared.this, pelicula)){
-                    Intent intent = new Intent(InfoTVShowShared.this, MainActivity.class);
+                    /*Intent intent = new Intent(InfoTVShowShared.this, MainActivity.class);
                     intent.putExtra("Name", pelicula.getTitulo());
-                    startActivity(intent);
+                    startActivity(intent);*/
                     finish();
                 } else {
                     MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), " \"" + pelicula.getTitulo() + "\" " + getResources().getString(R.string.alreadySaved) + "!");
@@ -221,10 +228,9 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         ImageView imdbLogo = (ImageView)findViewById(R.id.tmdbLogo);
         imdbLogo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://www.themoviedb.org/tv/" + String.valueOf(pelicula.getId())));
+                String url = "https://www.themoviedb.org/tv/" + String.valueOf(pelicula.getId());
+                Intent intent = new Intent(InfoTVShowShared.this, WebViewActivity.class);
+                intent.putExtra("url", url);
                 startActivity(intent);
             }
         });
@@ -232,10 +238,9 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         ImageView justWatch = (ImageView)findViewById(R.id.justWatchLogo);
         justWatch.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://www.themoviedb.org/tv/" + String.valueOf(pelicula.getId()) + "/watch"));
+                String url = "https://www.themoviedb.org/tv/" + String.valueOf(pelicula.getId()) + "/watch";
+                Intent intent = new Intent(InfoTVShowShared.this, WebViewActivity.class);
+                intent.putExtra("url", url);
                 startActivity(intent);
             }
         });
@@ -370,8 +375,8 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(InfoTVShowShared.this, MainActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(InfoTVShowShared.this, MainActivity.class);
+        startActivity(intent);*/
         finish();
     }
 

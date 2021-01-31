@@ -38,6 +38,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
+import com.wyrnlab.jotdownthatmovie.View.Activities.WebViewActivity;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
@@ -194,10 +195,9 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse,
 		ImageView imdbLogo = (ImageView)findViewById(R.id.tmdbLogo);
 		imdbLogo.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v){
-				Intent intent = new Intent();
-				intent.setAction(Intent.ACTION_VIEW);
-				intent.addCategory(Intent.CATEGORY_BROWSABLE);
-				intent.setData(Uri.parse("https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId())));
+				String url = "https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId());
+				Intent intent = new Intent(InfoMovieSearch.this, WebViewActivity.class);
+				intent.putExtra("url", url);
 				startActivity(intent);
 			}
 		});
@@ -205,10 +205,9 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse,
 		ImageView justWatch = (ImageView)findViewById(R.id.justWatchLogo);
 		justWatch.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v){
-				Intent intent = new Intent();
-				intent.setAction(Intent.ACTION_VIEW);
-				intent.addCategory(Intent.CATEGORY_BROWSABLE);
-				intent.setData(Uri.parse("https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId()) + "/watch"));
+				String url = "https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId()) + "/watch";
+				Intent intent = new Intent(InfoMovieSearch.this, WebViewActivity.class);
+				intent.putExtra("url", url);
 				startActivity(intent);
 			}
 		});
