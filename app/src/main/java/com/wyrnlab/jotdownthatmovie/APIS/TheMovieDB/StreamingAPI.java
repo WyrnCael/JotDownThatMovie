@@ -54,7 +54,7 @@ public class StreamingAPI  extends AsyncTask<String, Integer, List<Streaming>> i
 
         Document doc = null;
         try {
-            doc = Jsoup.connect(url).userAgent("Mozilla/5.0 Gecko/20100101 Firefox/21.0").get();
+            doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
