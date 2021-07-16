@@ -6,9 +6,13 @@ package com.wyrnlab.jotdownthatmovie.Utils;
 
 public class SetTheLanguages {
 
-    public static String getLanguage(String language){
+    public static String getLanguage(String language, String country){
         if(language.compareTo("español") == 0){
-            return "es";
+            if(country.equalsIgnoreCase("MX")){
+                return "es" + "-" + country;
+            } else {
+                return "es" + "-" + "ES";
+            }
         } else {
             return "en";
         }

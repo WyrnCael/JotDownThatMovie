@@ -129,7 +129,7 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
                 if (!CheckInternetConection.isConnectingToInternet(InfoMovieDatabase.this)) {
                     MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
                 } else {
-                    AlertDialog.Builder builder = new TrailerDialog(InfoMovieDatabase.this, pelicula.getOriginalLanguage(),SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula);
+                    AlertDialog.Builder builder = new TrailerDialog(InfoMovieDatabase.this, pelicula.getOriginalLanguage(),SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry()), pelicula);
                     builder.show();
                 }
             }

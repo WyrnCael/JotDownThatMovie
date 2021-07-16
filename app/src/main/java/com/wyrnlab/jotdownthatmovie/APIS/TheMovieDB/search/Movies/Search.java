@@ -78,7 +78,7 @@ public class Search extends AsyncTask<String, Integer, List<Pelicula>> {
     }
 
     public List<Pelicula> buscar(String nombre)  throws IOException {
-        String url = General.URLPRINCIPAL + "3/search/movie?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()) + "&query=" + URLEncoder.encode(nombre);
+        String url = General.URLPRINCIPAL + "3/search/movie?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry()) + "&query=" + URLEncoder.encode(nombre);
         url += this.page == null ? "" : "&page=" + this.page;
 
         leerJSONBuscar(MyUtils.getHttpRequest(url));

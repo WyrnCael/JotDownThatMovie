@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_menu"
-        android:icon="@drawable/ic_menu"
+        android:icon="@drawable/more_vert_white"
         android:title="action_notification"
         app:showAsAction="always">
         <menu>

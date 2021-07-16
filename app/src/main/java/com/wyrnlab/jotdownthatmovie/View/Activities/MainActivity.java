@@ -8,6 +8,8 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ShareActionProvider;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -371,6 +373,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		} else {
 			item.setTitle(getString(R.string.MarkAsViewed));
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate menu resource file.
+		getMenuInflater().inflate(R.menu.main, menu);
+
+		return true;
 	}
 
 	@Override

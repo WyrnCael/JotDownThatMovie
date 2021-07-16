@@ -215,7 +215,7 @@ public class Languages {
     }
 
     public static String getLanguageName(String isoCode){
-        if( SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()).equalsIgnoreCase("es") ){
+        if( SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry()).substring(0,2).equalsIgnoreCase("es") ){
             return languagesByISOCode.get(isoCode.toLowerCase()).getSpanish();
         } else {
             return languagesByISOCode.get(isoCode.toLowerCase()).getEnglish();

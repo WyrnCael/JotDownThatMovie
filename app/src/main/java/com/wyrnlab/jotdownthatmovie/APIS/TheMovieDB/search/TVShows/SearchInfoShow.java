@@ -103,7 +103,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
 
 
     private void getSinopsisTVShow() throws IOException{
-        String url = General.URLPRINCIPAL + "3/tv/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url = General.URLPRINCIPAL + "3/tv/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
 
         leerJSONSinopsis(MyUtils.getHttpRequest(url));
     }
@@ -117,7 +117,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
     }
 
     private void getCreditsTVShow() throws IOException{
-        String url = General.URLPRINCIPAL + "3/tv/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url = General.URLPRINCIPAL + "3/tv/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
 
         leerJSONCredits(MyUtils.getHttpRequest(url));
     }
@@ -179,7 +179,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
     }
 
     private void getSimilars() throws IOException{
-        String url = General.URLPRINCIPAL + "3/tv/" + this.tvShow.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url = General.URLPRINCIPAL + "3/tv/" + this.tvShow.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
 
         readJSONSimilars(MyUtils.getHttpRequest(url));
     }
