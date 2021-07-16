@@ -173,7 +173,7 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
                 if (!CheckInternetConection.isConnectingToInternet(InfoTVShowShared.this)) {
                     MyUtils.showSnacknar(findViewById(R.id.relativeLayoutTVInfoDB), getResources().getString(R.string.not_internet));
                 } else {
-                    AlertDialog.Builder builder = new TrailerDialog(InfoTVShowShared.this, pelicula.getOriginalLanguage(), SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage()), pelicula);
+                    AlertDialog.Builder builder = new TrailerDialog(InfoTVShowShared.this, pelicula.getOriginalLanguage(), SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry()), pelicula);
                     builder.show();
                 }
             }

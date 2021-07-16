@@ -85,7 +85,7 @@ public abstract class GetSimilarTVShows extends AsyncTask<String, Integer, List<
     }
 
     public List<TVShow> buscar(String nombre)  throws IOException {
-        String url = General.URLPRINCIPAL + "3/tv/" + this.id + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url = General.URLPRINCIPAL + "3/tv/" + this.id + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
         url += this.page == null ? "" : "&page=" + this.page;
 
         leerJSONBuscar(MyUtils.getHttpRequest(url));

@@ -100,7 +100,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
 
 
     private void getSinopsisPelicula() throws IOException{
-        String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
 
         leerJSONSinopsis(MyUtils.getHttpRequest(url));
     }
@@ -114,7 +114,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
     }
 
     private void getCreditsPelicula() throws IOException{
-        String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
 
         leerJSONCredits(MyUtils.getHttpRequest(url));
     }
@@ -175,7 +175,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
     }
 
     private void getSimilars() throws IOException{
-        String url = General.URLPRINCIPAL + "3/movie/" + this.pelicula.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage());
+        String url = General.URLPRINCIPAL + "3/movie/" + this.pelicula.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
 
         readJSONSimilars(MyUtils.getHttpRequest(url));
     }
