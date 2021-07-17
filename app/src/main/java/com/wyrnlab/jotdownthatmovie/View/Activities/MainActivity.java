@@ -2,6 +2,7 @@ package com.wyrnlab.jotdownthatmovie.View.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -368,6 +369,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 				.create();
 
 		dialog.setCanceledOnTouchOutside(false);
+
+		dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+			@Override
+			public boolean onKey(DialogInterface arg0, int keyCode,
+								 KeyEvent event) {
+				// Do Nothing
+				return true;
+			}
+		});
 
 		final View appLanguagesView = inflater.inflate(R.layout.language_options, null);
 		dialog.setView(appLanguagesView);
