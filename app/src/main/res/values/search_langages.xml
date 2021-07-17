@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>android array with translations
     <string-array name="search_languages_array">
-        <item>English</item>
-        <item>Spanish (Spain)</item>
-        <item>Spanish (Mexico)</item>
+        <item>@string/English</item>
+        <item>@string/SpanishES</item>
+        <item>@string/SpanishMX</item>
     </string-array>
 </resources>
