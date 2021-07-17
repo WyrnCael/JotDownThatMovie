@@ -17,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.wyrnlab.jotdownthatmovie.APIS.Analytics.SearchAnalytics;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
@@ -145,9 +144,6 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 
 		if(result != null){
 			General.setSearchResults((List<AudiovisualInterface>) result);
-			// Analytics
-			SearchAnalytics analytics = new SearchAnalytics(this, textoABuscar, searchMode, ((List<AudiovisualInterface>) result).size());
-			MyUtils.execute(analytics);
 		}
 
 		if(result == null){

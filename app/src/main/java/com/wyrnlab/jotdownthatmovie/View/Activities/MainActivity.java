@@ -32,7 +32,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.wyrnlab.jotdownthatmovie.APIS.Analytics.OpenApp;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.MaterialTapTargetPrompt;
@@ -53,11 +52,9 @@ import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchRemoveHelper;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
 
-import java.nio.channels.FileLockInterruptionException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewClickListener, AdapterCallback {
 
@@ -98,9 +95,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		}
 
 		setTitle(R.string.app_name);
-
-		OpenApp analytic = new OpenApp(this);
-		MyUtils.execute(analytic);
 
 		setContentView(R.layout.mostrar_peliculas);
 		moviesByType = DAO.getInstance().readAll(MainActivity.this);
