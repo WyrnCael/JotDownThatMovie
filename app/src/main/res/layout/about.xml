@@ -44,29 +44,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:inputType="textPersonName"
+                android:paddingTop="5dp"
                 android:text="by WyrnLabs"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_dark"
-                app:fontFamily="@font/raleway" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="40px"
-                android:layout_marginRight="10dp"
-                android:background="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30px"
-                android:layout_marginRight="10dp"
-                android:text="@string/IconCredits"
-                android:textColor="@color/negro"
                 app:fontFamily="@font/raleway" />
 
             <View
@@ -88,6 +69,8 @@
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="2"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="@string/provider"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_dark"
@@ -165,7 +148,36 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/app_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/icono" />
+
+                <TextView
+                    android:id="@+id/textViewAppIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/IconCredits"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <ImageView
                     android:id="@+id/camera"
@@ -181,7 +193,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30px"
                     android:layout_marginRight="10dp"
                     android:text="@string/IconCameraCredits"
                     android:textColor="@color/negro"
@@ -192,6 +203,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp"
                 android:paddingBottom="20dp">
 
                 <ImageView
@@ -208,7 +221,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30px"
                     android:layout_marginRight="10dp"
                     android:text="@string/IconTVCredits"
                     android:textColor="@color/negro"
