@@ -3,7 +3,6 @@ package com.wyrnlab.jotdownthatmovie.Model;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 public class Languages {
 
@@ -215,7 +214,7 @@ public class Languages {
     }
 
     public static String getLanguageName(String isoCode){
-        if( SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry()).substring(0,2).equalsIgnoreCase("es") ){
+        if( SetTheLanguages.getLanguage().substring(0,2).equalsIgnoreCase("es") ){
             return languagesByISOCode.get(isoCode.toLowerCase()).getSpanish();
         } else {
             return languagesByISOCode.get(isoCode.toLowerCase()).getEnglish();

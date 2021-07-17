@@ -41,14 +41,12 @@ import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.WebViewActivity;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
 import java.util.List;
-import java.util.Locale;
 
 public class InfoTVShowDatabase extends AppCompatActivity implements AsyncResponse, StreamingRecyclerViewAdapter.ItemClickListener {
 
@@ -79,6 +77,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_info);
 
         // Back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -128,7 +127,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
                 if (!CheckInternetConection.isConnectingToInternet(InfoTVShowDatabase.this)) {
                     MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
                 } else {
-                    AlertDialog.Builder builder = new TrailerDialog(InfoTVShowDatabase.this, pelicula.getOriginalLanguage(), SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry()), pelicula);
+                    AlertDialog.Builder builder = new TrailerDialog(InfoTVShowDatabase.this, pelicula.getOriginalLanguage(), SetTheLanguages.getLanguage(), pelicula);
                     builder.show();
                 }
             }

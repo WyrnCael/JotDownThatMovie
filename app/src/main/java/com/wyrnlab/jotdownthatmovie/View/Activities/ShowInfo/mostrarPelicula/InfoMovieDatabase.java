@@ -17,7 +17,6 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,9 +46,7 @@ import com.wyrnlab.jotdownthatmovie.View.Activities.WebViewActivity;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class InfoMovieDatabase extends AppCompatActivity implements AsyncResponse, StreamingRecyclerViewAdapter.ItemClickListener {
 
@@ -80,6 +77,7 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_info);
 
         // Back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -129,7 +127,7 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
                 if (!CheckInternetConection.isConnectingToInternet(InfoMovieDatabase.this)) {
                     MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
                 } else {
-                    AlertDialog.Builder builder = new TrailerDialog(InfoMovieDatabase.this, pelicula.getOriginalLanguage(),SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry()), pelicula);
+                    AlertDialog.Builder builder = new TrailerDialog(InfoMovieDatabase.this, pelicula.getOriginalLanguage(),SetTheLanguages.getLanguage(), pelicula);
                     builder.show();
                 }
             }

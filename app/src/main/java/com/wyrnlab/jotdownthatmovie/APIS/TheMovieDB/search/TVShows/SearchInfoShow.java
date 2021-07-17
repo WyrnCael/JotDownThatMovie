@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
@@ -14,12 +13,9 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
-import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelMovie;
-import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelSearchMovie;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelSearchTVShow;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelShow;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCredits;
-import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.Model.TVShow;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
@@ -28,16 +24,13 @@ import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -103,7 +96,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
 
 
     private void getSinopsisTVShow() throws IOException{
-        String url = General.URLPRINCIPAL + "3/tv/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
+        String url = General.URLPRINCIPAL + "3/tv/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
 
         leerJSONSinopsis(MyUtils.getHttpRequest(url));
     }
@@ -117,7 +110,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
     }
 
     private void getCreditsTVShow() throws IOException{
-        String url = General.URLPRINCIPAL + "3/tv/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
+        String url = General.URLPRINCIPAL + "3/tv/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
 
         leerJSONCredits(MyUtils.getHttpRequest(url));
     }
@@ -179,7 +172,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
     }
 
     private void getSimilars() throws IOException{
-        String url = General.URLPRINCIPAL + "3/tv/" + this.tvShow.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
+        String url = General.URLPRINCIPAL + "3/tv/" + this.tvShow.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
 
         readJSONSimilars(MyUtils.getHttpRequest(url));
     }

@@ -16,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +35,6 @@ import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
-import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.WebViewActivity;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
@@ -45,7 +42,6 @@ import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdap
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
 import java.util.List;
-import java.util.Locale;
 
 public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse, StreamingRecyclerViewAdapter.ItemClickListener {
 
@@ -81,6 +77,7 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		setTitle(R.string.title_activity_info);
 
 		// Back button
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -159,7 +156,7 @@ public class InfoTVShowSearch extends AppCompatActivity implements AsyncResponse
 				if (!CheckInternetConection.isConnectingToInternet(InfoTVShowSearch.this)) {
 					MyUtils.showSnacknar(findViewById(R.id.scrollViewShowInfo), getResources().getString(R.string.not_internet));
 				} else {
-					AlertDialog.Builder builder = new TrailerDialog(InfoTVShowSearch.this, pelicula.getOriginalLanguage(), SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry()), pelicula);
+					AlertDialog.Builder builder = new TrailerDialog(InfoTVShowSearch.this, pelicula.getOriginalLanguage(), SetTheLanguages.getLanguage(), pelicula);
 					builder.show();
 				}
             }

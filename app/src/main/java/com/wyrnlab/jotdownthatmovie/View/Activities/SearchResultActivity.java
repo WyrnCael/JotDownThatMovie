@@ -48,6 +48,7 @@ public class SearchResultActivity extends AppCompatActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_results);
         
         setContentView(R.layout.search_principal);
 

@@ -75,6 +75,11 @@
     <string name="MovieInfoProvidedBy">Movie info provided by:</string>
     <string name="ShowInfoProvidedBy">Show info provided by:</string>
     <string name="Streaming">Streaming:</string>
+    <string name="Language">Idioma</string>
+    <string name="Save">Guardar</string>
+    <string name="LanguageSettings">Opciones de idioma</string>
+    <string name="AppLanguage">Idioma de la App</string>
+    <string name="SearchLanguage">Idioma de las búsquedas</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>
