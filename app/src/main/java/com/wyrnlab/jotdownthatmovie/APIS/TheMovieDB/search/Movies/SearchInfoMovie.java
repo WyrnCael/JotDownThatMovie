@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
@@ -25,16 +24,13 @@ import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -100,7 +96,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
 
 
     private void getSinopsisPelicula() throws IOException{
-        String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
+        String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
 
         leerJSONSinopsis(MyUtils.getHttpRequest(url));
     }
@@ -114,7 +110,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
     }
 
     private void getCreditsPelicula() throws IOException{
-        String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
+        String url = General.URLPRINCIPAL + "3/movie/" + this.Id + "/credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
 
         leerJSONCredits(MyUtils.getHttpRequest(url));
     }
@@ -175,7 +171,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
     }
 
     private void getSimilars() throws IOException{
-        String url = General.URLPRINCIPAL + "3/movie/" + this.pelicula.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
+        String url = General.URLPRINCIPAL + "3/movie/" + this.pelicula.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
 
         readJSONSimilars(MyUtils.getHttpRequest(url));
     }

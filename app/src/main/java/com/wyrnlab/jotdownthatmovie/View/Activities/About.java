@@ -21,6 +21,7 @@ public class About extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.about);
         setContentView(R.layout.about);
 
         // Back button

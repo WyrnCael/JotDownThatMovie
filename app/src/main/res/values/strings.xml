@@ -74,6 +74,11 @@
     <string name="MovieInfoProvidedBy">Movie info provided by:</string>
     <string name="ShowInfoProvidedBy">Show info provided by:</string>
     <string name="Streaming">Streaming:</string>
+    <string name="Language">Language</string>
+    <string name="Save">Save</string>
+    <string name="LanguageSettings">Language settings</string>
+    <string name="AppLanguage">App language</string>
+    <string name="SearchLanguage">Search language</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>

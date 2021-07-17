@@ -40,6 +40,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle(R.string.title_activity_saludo);
         setContentView(R.layout.search);
 
 		// Back button

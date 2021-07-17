@@ -18,10 +18,8 @@ import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -83,7 +81,7 @@ public abstract class GetSimilarMovies extends AsyncTask<String, Integer, List<P
     }
 
     public List<Pelicula> buscar(String nombre)  throws IOException {
-        String url = General.URLPRINCIPAL + "3/movie/" + this.id + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
+        String url = General.URLPRINCIPAL + "3/movie/" + this.id + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
         url += this.page == null ? "" : "&page=" + this.page;
 
         leerJSONBuscar(MyUtils.getHttpRequest(url));

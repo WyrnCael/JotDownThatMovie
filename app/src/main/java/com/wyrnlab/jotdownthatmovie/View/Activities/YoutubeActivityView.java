@@ -23,6 +23,7 @@ public class YoutubeActivityView extends YouTubeBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Trailer");
         setContentView(R.layout.video_player);
 
         Intent i = getIntent();

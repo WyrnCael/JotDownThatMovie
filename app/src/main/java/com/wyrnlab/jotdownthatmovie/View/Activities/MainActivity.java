@@ -1,8 +1,11 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,13 +17,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.Analytics.OpenApp;
@@ -33,6 +42,7 @@ import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.Utils.permisionsexecutiontime.ReadExternalStorage;
 import com.wyrnlab.jotdownthatmovie.Utils.permisionsexecutiontime.WriteExternalStorage;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieDatabase;
@@ -47,6 +57,7 @@ import java.nio.channels.FileLockInterruptionException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewClickListener, AdapterCallback {
 
@@ -76,6 +87,17 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+		SharedPreferences settings = getSharedPreferences(General.LANGUAGE_SETTINGS, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.clear();
+		editor.commit();
+
+		if(SetTheLanguages.isEmptyLangageSettings(this)){
+			inflateLangagueOptions();
+		}
+
+		setTitle(R.string.app_name);
 
 		OpenApp analytic = new OpenApp(this);
 		MyUtils.execute(analytic);
@@ -276,10 +298,17 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 				finish();
 				return true;
 
-			case R.id.action_search:
+			/*case R.id.action_search:
 				Intent intent =  new Intent(MainActivity.this, SearchActivity.class);
 				startActivityForResult(intent, REQUEST_CODE_A);
 				return true;
+			*/
+			//
+			case R.id.action_language:
+				inflateLangagueOptions();
+				return true;
+
+			//
 
 			default:
 				// If we got here, the user's action was not recognized.
@@ -327,6 +356,70 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		}
 
 		refreshList(filter);
+	}
+
+	public void inflateLangagueOptions(){
+		LayoutInflater inflater = getLayoutInflater();
+		final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+				.setView(inflater.inflate(R.layout.language_options, null))
+				.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// sign in the user ...
+						SetTheLanguages.savePreferrences(MainActivity.this);
+
+					}
+				})
+				.setTitle(R.string.LanguageSettings)
+				.create();
+
+		dialog.setCanceledOnTouchOutside(false);
+
+		final View appLanguagesView = inflater.inflate(R.layout.language_options, null);
+		dialog.setView(appLanguagesView);
+		Spinner appLanguages = (Spinner) appLanguagesView .findViewById(R.id.app_language_options);
+		ArrayAdapter<CharSequence> appLanguagesAdapter = ArrayAdapter.createFromResource(this,
+				R.array.languages_array, android.R.layout.simple_spinner_item);
+
+		appLanguagesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		appLanguages.setAdapter(appLanguagesAdapter);
+		appLanguages.setSelection(SetTheLanguages.getAppLangagePosition(MainActivity.this), true);
+		General.AppLanguage = General.appLanguagesArray.get(appLanguages.getSelectedItemPosition());
+
+		appLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				General.AppLanguage = General.appLanguagesArray.get(position);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+
+			}
+		});
+
+		final View searchLanguagesView = inflater.inflate(R.layout.language_options, null);
+		dialog.setView(appLanguagesView);
+		Spinner searchLanguages = (Spinner) appLanguagesView .findViewById(R.id.search_language_options);
+		ArrayAdapter<CharSequence> searchLanguagesAdapter = ArrayAdapter.createFromResource(this,
+				R.array.search_languages_array, android.R.layout.simple_spinner_item);
+
+		searchLanguagesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		searchLanguages.setAdapter(searchLanguagesAdapter);
+		searchLanguages.setSelection(SetTheLanguages.getSearchLangagePosition(), true);
+		General.SearchLanguage = General.searchLanguagesArray.get(searchLanguages.getSelectedItemPosition());
+
+		searchLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				General.SearchLanguage = General.searchLanguagesArray.get(position);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {}
+		});
+
+		dialog.show();
 	}
 
 	@Override

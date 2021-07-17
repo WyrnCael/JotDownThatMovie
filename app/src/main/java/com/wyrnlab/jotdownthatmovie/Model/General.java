@@ -1,6 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,6 +29,21 @@ public class General {
     private static List<TVShow> showsBuscados;
     public static List<AudiovisualInterface> searchResults;
     public static Languages languageTranslations;
+    public static String AppLanguage = null;
+    public static String SearchLanguage = null;
+    public static final String LANGUAGE_SETTINGS = "LanguageSettings";
+    public static final String APP_LANGUAGE_SETTINGS = "AppLanguage";
+    public static final String SEARCH_LANGUAGE_SETTINGS = "SearchLanguage";
+    public static List<String> appLanguagesArray = Arrays.asList(
+            "es",
+            "en"
+    );
+
+    public static List<String> searchLanguagesArray = Arrays.asList(
+            "en-US",
+            "es-ES",
+            "es-MX"
+    );
 
     public static void setPeliculasBuscadas(List<Pelicula> peliculas){
         peliculasBuscadas = peliculas;

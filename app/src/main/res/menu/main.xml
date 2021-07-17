@@ -10,11 +10,11 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/action_search"
+                android:id="@+id/action_language"
                 android:orderInCategory="100"
-                android:icon="@drawable/ic_search"
+                android:icon="@drawable/flag_dark"
                 app:showAsAction="never"
-                android:title="@string/MenuSearch"/>
+                android:title="@string/Language"/>
 
             <item
                 android:id="@+id/action_about"

@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
-import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -108,7 +107,7 @@ public class GetVideoURL extends Activity{
     	private void getURLPelicula() throws IOException{
     		String web = null;
 
-            String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getCountry());
+            String url = General.URLPRINCIPAL + "3/movie/" + pelicula.getId() + "/videos?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
     		
     		URL oracle = new URL(url);
     	    yc = (HttpsURLConnection) oracle.openConnection();
