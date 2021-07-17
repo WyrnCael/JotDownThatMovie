@@ -35,7 +35,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_flag_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_close_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -59,7 +59,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="C:\Users\Jota\Documents\Android icons\strike-icon-300x232.png" />
-                                      <entry key="outputName" value="flag_dark" />
+                                      <entry key="outputName" value="quit" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>

@@ -78,7 +78,8 @@
     <string name="Save">Save</string>
     <string name="LanguageSettings">Language settings</string>
     <string name="AppLanguage">App language</string>
-    <string name="SearchLanguage">Data language</string>
+    <string name="SearchLanguage">Data language *</string>
+    <string name="SearchLanguageWarning">* If you change the data language, the saved movies will not be updated. You must refresh each movie.</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
@@ -88,7 +89,7 @@
     <string name="OpcLista1">Modify</string>
 	<string name="OpcLista2">Remove</string>
     <string name="MenuAbout">About</string>
-    <string name="MenuQuit">Quit</string>
+    <string name="MenuQuit">Close App</string>
     <string name="MenuSearch">Search/Add</string>
     <string name="alreadySaved">was already saved!</string>
 
