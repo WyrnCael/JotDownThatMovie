@@ -79,7 +79,7 @@
     <string name="Save">Guardar</string>
     <string name="LanguageSettings">Opciones de idioma</string>
     <string name="AppLanguage">Idioma de la App</string>
-    <string name="SearchLanguage">Idioma de las búsquedas</string>
+    <string name="SearchLanguage">Idioma de los datos</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>

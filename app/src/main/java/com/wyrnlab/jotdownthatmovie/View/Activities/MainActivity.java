@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	{
 		super.onCreate(savedInstanceState);
 
-		SharedPreferences settings = getSharedPreferences(General.LANGUAGE_SETTINGS, 0);
+		/*SharedPreferences settings = getSharedPreferences(General.LANGUAGE_SETTINGS, 0);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.clear();
-		editor.commit();
+		editor.commit();*/
 
 		if(SetTheLanguages.isEmptyLangageSettings(this)){
 			inflateLangagueOptions();
