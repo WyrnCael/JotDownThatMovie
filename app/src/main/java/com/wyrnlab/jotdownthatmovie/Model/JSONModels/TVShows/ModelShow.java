@@ -1,8 +1,9 @@
 package com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows;
 
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelMultiSearch;
 import com.wyrnlab.jotdownthatmovie.Model.ModelGenres;
 
-public class ModelShow {
+public class ModelShow extends ModelMultiSearch {
     public String backdrop_path;
     public ModelCreatedBy[] created_by = new ModelCreatedBy[]{};
     public Integer[] episode_run_time;
@@ -31,6 +32,34 @@ public class ModelShow {
     public String type;
     public Double vote_average;
     public Integer vote_count;
+
+    public ModelShow(){
+        super.media_type = "tv";
+    }
+
+    public Integer getId(){
+        return id;
+    }
+
+    public Byte[] getImage(){
+        return new Byte[]{};
+    }
+
+    public String getImagePath(){
+        return poster_path;
+    }
+
+    public String getTitulo(){
+        return name;
+    }
+
+    public Double getRating(){
+        return popularity;
+    }
+
+    public String getSource(){
+        return "";
+    }
 
     public class ModelCreatedBy{
         public Integer id;

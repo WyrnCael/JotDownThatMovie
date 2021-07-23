@@ -16,6 +16,8 @@ import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.JavaClasses.SaveAudiovisual;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelMultiSearch;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelSearchMultiSearch;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
@@ -35,9 +37,8 @@ public class SearchResultActivity extends AppCompatActivity implements
         AsyncResponse, AdapterCallback, RecyclerViewClickListener {
 
     public RecyclerView listView;
-    String type;
     List<RowItem> rowItems;
-    List<AudiovisualInterface> results;
+    ModelSearchMultiSearch results;
     List<AudiovisualInterface> rowsToSave;
     RecyclerViewAdapter adapter;
     int longClickPosition;
@@ -55,13 +56,12 @@ public class SearchResultActivity extends AppCompatActivity implements
         // Back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        type = getIntent().getStringExtra("Type");
         searchText = getIntent().getStringExtra("TextoABuscar");
 
         rowsToSave = new ArrayList<AudiovisualInterface>();
-        results = (List<AudiovisualInterface>) General.getsSarchResults();
+        results = General.getsSarchResults();
     	rowItems = new ArrayList<RowItem>();
-        for (AudiovisualInterface movie : results) {
+        for (ModelMultiSearch movie : results.results) {
         	rowItems.add(new RowItem(SearchResultActivity.this, movie));
         }
         
@@ -76,7 +76,7 @@ public class SearchResultActivity extends AppCompatActivity implements
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                if(type.equalsIgnoreCase("Movie")) {
+                /*if(type.equalsIgnoreCase("Movie")) {
                     com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchResultActivity.this, page);
                     searchor.delegate = SearchResultActivity.this;
                     searchor.execute(searchText);
@@ -85,7 +85,7 @@ public class SearchResultActivity extends AppCompatActivity implements
                     com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow(SearchResultActivity.this, page);
                     searchor.delegate = SearchResultActivity.this;
                     searchor.execute(searchText);
-                }
+                }*/
             }
         };
         // Adds the scroll listener to RecyclerView
@@ -98,24 +98,6 @@ public class SearchResultActivity extends AppCompatActivity implements
         listView.addItemDecoration(new ItemDecorationAddHelper(SearchResultActivity.this));
 
     }
- 
-    /*@Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-            long id) {
-
-        Intent intent;
-        if(type.equalsIgnoreCase("Movie")) {
-            intent = new Intent(SearchResultActivity.this, InfoMovieSearch.class);
-
-        } else {
-            intent = new Intent(SearchResultActivity.this, InfoTVShowSearch.class);
-        }
-        intent.putExtra("Pelicula", this.results.get(position));
-        intent.putExtra("Type", type);
-        startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
-        
-        // finish();
-    }*/
     
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -165,11 +147,11 @@ public class SearchResultActivity extends AppCompatActivity implements
                 MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.alreadySaved));
             }
         } else {
-            results.addAll((List<AudiovisualInterface>) result);
+            /*results.addAll((List<AudiovisualInterface>) result);
             for (AudiovisualInterface movie : ((List<AudiovisualInterface>) result)) {
                 rowItems.add(new RowItem(SearchResultActivity.this, movie));
             }
-            adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();*/
         }
     }
 
@@ -219,7 +201,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 
     @Override
     public void removeCallback(AudiovisualInterface item) {
-        SaveAudiovisual.saveItem(SearchResultActivity.this, SearchResultActivity.this, item, type);
+        SaveAudiovisual.saveItem(SearchResultActivity.this, SearchResultActivity.this, item, item.getTipo());
     }
 
     @Override
