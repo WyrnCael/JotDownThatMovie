@@ -1,5 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelSearchMultiSearch;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,11 +10,12 @@ import java.util.List;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
-    public final static String APIKEY = "";
-    public final static String YAPIKEY = "";
+    public final static String APIKEY = "YOUR_TMDB_APIKEY";
+    public final static String YAPIKEY = "YOUR_YOUTUBE_APIKEY";
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
+    public final static String PERSON_TYPE = "Person";
     public final static String VIEWED = "Viewed";
     public final static String DB_SOURCE = "DB";
     public final static String NET_SOURCE = "NET";
@@ -26,7 +29,7 @@ public class General {
     private static List<String> MovieIdsInDB = new ArrayList<>();
     private static List<Pelicula> peliculasBuscadas;
     private static List<TVShow> showsBuscados;
-    public static List<AudiovisualInterface> searchResults;
+    public static ModelSearchMultiSearch searchResults;
     public static Languages languageTranslations;
     public static String AppLanguage = null;
     public static String SearchLanguage = null;
@@ -72,17 +75,17 @@ public class General {
         return showsBuscados;
     }
 
-    public static void setSearchResults(List<AudiovisualInterface> results){
+    public static void setSearchResults(ModelSearchMultiSearch results){
         searchResults = results;
-        Collections.sort(searchResults, new Comparator<AudiovisualInterface>(){
+        /*Collections.sort(searchResults.results, new Comparator<AudiovisualInterface>(){
             public int compare(AudiovisualInterface mov1, AudiovisualInterface mov2) {
                 // ## Ascending order
                 return mov2.getAnyo().compareToIgnoreCase(mov1.getAnyo());
             }
-        });
+        });*/
     }
 
-    public static List<AudiovisualInterface> getsSarchResults(){
+    public static ModelSearchMultiSearch getsSarchResults(){
         return searchResults;
     }
 

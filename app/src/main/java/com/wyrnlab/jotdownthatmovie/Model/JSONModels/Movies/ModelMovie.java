@@ -1,8 +1,9 @@
 package com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies;
 
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelMultiSearch;
 import com.wyrnlab.jotdownthatmovie.Model.ModelGenres;
 
-public class ModelMovie {
+public class ModelMovie extends ModelMultiSearch {
 
     public Boolean adult;
     public String backdrop_path;
@@ -31,7 +32,31 @@ public class ModelMovie {
     public Integer vote_count;
 
     public ModelMovie(){
+        super.media_type = "movie";
+    }
 
+    public Integer getId(){
+        return id;
+    }
+
+    public Byte[] getImage(){
+        return new Byte[]{};
+    }
+
+    public String getImagePath(){
+        return poster_path;
+    }
+
+    public String getTitulo(){
+        return title;
+    }
+
+    public Double getRating(){
+        return popularity;
+    }
+
+    public String getSource(){
+        return "";
     }
 
     public class ModelProductionCompanies{

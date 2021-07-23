@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelMultiSearch;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelSearchMultiSearch;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
@@ -110,7 +112,7 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.empty_search));
 		} else {
 			if(searchMode.equalsIgnoreCase("Movie")){
-				com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchActivity.this, null);
+				com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.MultiSearch searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.MultiSearch(SearchActivity.this, null);
 				searchor.delegate = this;
 				searchor.execute(textoABuscar);
 			}
@@ -135,20 +137,20 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 	//this override the implemented method from asyncTask
 	@Override
 	public void processFinish(Object result){
-		muestralo(result);
+		muestralo((ModelSearchMultiSearch) result);
 	}
 	
-	public void muestralo(Object result){
+	public void muestralo(ModelSearchMultiSearch result){
 
-		General.searchResults = new ArrayList<>();
+		General.searchResults = new ModelSearchMultiSearch();
 
 		if(result != null){
-			General.setSearchResults((List<AudiovisualInterface>) result);
+			General.setSearchResults((ModelSearchMultiSearch) result);
 		}
 
 		if(result == null){
 			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.empty_search));
-		} else if( ((List<AudiovisualInterface>) result).size() == 0) {
+		} else if(result.results.length == 0) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
 
 			final String searchType = searchMode.equalsIgnoreCase("Movie") ? getString(R.string.Movies) : getString(R.string.TVShows);
