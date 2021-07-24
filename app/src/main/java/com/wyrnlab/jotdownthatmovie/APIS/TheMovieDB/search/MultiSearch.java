@@ -2,6 +2,7 @@ package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -19,6 +20,8 @@ import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelPerson;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelSearchMovie;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelShow;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
+import com.wyrnlab.jotdownthatmovie.Model.Person;
+import com.wyrnlab.jotdownthatmovie.Model.TVShow;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
@@ -36,17 +39,17 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Jota on 27/12/2017.
  */
 
-public class MultiSearch extends AsyncTask<String, Integer, ModelSearchMultiSearch> {
+public class MultiSearch extends AsyncTask<String, Integer, List<AudiovisualInterface>> {
 
     public AsyncResponse delegate = null;
-    private ModelSearchMultiSearch results;
+    private List<AudiovisualInterface> results;
     private HttpsURLConnection yc;
     ProgressDialog pDialog;
     Context context;
     Integer page;
 
     public MultiSearch(Context context, Integer page){
-        this.results = new ModelSearchMultiSearch();
+        this.results = new ArrayList<AudiovisualInterface>();
         this.context = context;
         this.page = page;
     }
@@ -63,9 +66,9 @@ public class MultiSearch extends AsyncTask<String, Integer, ModelSearchMultiSear
     }
 
     @Override
-    protected ModelSearchMultiSearch doInBackground(String... params) {
+    protected List<AudiovisualInterface> doInBackground(String... params) {
         String texto = params[0];
-        ModelSearchMultiSearch devolver = new ModelSearchMultiSearch();
+        List<AudiovisualInterface> devolver = new ArrayList<AudiovisualInterface>();
         try {
             devolver = buscar(texto);
         } catch (IOException e) {
@@ -76,14 +79,14 @@ public class MultiSearch extends AsyncTask<String, Integer, ModelSearchMultiSear
     }
 
     @Override
-    protected void onPostExecute(ModelSearchMultiSearch result)
+    protected void onPostExecute(List<AudiovisualInterface> result)
     {
         pDialog.dismiss();
         super.onPostExecute(result);
         delegate.processFinish(result);
     }
 
-    public ModelSearchMultiSearch buscar(String nombre)  throws IOException {
+    public List<AudiovisualInterface> buscar(String nombre)  throws IOException {
         String url = General.URLPRINCIPAL + "3/search/multi?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage() + "&query=" + URLEncoder.encode(nombre);
         url += this.page == null ? "" : "&page=" + this.page;
 
@@ -112,13 +115,30 @@ public class MultiSearch extends AsyncTask<String, Integer, ModelSearchMultiSear
 
                 for(ModelMultiSearch model : deserializedRequestList.results){
                     if(model.media_type.equals("movie")) {
-                        Log.d("Name", ((ModelMovie) model).original_title);
+                        Pelicula pelicula = new Pelicula();
+                        pelicula.setDataFromJson((ModelMovie)model);
+                        this.results.add(pelicula);
+                    } else if(model.media_type.equals("tv")) {
+                        TVShow show = new TVShow();
+                        show.setDataFromJson((ModelShow) model);
+                        this.results.add(show);
+                    } else if(model.media_type.equals("person")) {
+                        Person person = new Person();
+                        person.setDataFromJson((ModelPerson)model);
+
+
+                        Gson gson3 = new Gson();
+
+                        Log.d("JSON", gson3.toJson((ModelPerson)model));
+
+
+                        this.results.add(person);
                     }
                 }
 
                 Log.d("JSON", deserializedRequestList.toString());
 
-                this.results = deserializedRequestList;
+
 
     }
 

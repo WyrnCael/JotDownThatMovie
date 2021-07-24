@@ -35,7 +35,6 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 	String searchMode = "Movie";
 	SearchView txtSearchName;
 	Button btnSearch;
-	Spinner dropdown;
 	final int REQUEST_CODE_LISTABUSCADAS = 1;
 	
 	@Override
@@ -50,29 +49,9 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 		//Obtenemos una referencia a los controles de la interfaz
         txtSearchName = (SearchView) findViewById(R.id.TxtNombre);
         btnSearch = (Button)findViewById(R.id.BtnHola);
-		dropdown = findViewById(R.id.spinner);
-		// Dropdown
-		String[] items = new String[]{getResources().getString(R.string.Movies), getResources().getString(R.string.TVShows)};
-		ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-		dropdown.setAdapter(adapter);
-		dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				if(position == 0) {
-					searchMode = "Movie";
-				}
-				else{
-					searchMode = "Show";
-				}
-			}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> parentView) {
-				// your code here
-			}
-
-		});
-
+		txtSearchName.setQueryHint(getResources().getString(R.string.SearchFor));
+		txtSearchName.clearFocus();
 
 		txtSearchName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override
@@ -137,41 +116,21 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 	//this override the implemented method from asyncTask
 	@Override
 	public void processFinish(Object result){
-		muestralo((ModelSearchMultiSearch) result);
+		muestralo((List<AudiovisualInterface>) result);
 	}
 	
-	public void muestralo(ModelSearchMultiSearch result){
+	public void muestralo(List<AudiovisualInterface> result){
 
-		General.searchResults = new ModelSearchMultiSearch();
+		General.searchResults = new ArrayList<AudiovisualInterface>();
 
 		if(result != null){
-			General.setSearchResults((ModelSearchMultiSearch) result);
+			General.setSearchResults((List<AudiovisualInterface>) result);
 		}
 
 		if(result == null){
 			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getResources().getString(R.string.empty_search));
-		} else if(result.results.length == 0) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
-
-			final String searchType = searchMode.equalsIgnoreCase("Movie") ? getString(R.string.Movies) : getString(R.string.TVShows);
-			String otherType = searchMode.equalsIgnoreCase("Movie") ? getString(R.string.TVShows) : getString(R.string.Movies);
-
-			builder.setTitle(getString(R.string.Noresults) + " " + searchType + " " + getString(R.string.For)+ " '" + textoABuscar + "'");
-			builder.setMessage(getString(R.string.Trywith) + " " + otherType + "?");
-			builder.setNegativeButton(getString(R.string.Cancel), null);
-			builder.setPositiveButton(getString(R.string.Search), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					if(searchMode.equalsIgnoreCase("Movie")){
-						searchMode = "Show";
-						dropdown.setSelection(1);
-					} else {
-						searchMode = "Movie";
-						dropdown.setSelection(0);
-					}
-					pulsado(String.valueOf(txtSearchName.getQuery()));
-				}
-			});
-			builder.show();
+		} else if(result.size() == 0) {
+			MyUtils.showSnacknar(findViewById(R.id.LinearLayout1), getString(R.string.Noresults) + " " + getString(R.string.For)+ " '" + textoABuscar + "'");
         } else {
             Intent intent =  new Intent(SearchActivity.this, SearchResultActivity.class);
             intent.putExtra("Type", searchMode);

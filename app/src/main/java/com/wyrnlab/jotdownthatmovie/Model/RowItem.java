@@ -8,7 +8,7 @@ public class RowItem {
 	private int id;
     private Object imageId;
     private String title;
-    private String desc;
+    private String desc = "";
     private String type;
     private Object object;
     private Context context;
@@ -18,11 +18,16 @@ public class RowItem {
 
         AudiovisualInterface movie = (AudiovisualInterface) object;
     	this.id = movie.getId();
-        this.imageId = movie.getImage() != null ? movie.getImage() : General.base_url + "w92" +  movie.getImagePath();
+        this.imageId = movie.getImage() != null
+                        ? movie.getImage()
+                        : movie.getImagePath() == null
+                            ? null
+                            : General.base_url + "w92" +  movie.getImagePath();
         this.title = movie.getTitulo();
-        this.desc = (context.getResources().getString(R.string.anyo) + " " + movie.getAnyo() + " " + context.getResources().getString(R.string.valoracion) + " ");
-        this.desc += movie.getRating() == 0.0 ? context.getResources().getString(R.string.notavailable) : movie.getRating();
         this.type = movie.getTipo();
+        if(!this.type.equalsIgnoreCase(General.PERSON_TYPE)){
+            this.desc = (context.getResources().getString(R.string.anyo) + " " + movie.getAnyo() + " " + context.getResources().getString(R.string.valoracion) + " ");
+        }
         this.source = movie.getSource();
         this.object = object;
         this.context = context;

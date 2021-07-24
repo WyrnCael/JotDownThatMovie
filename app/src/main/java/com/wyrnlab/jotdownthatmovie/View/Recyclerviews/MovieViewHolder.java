@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
+import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
@@ -46,16 +47,20 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         this.itemListener = itemListener;
         this.position = position;
 
-        if(rowItem.getType() == null || rowItem.getType().equalsIgnoreCase("Movie")){
+        if(rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.MOVIE_TYPE)){
             this.icon.setImageResource(R.drawable.video_camera);
-        } else {
+        } else if(rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.TVSHOW_TYPE)) {
             this.icon.setImageResource(R.drawable.tv);
+        } else if (rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.PERSON_TYPE)) {
+            this.icon.setImageResource(R.drawable.person);
         }
 
-        if(rowItem.getImageId() instanceof  String)
-            imageLoader.DisplayImage((String) rowItem.getImageId(), this.imageView);
-        else {
+        if(rowItem.getImageId() instanceof String)
+            this.imageLoader.DisplayImage((String) rowItem.getImageId(), this.imageView);
+        else if (rowItem.getImageId() != null){
             this.imageView.setImageBitmap(ImageHandler.getImage((byte[]) rowItem.getImageId()));
+        } else {
+            this.imageView.setImageResource(R.drawable.stub);
         }
 
         itemView.setOnClickListener(this);
@@ -68,7 +73,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
     }
 
     public void clearCache(){
-        imageLoader.clearCache();
+        this.imageLoader.clearCache();
     }
 
     @Override
