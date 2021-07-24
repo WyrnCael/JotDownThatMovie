@@ -38,7 +38,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 
     public RecyclerView listView;
     List<RowItem> rowItems;
-    ModelSearchMultiSearch results;
+    List<AudiovisualInterface> results;
     List<AudiovisualInterface> rowsToSave;
     RecyclerViewAdapter adapter;
     int longClickPosition;
@@ -61,7 +61,7 @@ public class SearchResultActivity extends AppCompatActivity implements
         rowsToSave = new ArrayList<AudiovisualInterface>();
         results = General.getsSarchResults();
     	rowItems = new ArrayList<RowItem>();
-        for (ModelMultiSearch movie : results.results) {
+        for (AudiovisualInterface movie : results) {
         	rowItems.add(new RowItem(SearchResultActivity.this, movie));
         }
         
@@ -76,16 +76,9 @@ public class SearchResultActivity extends AppCompatActivity implements
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                /*if(type.equalsIgnoreCase("Movie")) {
-                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchResultActivity.this, page);
-                    searchor.delegate = SearchResultActivity.this;
-                    searchor.execute(searchText);
-
-                } else {
-                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow(SearchResultActivity.this, page);
-                    searchor.delegate = SearchResultActivity.this;
-                    searchor.execute(searchText);
-                }*/
+                com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.MultiSearch searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.MultiSearch(SearchResultActivity.this, page);
+                searchor.delegate = SearchResultActivity.this;
+                searchor.execute(searchText);
             }
         };
         // Adds the scroll listener to RecyclerView
@@ -147,11 +140,11 @@ public class SearchResultActivity extends AppCompatActivity implements
                 MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.alreadySaved));
             }
         } else {
-            /*results.addAll((List<AudiovisualInterface>) result);
+            results.addAll((List<AudiovisualInterface>) result);
             for (AudiovisualInterface movie : ((List<AudiovisualInterface>) result)) {
                 rowItems.add(new RowItem(SearchResultActivity.this, movie));
             }
-            adapter.notifyDataSetChanged();*/
+            adapter.notifyDataSetChanged();
         }
     }
 

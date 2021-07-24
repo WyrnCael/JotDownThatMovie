@@ -7,7 +7,7 @@ public class ModelPerson extends ModelMultiSearch {
 
     public String profile_path;
     public Integer id;
-    //known_for
+    public ModelMovie[] known_for = new ModelMovie[]{};
     public String name;
     public Double popularity;
 

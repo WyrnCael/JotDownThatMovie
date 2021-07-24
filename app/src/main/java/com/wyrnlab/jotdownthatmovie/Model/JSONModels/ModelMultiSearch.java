@@ -13,15 +13,4 @@ public abstract class ModelMultiSearch {
     public ModelMultiSearch(){
 
     }
-
-    public abstract Integer getId();
-    public abstract Byte[] getImage();
-    public abstract String getImagePath();
-    public abstract String getTitulo();
-    public abstract Double getRating();
-    public abstract String getSource();
-
-    public String getTipo(){
-        return this.media_type;
-    }
 }

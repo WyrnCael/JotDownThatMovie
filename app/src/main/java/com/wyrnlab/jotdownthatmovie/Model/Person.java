@@ -1,24 +1,14 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelPerson;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelShow;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 
 public class Person extends AudiovisualInterface {
-    public void setDataFromJson(ModelShow model){
-        super.TituloOriginal = model.original_name;
+    public void setDataFromJson(ModelPerson model){
         super.Titulo = model.name;
         super.Id = model.id;
-        super.Anyo = MyUtils.getYearFromDate(model.first_air_date);
-        super.Image_path = model.poster_path;
-        super.Rating = model.vote_average;
-        super.Descripcion = model.overview == null ? "" : model.overview;
-        super.originalLanguage = model.original_language;
-
-        for(ModelGenres genres : model.genres){
-            super.addGeneros(genres.name);
-        }
-
-        super.Seasons = String.valueOf(model.number_of_seasons);
+        super.Image_path = model.profile_path;
         super.Tipo = General.PERSON_TYPE;
         super.source = General.NET_SOURCE;
     }

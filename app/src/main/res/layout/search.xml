@@ -1,67 +1,46 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="right">
 
-    <TextView
-        android:id="@+id/lblType"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/SearchType"
-        android:textColor="@color/verde"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/raleway" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:dropDownWidth="wrap_content"
-        android:spinnerMode="dropdown" />
-
-    <TextView
+        <TextView
         android:id="@+id/LblNombre"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/nombre"
+        android:text="@string/SearchLabel"
         android:textColor="@color/verde"
         android:textSize="18sp"
         android:textStyle="bold"
         app:fontFamily="@font/raleway" />
 
-    <androidx.appcompat.widget.SearchView
+        <androidx.appcompat.widget.SearchView
         android:id="@+id/TxtNombre"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:imeOptions="actionSearch"
-        android:inputType="textCapSentences" />
+        android:inputType="textCapSentences" >
 
-    <Button
+        </androidx.appcompat.widget.SearchView>
+
+        <Button
         android:id="@+id/BtnHola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:text="@string/hola"
         android:theme="@style/GreenButton" />

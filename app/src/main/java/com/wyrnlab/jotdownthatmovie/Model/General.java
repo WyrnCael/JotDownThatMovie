@@ -29,7 +29,7 @@ public class General {
     private static List<String> MovieIdsInDB = new ArrayList<>();
     private static List<Pelicula> peliculasBuscadas;
     private static List<TVShow> showsBuscados;
-    public static ModelSearchMultiSearch searchResults;
+    public static List<AudiovisualInterface> searchResults;
     public static Languages languageTranslations;
     public static String AppLanguage = null;
     public static String SearchLanguage = null;
@@ -75,7 +75,7 @@ public class General {
         return showsBuscados;
     }
 
-    public static void setSearchResults(ModelSearchMultiSearch results){
+    public static void setSearchResults(List<AudiovisualInterface> results){
         searchResults = results;
         /*Collections.sort(searchResults.results, new Comparator<AudiovisualInterface>(){
             public int compare(AudiovisualInterface mov1, AudiovisualInterface mov2) {
@@ -85,7 +85,7 @@ public class General {
         });*/
     }
 
-    public static ModelSearchMultiSearch getsSarchResults(){
+    public static List<AudiovisualInterface> getsSarchResults(){
         return searchResults;
     }
 

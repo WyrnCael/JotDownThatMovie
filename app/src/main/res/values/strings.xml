@@ -82,6 +82,7 @@
     <string name="SearchLanguageWarning">* If you change the data language, the saved movies will not be updated. You must refresh each movie.</string>
     <string name="SpanishES">Spanish (Spain)</string>
     <string name="SpanishMX">Spanish (Mexico)</string>
+    <string name="SearchFor">Movie, tv show, person...</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
@@ -97,9 +98,10 @@
 
     <string name="notAviableTrailer">Not available trailer, try with another language</string>
     <string name="noSimilarMovies">Cannot recognize similars!</string>
-    <string name="Noresults">No results found of type</string>
+    <string name="Noresults">No results found</string>
     <string name="For">for</string>
     <string name="Trywith">Do you want to repeat the search for</string>
+    <string name="SearchLabel">Text to search:</string>
 
 	<string name="image">Thumbnail</string>
 	
