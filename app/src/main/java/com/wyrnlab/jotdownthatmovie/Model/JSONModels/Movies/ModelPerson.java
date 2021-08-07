@@ -10,6 +10,9 @@ public class ModelPerson extends ModelMultiSearch {
     public ModelMovie[] known_for = new ModelMovie[]{};
     public String name;
     public Double popularity;
+    //public String cast;
+    public ModelCrew[] crew = new ModelCrew[]{};
+    public String known_for_department;
 
     public ModelPerson(){
         super.media_type = "person";

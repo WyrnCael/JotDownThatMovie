@@ -70,7 +70,6 @@
         <activity android:name=".View.Activities.ShowInfo.showTVShow.InfoTVShowSearch"
             android:label="@string/title_activity_info"
             android:configChanges="keyboardHidden|orientation|screenSize" >
-
         </activity>
 
         <activity android:name=".View.Activities.ShowInfo.showTVShow.InfoTVShowShared"
@@ -89,7 +88,11 @@
         <activity android:name=".View.Activities.ShowInfo.showTVShow.InfoTVShowDatabase"
             android:label="@string/title_activity_info"
             android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
 
+        <activity android:name=".View.Activities.InfoPersonActivity"
+            android:label="@string/title_activity_info"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
 
         <activity android:name=".View.Activities.YoutubeActivityView"
