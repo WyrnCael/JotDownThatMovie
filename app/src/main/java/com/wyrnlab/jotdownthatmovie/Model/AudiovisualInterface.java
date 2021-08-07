@@ -20,7 +20,37 @@ public abstract class AudiovisualInterface implements Serializable {
     protected String source;
     protected String originalLanguage;
     protected List<AudiovisualInterface> similars;
+    protected List<AudiovisualInterface> crew;
     protected Boolean viewed;
+    protected String knownFor;
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    protected String job;
+
+    public String getKnownFor() {
+        return knownFor;
+    }
+
+    public void setKnownFor(String knownFor) {
+        this.knownFor = knownFor;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    protected String birthday;
 
     public List<AudiovisualInterface> getSimilars() {
         return similars;
@@ -28,6 +58,14 @@ public abstract class AudiovisualInterface implements Serializable {
 
     public void setSimilars(List<AudiovisualInterface> similars) {
         this.similars = similars;
+    }
+
+    public List<AudiovisualInterface> getCrew() {
+        return crew;
+    }
+
+    public void setCrew(List<AudiovisualInterface> crew) {
+        this.crew = crew;
     }
 
     public String getSource() {

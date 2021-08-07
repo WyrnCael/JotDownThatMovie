@@ -48,7 +48,7 @@
     <string name="StartPrimaryText">Start here!</string>
     <string name="StartSecondaryText">Welcome! Tap here to start</string>
     <string name="SearchPrimaryText">Find something</string>
-    <string name="SearchSecondaryText">Find a movie or a TV Show</string>
+    <string name="SearchSecondaryText">Find a movie, tv show, person...</string>
     <string name="button_undo">Undo</string>
     <string name="SimilarMovies">Similar movies:</string>
     <string name="Similars">Similars</string>
@@ -73,6 +73,7 @@
     <string name="CloseParentesis">)</string>
     <string name="MovieInfoProvidedBy">Movie info provided by:</string>
     <string name="ShowInfoProvidedBy">Show info provided by:</string>
+    <string name="InfoProvidedBy">Info provided by:</string>
     <string name="Streaming">Streaming:</string>
     <string name="Language">Language</string>
     <string name="Save">Save</string>
@@ -104,5 +105,7 @@
     <string name="SearchLabel">Text to search:</string>
 
 	<string name="image">Thumbnail</string>
+
+    <string name="name">Name</string>
 	
 </resources>

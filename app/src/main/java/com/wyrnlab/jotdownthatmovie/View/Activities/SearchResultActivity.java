@@ -16,8 +16,6 @@ import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.JavaClasses.SaveAudiovisual;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
-import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelMultiSearch;
-import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelSearchMultiSearch;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
@@ -169,12 +167,13 @@ public class SearchResultActivity extends AppCompatActivity implements
     public void recyclerViewListClicked(View v, int position) {
         AudiovisualInterface pelicula = (AudiovisualInterface) ((RowItem)rowItems.get(position)).getObject();
 
-        Intent intent;
+        Intent intent = null;
         if(pelicula.getTipo().equalsIgnoreCase(General.MOVIE_TYPE)) {
             intent = new Intent(SearchResultActivity.this, InfoMovieSearch.class);
-
-        } else {
+        } else if (pelicula.getTipo().equalsIgnoreCase(General.TVSHOW_TYPE)) {
             intent = new Intent(SearchResultActivity.this, InfoTVShowSearch.class);
+        } else if (pelicula.getTipo().equalsIgnoreCase(General.PERSON_TYPE)) {
+            intent = new Intent(SearchResultActivity.this, InfoPersonActivity.class);
         }
         intent.putExtra("Pelicula", pelicula);
         intent.putExtra("Type", pelicula.getTipo());

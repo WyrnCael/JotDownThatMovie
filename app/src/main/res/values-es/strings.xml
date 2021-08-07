@@ -49,7 +49,7 @@
     <string name="StartPrimaryText">¡Empieza aquí!</string>
     <string name="StartSecondaryText">Empieza pulsando aquí</string>
     <string name="SearchPrimaryText">Busca algo</string>
-    <string name="SearchSecondaryText">Busca una película o una serie</string>
+    <string name="SearchSecondaryText">Busca una película, serie, persona...</string>
     <string name="button_undo">Deshacer</string>
     <string name="SimilarMovies">Peliculas similares:</string>
     <string name="Similars">Similares</string>
@@ -74,6 +74,7 @@
     <string name="CloseParentesis">)</string>
     <string name="MovieInfoProvidedBy">Movie info provided by:</string>
     <string name="ShowInfoProvidedBy">Show info provided by:</string>
+    <string name="InfoProvidedBy">Info provided by:</string>
     <string name="Streaming">Streaming:</string>
     <string name="Language">Idioma</string>
     <string name="Save">Guardar</string>
@@ -103,5 +104,7 @@
     <string name="SearchLabel">Texto a buscar:</string>
 	
 	<string name="image">Thumbnail</string>
-	
+
+    <string name="name">Nombre</string>
+
 </resources>
