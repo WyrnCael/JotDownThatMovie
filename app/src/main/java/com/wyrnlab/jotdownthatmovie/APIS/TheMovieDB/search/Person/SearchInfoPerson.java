@@ -1,6 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Person;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,7 @@ import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCrew;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelMovie;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelPerson;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelSearchMovie;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TranslationModel;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.Model.Person;
 import com.wyrnlab.jotdownthatmovie.R;
@@ -28,8 +30,14 @@ import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -214,16 +222,57 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
         ModelPerson results = new Gson().fromJson(json, ModelPerson.class);
         Map<Integer, AudiovisualInterface> moviesById = new HashMap<Integer, AudiovisualInterface>();
 
+
+
+
+
+
+        Yaml yaml = new Yaml(new Constructor(TranslationModel.class));
+        TranslationModel items = (TranslationModel) yaml.load(context.getResources().openRawResource(R.raw.es_es));
+        Map<String, Object> itemMap = items.es_ES;
+        final Map<String, Object> jobs = (Map<String, Object>) itemMap.get("jobs");
+
+        Log.d("YAML: ", jobs.get("3D Sequence Supervisor").toString());
+
+
+
+
+
+
+
+
+
         if(results.crew.length > 0) {
             for (ModelCrew model : results.crew) {
                 Crew movie = new Crew();
                 movie.setDataFromJson(model);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 if(movie.getImagePath() == null) {
                     getOtrosPosters(movie);
                 }
 
                 if(moviesById.containsKey(movie.getId())) {
-                    movie.setJob(moviesById.get(movie.getId()).getJob() + ", " + movie.getJob());
+                    String jobTranslated = (String) (jobs.containsKey(movie.getJob()) ? jobs.get(movie.getJob()) : movie.getJob());
+                    movie.setJob(moviesById.get(movie.getId()).getJob() + ", " + jobTranslated);
                 }
                 moviesById.put(movie.getId(), movie);
             }
