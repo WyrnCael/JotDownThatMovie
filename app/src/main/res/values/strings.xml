@@ -84,6 +84,7 @@
     <string name="SpanishES">Spanish (Spain)</string>
     <string name="SpanishMX">Spanish (Mexico)</string>
     <string name="SearchFor">Movie, tv show, person...</string>
+    <string name="KnownFor">Known for:</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>

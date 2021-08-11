@@ -124,7 +124,7 @@ public class MultiSearch extends AsyncTask<String, Integer, List<AudiovisualInte
                         this.results.add(show);
                     } else if(model.media_type.equals("person")) {
                         Person person = new Person();
-                        person.setDataFromJson((ModelPerson)model);
+                        person.setDataFromJson((ModelPerson)model, context);
 
 
                         Gson gson3 = new Gson();

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
@@ -36,6 +37,8 @@ public class General {
     public static final String LANGUAGE_SETTINGS = "LanguageSettings";
     public static final String APP_LANGUAGE_SETTINGS = "AppLanguage";
     public static final String SEARCH_LANGUAGE_SETTINGS = "SearchLanguage";
+    public static Map<String, Object> jobTranslations = null;
+    public static Map<String, Object> departamentsTranslations = null;
     public static List<String> appLanguagesArray = Arrays.asList(
             "es",
             "en"

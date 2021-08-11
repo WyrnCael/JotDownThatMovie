@@ -17,6 +17,7 @@ import com.wyrnlab.jotdownthatmovie.JavaClasses.SaveAudiovisual;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
@@ -35,7 +36,7 @@ public class SearchResultActivity extends AppCompatActivity implements
         AsyncResponse, AdapterCallback, RecyclerViewClickListener {
 
     public RecyclerView listView;
-    List<RowItem> rowItems;
+    List<RowItemInterface> rowItems;
     List<AudiovisualInterface> results;
     List<AudiovisualInterface> rowsToSave;
     RecyclerViewAdapter adapter;
@@ -58,7 +59,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 
         rowsToSave = new ArrayList<AudiovisualInterface>();
         results = General.getsSarchResults();
-    	rowItems = new ArrayList<RowItem>();
+    	rowItems = new ArrayList<RowItemInterface>();
         for (AudiovisualInterface movie : results) {
         	rowItems.add(new RowItem(SearchResultActivity.this, movie));
         }

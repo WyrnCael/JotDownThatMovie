@@ -1,18 +1,21 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
+import android.content.Context;
+
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCrew;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelPerson;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelShow;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 public class Person extends AudiovisualInterface {
-    public void setDataFromJson(ModelPerson model){
+    public void setDataFromJson(ModelPerson model, Context context){
         super.Titulo = model.name;
         super.Id = model.id;
         super.Image_path = model.profile_path;
         super.Tipo = General.PERSON_TYPE;
         super.source = General.NET_SOURCE;
-        super.knownFor = model.known_for_department;
+        super.knownFor = SetTheLanguages.getDepartamentsTranslation(context, model.known_for_department);
 
     }
 

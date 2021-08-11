@@ -119,7 +119,7 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
 
     private void readPersonInfo(String json) throws IOException{
         ModelPerson personModel = new Gson().fromJson(json, ModelPerson.class);
-        person.setDataFromJson(personModel);
+        person.setDataFromJson(personModel, context);
         /*if(person.getImagePath() == null) {
             getOtrosPosters(person);
         }*/
@@ -222,58 +222,20 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
         ModelPerson results = new Gson().fromJson(json, ModelPerson.class);
         Map<Integer, AudiovisualInterface> moviesById = new HashMap<Integer, AudiovisualInterface>();
 
-
-
-
-
-
-        Yaml yaml = new Yaml(new Constructor(TranslationModel.class));
-        TranslationModel items = (TranslationModel) yaml.load(context.getResources().openRawResource(R.raw.es_es));
-        Map<String, Object> itemMap = items.es_ES;
-        final Map<String, Object> jobs = (Map<String, Object>) itemMap.get("jobs");
-
-        Log.d("YAML: ", jobs.get("3D Sequence Supervisor").toString());
-
-
-
-
-
-
-
-
-
         if(results.crew.length > 0) {
             for (ModelCrew model : results.crew) {
                 Crew movie = new Crew();
                 movie.setDataFromJson(model);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 if(movie.getImagePath() == null) {
                     getOtrosPosters(movie);
                 }
 
                 if(moviesById.containsKey(movie.getId())) {
-                    String jobTranslated = (String) (jobs.containsKey(movie.getJob()) ? jobs.get(movie.getJob()) : movie.getJob());
-                    movie.setJob(moviesById.get(movie.getId()).getJob() + ", " + jobTranslated);
+                    movie.setJob(moviesById.get(movie.getId()).getJob() + ", " + SetTheLanguages.getJobTranslation(context, movie.getJob()));
+                } else{
+                    movie.setJob(SetTheLanguages.getJobTranslation(context, movie.getJob()));
                 }
+
                 moviesById.put(movie.getId(), movie);
             }
         }

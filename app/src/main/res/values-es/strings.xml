@@ -85,6 +85,7 @@
     <string name="SpanishES">Español (España)</string>
     <string name="SpanishMX">Español (México)</string>
     <string name="SearchFor">Película, serie, persona...</string>
+    <string name="KnownFor">Conocido por:</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>
