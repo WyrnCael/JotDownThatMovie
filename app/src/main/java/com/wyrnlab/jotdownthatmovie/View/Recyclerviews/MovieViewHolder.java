@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 
@@ -21,7 +22,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
     ImageView icon;
     Context context;
     ImageLoader imageLoader;
-    RowItem item;
+    RowItemInterface item;
     RecyclerViewClickListener itemListener;
     int position;
     View itemView;
@@ -39,7 +40,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         itemView.setOnCreateContextMenuListener(this);
     }
 
-    public void setMovieRow(RowItem rowItem, int position, RecyclerViewClickListener itemListener) {
+    public void setMovieRow(RowItemInterface rowItem, int position, RecyclerViewClickListener itemListener) {
         this.item = rowItem;
         this.imageView.setTag(rowItem.getImageId());
         this.txtDesc.setText(rowItem.getDesc());

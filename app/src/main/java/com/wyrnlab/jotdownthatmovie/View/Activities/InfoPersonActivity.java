@@ -26,6 +26,8 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
+import com.wyrnlab.jotdownthatmovie.Model.RowItemPerson;
 import com.wyrnlab.jotdownthatmovie.Model.Streaming;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
@@ -73,7 +75,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 	int position;
 
 	public RecyclerView listView;
-	List<RowItem> rowItems;
+	List<RowItemInterface> rowItems;
 	List<AudiovisualInterface> results;
 	RecyclerViewAdapter adapter;
 	int longClickPosition;
@@ -250,10 +252,9 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		//birth.setText(pelicula.getBirthday());
 
 		results = pelicula.getCrew();
-		rowItems = new ArrayList<RowItem>();
+		rowItems = new ArrayList<RowItemInterface>();
 		for (AudiovisualInterface movie : results) {
-			rowItems.add(new RowItem(this, movie));
-			Log.d("Pelicula: ", movie.getJob());
+			rowItems.add(new RowItemPerson(this, movie));
 		}
 
 		listView = (RecyclerView) findViewById(R.id.list);

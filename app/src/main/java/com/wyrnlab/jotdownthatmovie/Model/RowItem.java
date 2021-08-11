@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.wyrnlab.jotdownthatmovie.R;
 
-public class RowItem {
+public class RowItem extends RowItemInterface {
 	private int id;
     private Object imageId;
     private String title;
@@ -27,6 +27,8 @@ public class RowItem {
         this.type = movie.getTipo();
         if(!this.type.equalsIgnoreCase(General.PERSON_TYPE)){
             this.desc = (context.getResources().getString(R.string.anyo) + " " + movie.getAnyo() + " " + context.getResources().getString(R.string.valoracion) + " ");
+        } else {
+            this.desc = context.getResources().getString(R.string.KnownFor) + " " + movie.getKnownFor();
         }
         this.source = movie.getSource();
         this.object = object;
