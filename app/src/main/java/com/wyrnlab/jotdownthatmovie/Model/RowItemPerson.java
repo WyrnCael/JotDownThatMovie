@@ -17,7 +17,7 @@ public class RowItemPerson extends RowItemInterface {
                             : General.base_url + "w92" +  movie.getImagePath();
         this.title = movie.getTitulo();
         this.type = movie.getTipo();
-        this.desc = movie.getJob();
+        this.desc = movie.getJob() == null ? movie.getCharacter() : movie.getJob();
         this.source = movie.getSource();
         this.object = object;
         this.context = context;

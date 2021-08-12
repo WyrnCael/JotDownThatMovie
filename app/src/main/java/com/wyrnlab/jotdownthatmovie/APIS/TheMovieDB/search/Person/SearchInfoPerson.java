@@ -14,8 +14,10 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
+import com.wyrnlab.jotdownthatmovie.Model.Cast;
 import com.wyrnlab.jotdownthatmovie.Model.Crew;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCast;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCredits;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCrew;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelMovie;
@@ -221,6 +223,7 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
     private void readJSONMovies(String json) throws IOException{
         ModelPerson results = new Gson().fromJson(json, ModelPerson.class);
         Map<Integer, AudiovisualInterface> moviesById = new HashMap<Integer, AudiovisualInterface>();
+        List<AudiovisualInterface> moviesCast = new ArrayList<AudiovisualInterface>();
 
         if(results.crew.length > 0) {
             for (ModelCrew model : results.crew) {
@@ -238,9 +241,21 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
 
                 moviesById.put(movie.getId(), movie);
             }
+            this.person.setCrew(new ArrayList<AudiovisualInterface>(moviesById.values()));
         }
 
-        this.person.setCrew(new ArrayList<AudiovisualInterface>(moviesById.values()));
+        if(results.cast.length > 0) {
+            for (ModelCast model : results.cast) {
+                Cast movie = new Cast();
+                movie.setDataFromJson(model);
+                if(movie.getImagePath() == null) {
+                    getOtrosPosters(movie);
+                }
+
+                moviesCast.add(movie);
+            }
+            this.person.setCast(new ArrayList<AudiovisualInterface>(moviesCast));
+        }
 
     }
 

@@ -20,9 +20,19 @@ public abstract class AudiovisualInterface implements Serializable {
     protected String source;
     protected String originalLanguage;
     protected List<AudiovisualInterface> similars;
-    protected List<AudiovisualInterface> crew;
+    protected List<AudiovisualInterface> crew = new ArrayList<AudiovisualInterface>();
+    protected List<AudiovisualInterface> cast = new ArrayList<AudiovisualInterface>();
     protected Boolean viewed;
     protected String knownFor;
+    protected String character;
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(String character) {
+        this.character = character;
+    }
 
     public String getJob() {
         return job;
@@ -66,6 +76,14 @@ public abstract class AudiovisualInterface implements Serializable {
 
     public void setCrew(List<AudiovisualInterface> crew) {
         this.crew = crew;
+    }
+
+    public List<AudiovisualInterface> getCast() {
+        return cast;
+    }
+
+    public void setCast(List<AudiovisualInterface> cast) {
+        this.crew = cast;
     }
 
     public String getSource() {
