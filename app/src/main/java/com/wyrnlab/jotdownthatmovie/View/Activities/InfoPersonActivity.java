@@ -34,6 +34,8 @@ import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
+import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowSearch;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.AdapterCallback;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
@@ -256,6 +258,9 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		for (AudiovisualInterface movie : results) {
 			rowItems.add(new RowItemPerson(this, movie));
 		}
+		for (AudiovisualInterface movie : pelicula.getCast()) {
+			rowItems.add(new RowItemPerson(this, movie));
+		}
 
 		listView = (RecyclerView) findViewById(R.id.list);
 		adapter = new RecyclerViewAdapter(InfoPersonActivity.this, this,
@@ -365,7 +370,19 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
 	@Override
 	public void recyclerViewListClicked(View v, int position) {
+		AudiovisualInterface pelicula = (AudiovisualInterface) ((RowItemPerson)rowItems.get(position)).getObject();
 
+		Intent intent;
+		if(pelicula.getTipo().equalsIgnoreCase(General.MOVIE_TYPE)) {
+			intent = new Intent(InfoPersonActivity.this, InfoMovieSearch.class);
+
+		} else {
+			intent = new Intent(InfoPersonActivity.this, InfoTVShowSearch.class);
+		}
+		intent.putExtra("Pelicula", pelicula);
+		intent.putExtra("Type", pelicula.getTipo());
+		intent.putExtra("Position", position);
+		InfoPersonActivity.this.startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
 	}
 
 	@Override
