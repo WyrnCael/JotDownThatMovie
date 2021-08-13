@@ -83,7 +83,7 @@ public abstract class AudiovisualInterface implements Serializable {
     }
 
     public void setCast(List<AudiovisualInterface> cast) {
-        this.crew = cast;
+        this.cast = cast;
     }
 
     public String getSource() {

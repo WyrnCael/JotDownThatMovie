@@ -10,6 +10,8 @@ public class ModelPerson extends ModelMultiSearch {
     public ModelMovie[] known_for = new ModelMovie[]{};
     public String name;
     public Double popularity;
+    public String birthday;
+    public String deathday;
     public ModelCast[] cast = new ModelCast[]{};
     public ModelCrew[] crew = new ModelCrew[]{};
     public String known_for_department;

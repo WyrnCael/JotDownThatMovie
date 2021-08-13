@@ -117,29 +117,15 @@
                 </LinearLayout>
             </TableRow>
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/blanco">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/streamingLY">
-                </LinearLayout>
-            </TableRow>
-
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
                 android:height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+                app:tabTextColor="@color/verde"
+                app:tabSelectedTextColor="@color/verde" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
@@ -147,123 +133,56 @@
                 android:layout_height="wrap_content"
                 />
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/blanco"
-                android:id="@+id/StreamingInfoRow"/>
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/blanco"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/tmdb">
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:id="@+id/tmdRLY">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/tmdbLY">
-
-                        <TextView
-                            android:id="@+id/tmdbText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ShowInfoProvidedBy"
-                            android:layout_gravity="right|center_vertical"
-                            android:textColor="#CC0D253F"
-                            android:textSize="10sp"
-                            android:textStyle="bold"
-                            app:fontFamily="@font/raleway" />
-
-                        <ImageView
-                            android:id="@+id/tmdbLogo"
-                            android:layout_width="100dp"
-                            android:layout_height="11dp"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="5dp"
-                            android:layout_gravity="center_vertical"
-                            android:clickable="true"
-                            android:src="@drawable/provider_21" />
-
-                    </LinearLayout >
-                </RelativeLayout >
-            </TableRow>
         </TableLayout>
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/blanco"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="4">
 
-        <Button
-            android:id="@+id/BtnAnadir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/transparent"
-            android:drawableTop="@drawable/ic_add_black_24dp"
-            android:stateListAnimator="@null"
-            android:text="@string/addButton"
-            android:textColor="#000000"
-            android:theme="@style/GreenButton" />
 
-        <Button
-            android:id="@+id/BtnTrailer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/transparent"
-            android:drawableTop="@drawable/ic_trailer"
-            android:stateListAnimator="@null"
-            android:text="Trailer"
-            android:textColor="#000000"
-            android:theme="@style/GreenButton" />
 
-        <Button
-            android:id="@+id/BtnSimilars"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/transparent"
-            android:drawableTop="@drawable/ic_similar"
-            android:stateListAnimator="@null"
-            android:text="@string/Similars"
-            android:textColor="#000000"
-            android:theme="@style/GreenButton" />
+            <Button
+                android:id="@+id/BtnAtras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/ic_arrow_back_black_24dp"
+                android:stateListAnimator="@null"
+                android:text="@string/backButton"
+                android:textColor="#000000"
+                android:theme="@style/GreenButton" />
 
-        <Button
-            android:id="@+id/BtnAtras"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:background="@android:color/transparent"
-            android:drawableTop="@drawable/ic_arrow_back_black_24dp"
-            android:stateListAnimator="@null"
-            android:text="@string/backButton"
-            android:textColor="#000000"
-            android:theme="@style/GreenButton" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tmdbText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ShowInfoProvidedBy"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="#CC0D253F"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/raleway" />
+
+            <ImageView
+                android:id="@+id/tmdbLogo"
+                android:layout_width="100dp"
+                android:layout_height="11dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:src="@drawable/provider_21" />
+
+        </LinearLayout >
 
 </RelativeLayout>
