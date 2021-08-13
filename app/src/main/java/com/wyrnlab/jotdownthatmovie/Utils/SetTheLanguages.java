@@ -19,6 +19,9 @@ import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -183,6 +186,24 @@ public class SetTheLanguages {
             return R.drawable.stub_person_spanish;
         } else {
             return R.drawable.stub_person_english;
+        }
+    }
+
+    public static String getDateFormatted(String dateString){
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = format.parse(dateString);
+
+            SimpleDateFormat dateFormat;
+            if (General.SearchLanguage.substring(0, 2).equalsIgnoreCase("es")) {
+                dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            } else {
+                dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            }
+
+            return dateFormat.format(date);
+        } catch (ParseException | NullPointerException e){
+            return dateString;
         }
     }
 
