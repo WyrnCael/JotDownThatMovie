@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -81,7 +82,7 @@ public class PhotoFullPopupWindow extends PopupWindow {
             GlideApp.with(ctx) .asBitmap()
                     .load(imageUrl)
 
-                    .error(R.drawable.stub)
+                    .error(SetTheLanguages.getImageStubResourceId())
                     .listener(new RequestListener<Bitmap>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {

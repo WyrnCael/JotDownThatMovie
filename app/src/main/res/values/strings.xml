@@ -33,7 +33,9 @@
     <string name="Sinopsis">Synopsis:</string>
     <string name="IconCredits">App Icon made by <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="IconCameraCredits">Camera icon made by <string name="Chris Veigt"><a href="http://chrisveigt.com/">Chris Veigt</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
-    <string name="IconTVCredits">Television icon made by <string name="Freepic"><a href="http://chrisveigt.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconTVCredits">Television icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconPosterCredits">Poster icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconUserCredits">Person icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="Movies">Movies</string>
     <string name="TVShows">TV Shows</string>
     <string name="SearchType">Search Type:</string>

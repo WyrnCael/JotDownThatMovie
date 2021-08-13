@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.widget.ImageView;
 
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,13 +31,15 @@ public class ImageLoader {
     private Map<ImageView, String> imageViews=Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService;
     Handler handler=new Handler();//handler to display images in UI thread
+    Boolean isPerson = false;
     
-    public ImageLoader(Context context){
+    public ImageLoader(Context context, Boolean isPerson){
         fileCache=new FileCache(context);
         executorService=Executors.newFixedThreadPool(5);
+        this.isPerson = isPerson;
     }
     
-    final int stub_id=R.drawable.stub;
+    //final int stub_id = isPerson ? SetTheLanguages.getPersonImageStubResourceId() : SetTheLanguages.getImageStubResourceId();
     public void DisplayImage(String url, ImageView imageView)
     {
         imageViews.put(imageView, url);
@@ -178,8 +181,10 @@ public class ImageLoader {
                 return;
             if(bitmap!=null)
                 photoToLoad.imageView.setImageBitmap(bitmap);
-            else
+            else {
+                Integer stub_id = isPerson ? SetTheLanguages.getPersonImageStubResourceId() : SetTheLanguages.getImageStubResourceId();
                 photoToLoad.imageView.setImageResource(stub_id);
+            }
         }
     }
 

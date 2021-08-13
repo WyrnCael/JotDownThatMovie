@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		moviesByType = DAO.getInstance().readAll(MainActivity.this);
 
 		// Vaciar cache imagenes
-		ImageLoader imageLoader = new ImageLoader(this);
+		ImageLoader imageLoader = new ImageLoader(this, false);
 		imageLoader.clearCache();
 
 		// Solicitar permisos
