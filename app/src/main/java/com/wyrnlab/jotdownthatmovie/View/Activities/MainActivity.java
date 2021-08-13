@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		closeFABMenu();
 		filter = typeFilter;
 
-		Parcelable recylerViewState = listView.getLayoutManager().onSaveInstanceState();
+		/*Parcelable recylerViewState = listView.getLayoutManager().onSaveInstanceState();*/
 
 		if(adapter.snackbar != null && adapter.snackbar.isShown()){ adapter.snackbar.dismiss(); }
 		adapter.clear();
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 		refreshTabs();
 
-		listView.getLayoutManager().onRestoreInstanceState(recylerViewState);
+		/*listView.getLayoutManager().onRestoreInstanceState(recylerViewState);*/
 
 		if(moviesByType.get(FILTER_ALL).isEmpty() && moviesByType.get(FILTER_VIEWED).isEmpty()) {
 			firstTime = true;

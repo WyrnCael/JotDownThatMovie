@@ -18,7 +18,7 @@ public class Person extends AudiovisualInterface {
         super.Tipo = General.PERSON_TYPE;
         super.source = General.NET_SOURCE;
         super.knownFor = SetTheLanguages.getDepartamentsTranslation(context, model.known_for_department);
-
+        super.birthday = model.birthday;
     }
 
     public void setCrewFromJSON(ModelCrew crew){

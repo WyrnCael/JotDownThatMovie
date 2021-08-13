@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -18,9 +19,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.StreamingAPI;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Person.SearchInfoPerson;
+import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
@@ -43,7 +46,9 @@ import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdap
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ShareActionProvider;
@@ -68,17 +73,15 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 	TextView directorLab;
 	TextView originalTitle;
 	TextView originalLanguage;
-	Button botonAnadir;
 	Button botonVolver;
-	Button botonTrailer;
-	Button botonSimilars;
 	ImageView image;
 	private ShareActionProvider mShareActionProvider;
 	int position;
+	TabLayout tabLayout;
+	Map<Integer, List<AudiovisualInterface>> audiovisualsByTab = new HashMap<Integer, List<AudiovisualInterface>>();
 
 	public RecyclerView listView;
 	List<RowItemInterface> rowItems;
-	List<AudiovisualInterface> results;
 	RecyclerViewAdapter adapter;
 	int longClickPosition;
 
@@ -112,14 +115,18 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		descripcion = (TextView)findViewById(R.id.toda_la_descripcion);
 		generoLab = (TextView)findViewById(R.id.generoLab);
 		directorLab = (TextView)findViewById(R.id.directorLAb);
-		botonAnadir = (Button)findViewById(R.id.BtnAnadir);
 		botonVolver = (Button)findViewById(R.id.BtnAtras);
-		botonTrailer = (Button)findViewById(R.id.BtnTrailer);
-		botonSimilars = (Button)findViewById(R.id.BtnSimilars);
 		originalTitle = (TextView)findViewById(R.id.OriginalTitleText);
 		originalLanguage = (TextView)findViewById(R.id.OriginalLangugeText);
 		knownFor = (TextView)findViewById(R.id.KnownFor);
 		birth = (TextView)findViewById(R.id.Birth);
+		tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+		listView = (RecyclerView) findViewById( R.id.list );
+
+		rowItems = new ArrayList<RowItemInterface>();
+		adapter = new RecyclerViewAdapter(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
+		listView.setAdapter(adapter);
+		listView.setLayoutManager(new LinearLayoutManager(this));
 
       //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
@@ -129,31 +136,8 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
         //anyo.setText("	" + pelicula.getAnyo());
 
-        //Implementamos el evento click del botón
-        botonAnadir.setOnClickListener(new OnClickListener() {
-             @Override
-             public void onClick(View v) {
-				 Intent resultIntent = new Intent();
-				 resultIntent.putExtra("Name", pelicula.getTitulo());
-				 resultIntent.putExtra("Position", position);
-				 setResult(General.RESULT_CODE_ADD, resultIntent);
-				 finish();
-             }
-        });
 
         name.setText(pelicula.getTitulo());
-
-        similarMoviesModal = new SimilarMoviesModal(pelicula, InfoPersonActivity.this, InfoPersonActivity.this);
-		botonSimilars.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(pelicula.getSimilars().isEmpty()){
-					MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.noSimilarMovies));
-				} else {
-					similarMoviesModal.createView();
-				}
-			}
-		});
 
       //Implementamos el evento click del botón
         botonVolver.setOnClickListener(new OnClickListener() {
@@ -162,18 +146,6 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
             	backPressed();
              }
         });
-
-        botonTrailer.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-				if (!CheckInternetConection.isConnectingToInternet(InfoPersonActivity.this)) {
-					MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), getResources().getString(R.string.not_internet));
-				} else {
-					AlertDialog.Builder builder = new TrailerDialog(InfoPersonActivity.this, pelicula.getOriginalLanguage(),SetTheLanguages.getLanguage(), pelicula);
-					builder.show();
-				}
-			}
-  	     });
 
 
 		ImageView imdbLogo = (ImageView)findViewById(R.id.tmdbLogo);
@@ -204,7 +176,51 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		}*/
 
 
+		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+				switch (tab.getPosition()){
+					case 0:
+						refreshList(0);
+						break;
+					case 1:
+						refreshList(1);
+						break;
+				}
+			}
+
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+
+			}
+		});
+
+
     }
+
+	private void refreshList(Integer tabIndex){
+		if(adapter.snackbar != null && adapter.snackbar.isShown()){ adapter.snackbar.dismiss(); }
+		adapter.clear();
+		listView.setAdapter(null);
+
+		adapter = new RecyclerViewAdapter(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
+		listView.setAdapter(adapter);
+		listView.setLayoutManager(new LinearLayoutManager(this));
+
+		if(audiovisualsByTab != null && audiovisualsByTab.containsKey(tabIndex)){
+			for (AudiovisualInterface movie : audiovisualsByTab.get(tabIndex)) {
+				rowItems.add(new RowItemPerson(InfoPersonActivity.this, movie));
+			}
+		}
+
+		adapter.notifyDataSetChanged();
+	}
 
 	//this override the implemented method from asyncTask
 	@Override
@@ -214,6 +230,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 	}
 
 	public void actualiza(){
+
 
 		// A�adir generos
         /*genero.setText("	" + pelicula.getGenerosToStrig());
@@ -234,6 +251,28 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
         descripcion.setText(pelicula.getDescripcion());
 */
+        Integer tabsInserted = 0;
+		if(!pelicula.getCast().isEmpty()){
+			tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.Cast)));
+			audiovisualsByTab.put(tabsInserted, new ArrayList<AudiovisualInterface>());
+			audiovisualsByTab.get(tabsInserted).addAll(pelicula.getCast());
+			tabsInserted++;
+		}
+
+		if (!pelicula.getCrew().isEmpty()){
+			tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.Crew)));
+			audiovisualsByTab.put(tabsInserted, new ArrayList<AudiovisualInterface>());
+			audiovisualsByTab.get(tabsInserted).addAll(pelicula.getCrew());
+			tabsInserted++;
+		}
+
+		if(!audiovisualsByTab.get(0).isEmpty()){
+			for (AudiovisualInterface movie : audiovisualsByTab.get(0)) {
+				rowItems.add(new RowItemPerson(this, movie));
+			}
+		}
+
+
 		image = (ImageView)findViewById(R.id.poster);
 		final ImageLoader imageLoader = new ImageLoader(this);
 		imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
@@ -251,16 +290,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		similarMoviesModal.pelicula = this.pelicula;*/
 
 		knownFor.setText(pelicula.getKnownFor());
-		//birth.setText(pelicula.getBirthday());
-
-		results = pelicula.getCrew();
-		rowItems = new ArrayList<RowItemInterface>();
-		for (AudiovisualInterface movie : results) {
-			rowItems.add(new RowItemPerson(this, movie));
-		}
-		for (AudiovisualInterface movie : pelicula.getCast()) {
-			rowItems.add(new RowItemPerson(this, movie));
-		}
+		birth.setText(pelicula.getBirthday());
 
 		listView = (RecyclerView) findViewById(R.id.list);
 		adapter = new RecyclerViewAdapter(InfoPersonActivity.this, this,
