@@ -111,10 +111,11 @@ public class SearchResultActivity extends AppCompatActivity implements
     public void recylerViewCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo, int position) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        MenuInflater inflater = getMenuInflater();
-
-        rowItems.get(position).toString();
-        inflater.inflate(R.menu.menu_pelicula_busqueda, menu);
+        if(!rowItems.get(position).getType().equalsIgnoreCase(General.PERSON_TYPE)) {
+            MenuInflater inflater = getMenuInflater();
+            rowItems.get(position).toString();
+            inflater.inflate(R.menu.menu_pelicula_busqueda, menu);
+        }
     }
 
     @Override

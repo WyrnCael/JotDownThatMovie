@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
+import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SearchResultActivity;
 
@@ -44,9 +45,10 @@ public class ItemTouchAddHelper extends androidx.recyclerview.widget.ItemTouchHe
     public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         int position = viewHolder.getAdapterPosition();
         RecyclerViewAdapter testAdapter = (RecyclerViewAdapter)recyclerView.getAdapter();
-        if (testAdapter.isUndoOn() && testAdapter.isPendingRemoval(position)) {
+        if ((testAdapter.isUndoOn() && testAdapter.isPendingRemoval(position)) || testAdapter.items.get(position).getType() == General.PERSON_TYPE) {
             return 0;
         }
+
         return super.getSwipeDirs(recyclerView, viewHolder);
     }
 
