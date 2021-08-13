@@ -26,6 +26,7 @@ import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Person.SearchInfoPers
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
+import com.wyrnlab.jotdownthatmovie.JavaClasses.SaveAudiovisual;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
@@ -40,7 +41,10 @@ import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.showTVShow.InfoTVShowSearch;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.AdapterCallback;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemDecorationAddHelper;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.ItemTouchAddHelper;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
+import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapterPerson;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.TrailerDialog;
@@ -82,7 +86,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
 	public RecyclerView listView;
 	List<RowItemInterface> rowItems;
-	RecyclerViewAdapter adapter;
+	RecyclerViewAdapterPerson adapter;
 	int longClickPosition;
 
 	SimilarMoviesModal similarMoviesModal;
@@ -124,17 +128,24 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		listView = (RecyclerView) findViewById( R.id.list );
 
 		rowItems = new ArrayList<RowItemInterface>();
-		adapter = new RecyclerViewAdapter(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
+		adapter = new RecyclerViewAdapterPerson(this, (AdapterCallback) this,
+				R.layout.list_item, rowItems, InfoPersonActivity.this);
 		listView.setAdapter(adapter);
-		listView.setLayoutManager(new LinearLayoutManager(this));
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+		listView.setLayoutManager(linearLayoutManager);
+		registerForContextMenu(listView);
+
+		//Swipe
+		/*ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT, InfoPersonActivity.this, adapter);
+		androidx.recyclerview.widget.ItemTouchHelper mItemTouchHelper = new androidx.recyclerview.widget.ItemTouchHelper(simpleItemTouchCallback);
+		mItemTouchHelper.attachToRecyclerView(listView);
+		listView.addItemDecoration(new ItemDecorationAddHelper(InfoPersonActivity.this));*/
 
       //Recuperamos la información pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
 
 		// Title
 		getSupportActionBar().setTitle(pelicula.getTitulo());
-
-        //anyo.setText("	" + pelicula.getAnyo());
 
 
         name.setText(pelicula.getTitulo());
@@ -157,23 +168,6 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 				startActivity(intent);
 			}
 		});
-
-		/*ImageView justWatch = (ImageView)findViewById(R.id.justWatchLogo);
-		justWatch.setOnClickListener(new OnClickListener(){
-			public void onClick(View v){
-				String url = "https://www.themoviedb.org/movie/" + String.valueOf(pelicula.getId()) + "/watch";
-				Intent intent = new Intent(InfoPersonActivity.this, WebViewActivity.class);
-				intent.putExtra("url", url);
-				startActivity(intent);
-			}
-		});
-
-
-		if(pelicula.getRating() == 0.0){
-			valoracion.setText("	" +  getResources().getString(R.string.notavailable));
-		}else{
-			valoracion.setText("	" + Double.toString(pelicula.getRating()));
-		}*/
 
 
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -209,7 +203,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		adapter.clear();
 		listView.setAdapter(null);
 
-		adapter = new RecyclerViewAdapter(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
+		adapter = new RecyclerViewAdapterPerson(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -290,10 +284,10 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		similarMoviesModal.pelicula = this.pelicula;*/
 
 		knownFor.setText(pelicula.getKnownFor());
-		birth.setText(pelicula.getBirthday());
+		birth.setText(SetTheLanguages.getDateFormatted(pelicula.getBirthday()));
 
 		listView = (RecyclerView) findViewById(R.id.list);
-		adapter = new RecyclerViewAdapter(InfoPersonActivity.this, this,
+		adapter = new RecyclerViewAdapterPerson(InfoPersonActivity.this, this,
 				R.layout.list_item, rowItems, InfoPersonActivity.this);
 		listView.setAdapter(adapter);
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(InfoPersonActivity.this);
@@ -390,7 +384,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
 	@Override
 	public void removeCallback(AudiovisualInterface item) {
-
+		SaveAudiovisual.saveItem(InfoPersonActivity.this, InfoPersonActivity.this, item, item.getTipo());
 	}
 
 	@Override

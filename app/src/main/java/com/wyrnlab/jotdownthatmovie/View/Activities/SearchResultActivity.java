@@ -1,6 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,7 +85,7 @@ public class SearchResultActivity extends AppCompatActivity implements
         listView.addOnScrollListener(scrollListener);
 
         //Swipe
-        ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT, SearchResultActivity.this);
+        ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT, SearchResultActivity.this, adapter);
         androidx.recyclerview.widget.ItemTouchHelper mItemTouchHelper = new androidx.recyclerview.widget.ItemTouchHelper(simpleItemTouchCallback);
         mItemTouchHelper.attachToRecyclerView(listView);
         listView.addItemDecoration(new ItemDecorationAddHelper(SearchResultActivity.this));
@@ -168,7 +169,7 @@ public class SearchResultActivity extends AppCompatActivity implements
     @Override
     public void recyclerViewListClicked(View v, int position) {
         AudiovisualInterface pelicula = (AudiovisualInterface) ((RowItem)rowItems.get(position)).getObject();
-
+        Context context = v.getContext();
         Intent intent = null;
         if(pelicula.getTipo().equalsIgnoreCase(General.MOVIE_TYPE)) {
             intent = new Intent(SearchResultActivity.this, InfoMovieSearch.class);
