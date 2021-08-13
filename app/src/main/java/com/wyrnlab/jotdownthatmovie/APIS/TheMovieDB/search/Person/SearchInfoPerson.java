@@ -151,7 +151,6 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
                 SearchBaseUrl.getBaseUrl();
             }
             URL url = new URL(General.base_url + "w500" + person.getImagePath());
-            Log.d("IMAGEURL", url.toString());
             URLConnection ucon = url.openConnection();
 
             InputStream is = ucon.getInputStream();
@@ -169,7 +168,7 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
             person.setImage(buffer.toByteArray());
         } catch (Exception e) {
             Bitmap b = BitmapFactory.decodeResource(context.getResources(),
-                    R.drawable.stub);
+                    SetTheLanguages.getPersonImageStubResourceId());
             person.setImage(ImageHandler.getBytes(b));
         }
     }

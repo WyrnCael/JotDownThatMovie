@@ -13,6 +13,7 @@ import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
+import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener,View.OnCreateContextMenuListener {
 
@@ -35,7 +36,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         this.txtTitle = (TextView) itemView.findViewById(R.id.title);
         this.imageView = (ImageView) itemView.findViewById(R.id.icon);
         this.icon = (ImageView) itemView.findViewById(R.id.iconType);
-        this.imageLoader=new ImageLoader(context);
+        this.imageLoader=new ImageLoader(context, false);
         this.itemView = itemView;
         itemView.setOnCreateContextMenuListener(this);
     }
@@ -61,7 +62,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         else if (rowItem.getImageId() != null){
             this.imageView.setImageBitmap(ImageHandler.getImage((byte[]) rowItem.getImageId()));
         } else {
-            this.imageView.setImageResource(R.drawable.stub);
+            this.imageView.setImageResource(rowItem.getType().equalsIgnoreCase(General.PERSON_TYPE)? SetTheLanguages.getPersonImageStubResourceId() : SetTheLanguages.getImageStubResourceId());
         }
 
         itemView.setOnClickListener(this);

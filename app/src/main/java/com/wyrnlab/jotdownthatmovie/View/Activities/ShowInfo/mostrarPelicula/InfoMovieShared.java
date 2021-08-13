@@ -299,7 +299,7 @@ public class InfoMovieShared extends AppCompatActivity implements AsyncResponse,
         descripcion.setText(pelicula.getDescripcion());
 
         image = (ImageView)findViewById(R.id.poster);
-        imageLoader = new ImageLoader(this);
+        imageLoader = new ImageLoader(this, false);
         if(General.base_url == null){
             SearchBaseUrl searchor = new SearchBaseUrl(InfoMovieShared.this){
                 @Override

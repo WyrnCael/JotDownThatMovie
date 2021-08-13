@@ -111,7 +111,6 @@ public class MultiSearch extends AsyncTask<String, Integer, List<AudiovisualInte
         // do the mapping
                 final ModelSearchMultiSearch deserializedRequestList = gson.fromJson(responseJson, ModelSearchMultiSearch.class);
         final Gson gson2 = new GsonBuilder().create();
-                Log.d("JSONDeserialized",  gson2.toJson(deserializedRequestList));
 
                 for(ModelMultiSearch model : deserializedRequestList.results){
                     if(model.media_type.equals("movie")) {
@@ -129,14 +128,10 @@ public class MultiSearch extends AsyncTask<String, Integer, List<AudiovisualInte
 
                         Gson gson3 = new Gson();
 
-                        Log.d("JSON", gson3.toJson((ModelPerson)model));
-
 
                         this.results.add(person);
                     }
                 }
-
-                Log.d("JSON", deserializedRequestList.toString());
 
 
 

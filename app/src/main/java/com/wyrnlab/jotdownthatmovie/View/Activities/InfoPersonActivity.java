@@ -274,7 +274,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
 
 		image = (ImageView)findViewById(R.id.poster);
-		final ImageLoader imageLoader = new ImageLoader(this);
+		final ImageLoader imageLoader = new ImageLoader(this, true);
 		imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
 		image.setOnClickListener(new OnClickListener() {
 			@Override

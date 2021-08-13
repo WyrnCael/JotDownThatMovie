@@ -120,12 +120,13 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:height="?attr/actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:tabTextColor="@color/verde"
-                app:tabSelectedTextColor="@color/verde" />
+                app:tabSelectedTextColor="@color/verde"
+                android:paddingBottom="5dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"

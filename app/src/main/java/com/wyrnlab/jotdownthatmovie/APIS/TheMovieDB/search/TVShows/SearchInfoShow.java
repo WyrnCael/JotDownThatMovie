@@ -150,8 +150,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
 
             tvShow.setImage(buffer.toByteArray());
         } catch (Exception e) {
-            Bitmap b = BitmapFactory.decodeResource(context.getResources(),
-                    R.drawable.stub);
+            Bitmap b = SetTheLanguages.getImageStub(context);
             tvShow.setImage(ImageHandler.getBytes(b));
         }
     }

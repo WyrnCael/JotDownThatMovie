@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -149,6 +151,38 @@ public class SetTheLanguages {
             return (String) (General.departamentsTranslations.containsKey(textToTranslate) ? General.departamentsTranslations.get(textToTranslate) : textToTranslate);
         } else {
             return textToTranslate;
+        }
+    }
+
+    public static Bitmap getImageStub(Context context){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_spanish);
+        } else {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_english);
+        }
+    }
+
+    public static Integer getImageStubResourceId(){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            return R.drawable.stub_spanish;
+        } else {
+            return R.drawable.stub_english;
+        }
+    }
+
+    public static Bitmap getPersonImageStub(Context context){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_person_spanish);
+        } else {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_person_english);
+        }
+    }
+
+    public static Integer getPersonImageStubResourceId(){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            return R.drawable.stub_person_spanish;
+        } else {
+            return R.drawable.stub_person_english;
         }
     }
 
