@@ -1,10 +1,17 @@
 package com.wyrnlab.jotdownthatmovie.View.Recyclerviews;
 
+import android.app.Activity;
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
@@ -55,6 +62,37 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         this.txtTitle.setText(rowItem.getTitle());
         this.itemListener = itemListener;
         this.position = position;
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        final Rect bounds = new Rect();
+        final Paint paint = new Paint();
+        paint.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.text_view_height));
+        paint.getTextBounds(rowItem.getTitle(), 0, rowItem.getTitle().length(), bounds);
+
+        final int numLines = (int) Math.ceil((float) bounds.width() / (width - context.getResources().getDimensionPixelSize(R.dimen.standard_100)));
+
+        Log.d(rowItem.getTitle(), String.valueOf(numLines));
+        if(numLines == 1){
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) this.txtTitle.getLayoutParams();
+            if(rowItem.getType().equalsIgnoreCase(General.PERSON_TYPE)){
+                params.height = context.getResources().getDimensionPixelSize(R.dimen.standard_35);
+                params.topMargin = context.getResources().getDimensionPixelSize(R.dimen.standard_5);
+            } else {
+                params.height = context.getResources().getDimensionPixelSize(R.dimen.standard_30);
+            }
+            this.txtTitle.setLayoutParams(params);
+        } else {
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) this.txtTitle.getLayoutParams();
+            params.height = context.getResources().getDimensionPixelSize(R.dimen.standard_40);
+            this.txtTitle.setLayoutParams(params);
+        }
+
+        if(rowItem.getType().equalsIgnoreCase(General.PERSON_TYPE)){
+
+        }
 
         if(rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.MOVIE_TYPE)){
             this.icon.setImageResource(R.drawable.video_camera);

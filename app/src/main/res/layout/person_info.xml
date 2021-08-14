@@ -73,7 +73,6 @@
                             android:id="@+id/Name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Name"
                             android:textColor="@color/negro"
                             android:textStyle="bold"
                             app:fontFamily="@font/raleway" />
@@ -82,7 +81,7 @@
                             android:id="@+id/KnownForLabel"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="Conocido por"
+                            android:text="@string/KnownFor"
                             android:textColor="?attr/colorAccent"
                             android:textStyle="bold"
                             app:fontFamily="@font/raleway" />
@@ -91,7 +90,6 @@
                             android:id="@+id/KnownFor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Conocido por"
                             android:textColor="@color/negro"
                             android:textStyle="bold"
                             app:fontFamily="@font/raleway" />
@@ -100,7 +98,7 @@
                             android:id="@+id/BithLabel"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="Nacimiento"
+                            android:text="@string/BirthDay"
                             android:textColor="?attr/colorAccent"
                             android:textStyle="bold"
                             app:fontFamily="@font/raleway" />
@@ -109,7 +107,6 @@
                             android:id="@+id/Birth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"
                             android:textColor="@color/negro"
                             android:textStyle="bold"
                             app:fontFamily="@font/raleway" />
