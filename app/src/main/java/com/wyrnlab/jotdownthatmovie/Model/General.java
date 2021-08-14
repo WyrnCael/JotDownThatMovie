@@ -17,6 +17,8 @@ public class General {
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
     public final static String PERSON_TYPE = "Person";
+    public final static String CREW_TYPE = "Crew";
+    public final static String CAST_TYPE = "Cast";
     public final static String VIEWED = "Viewed";
     public final static String DB_SOURCE = "DB";
     public final static String NET_SOURCE = "NET";

@@ -95,6 +95,7 @@
     <string name="Cast">Cast</string>
     <string name="Crew">Crew</string>
     <string name="Voice">Voice</string>
+    <string name="BirthDay">Birthday:</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
