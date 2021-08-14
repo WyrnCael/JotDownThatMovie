@@ -89,9 +89,7 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
             getMovies();
             getShows();
             sortCrewAndCast();
-            /*getCreditsPelicula();*/
             getImage();
-            /*getSimilars();*/
         } catch (IOException e) {
 
         }
@@ -121,9 +119,6 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
     private void readPersonInfo(String json) throws IOException{
         ModelPerson personModel = new Gson().fromJson(json, ModelPerson.class);
         person.setDataFromJson(personModel, context);
-        /*if(person.getImagePath() == null) {
-            getOtrosPosters(person);
-        }*/
     }
 
     private void getCreditsPelicula() throws IOException{
@@ -185,31 +180,6 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
             JsonObject poster = aux.get(0).asObject();
             movie.setImagePath(poster.get("file_path").asString());
         }*/
-    }
-
-    private void getSimilars() throws IOException{
-        String url = General.URLPRINCIPAL + "3/movie/" + this.person.getId() + "/similar?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
-
-        readJSONSimilars(MyUtils.getHttpRequest(url));
-    }
-
-    private void readJSONSimilars(String json) throws IOException{
-        ModelSearchMovie results = new Gson().fromJson(json, ModelSearchMovie.class);
-
-        List<AudiovisualInterface> similars = new ArrayList<AudiovisualInterface>();
-
-        if(results.results.length > 0) {
-            for (ModelMovie model : results.results) {
-                Pelicula movie = new Pelicula();
-                movie.setDataFromJson(model);
-                if(movie.getImagePath() == null) {
-                    getOtrosPosters(movie);
-                }
-                similars.add(movie);
-            }
-        }
-
-        this.person.setSimilars(similars);
     }
 
     private void getMovies() throws IOException{
