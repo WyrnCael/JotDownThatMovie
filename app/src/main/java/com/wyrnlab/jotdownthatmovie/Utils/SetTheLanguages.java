@@ -1,16 +1,27 @@
 package com.wyrnlab.jotdownthatmovie.Utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TranslationModel;
+import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.View.Activities.MainActivity;
 
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -113,4 +124,88 @@ public class SetTheLanguages {
 
         setLocale(context, General.AppLanguage, true);
     }
+
+    private static void parseYAML(Context context){
+        Yaml yaml = new Yaml(new Constructor(TranslationModel.class));
+        TranslationModel items = (TranslationModel) yaml.load(context.getResources().openRawResource(R.raw.es_es));
+        Map<String, Object> itemMap = items.es_ES;
+        General.jobTranslations = (Map<String, Object>) itemMap.get("jobs");
+        General.departamentsTranslations = (Map<String, Object>) itemMap.get("departments");
+    }
+
+    public static String getJobTranslation(Context context, String textToTranslate){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            if (General.jobTranslations == null) {
+                parseYAML(context);
+            }
+
+            return (String) (General.jobTranslations.containsKey(textToTranslate) ? General.jobTranslations.get(textToTranslate) : textToTranslate);
+        } else {
+            return textToTranslate;
+        }
+    }
+
+    public static String getDepartamentsTranslation(Context context, String textToTranslate){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            if (General.departamentsTranslations == null) {
+                parseYAML(context);
+            }
+
+            return (String) (General.departamentsTranslations.containsKey(textToTranslate) ? General.departamentsTranslations.get(textToTranslate) : textToTranslate);
+        } else {
+            return textToTranslate;
+        }
+    }
+
+    public static Bitmap getImageStub(Context context){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_spanish);
+        } else {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_english);
+        }
+    }
+
+    public static Integer getImageStubResourceId(){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            return R.drawable.stub_spanish;
+        } else {
+            return R.drawable.stub_english;
+        }
+    }
+
+    public static Bitmap getPersonImageStub(Context context){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_person_spanish);
+        } else {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_person_english);
+        }
+    }
+
+    public static Integer getPersonImageStubResourceId(){
+        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+            return R.drawable.stub_person_spanish;
+        } else {
+            return R.drawable.stub_person_english;
+        }
+    }
+
+    public static String getDateFormatted(String dateString){
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = format.parse(dateString);
+
+            SimpleDateFormat dateFormat;
+            if (General.SearchLanguage.substring(0, 2).equalsIgnoreCase("es")) {
+                dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            } else {
+                dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            }
+
+            return dateFormat.format(date);
+        } catch (ParseException | NullPointerException e){
+            return dateString;
+        }
+    }
+
+
 }

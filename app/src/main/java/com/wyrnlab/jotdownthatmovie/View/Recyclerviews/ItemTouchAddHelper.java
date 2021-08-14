@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
+import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SearchResultActivity;
 
@@ -20,10 +21,12 @@ public class ItemTouchAddHelper extends androidx.recyclerview.widget.ItemTouchHe
     int xMarkMargin;
     boolean initiated;
     Context context;
+    RecyclerViewAdapter adapter;
 
-    public ItemTouchAddHelper(int dragDirs, int swipeDirs, Activity context){
+    public ItemTouchAddHelper(int dragDirs, int swipeDirs, Activity context, RecyclerViewAdapter adapter){
         super(dragDirs, swipeDirs);
         this.context = context;
+        this.adapter = adapter;
     }
 
     private void init() {
@@ -44,16 +47,16 @@ public class ItemTouchAddHelper extends androidx.recyclerview.widget.ItemTouchHe
     public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         int position = viewHolder.getAdapterPosition();
         RecyclerViewAdapter testAdapter = (RecyclerViewAdapter)recyclerView.getAdapter();
-        if (testAdapter.isUndoOn() && testAdapter.isPendingRemoval(position)) {
+        if ((testAdapter.isUndoOn() && testAdapter.isPendingRemoval(position)) || testAdapter.items.get(position).getType() == General.PERSON_TYPE) {
             return 0;
         }
+
         return super.getSwipeDirs(recyclerView, viewHolder);
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
         int swipedPosition = viewHolder.getAdapterPosition();
-        RecyclerViewAdapter adapter = (RecyclerViewAdapter) ((SearchResultActivity)context).listView.getAdapter();
         boolean undoOn = adapter.isUndoOn();
         /*if (undoOn) {
             adapter.pendingRemoval(swipedPosition);

@@ -149,8 +149,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
 
             pelicula.setImage(buffer.toByteArray());
         } catch (Exception e) {
-            Bitmap b = BitmapFactory.decodeResource(context.getResources(),
-                    R.drawable.stub);
+            Bitmap b = SetTheLanguages.getImageStub(context);
             pelicula.setImage(ImageHandler.getBytes(b));
         }
     }

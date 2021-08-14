@@ -34,7 +34,9 @@
     <string name="Sinopsis">Sinopsis:</string>
     <string name="IconCredits">Icono creado por <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="IconCameraCredits">Icono de camara creado por <string name="Chris Veigt"><a href="http://chrisveigt.com/">Chris Veigt</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
-    <string name="IconTVCredits">Icono de television creado por <string name="Freepic"><a href="http://chrisveigt.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconTVCredits">Icono de television creado por <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconPosterCredits">Icono de poster creado por <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconUserCredits">Icono de persona creado por <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="Movies">Películas</string>
     <string name="TVShows">Series</string>
     <string name="SearchType">Tipo de búsqueda:</string>
@@ -49,7 +51,7 @@
     <string name="StartPrimaryText">¡Empieza aquí!</string>
     <string name="StartSecondaryText">Empieza pulsando aquí</string>
     <string name="SearchPrimaryText">Busca algo</string>
-    <string name="SearchSecondaryText">Busca una película o una serie</string>
+    <string name="SearchSecondaryText">Busca una película, serie, persona...</string>
     <string name="button_undo">Deshacer</string>
     <string name="SimilarMovies">Peliculas similares:</string>
     <string name="Similars">Similares</string>
@@ -74,6 +76,7 @@
     <string name="CloseParentesis">)</string>
     <string name="MovieInfoProvidedBy">Movie info provided by:</string>
     <string name="ShowInfoProvidedBy">Show info provided by:</string>
+    <string name="InfoProvidedBy">Info provided by:</string>
     <string name="Streaming">Streaming:</string>
     <string name="Language">Idioma</string>
     <string name="Save">Guardar</string>
@@ -83,6 +86,10 @@
     <string name="SearchLanguageWarning">* Si cambia el idioma los datos, las peliculas ya almacenadas no se actualizarán. Deberá actualizarlas manualmente.</string>
     <string name="SpanishES">Español (España)</string>
     <string name="SpanishMX">Español (México)</string>
+    <string name="SearchFor">Película, serie, persona...</string>
+    <string name="KnownFor">Conocido por:</string>
+    <string name="Cast">Elenco</string>
+    <string name="Crew">Equipo</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>
@@ -93,13 +100,16 @@
     <string name="MenuAbout">Acerca de</string>
     <string name="MenuQuit">Salir de la App</string>
     <string name="MenuSearch">Buscar/Añadir</string>
-    <string name="Noresults">No hay resultados del tipo </string>
+    <string name="Noresults">No hay resultados</string>
     <string name="For">para</string>
-    <string name="Trywith">¿Quiere repetir la búsqueda para</string>
+    <string name="Trywith">¿Quiere repetir la búsqueda</string>
 
     <string name="notAviableTrailer">No hay trailers disponibles, prueba con otro idioma</string>
     <string name="noSimilarMovies">No se reconocen otras similares.</string>
+    <string name="SearchLabel">Texto a buscar:</string>
 	
 	<string name="image">Thumbnail</string>
-	
+
+    <string name="name">Nombre</string>
+
 </resources>

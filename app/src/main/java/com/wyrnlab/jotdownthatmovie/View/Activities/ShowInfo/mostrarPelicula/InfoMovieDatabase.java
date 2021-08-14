@@ -277,17 +277,15 @@ public class InfoMovieDatabase extends AppCompatActivity implements AsyncRespons
         originalTitle.setText(pelicula.getTituloOriginal());
         ImageView image = (ImageView)findViewById(R.id.poster);
         image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
-        Bitmap stub = BitmapFactory.decodeResource(getResources(), R.drawable.stub);
-        if(ImageHandler.getImage(pelicula.getImage()) != stub){
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Code to show image in full screen:
-                    new PhotoFullPopupWindow(InfoMovieDatabase.this, R.layout.popup_photo_full, view, null, ImageHandler.getImage(pelicula.getImage()));
+        Bitmap stub = SetTheLanguages.getImageStub(InfoMovieDatabase.this);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Code to show image in full screen:
+                new PhotoFullPopupWindow(InfoMovieDatabase.this, R.layout.popup_photo_full, view, null, pelicula.getImagePath() == null ? null : ImageHandler.getImage(pelicula.getImage()));
 
-                }
-            });
-        }
+            }
+        });
         if (pelicula.getDirectores().size() > 0) director.setText("	" + pelicula.getDirectores().get(0));
 
         setViewedState();

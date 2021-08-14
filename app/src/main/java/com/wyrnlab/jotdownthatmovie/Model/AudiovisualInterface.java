@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class AudiovisualInterface implements Serializable {
     protected int Id;
-    protected double Rating;
+    protected Double Rating;
     protected String Titulo;
     protected String TituloOriginal;
     protected String Image_path;
@@ -20,7 +20,56 @@ public abstract class AudiovisualInterface implements Serializable {
     protected String source;
     protected String originalLanguage;
     protected List<AudiovisualInterface> similars;
+    protected List<AudiovisualInterface> crew = new ArrayList<AudiovisualInterface>();
+    protected List<AudiovisualInterface> cast = new ArrayList<AudiovisualInterface>();
     protected Boolean viewed;
+    protected String knownFor;
+    protected String character;
+    protected Double popularity;
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(String character) {
+        this.character = character;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    protected String job;
+
+    public String getKnownFor() {
+        return knownFor;
+    }
+
+    public void setKnownFor(String knownFor) {
+        this.knownFor = knownFor;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    protected String birthday;
 
     public List<AudiovisualInterface> getSimilars() {
         return similars;
@@ -28,6 +77,30 @@ public abstract class AudiovisualInterface implements Serializable {
 
     public void setSimilars(List<AudiovisualInterface> similars) {
         this.similars = similars;
+    }
+
+    public List<AudiovisualInterface> getCrew() {
+        return crew;
+    }
+
+    public void setCrew(List<AudiovisualInterface> crew) {
+        this.crew = crew;
+    }
+
+    public void addCrew(List<AudiovisualInterface> crew) {
+        this.crew.addAll(crew);
+    }
+
+    public List<AudiovisualInterface> getCast() {
+        return cast;
+    }
+
+    public void setCast(List<AudiovisualInterface> cast) {
+        this.cast = cast;
+    }
+
+    public void addCast(List<AudiovisualInterface> cast) {
+        this.cast.addAll(cast);
     }
 
     public String getSource() {

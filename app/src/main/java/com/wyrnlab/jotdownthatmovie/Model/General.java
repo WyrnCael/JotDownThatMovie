@@ -1,18 +1,22 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelSearchMultiSearch;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
-    public final static String APIKEY = "";
-    public final static String YAPIKEY = "";
+    public final static String APIKEY = "YOUR_TMDB_APIKEY";
+    public final static String YAPIKEY = "YOUR_YOUTUBE_APIKEY";
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
+    public final static String PERSON_TYPE = "Person";
     public final static String VIEWED = "Viewed";
     public final static String DB_SOURCE = "DB";
     public final static String NET_SOURCE = "NET";
@@ -33,6 +37,8 @@ public class General {
     public static final String LANGUAGE_SETTINGS = "LanguageSettings";
     public static final String APP_LANGUAGE_SETTINGS = "AppLanguage";
     public static final String SEARCH_LANGUAGE_SETTINGS = "SearchLanguage";
+    public static Map<String, Object> jobTranslations = null;
+    public static Map<String, Object> departamentsTranslations = null;
     public static List<String> appLanguagesArray = Arrays.asList(
             "es",
             "en"
@@ -74,12 +80,12 @@ public class General {
 
     public static void setSearchResults(List<AudiovisualInterface> results){
         searchResults = results;
-        Collections.sort(searchResults, new Comparator<AudiovisualInterface>(){
+        /*Collections.sort(searchResults.results, new Comparator<AudiovisualInterface>(){
             public int compare(AudiovisualInterface mov1, AudiovisualInterface mov2) {
                 // ## Ascending order
                 return mov2.getAnyo().compareToIgnoreCase(mov1.getAnyo());
             }
-        });
+        });*/
     }
 
     public static List<AudiovisualInterface> getsSarchResults(){

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.R;
 
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     protected static RecyclerViewClickListener itemListener;
 	Context context;
 	AdapterCallback adapterCallback;
-	public List<RowItem> items;
-    List<RowItem> itemsPendingRemoval;
+	public List<RowItemInterface> items;
+    List<RowItemInterface> itemsPendingRemoval;
 	int resourceId;
 	MovieViewHolder holderAdapter;
     boolean undoOn = true;
@@ -33,13 +34,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     public Snackbar snackbar;
 
     public RecyclerViewAdapter(Context context, AdapterCallback adapterCallback, int resourceId,
-                               List<RowItem> items, RecyclerViewClickListener itemListener) {
+                               List<RowItemInterface> items, RecyclerViewClickListener itemListener) {
         this.context = context;
         this.adapterCallback = adapterCallback;
         this.resourceId = resourceId;
         this.items = items;
         this.itemListener = itemListener;
-        this.itemsPendingRemoval = new ArrayList<RowItem>();
+        this.itemsPendingRemoval = new ArrayList<RowItemInterface>();
 
     }
 
@@ -54,7 +55,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        final RowItem row = this.items.get(position);
+        final RowItemInterface row = this.items.get(position);
         holder.setMovieRow(row, position, itemListener);
     }
 
@@ -63,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         return this.items.size();
     }
 
-    public void update(List<RowItem> newRows){
+    public void update(List<RowItemInterface> newRows){
         items.clear();
         items.addAll(newRows);
         this.notifyDataSetChanged();
@@ -74,7 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
             if (r != null) handler.removeCallbacks(r);
         }
 
-        for(RowItem row : itemsPendingRemoval){
+        for(RowItemInterface row : itemsPendingRemoval){
             adapterCallback.removeCallback((AudiovisualInterface) row.getObject());
         }
 
@@ -99,7 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     public void pendingRemoval(int position) {
-        final RowItem row = items.get(position);
+        final RowItemInterface row = items.get(position);
         final Integer itemId = items.get(position).getId();
         final Integer itemPosition = items.indexOf(row);
         if (!itemsPendingRemoval.contains(row)) {
@@ -139,7 +140,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     public void remove(int position) {
-        final RowItem item = items.get(position);
+        final RowItemInterface item = items.get(position);
         if (itemsPendingRemoval.contains(item)) {
             itemsPendingRemoval.remove(item);
         }
@@ -152,7 +153,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     public boolean isPendingRemoval(int position) {
-        RowItem item = items.get(position);
+        RowItemInterface item = items.get(position);
         return itemsPendingRemoval.contains(item);
     }
 

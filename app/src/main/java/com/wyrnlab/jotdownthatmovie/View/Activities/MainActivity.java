@@ -38,8 +38,10 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.materialtaptagetprompt.MaterialTapTargetPrompt;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelMultiSearch;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	Boolean isFABOpen = false;
 	private Map<String, List<AudiovisualInterface>> moviesByType;
 	public RecyclerView listView;
-	List<RowItem> rowItems;
+	List<RowItemInterface> rowItems;
 	private static String FILTER_ALL = "All";
 	private static String FILTER_MOVIE = "Movie";
 	private static String FILTER_TVSHOW = "Show";
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		moviesByType = DAO.getInstance().readAll(MainActivity.this);
 
 		// Vaciar cache imagenes
-		ImageLoader imageLoader = new ImageLoader(this);
+		ImageLoader imageLoader = new ImageLoader(this, false);
 		imageLoader.clearCache();
 
 		// Solicitar permisos
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 		//Localizar los controles
 		listView = (RecyclerView) findViewById( R.id.mainListView );
-		rowItems = new ArrayList<RowItem>();
+		rowItems = new ArrayList<RowItemInterface>();
 		adapter = new RecyclerViewAdapter(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
@@ -139,15 +141,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 				switch (tab.getPosition()){
 					case 0:
 						refreshList(FILTER_ALL);
+						listView.scrollToPosition(0);
 						break;
 					case 1:
 						refreshList(FILTER_MOVIE);
+                        listView.scrollToPosition(0);
 						break;
 					case 2:
 						refreshList(FILTER_TVSHOW);
+                        listView.scrollToPosition(0);
 						break;
 					case 3:
 						refreshList(FILTER_VIEWED);
+                        listView.scrollToPosition(0);
 						break;
 				}
 			}
@@ -315,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		final RowItem row = rowItems.get(longClickPosition);
+		final RowItemInterface row = rowItems.get(longClickPosition);
 		switch (item.getItemId()) {
 			case R.id.CtxLstOpc2:
 				adapter.pendingRemoval(longClickPosition);
@@ -333,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	}
 
 	public void setAsViewedOrNotViewed(Integer longClickPosition){
-		RowItem item = adapter.items.get(longClickPosition);
+		RowItemInterface item = adapter.items.get(longClickPosition);
 		AudiovisualInterface pelicula = (AudiovisualInterface) item.getObject();
 		pelicula.setId(item.getId());
 		if(pelicula.getViewed()){

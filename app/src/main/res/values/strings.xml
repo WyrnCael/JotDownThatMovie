@@ -33,7 +33,9 @@
     <string name="Sinopsis">Synopsis:</string>
     <string name="IconCredits">App Icon made by <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="IconCameraCredits">Camera icon made by <string name="Chris Veigt"><a href="http://chrisveigt.com/">Chris Veigt</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
-    <string name="IconTVCredits">Television icon made by <string name="Freepic"><a href="http://chrisveigt.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconTVCredits">Television icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconPosterCredits">Poster icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconUserCredits">Person icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="Movies">Movies</string>
     <string name="TVShows">TV Shows</string>
     <string name="SearchType">Search Type:</string>
@@ -48,7 +50,7 @@
     <string name="StartPrimaryText">Start here!</string>
     <string name="StartSecondaryText">Welcome! Tap here to start</string>
     <string name="SearchPrimaryText">Find something</string>
-    <string name="SearchSecondaryText">Find a movie or a TV Show</string>
+    <string name="SearchSecondaryText">Find a movie, tv show, person...</string>
     <string name="button_undo">Undo</string>
     <string name="SimilarMovies">Similar movies:</string>
     <string name="Similars">Similars</string>
@@ -73,6 +75,7 @@
     <string name="CloseParentesis">)</string>
     <string name="MovieInfoProvidedBy">Movie info provided by:</string>
     <string name="ShowInfoProvidedBy">Show info provided by:</string>
+    <string name="InfoProvidedBy">Info provided by:</string>
     <string name="Streaming">Streaming:</string>
     <string name="Language">Language</string>
     <string name="Save">Save</string>
@@ -82,6 +85,10 @@
     <string name="SearchLanguageWarning">* If you change the data language, the saved movies will not be updated. You must refresh each movie.</string>
     <string name="SpanishES">Spanish (Spain)</string>
     <string name="SpanishMX">Spanish (Mexico)</string>
+    <string name="SearchFor">Movie, tv show, person...</string>
+    <string name="KnownFor">Known for:</string>
+    <string name="Cast">Cast</string>
+    <string name="Crew">Crew</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
@@ -97,10 +104,13 @@
 
     <string name="notAviableTrailer">Not available trailer, try with another language</string>
     <string name="noSimilarMovies">Cannot recognize similars!</string>
-    <string name="Noresults">No results found of type</string>
+    <string name="Noresults">No results found</string>
     <string name="For">for</string>
     <string name="Trywith">Do you want to repeat the search for</string>
+    <string name="SearchLabel">Text to search:</string>
 
 	<string name="image">Thumbnail</string>
+
+    <string name="name">Name</string>
 	
 </resources>
