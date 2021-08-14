@@ -204,8 +204,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="0dp"
-                android:paddingBottom="20dp">
+                android:paddingRight="0dp">
 
                 <ImageView
                     android:id="@+id/television"
@@ -223,6 +222,63 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:text="@string/IconTVCredits"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp">
+
+                <ImageView
+                    android:id="@+id/poster"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/user" />
+
+                <TextView
+                    android:id="@+id/textViewPostert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/IconUserCredits"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/user"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/poster" />
+
+                <TextView
+                    android:id="@+id/textUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/IconUserCredits"
                     android:textColor="@color/negro"
                     app:fontFamily="@font/raleway" />
             </LinearLayout>

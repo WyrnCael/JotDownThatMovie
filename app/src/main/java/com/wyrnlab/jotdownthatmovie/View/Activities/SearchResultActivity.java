@@ -1,6 +1,7 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.wyrnlab.jotdownthatmovie.JavaClasses.SaveAudiovisual;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
+import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.View.Activities.ShowInfo.mostrarPelicula.InfoMovieSearch;
@@ -35,8 +37,7 @@ public class SearchResultActivity extends AppCompatActivity implements
         AsyncResponse, AdapterCallback, RecyclerViewClickListener {
 
     public RecyclerView listView;
-    String type;
-    List<RowItem> rowItems;
+    List<RowItemInterface> rowItems;
     List<AudiovisualInterface> results;
     List<AudiovisualInterface> rowsToSave;
     RecyclerViewAdapter adapter;
@@ -55,12 +56,11 @@ public class SearchResultActivity extends AppCompatActivity implements
         // Back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        type = getIntent().getStringExtra("Type");
         searchText = getIntent().getStringExtra("TextoABuscar");
 
         rowsToSave = new ArrayList<AudiovisualInterface>();
-        results = (List<AudiovisualInterface>) General.getsSarchResults();
-    	rowItems = new ArrayList<RowItem>();
+        results = General.getsSarchResults();
+    	rowItems = new ArrayList<RowItemInterface>();
         for (AudiovisualInterface movie : results) {
         	rowItems.add(new RowItem(SearchResultActivity.this, movie));
         }
@@ -76,46 +76,21 @@ public class SearchResultActivity extends AppCompatActivity implements
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                if(type.equalsIgnoreCase("Movie")) {
-                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.Search(SearchResultActivity.this, page);
-                    searchor.delegate = SearchResultActivity.this;
-                    searchor.execute(searchText);
-
-                } else {
-                    com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.SearchShow(SearchResultActivity.this, page);
-                    searchor.delegate = SearchResultActivity.this;
-                    searchor.execute(searchText);
-                }
+                com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.MultiSearch searchor = new com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.MultiSearch(SearchResultActivity.this, page);
+                searchor.delegate = SearchResultActivity.this;
+                searchor.execute(searchText);
             }
         };
         // Adds the scroll listener to RecyclerView
         listView.addOnScrollListener(scrollListener);
 
         //Swipe
-        ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT, SearchResultActivity.this);
+        ItemTouchAddHelper simpleItemTouchCallback = new ItemTouchAddHelper(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT, SearchResultActivity.this, adapter);
         androidx.recyclerview.widget.ItemTouchHelper mItemTouchHelper = new androidx.recyclerview.widget.ItemTouchHelper(simpleItemTouchCallback);
         mItemTouchHelper.attachToRecyclerView(listView);
         listView.addItemDecoration(new ItemDecorationAddHelper(SearchResultActivity.this));
 
     }
- 
-    /*@Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-            long id) {
-
-        Intent intent;
-        if(type.equalsIgnoreCase("Movie")) {
-            intent = new Intent(SearchResultActivity.this, InfoMovieSearch.class);
-
-        } else {
-            intent = new Intent(SearchResultActivity.this, InfoTVShowSearch.class);
-        }
-        intent.putExtra("Pelicula", this.results.get(position));
-        intent.putExtra("Type", type);
-        startActivityForResult(intent, General.REQUEST_CODE_PELIBUSCADA);
-        
-        // finish();
-    }*/
     
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -137,10 +112,11 @@ public class SearchResultActivity extends AppCompatActivity implements
     public void recylerViewCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo, int position) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        MenuInflater inflater = getMenuInflater();
-
-        rowItems.get(position).toString();
-        inflater.inflate(R.menu.menu_pelicula_busqueda, menu);
+        if(!rowItems.get(position).getType().equalsIgnoreCase(General.PERSON_TYPE)) {
+            MenuInflater inflater = getMenuInflater();
+            rowItems.get(position).toString();
+            inflater.inflate(R.menu.menu_pelicula_busqueda, menu);
+        }
     }
 
     @Override
@@ -193,13 +169,14 @@ public class SearchResultActivity extends AppCompatActivity implements
     @Override
     public void recyclerViewListClicked(View v, int position) {
         AudiovisualInterface pelicula = (AudiovisualInterface) ((RowItem)rowItems.get(position)).getObject();
-
-        Intent intent;
+        Context context = v.getContext();
+        Intent intent = null;
         if(pelicula.getTipo().equalsIgnoreCase(General.MOVIE_TYPE)) {
             intent = new Intent(SearchResultActivity.this, InfoMovieSearch.class);
-
-        } else {
+        } else if (pelicula.getTipo().equalsIgnoreCase(General.TVSHOW_TYPE)) {
             intent = new Intent(SearchResultActivity.this, InfoTVShowSearch.class);
+        } else if (pelicula.getTipo().equalsIgnoreCase(General.PERSON_TYPE)) {
+            intent = new Intent(SearchResultActivity.this, InfoPersonActivity.class);
         }
         intent.putExtra("Pelicula", pelicula);
         intent.putExtra("Type", pelicula.getTipo());
@@ -219,7 +196,7 @@ public class SearchResultActivity extends AppCompatActivity implements
 
     @Override
     public void removeCallback(AudiovisualInterface item) {
-        SaveAudiovisual.saveItem(SearchResultActivity.this, SearchResultActivity.this, item, type);
+        SaveAudiovisual.saveItem(SearchResultActivity.this, SearchResultActivity.this, item, item.getTipo());
     }
 
     @Override

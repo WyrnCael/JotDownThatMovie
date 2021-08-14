@@ -249,7 +249,7 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse,
         descripcion.setText(pelicula.getDescripcion());
 
 		image = (ImageView)findViewById(R.id.poster);
-		final ImageLoader imageLoader = new ImageLoader(this);
+		final ImageLoader imageLoader = new ImageLoader(this, false);
 		imageLoader.DisplayImage((General.base_url + "w500" + pelicula.getImagePath()), image);
 		image.setOnClickListener(new View.OnClickListener() {
 			@Override

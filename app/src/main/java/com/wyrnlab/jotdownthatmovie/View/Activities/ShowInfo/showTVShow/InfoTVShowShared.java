@@ -107,16 +107,13 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         String link = url.toString();
 
         int id = -1;
-        Log.d("link", link);
         String linkWoTV = link.substring(link.indexOf("tv/") + 3, link.length());
-        Log.d("linkWoTV", linkWoTV);
         if(linkWoTV.indexOf("-") == -1 && linkWoTV.indexOf("/") == -1)
             id = Integer.valueOf(linkWoTV);
         else if (linkWoTV.indexOf("-") != -1)
             id = Integer.valueOf(linkWoTV.substring(0, linkWoTV.indexOf("-")));
         else if (linkWoTV.indexOf("/") != -1)
             id = Integer.valueOf(linkWoTV.substring(0, linkWoTV.indexOf("/")));
-        Log.d("link", String.valueOf(id));
 
         SearchInfoShow searchorShow = new SearchInfoShow(this, id, getString(R.string.searching));
         searchorShow.delegate = this;
@@ -300,7 +297,7 @@ public class InfoTVShowShared extends AppCompatActivity implements AsyncResponse
         season.setText("	" + pelicula.getSeasons());
 
         image = (ImageView)findViewById(R.id.poster);
-        imageLoader = new ImageLoader(this);
+        imageLoader = new ImageLoader(this, false);
         if(General.base_url == null){
             SearchBaseUrl searchor = new SearchBaseUrl(InfoTVShowShared.this){
                 @Override

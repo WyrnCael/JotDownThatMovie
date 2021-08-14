@@ -266,17 +266,15 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
         seasons.setText("	" + pelicula.getSeasons());
         ImageView image = (ImageView)findViewById(R.id.poster);
         image.setImageBitmap(ImageHandler.getImage(pelicula.getImage()));
-        Bitmap stub = BitmapFactory.decodeResource(getResources(), R.drawable.stub);
-        if(ImageHandler.getImage(pelicula.getImage()) != stub){
-            image.setOnClickListener(new View.OnClickListener() {
+        Bitmap stub = SetTheLanguages.getImageStub(InfoTVShowDatabase.this);
+        image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Code to show image in full screen:
-                    new PhotoFullPopupWindow(InfoTVShowDatabase.this, R.layout.popup_photo_full, view, null, ImageHandler.getImage(pelicula.getImage()));
+                // Code to show image in full screen:
+                new PhotoFullPopupWindow(InfoTVShowDatabase.this, R.layout.popup_photo_full, view, null, pelicula.getImagePath() == null ? null : ImageHandler.getImage(pelicula.getImage()));
 
-                }
-            });
-        }
+            }
+        });
         if(pelicula.getOriginalLanguage() == null){
             originalLanguage.setText(getString(R.string.NeedsRefresh));
             originalLanguage.setTextColor(Color.RED);
