@@ -259,8 +259,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="0dp"
-                android:paddingBottom="20dp">
+                android:paddingRight="0dp">
 
                 <ImageView
                     android:id="@+id/user"
@@ -279,6 +278,142 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:text="@string/IconUserCredits"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp">
+
+                <ImageView
+                    android:id="@+id/calendar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/textCalendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/IconCalendarCredits"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp">
+
+                <ImageView
+                    android:id="@+id/star"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/star" />
+
+                <TextView
+                    android:id="@+id/textStar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/IconStarCredits"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp">
+
+                <ImageView
+                    android:id="@+id/known"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/known" />
+
+                <TextView
+                    android:id="@+id/textKnown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/IconKnownCredits"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp">
+
+                <ImageView
+                    android:id="@+id/cast"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/cast" />
+
+                <TextView
+                    android:id="@+id/textCase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/IconCastCredits"
+                    android:textColor="@color/negro"
+                    app:fontFamily="@font/raleway" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/crew"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top|center"
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/crew" />
+
+                <TextView
+                    android:id="@+id/textCrew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/IconCrewCredits"
                     android:textColor="@color/negro"
                     app:fontFamily="@font/raleway" />
             </LinearLayout>

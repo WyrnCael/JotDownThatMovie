@@ -207,5 +207,13 @@ public class SetTheLanguages {
         }
     }
 
+    public static String translateCharacterDesc(Context context, String characterDesc){
+        try {
+            characterDesc = characterDesc.replace("(voice)", "(" + context.getString(R.string.Voice) + ")");
+            return characterDesc.replace("(Voice)", "(" + context.getString(R.string.Voice) + ")");
+        } catch (NullPointerException e){
+            return characterDesc;
+        }
+    }
 
 }

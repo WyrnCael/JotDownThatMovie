@@ -34,7 +34,7 @@
             android:autoSizeMinTextSize="12dp"
             android:autoSizeStepGranularity="2dp"
             android:autoSizeTextType="uniform"
-            android:paddingTop="5dp"
+            android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/verde"
             android:textSize="16dp"
@@ -53,7 +53,7 @@
                 android:layout_gravity="top">
 
                 <ImageView
-                    android:id="@+id/imageYear"
+                    android:id="@+id/imageView"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_centerVertical="true"
@@ -84,16 +84,16 @@
                 android:layout_gravity="top">
 
                 <ImageView
-                    android:id="@+id/imageStar"
+                    android:id="@+id/imageCrewCast"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_centerVertical="true"
                     android:layout_weight="1"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/star" />
+                    app:srcCompat="@drawable/cast" />
 
                 <TextView
-                    android:id="@+id/rating"
+                    android:id="@+id/desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"

@@ -1,7 +1,6 @@
 package com.wyrnlab.jotdownthatmovie.View.Recyclerviews;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,21 +8,21 @@ import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.Model.General;
-import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
-public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener,View.OnCreateContextMenuListener {
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MoviePersonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener,View.OnCreateContextMenuListener {
 
     ImageView imageView;
     TextView txtTitle;
+    TextView txtDesc;
     TextView txtYear;
-    TextView txtRating;
     ImageView icon;
-    ImageView calendar;
-    ImageView star;
+    ImageView iconCrewCast;
     Context context;
     ImageLoader imageLoader;
     RowItemInterface item;
@@ -31,17 +30,16 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
     int position;
     View itemView;
 
-    public MovieViewHolder(Context context, View itemView) {
+    public MoviePersonViewHolder(Context context, View itemView) {
         super(itemView);
 
         this.context = context;
+        this.txtDesc = (TextView) itemView.findViewById(R.id.desc);
         this.txtYear = (TextView) itemView.findViewById(R.id.year);
-        this.txtRating = (TextView) itemView.findViewById(R.id.rating);
         this.txtTitle = (TextView) itemView.findViewById(R.id.title);
         this.imageView = (ImageView) itemView.findViewById(R.id.icon);
         this.icon = (ImageView) itemView.findViewById(R.id.iconType);
-        this.calendar = (ImageView) itemView.findViewById(R.id.imageYear);
-        this.star = (ImageView) itemView.findViewById(R.id.imageStar);
+        this.iconCrewCast = (ImageView) itemView.findViewById(R.id.imageCrewCast);
         this.imageLoader=new ImageLoader(context, false);
         this.itemView = itemView;
         itemView.setOnCreateContextMenuListener(this);
@@ -50,8 +48,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public void setMovieRow(RowItemInterface rowItem, int position, RecyclerViewClickListener itemListener) {
         this.item = rowItem;
         this.imageView.setTag(rowItem.getImageId());
+        this.txtDesc.setText(rowItem.getDesc());
         this.txtYear.setText(rowItem.getYear());
-        this.txtRating.setText(rowItem.getRating());
         this.txtTitle.setText(rowItem.getTitle());
         this.itemListener = itemListener;
         this.position = position;
@@ -62,9 +60,10 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
             this.icon.setImageResource(R.drawable.tv);
         } else if (rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.PERSON_TYPE)) {
             this.icon.setImageResource(R.drawable.person);
-            this.calendar.setImageResource(R.drawable.known);
-            this.txtYear.setText(rowItem.getDesc());
-            this.star.setVisibility(View.GONE);
+        }
+
+        if(rowItem.getRelatedToPersonType().equalsIgnoreCase(General.CREW_TYPE)){
+            this.iconCrewCast.setImageResource(R.drawable.crew);
         }
 
         if(rowItem.getImageId() instanceof String)

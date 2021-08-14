@@ -191,7 +191,7 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
     private void readJSONMovies(String json) throws IOException{
         ModelPerson results = new Gson().fromJson(json, ModelPerson.class);
         Map<Integer, AudiovisualInterface> moviesById = new HashMap<Integer, AudiovisualInterface>();
-        List<AudiovisualInterface> moviesCast = new ArrayList<AudiovisualInterface>();
+        Map<Integer, AudiovisualInterface> moviesByIdCast = new HashMap<Integer, AudiovisualInterface>();
 
         if(results.crew.length > 0) {
             for (ModelCrew model : results.crew) {
@@ -220,11 +220,15 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
                 if(movie.getImagePath() == null) {
                     getOtrosPosters(movie);
                 }
+                if(moviesByIdCast.containsKey(movie.getId())) {
+                    movie.setCharacter(moviesByIdCast.get(movie.getId()).getCharacter() + ", " + SetTheLanguages.translateCharacterDesc(context, movie.getCharacter()));
+                } else{
+                    movie.setJob(SetTheLanguages.translateCharacterDesc(context, movie.getCharacter()));
+                }
                 movie.setTipo(General.MOVIE_TYPE);
-
-                moviesCast.add(movie);
+                moviesByIdCast.put(movie.getId(), movie);
             }
-            this.person.addCast(new ArrayList<AudiovisualInterface>(moviesCast));
+            this.person.addCast(new ArrayList<AudiovisualInterface>(moviesByIdCast.values()));
         }
 
     }
@@ -238,7 +242,7 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
     private void readJSONShows(String json) throws IOException{
         ModelPersonShow results = new Gson().fromJson(json, ModelPersonShow.class);
         Map<Integer, AudiovisualInterface> moviesById = new HashMap<Integer, AudiovisualInterface>();
-        List<AudiovisualInterface> moviesCast = new ArrayList<AudiovisualInterface>();
+        Map<Integer, AudiovisualInterface> moviesByIdCast = new HashMap<Integer, AudiovisualInterface>();
 
         if(results.crew.length > 0) {
             for (ModelCrewShow model : results.crew) {
@@ -253,7 +257,6 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
                 } else{
                     movie.setJob(SetTheLanguages.getJobTranslation(context, movie.getJob()));
                 }
-
                 movie.setTipo(General.TVSHOW_TYPE);
 
                 moviesById.put(movie.getId(), movie);
@@ -270,12 +273,15 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
                 if(movie.getImagePath() == null) {
                     getOtrosPosters(movie);
                 }
-
-                moviesCast.add(movie);
+                if(moviesByIdCast.containsKey(movie.getId())) {
+                    movie.setCharacter(moviesByIdCast.get(movie.getId()).getCharacter() + ", " + SetTheLanguages.translateCharacterDesc(context, movie.getCharacter()));
+                } else{
+                    movie.setJob(SetTheLanguages.translateCharacterDesc(context, movie.getCharacter()));
+                }
                 movie.setTipo(General.TVSHOW_TYPE);
+                moviesByIdCast.put(movie.getId(), movie);
             }
-            this.person.addCast(new ArrayList<AudiovisualInterface>(moviesCast));
-
+            this.person.addCast(new ArrayList<AudiovisualInterface>(moviesByIdCast.values()));
 
         }
 

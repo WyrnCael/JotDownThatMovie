@@ -35,8 +35,12 @@
     <string name="IconCredits">Icono creado por <string name="Roundicons"><a href="https://roundicons.com/">Roundicons</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="IconCameraCredits">Icono de camara creado por <string name="Chris Veigt"><a href="http://chrisveigt.com/">Chris Veigt</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="IconTVCredits">Icono de television creado por <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
-    <string name="IconPosterCredits">Icono de poster creado por <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="IconUserCredits">Icono de persona creado por <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconCalendarCredits">Icono de calendario creado por <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconStarCredits">Icono de estrella creado por <string name="Pixel perfect"><a href="https://icon54.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconKnownCredits">Icono de ¿quién es? creado por <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconCastCredits">Icono de elenco creado por <string name="Eucalyp"><a href="https://creativemarket.com/eucalyp">Eucalyp</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconCrewCredits">Icono de equipo creado por <string name="monkik"><a href="https://www.flaticon.com/authors/monkik">monkik</a></string> de <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="Movies">Películas</string>
     <string name="TVShows">Series</string>
     <string name="SearchType">Tipo de búsqueda:</string>
@@ -90,6 +94,7 @@
     <string name="KnownFor">Conocido por:</string>
     <string name="Cast">Elenco</string>
     <string name="Crew">Equipo</string>
+    <string name="Voice">Voz</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>

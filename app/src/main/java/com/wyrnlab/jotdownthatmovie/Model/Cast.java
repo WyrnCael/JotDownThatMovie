@@ -19,6 +19,7 @@ public class Cast extends AudiovisualInterface implements Serializable {
         super.originalLanguage = cast.original_language;
         super.popularity = cast.popularity;
         super.Rating = cast.vote_average;
+        super.relatedToPerson = General.CAST_TYPE;
 
         /*for(ModelGenres genres : model.genres){
             super.addGeneros(genres.name);

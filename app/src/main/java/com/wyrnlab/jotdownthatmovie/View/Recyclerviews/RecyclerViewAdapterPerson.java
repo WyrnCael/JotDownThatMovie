@@ -17,7 +17,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerViewAdapterPerson extends RecyclerView.Adapter<MovieViewHolder> {
+public class RecyclerViewAdapterPerson extends RecyclerView.Adapter<MoviePersonViewHolder> {
 
     protected static final int PENDING_REMOVAL_TIMEOUT = 3000;
     protected static RecyclerViewClickListener itemListener;
@@ -26,7 +26,7 @@ public class RecyclerViewAdapterPerson extends RecyclerView.Adapter<MovieViewHol
     public List<RowItemInterface> items;
     List<RowItemInterface> itemsPendingRemoval;
     int resourceId;
-    MovieViewHolder holderAdapter;
+    MoviePersonViewHolder holderAdapter;
     boolean undoOn = true;
     protected Handler handler = new Handler();
     HashMap<Integer, Runnable> pendingRunnables = new HashMap<>();
@@ -45,16 +45,16 @@ public class RecyclerViewAdapterPerson extends RecyclerView.Adapter<MovieViewHol
     }
 
     @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MoviePersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.parentView = parent;
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(this.resourceId, parent, false);
-        this.holderAdapter = new MovieViewHolder(this.context, view);
+        this.holderAdapter = new MoviePersonViewHolder(this.context, view);
         return this.holderAdapter;
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
+    public void onBindViewHolder(MoviePersonViewHolder holder, int position) {
         final RowItemInterface row = this.items.get(position);
         holder.setMovieRow(row, position, itemListener);
     }
@@ -158,7 +158,7 @@ public class RecyclerViewAdapterPerson extends RecyclerView.Adapter<MovieViewHol
     }
 
     @Override
-    public void onViewRecycled(MovieViewHolder holder) {
+    public void onViewRecycled(MoviePersonViewHolder holder) {
         holder.itemView.setOnLongClickListener(null);
         super.onViewRecycled(holder);
     }

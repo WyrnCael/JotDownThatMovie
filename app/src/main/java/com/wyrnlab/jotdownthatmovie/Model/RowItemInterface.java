@@ -11,6 +11,9 @@ public abstract class RowItemInterface {
     protected Object object;
     protected Context context;
     protected String source;
+    protected String year;
+    protected String rating;
+    protected String relatedToPersonType;
 
     public int getId(){
         return this.id;
@@ -49,4 +52,28 @@ public abstract class RowItemInterface {
     public void setContext(Context context) { this.context = context; }
     public String getSource() { return source; }
     public void setSource(String source) { this.source = source; }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getRelatedToPersonType() {
+        return relatedToPersonType;
+    }
+
+    public void setRelatedToPersonType(String relatedToPersonType) {
+        this.relatedToPersonType = relatedToPersonType;
+    }
 }

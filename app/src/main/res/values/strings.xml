@@ -36,6 +36,11 @@
     <string name="IconTVCredits">Television icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="IconPosterCredits">Poster icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="IconUserCredits">Person icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconCalendarCredits">Calendar icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconStarCredits">Star  icon made by <string name="Pixel perfect"><a href="https://icon54.com/">Pixel perfect</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconKnownCredits">Who is? icon made by <string name="Freepic"><a href="https://www.freepik.com/">Freepic</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconCastCredits">Case icon made by <string name="Eucalyp"><a href="https://creativemarket.com/eucalyp">Eucalyp</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
+    <string name="IconCrewCredits">Crew icon made by <string name="monkik"><a href="https://www.flaticon.com/authors/monkik">monkik</a></string> from <string name="Flaticon"><a href="https://www.flaticon.com">www.flaticon.com</a></string></string>
     <string name="Movies">Movies</string>
     <string name="TVShows">TV Shows</string>
     <string name="SearchType">Search Type:</string>
@@ -89,6 +94,7 @@
     <string name="KnownFor">Known for:</string>
     <string name="Cast">Cast</string>
     <string name="Crew">Crew</string>
+    <string name="Voice">Voice</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>
