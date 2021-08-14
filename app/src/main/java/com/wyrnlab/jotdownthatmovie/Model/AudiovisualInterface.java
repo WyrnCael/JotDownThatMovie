@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class AudiovisualInterface implements Serializable {
     protected int Id;
-    protected double Rating;
+    protected Double Rating;
     protected String Titulo;
     protected String TituloOriginal;
     protected String Image_path;
@@ -25,6 +25,15 @@ public abstract class AudiovisualInterface implements Serializable {
     protected Boolean viewed;
     protected String knownFor;
     protected String character;
+    protected Double popularity;
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
 
     public String getCharacter() {
         return character;
@@ -78,12 +87,20 @@ public abstract class AudiovisualInterface implements Serializable {
         this.crew = crew;
     }
 
+    public void addCrew(List<AudiovisualInterface> crew) {
+        this.crew.addAll(crew);
+    }
+
     public List<AudiovisualInterface> getCast() {
         return cast;
     }
 
     public void setCast(List<AudiovisualInterface> cast) {
         this.cast = cast;
+    }
+
+    public void addCast(List<AudiovisualInterface> cast) {
+        this.cast.addAll(cast);
     }
 
     public String getSource() {

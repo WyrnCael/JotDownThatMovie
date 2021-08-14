@@ -1,17 +1,17 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCrew;
-import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelMovie;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelCrewShow;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Crew extends AudiovisualInterface implements Serializable{
+public class CrewShow extends AudiovisualInterface implements Serializable{
 
-    public void setDataFromJson(ModelCrew model){
-        super.TituloOriginal = model.original_title;
-        super.Titulo = model.title;
+    public void setDataFromJson(ModelCrewShow model){
+        super.TituloOriginal = model.original_name;
+        super.Titulo = model.name;
         super.Id = model.id;
         super.Anyo = MyUtils.getYearFromDate(model.release_date);
         super.Image_path = model.poster_path;

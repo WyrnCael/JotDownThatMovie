@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/icon"
+        android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textColor="@color/verde"
         android:textSize="16dp"
@@ -37,6 +38,7 @@
         android:layout_below="@+id/title"
         android:layout_toRightOf="@+id/icon"
         android:paddingLeft="10dp"
+        android:paddingRight="50dp"
         android:textColor="@color/negro"
         android:textSize="14dp"
         app:fontFamily="@font/raleway" />

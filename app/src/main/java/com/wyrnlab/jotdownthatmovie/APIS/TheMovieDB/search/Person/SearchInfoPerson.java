@@ -1,21 +1,22 @@
 package com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Person;
 
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
-import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonArray;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.json.JsonObject;
+import com.wyrnlab.jotdownthatmovie.Model.AudioVisualInterfaceVoreAverageComparator;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.Cast;
+import com.wyrnlab.jotdownthatmovie.Model.CastShow;
 import com.wyrnlab.jotdownthatmovie.Model.Crew;
+import com.wyrnlab.jotdownthatmovie.Model.AudioVisualInterfacePopularityComparator;
+import com.wyrnlab.jotdownthatmovie.Model.CrewShow;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCast;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCredits;
@@ -23,28 +24,24 @@ import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelCrew;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelMovie;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelPerson;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.Movies.ModelSearchMovie;
-import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TranslationModel;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelCastShow;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelCrewShow;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.TVShows.ModelPersonShow;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.Model.Person;
-import com.wyrnlab.jotdownthatmovie.R;
 import com.wyrnlab.jotdownthatmovie.Utils.ICallback;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +87,8 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
         try {
             getPersonInfo();
             getMovies();
+            getShows();
+            sortCrewAndCast();
             /*getCreditsPelicula();*/
             getImage();
             /*getSimilars();*/
@@ -237,10 +236,11 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
                 } else{
                     movie.setJob(SetTheLanguages.getJobTranslation(context, movie.getJob()));
                 }
+                movie.setTipo(General.MOVIE_TYPE);
 
                 moviesById.put(movie.getId(), movie);
             }
-            this.person.setCrew(new ArrayList<AudiovisualInterface>(moviesById.values()));
+            this.person.addCrew(new ArrayList<AudiovisualInterface>(moviesById.values()));
         }
 
         if(results.cast.length > 0) {
@@ -250,12 +250,70 @@ public class SearchInfoPerson extends AsyncTask<String, Integer, Person> impleme
                 if(movie.getImagePath() == null) {
                     getOtrosPosters(movie);
                 }
+                movie.setTipo(General.MOVIE_TYPE);
 
                 moviesCast.add(movie);
             }
-            this.person.setCast(new ArrayList<AudiovisualInterface>(moviesCast));
+            this.person.addCast(new ArrayList<AudiovisualInterface>(moviesCast));
         }
 
+    }
+
+    private void getShows() throws IOException{
+        String url = General.URLPRINCIPAL + "3/person/" + this.person.getId() + "/tv_credits?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
+
+        readJSONShows(MyUtils.getHttpRequest(url));
+    }
+
+    private void readJSONShows(String json) throws IOException{
+        ModelPersonShow results = new Gson().fromJson(json, ModelPersonShow.class);
+        Map<Integer, AudiovisualInterface> moviesById = new HashMap<Integer, AudiovisualInterface>();
+        List<AudiovisualInterface> moviesCast = new ArrayList<AudiovisualInterface>();
+
+        if(results.crew.length > 0) {
+            for (ModelCrewShow model : results.crew) {
+                CrewShow movie = new CrewShow();
+                movie.setDataFromJson(model);
+                if(movie.getImagePath() == null) {
+                    getOtrosPosters(movie);
+                }
+
+                if(moviesById.containsKey(movie.getId())) {
+                    movie.setJob(moviesById.get(movie.getId()).getJob() + ", " + SetTheLanguages.getJobTranslation(context, movie.getJob()));
+                } else{
+                    movie.setJob(SetTheLanguages.getJobTranslation(context, movie.getJob()));
+                }
+
+                movie.setTipo(General.TVSHOW_TYPE);
+
+                moviesById.put(movie.getId(), movie);
+            }
+            this.person.addCrew(new ArrayList<AudiovisualInterface>(moviesById.values()));
+
+
+        }
+
+        if(results.cast.length > 0) {
+            for (ModelCastShow model : results.cast) {
+                CastShow movie = new CastShow();
+                movie.setDataFromJson(model);
+                if(movie.getImagePath() == null) {
+                    getOtrosPosters(movie);
+                }
+
+                moviesCast.add(movie);
+                movie.setTipo(General.TVSHOW_TYPE);
+            }
+            this.person.addCast(new ArrayList<AudiovisualInterface>(moviesCast));
+
+
+        }
+
+    }
+
+    private void sortCrewAndCast(){
+        Collections.sort(this.person.getCrew(), new AudioVisualInterfaceVoreAverageComparator());
+        Collections.sort(this.person.getCast(), new AudioVisualInterfaceVoreAverageComparator());
     }
 
     @Override
