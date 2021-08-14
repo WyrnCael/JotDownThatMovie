@@ -72,7 +72,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         paint.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.text_view_height));
         paint.getTextBounds(rowItem.getTitle(), 0, rowItem.getTitle().length(), bounds);
 
-        final int numLines = (int) Math.ceil((float) bounds.width() / (width - context.getResources().getDimensionPixelSize(R.dimen.standard_100)));
+        final int numLines = (int) Math.ceil((float) bounds.width() / (width - context.getResources().getDimensionPixelSize(R.dimen.standard_110)));
 
         Log.d(rowItem.getTitle(), String.valueOf(numLines));
         if(numLines == 1){
@@ -88,10 +88,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) this.txtTitle.getLayoutParams();
             params.height = context.getResources().getDimensionPixelSize(R.dimen.standard_40);
             this.txtTitle.setLayoutParams(params);
-        }
-
-        if(rowItem.getType().equalsIgnoreCase(General.PERSON_TYPE)){
-
         }
 
         if(rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.MOVIE_TYPE)){
