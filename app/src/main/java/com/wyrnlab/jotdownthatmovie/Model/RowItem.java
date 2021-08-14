@@ -25,11 +25,11 @@ public class RowItem extends RowItemInterface {
                             : General.base_url + "w92" +  movie.getImagePath();
         this.title = movie.getTitulo();
         this.type = movie.getTipo();
-        if(!this.type.equalsIgnoreCase(General.PERSON_TYPE)){
-            this.desc = (context.getResources().getString(R.string.anyo) + " " + movie.getAnyo() + " " + context.getResources().getString(R.string.valoracion) + " ");
-            this.desc += movie.getRating() == 0.0 ? context.getResources().getString(R.string.notavailable) : movie.getRating();
+        this.year = movie.getAnyo();
+        if(this.type.equalsIgnoreCase(General.PERSON_TYPE)){
+            this.desc = movie.getKnownFor();
         } else {
-            this.desc = context.getResources().getString(R.string.KnownFor) + " " + movie.getKnownFor();
+            this.rating = movie.getRating() == 0.0 || movie.getRating() == null ? context.getResources().getString(R.string.notavailable) : movie.getRating().toString();
         }
         this.source = movie.getSource();
         this.object = object;

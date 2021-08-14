@@ -20,6 +20,7 @@ public class Crew extends AudiovisualInterface implements Serializable{
         super.originalLanguage = model.original_language;
         super.popularity = model.popularity;
         super.Rating = model.vote_average;
+        super.relatedToPerson = General.CREW_TYPE;
 
         /*for(ModelGenres genres : model.genres){
             super.addGeneros(genres.name);

@@ -129,7 +129,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
 		rowItems = new ArrayList<RowItemInterface>();
 		adapter = new RecyclerViewAdapterPerson(this, (AdapterCallback) this,
-				R.layout.list_item, rowItems, InfoPersonActivity.this);
+				R.layout.list_item_person, rowItems, InfoPersonActivity.this);
 		listView.setAdapter(adapter);
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 		listView.setLayoutManager(linearLayoutManager);
@@ -203,7 +203,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		adapter.clear();
 		listView.setAdapter(null);
 
-		adapter = new RecyclerViewAdapterPerson(this, (AdapterCallback) this, R.layout.list_item, rowItems, this);
+		adapter = new RecyclerViewAdapterPerson(this, (AdapterCallback) this, R.layout.list_item_person, rowItems, this);
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -288,7 +288,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
 		listView = (RecyclerView) findViewById(R.id.list);
 		adapter = new RecyclerViewAdapterPerson(InfoPersonActivity.this, this,
-				R.layout.list_item, rowItems, InfoPersonActivity.this);
+				R.layout.list_item_person, rowItems, InfoPersonActivity.this);
 		listView.setAdapter(adapter);
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(InfoPersonActivity.this);
 		listView.setLayoutManager(linearLayoutManager);

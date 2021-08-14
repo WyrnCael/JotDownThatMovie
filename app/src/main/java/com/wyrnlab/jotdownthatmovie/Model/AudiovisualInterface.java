@@ -26,6 +26,7 @@ public abstract class AudiovisualInterface implements Serializable {
     protected String knownFor;
     protected String character;
     protected Double popularity;
+    protected String relatedToPerson;
 
     public Double getPopularity() {
         return popularity;
@@ -140,7 +141,7 @@ public abstract class AudiovisualInterface implements Serializable {
         this.Id = id;
     }
 
-    public void setRating(double r){
+    public void setRating(Double r){
         this.Rating = r;
     }
 
@@ -176,7 +177,7 @@ public abstract class AudiovisualInterface implements Serializable {
         return this.Id;
     }
 
-    public double getRating(){
+    public Double getRating(){
         return this.Rating;
     }
 
@@ -222,6 +223,14 @@ public abstract class AudiovisualInterface implements Serializable {
 
     public String getOriginalLanguage() {
         return originalLanguage;
+    }
+
+    public String getRelatedToPerson() {
+        return relatedToPerson;
+    }
+
+    public void setRelatedToPerson(String relatedToPerson) {
+        this.relatedToPerson = relatedToPerson;
     }
 
     public void setOriginalLanguage(String originalLanguage) {
