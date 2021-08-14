@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -29,6 +30,7 @@ import com.wyrnlab.jotdownthatmovie.ExternalLibraries.lazylist.ImageLoader;
 import com.wyrnlab.jotdownthatmovie.JavaClasses.SaveAudiovisual;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
+import com.wyrnlab.jotdownthatmovie.Model.Person;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.Model.RowItemPerson;
@@ -81,6 +83,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 	ImageView image;
 	private ShareActionProvider mShareActionProvider;
 	int position;
+	ScrollView scrollView;
 	TabLayout tabLayout;
 	Map<Integer, List<AudiovisualInterface>> audiovisualsByTab = new HashMap<Integer, List<AudiovisualInterface>>();
 
@@ -219,32 +222,19 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 	//this override the implemented method from asyncTask
 	@Override
 	public void processFinish(Object result){
-		this.pelicula = (AudiovisualInterface) result;
-		actualiza();
+		if(result instanceof Person) {
+			this.pelicula = (AudiovisualInterface) result;
+			actualiza();
+		} else {
+			if(DAO.getInstance().insert(this, (AudiovisualInterface) result)){
+				MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.added));
+			} else {
+				MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.alreadySaved));
+			}
+		}
 	}
 
 	public void actualiza(){
-
-
-		// A�adir generos
-        /*genero.setText("	" + pelicula.getGenerosToStrig());
-        if(pelicula.getGeneros().size() > 1){
-			generoLab.setText(getResources().getString(R.string.genders));
-		}
-
-        //A�adir directores
-        String direc = "";
-        for (int d = 0; d < pelicula.getDirectores().size() ; d++){
-        	if (d > 0){
-        		direc += ", " + pelicula.getDirectores().get(d);
-        		directorLab.setText(getResources().getString(R.string.directors));
-        	}
-        	else direc += pelicula.getDirectores().get(d);
-        }
-        director.setText("	" + direc);
-
-        descripcion.setText(pelicula.getDescripcion());
-*/
         Integer tabsInserted = 0;
 		if(!pelicula.getCast().isEmpty()){
 			tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.Cast)));
@@ -278,10 +268,6 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 
 			}
 		});
-		/*originalLanguage.setText(General.getLanguageTranslations(pelicula.getOriginalLanguage()));
-		originalTitle.setText(pelicula.getTituloOriginal());
-
-		similarMoviesModal.pelicula = this.pelicula;*/
 
 		knownFor.setText(pelicula.getKnownFor());
 		birth.setText(SetTheLanguages.getDateFormatted(pelicula.getBirthday()));
@@ -300,7 +286,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		switch(requestCode) {
 			case General.REQUEST_CODE_PELIBUSCADA:
 				if (resultCode == General.RESULT_CODE_ADD) {
-					similarMoviesModal.removeAndSaveItem(data);
+					SaveAudiovisual.saveItem(InfoPersonActivity.this, InfoPersonActivity.this, (AudiovisualInterface) rowItems.get(data.getIntExtra("Position", 0)).getObject(), rowItems.get(data.getIntExtra("Position", 0)).getType());
 				} else if(resultCode == General.RESULT_CODE_SIMILAR_CLOSED){
 					if(similarMoviesModal != null && similarMoviesModal.popupWindow != null){
 						similarMoviesModal.popupWindow.dismiss();
@@ -339,7 +325,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		if (mShareActionProvider != null) {
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
-			sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/movie/" + pelicula.getId());
+			sendIntent.putExtra(Intent.EXTRA_TEXT, "https://www.themoviedb.org/person/" + pelicula.getId());
 			sendIntent.setType("text/plain");
 			mShareActionProvider.setShareIntent(sendIntent);
 		}

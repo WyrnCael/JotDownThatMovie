@@ -12,6 +12,7 @@
     <dimen name="standard_58">58dp</dimen>
     <dimen name="standard_100">100dp</dimen>
     <dimen name="standard_108">108dp</dimen>
+    <dimen name="standard_110">110dp</dimen>
     <dimen name="standard_161">161dp</dimen>
     <dimen name="fab_margin">21dp</dimen>
     <dimen name="ic_clear_margin">16dp</dimen>
