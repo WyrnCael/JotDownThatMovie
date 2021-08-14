@@ -27,6 +27,7 @@ public class RowItem extends RowItemInterface {
         this.type = movie.getTipo();
         if(!this.type.equalsIgnoreCase(General.PERSON_TYPE)){
             this.desc = (context.getResources().getString(R.string.anyo) + " " + movie.getAnyo() + " " + context.getResources().getString(R.string.valoracion) + " ");
+            this.desc += movie.getRating() == 0.0 ? context.getResources().getString(R.string.notavailable) : movie.getRating();
         } else {
             this.desc = context.getResources().getString(R.string.KnownFor) + " " + movie.getKnownFor();
         }
