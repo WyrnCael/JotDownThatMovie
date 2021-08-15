@@ -210,7 +210,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 		listView.setAdapter(adapter);
 		listView.setLayoutManager(new LinearLayoutManager(this));
 
-		if(audiovisualsByTab != null && audiovisualsByTab.containsKey(tabIndex)){
+		if(!audiovisualsByTab.isEmpty() && audiovisualsByTab.containsKey(tabIndex)){
 			for (AudiovisualInterface movie : audiovisualsByTab.get(tabIndex)) {
 				rowItems.add(new RowItemPerson(InfoPersonActivity.this, movie));
 			}
@@ -243,14 +243,14 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 			tabsInserted++;
 		}
 
-		if (!pelicula.getCrew().isEmpty()){
+		if (!audiovisualsByTab.isEmpty() && !pelicula.getCrew().isEmpty()){
 			tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.Crew)));
 			audiovisualsByTab.put(tabsInserted, new ArrayList<AudiovisualInterface>());
 			audiovisualsByTab.get(tabsInserted).addAll(pelicula.getCrew());
 			tabsInserted++;
 		}
 
-		if(!audiovisualsByTab.get(0).isEmpty()){
+		if(!audiovisualsByTab.isEmpty() && !audiovisualsByTab.get(0).isEmpty()){
 			for (AudiovisualInterface movie : audiovisualsByTab.get(0)) {
 				rowItems.add(new RowItemPerson(this, movie));
 			}
