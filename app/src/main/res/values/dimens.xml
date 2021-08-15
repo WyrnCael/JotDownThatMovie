@@ -5,6 +5,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="standard_5">5dp</dimen>
     <dimen name="standard_10">10dp</dimen>
+    <dimen name="standard_14">14dp</dimen>
+    <dimen name="standard_16">16dp</dimen>
     <dimen name="standard_30">30dp</dimen>
     <dimen name="standard_35">35dp</dimen>
     <dimen name="standard_40">40dp</dimen>

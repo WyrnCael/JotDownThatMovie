@@ -66,12 +66,13 @@ public class MoviePersonViewHolder extends RecyclerView.ViewHolder implements Vi
         int width = displayMetrics.widthPixels;
         final Rect bounds = new Rect();
         final Paint paint = new Paint();
-        paint.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.text_view_height));
+        paint.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.standard_14));
         paint.getTextBounds(rowItem.getTitle(), 0, rowItem.getTitle().length(), bounds);
 
-        final int numLines = (int) Math.ceil((float) bounds.width() / (width - context.getResources().getDimensionPixelSize(R.dimen.standard_110)));
+        final int numLines = (int) Math.ceil((float) bounds.width() / (width - context.getResources().getDimensionPixelSize(R.dimen.standard_100) - context.getResources().getDimensionPixelSize(R.dimen.text_view_height)));
 
         Log.d(rowItem.getTitle(), String.valueOf(numLines));
+        Log.d(String.valueOf(bounds.width()), String.valueOf((width - context.getResources().getDimensionPixelSize(R.dimen.standard_100) - context.getResources().getDimensionPixelSize(R.dimen.text_view_height))));
         if(numLines == 1){
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) this.txtTitle.getLayoutParams();
             params.height = context.getResources().getDimensionPixelSize(R.dimen.standard_30);

@@ -66,6 +66,8 @@ public class SearchActivity extends AppCompatActivity implements AsyncResponse {
 			}
 		});
 
+		txtSearchName.onActionViewExpanded();
+
         
        //Implementamos el evento “click” del botón
         btnSearch.setOnClickListener(new OnClickListener() {
