@@ -243,7 +243,7 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 			tabsInserted++;
 		}
 
-		if (!audiovisualsByTab.isEmpty() && !pelicula.getCrew().isEmpty()){
+		if (!pelicula.getCrew().isEmpty()){
 			tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.Crew)));
 			audiovisualsByTab.put(tabsInserted, new ArrayList<AudiovisualInterface>());
 			audiovisualsByTab.get(tabsInserted).addAll(pelicula.getCrew());
