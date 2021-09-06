@@ -271,7 +271,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
                 @Override
                 public void onClick(View view) {
                 // Code to show image in full screen:
-                new PhotoFullPopupWindow(InfoTVShowDatabase.this, R.layout.popup_photo_full, view, null, pelicula.getImagePath() == null ? null : ImageHandler.getImage(pelicula.getImage()));
+                new PhotoFullPopupWindow(InfoTVShowDatabase.this, R.layout.popup_photo_full, view, null, pelicula.getImage() == null ? null : ImageHandler.getImage(pelicula.getImage()));
 
             }
         });
