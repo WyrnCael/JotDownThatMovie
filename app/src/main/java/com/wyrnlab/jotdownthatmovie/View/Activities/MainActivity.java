@@ -30,6 +30,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -56,6 +58,8 @@ import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	RecyclerViewAdapter adapter;
 	TabLayout tabLayout;
 	private int longClickPosition;
+	RadioGroup radioGroup;
+	String orderTypeAD = null;
 
 
 	@Override
@@ -96,6 +102,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		if(SetTheLanguages.isEmptyLangageSettings(this)){
 			inflateLangagueOptions();
 		}
+
+		loadOrderSetting();
 
 		setTitle(R.string.app_name);
 
@@ -228,6 +236,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 			rowItems.add(new RowItem(MainActivity.this, movie));
 		}
 
+		orderArray();
+
+		if(General.orderType == General.orderArray.get(0) && General.orderTypeAD == General.orderADArray.get(1)){
+			Collections.reverse(rowItems);
+		}
+
 		adapter.notifyDataSetChanged();
 
 		refreshTabs();
@@ -309,7 +323,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 				inflateLangagueOptions();
 				return true;
 
-			//
+			case R.id.action_filter:
+				inflateOrderOptions();
+				return true;
 
 			default:
 				// If we got here, the user's action was not recognized.
@@ -433,6 +449,92 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		dialog.show();
 	}
 
+	public void inflateOrderOptions(){
+		LayoutInflater inflater = getLayoutInflater();
+		final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+				.setView(inflater.inflate(R.layout.order_options, null))
+				.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						final View dialogView = getLayoutInflater().inflate(R.layout.order_options, null);
+						final RadioGroup group = dialogView.findViewById(R.id.OrderRadioGroup);
+						int radioGroupId = radioGroup.getCheckedRadioButtonId();
+						RadioButton myCheckedButton = (RadioButton)dialogView.findViewById(radioGroupId);
+						int index = group.indexOfChild(myCheckedButton);
+
+						General.orderType = General.orderArray.get(index);
+						General.orderTypeAD = orderTypeAD;
+
+						SharedPreferences settings = getSharedPreferences(General.ORDER_SETTINGS, 0);
+						SharedPreferences.Editor editor = settings.edit();
+						editor.putString(General.ORDER_TYPE_SETTINGS, General.orderType);
+						editor.putString(General.ORDERAD_SETTING, General.orderTypeAD);
+						editor.commit();
+
+						refreshList(filter);
+					}
+				})
+				.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+					}
+				})
+				.setTitle(R.string.SelectOrder)
+				.create();
+
+		dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+			@Override
+			public boolean onKey(DialogInterface arg0, int keyCode,
+								 KeyEvent event) {
+				// Do Nothing
+				return true;
+			}
+		});
+
+		dialog.show();
+
+		Spinner orderTypeSpinner = (Spinner) dialog.findViewById(R.id.orderTypeAD);
+		ArrayAdapter<CharSequence> orderTypeAdapter = ArrayAdapter.createFromResource(this,
+				R.array.order_array, android.R.layout.simple_spinner_item);
+		orderTypeSpinner.setAdapter(orderTypeAdapter);
+
+		orderTypeSpinner.setAdapter(orderTypeAdapter);
+		orderTypeSpinner.setSelection(SetTheLanguages.getAppLangagePosition(MainActivity.this), true);
+
+		orderTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				orderTypeAD = General.orderADArray.get(position);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+
+			}
+		});
+
+		radioGroup = dialog.findViewById(R.id.OrderRadioGroup);
+		//Log.d("Order Type", General.orderType);
+		if(General.orderType == null){
+			((RadioButton)radioGroup.getChildAt(0)).setChecked(true);
+			General.orderType = General.orderArray.get(0);
+		} else {
+			int index = General.orderArray.indexOf(General.orderType);
+			((RadioButton)radioGroup.getChildAt(index)).setChecked(true);
+		}
+
+		if(General.orderTypeAD == null){
+			orderTypeSpinner.setSelection(0, true);
+			General.orderTypeAD = General.orderADArray.get(0);
+			orderTypeAD = General.orderADArray.get(0);
+		} else {
+			int index = General.orderADArray.indexOf(General.orderTypeAD);
+			orderTypeSpinner.setSelection(index, true);
+		}
+	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_SEARCH) {
@@ -520,5 +622,93 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		moviesByType.get(item.getTipo()).remove(item);
 		moviesByType.get(FILTER_ALL).remove(item);
 		refreshTabs();
+	}
+
+	private void loadOrderSetting(){
+		SharedPreferences settings = getSharedPreferences(General.ORDER_SETTINGS, 0);
+		General.orderType = settings.getString(General.ORDER_TYPE_SETTINGS, null);
+		General.orderTypeAD = settings.getString(General.ORDERAD_SETTING, null);
+
+		if(General.orderType == null){
+			General.orderType = General.orderArray.get(0);
+		} else if (General.orderTypeAD == null){
+			General.orderTypeAD = General.orderADArray.get(0);
+			orderTypeAD = General.orderADArray.get(0);
+		}
+	}
+
+	private void orderArray(){
+		int orderType = General.orderArray.indexOf(General.orderType);
+		int orderADType = General.orderADArray.indexOf(General.orderTypeAD);
+
+		switch(orderType){
+			case 0:
+				break;
+			case 1:
+				if(orderADType == 0){
+					Collections.sort(rowItems, new Comparator<RowItemInterface>() {
+						@Override
+						public int compare(RowItemInterface o1, RowItemInterface o2) {
+							return o1.getYear().compareTo(o2.getYear());
+						}
+					});
+				} else {
+					Collections.sort(rowItems, new Comparator<RowItemInterface>() {
+						@Override
+						public int compare(RowItemInterface o1, RowItemInterface o2) {
+							return o2.getYear().compareTo(o1.getYear());
+						}
+					});
+				}
+				break;
+			case 2:
+				if(orderADType == 0){
+					Collections.sort(rowItems, new Comparator<RowItemInterface>() {
+						@Override
+						public int compare(RowItemInterface o1, RowItemInterface o2) {
+							if(o1.getRating() == getString(R.string.notavailable)){
+								return -11;
+							} else if (o2.getRating() == getString(R.string.notavailable)){
+								return 1;
+							} else {
+								return Double.valueOf(o1.getRating()).compareTo(Double.valueOf(o2.getRating()));
+							}
+						}
+					});
+				} else {
+					Collections.sort(rowItems, new Comparator<RowItemInterface>() {
+						@Override
+						public int compare(RowItemInterface o1, RowItemInterface o2) {
+							if(o1.getRating() == getString(R.string.notavailable)){
+								return 1;
+							} else if (o2.getRating() == getString(R.string.notavailable)){
+								return -1;
+							} else {
+								return Double.valueOf(o2.getRating()).compareTo(Double.valueOf(o1.getRating()));
+							}
+						}
+					});
+				}
+				break;
+			case 3:
+				if(orderADType == 0){
+					Collections.sort(rowItems, new Comparator<RowItemInterface>() {
+						@Override
+						public int compare(RowItemInterface o1, RowItemInterface o2) {
+							return o1.getTitle().compareTo(o2.getTitle());
+						}
+					});
+				} else {
+					Collections.sort(rowItems, new Comparator<RowItemInterface>() {
+						@Override
+						public int compare(RowItemInterface o1, RowItemInterface o2) {
+							return o2.getTitle().compareTo(o1.getTitle());
+						}
+					});
+				}
+				break;
+		}
+		adapter.notifyDataSetChanged();
+		listView.scrollToPosition(0);
 	}
 }

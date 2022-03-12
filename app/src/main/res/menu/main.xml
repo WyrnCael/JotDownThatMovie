@@ -4,28 +4,38 @@
     tools:context=".activities.BaseActivity">
 
     <item
+        android:id="@+id/action_filter"
+        android:orderInCategory="100"
+        android:icon="@drawable/filter_white"
+        app:showAsAction="always"
+        android:title="@string/Order"/>
+
+    <item
         android:id="@+id/action_menu"
+        android:orderInCategory="101"
         android:icon="@drawable/more_vert_white"
         android:title="action_notification"
         app:showAsAction="always">
         <menu>
+
+
             <item
                 android:id="@+id/action_language"
-                android:orderInCategory="100"
+                android:orderInCategory="102"
                 android:icon="@drawable/flag_dark"
                 app:showAsAction="never"
                 android:title="@string/Language"/>
 
             <item
                 android:id="@+id/action_about"
-                android:orderInCategory="100"
+                android:orderInCategory="103"
                 android:icon="@drawable/info"
                 app:showAsAction="never"
                 android:title="@string/MenuAbout"/>
 
             <item
                 android:id="@+id/action_quit"
-                android:orderInCategory="100"
+                android:orderInCategory="104"
                 android:icon="@drawable/quit"
                 app:showAsAction="never"
                 android:title="@string/MenuQuit"/>

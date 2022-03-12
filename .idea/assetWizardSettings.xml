@@ -59,10 +59,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Jota\Downloads\crew.png" />
-                                      <entry key="outputName" value="crew" />
+                                      <entry key="imageAsset" value="C:\Users\Jota\Downloads\filter.png" />
+                                      <entry key="outputName" value="filter_white" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="000000" />
+                                      <entry key="themeColor" value="ffffff" />
                                     </map>
                                   </option>
                                 </PersistentState>

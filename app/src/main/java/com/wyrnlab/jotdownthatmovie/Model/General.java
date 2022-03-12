@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
-    public final static String APIKEY = "YOUR_TMDB_APIKEY";
-    public final static String YAPIKEY = "YOUR_YOUTUBE_APIKEY";
+    public final static String APIKEY = /*YOUR_THEMOVIEDB_APIKEY*/;
+    public final static String YAPIKEY = /*YOUR_YOUTUBE_APIKEY*/;
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
@@ -39,6 +39,11 @@ public class General {
     public static final String LANGUAGE_SETTINGS = "LanguageSettings";
     public static final String APP_LANGUAGE_SETTINGS = "AppLanguage";
     public static final String SEARCH_LANGUAGE_SETTINGS = "SearchLanguage";
+    public static final String ORDER_SETTINGS = "OrderSettings";
+    public static final String ORDER_TYPE_SETTINGS = "OrderTypeSettings";
+    public static final String ORDERAD_SETTING = "OrderADSetting";
+    public static String orderType = null;
+    public static String orderTypeAD = null;
     public static Map<String, Object> jobTranslations = null;
     public static Map<String, Object> departamentsTranslations = null;
     public static List<String> appLanguagesArray = Arrays.asList(
@@ -50,6 +55,18 @@ public class General {
             "en-US",
             "es-ES",
             "es-MX"
+    );
+
+    public static List<String> orderArray = Arrays.asList(
+            "Save",
+            "Year",
+            "Valoration",
+            "Title"
+    );
+
+    public static List<String> orderADArray = Arrays.asList(
+            "ASC",
+            "DESC"
     );
 
     public static void setPeliculasBuscadas(List<Pelicula> peliculas){
