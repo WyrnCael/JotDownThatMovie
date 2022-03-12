@@ -96,6 +96,14 @@
     <string name="Crew">Crew</string>
     <string name="Voice">Voice</string>
     <string name="BirthDay">Birthday:</string>
+    <string name="Order">Order</string>
+    <string name="SelectOrder">Select the list order:</string>
+    <string name="SaveOrder">Saved</string>
+    <string name="Valoration">Valoration</string>
+    <string name="Year">Year</string>
+    <string name="Title">Title</string>
+    <string name="OrderTypeAsc">Ascending</string>
+    <string name="OrderTypeDesc">Descending</string>
 
 
     <string name="not_internet">Can\'t connect to server, is internet enable?</string>

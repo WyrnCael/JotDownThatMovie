@@ -96,6 +96,14 @@
     <string name="Crew">Equipo</string>
     <string name="Voice">Voz</string>
     <string name="BirthDay">Nacimiento:</string>
+    <string name="Order">Ordenar</string>
+    <string name="SelectOrder">Selecciona como ordenar los elementos:</string>
+    <string name="SaveOrder">Fecha de guardado</string>
+    <string name="Valoration">Valoración</string>
+    <string name="OrderTypeAsc">Ascendente</string>
+    <string name="OrderTypeDesc">Descendente</string>
+    <string name="Year">Año</string>
+    <string name="Title">Título</string>
 
     <string name="not_internet">No se puede conectar al servidor, ¿Tienes conexión a internet?</string>
     <string name="without_results">No se han encontrado resultados.</string>
