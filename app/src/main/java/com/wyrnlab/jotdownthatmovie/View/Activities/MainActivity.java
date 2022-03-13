@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 		orderArray();
 
-		if(General.orderType == General.orderArray.get(0) && General.orderTypeAD == General.orderADArray.get(1)){
+		if(General.orderType.equals(General.orderArray.get(0)) && General.orderTypeAD.equals(General.orderADArray.get(1))){
 			Collections.reverse(rowItems);
 		}
 
@@ -499,10 +499,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		ArrayAdapter<CharSequence> orderTypeAdapter = ArrayAdapter.createFromResource(this,
 				R.array.order_array, android.R.layout.simple_spinner_item);
 		orderTypeSpinner.setAdapter(orderTypeAdapter);
-
-		orderTypeSpinner.setAdapter(orderTypeAdapter);
 		orderTypeSpinner.setSelection(SetTheLanguages.getAppLangagePosition(MainActivity.this), true);
-
+		orderTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		orderTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -631,7 +629,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 		if(General.orderType == null){
 			General.orderType = General.orderArray.get(0);
-		} else if (General.orderTypeAD == null){
+		}
+
+		if (General.orderTypeAD == null){
 			General.orderTypeAD = General.orderADArray.get(0);
 			orderTypeAD = General.orderADArray.get(0);
 		}
@@ -666,9 +666,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 					Collections.sort(rowItems, new Comparator<RowItemInterface>() {
 						@Override
 						public int compare(RowItemInterface o1, RowItemInterface o2) {
-							if(o1.getRating() == getString(R.string.notavailable)){
+							if(o1.getRating().equals(getString(R.string.notavailable))){
 								return -11;
-							} else if (o2.getRating() == getString(R.string.notavailable)){
+							} else if (o2.getRating().equals(getString(R.string.notavailable))){
 								return 1;
 							} else {
 								return Double.valueOf(o1.getRating()).compareTo(Double.valueOf(o2.getRating()));
@@ -679,9 +679,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 					Collections.sort(rowItems, new Comparator<RowItemInterface>() {
 						@Override
 						public int compare(RowItemInterface o1, RowItemInterface o2) {
-							if(o1.getRating() == getString(R.string.notavailable)){
+							if(o1.getRating().equals(getString(R.string.notavailable))){
 								return 1;
-							} else if (o2.getRating() == getString(R.string.notavailable)){
+							} else if (o2.getRating().equals(getString(R.string.notavailable))){
 								return -1;
 							} else {
 								return Double.valueOf(o2.getRating()).compareTo(Double.valueOf(o1.getRating()));
