@@ -146,7 +146,7 @@ public class SetTheLanguages {
     }
 
     public static String getDepartamentsTranslation(Context context, String textToTranslate){
-        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+        if(General.SearchLanguage != null && General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
             if (General.departamentsTranslations == null) {
                 parseYAML(context);
             }
@@ -158,7 +158,7 @@ public class SetTheLanguages {
     }
 
     public static Bitmap getImageStub(Context context){
-        if(General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
+        if(General.SearchLanguage != null && General.SearchLanguage.substring(0,2).equalsIgnoreCase("es")) {
             return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_spanish);
         } else {
             return BitmapFactory.decodeResource(context.getResources(), R.drawable.stub_english);

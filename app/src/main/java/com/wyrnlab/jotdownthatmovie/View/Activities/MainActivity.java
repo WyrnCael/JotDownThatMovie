@@ -236,8 +236,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 			rowItems.add(new RowItem(MainActivity.this, movie));
 		}
 
-		orderArray();
-
 		if(General.orderType.equals(General.orderArray.get(0)) && General.orderTypeAD.equals(General.orderADArray.get(1))){
 			Collections.reverse(rowItems);
 		}
@@ -254,6 +252,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		} else {
 			firstTime = false;
 		}
+
+		orderArray();
 	}
 
 	public void refreshTabs(){
@@ -472,6 +472,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 						editor.commit();
 
 						refreshList(filter);
+						listView.scrollToPosition(0);
 					}
 				})
 				.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
@@ -709,6 +710,5 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 				break;
 		}
 		adapter.notifyDataSetChanged();
-		listView.scrollToPosition(0);
 	}
 }
