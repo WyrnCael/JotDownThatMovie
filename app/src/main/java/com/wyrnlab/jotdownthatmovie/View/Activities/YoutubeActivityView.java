@@ -1,21 +1,27 @@
 package com.wyrnlab.jotdownthatmovie.View.Activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.youtube.player.YouTubeBaseActivity;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
-import com.wyrnlab.jotdownthatmovie.Model.General;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
+import android.view.MenuItem;
+
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.wyrnlab.jotdownthatmovie.R;
 
 /**
  * Created by Jota on 03/03/2017.
  */
 
-public class YoutubeActivityView extends YouTubeBaseActivity {
+public class YoutubeActivityView extends AppCompatActivity {
 
     private String trailerId;
     protected ProgressDialog pDialog;
@@ -23,29 +29,55 @@ public class YoutubeActivityView extends YouTubeBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setTitle("Trailer");
         setContentView(R.layout.video_player);
 
         Intent i = getIntent();
         trailerId = (String)i.getSerializableExtra("TrailerId");
+        Log.d("Trailer", trailerId);
 
-        YouTubePlayerView youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
-        YouTubePlayer.OnInitializedListener initListener = new YouTubePlayer.OnInitializedListener(){
-
+        IFramePlayerOptions iFramePlayerOptions = new IFramePlayerOptions.Builder()
+                .controls(1)
+                // enable full screen button
+                .fullscreen(0)
+                .build();
+        YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
+        youTubePlayerView.setEnableAutomaticInitialization(false);
+        AbstractYouTubePlayerListener listener = new AbstractYouTubePlayerListener() {
             @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.setFullscreen(true);
-                youTubePlayer.loadVideo(trailerId);
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                /*Intent intent =  new Intent(YoutubeActivityView.this, VideoEnabledWebView.class);
-                intent.putExtra("Pelicula", pelicula);
-                startActivityForResult(intent, 1);*/
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                youTubePlayer.loadVideo(trailerId, 0);
             }
         };
-        youTubeView.initialize(General.APIKEY, initListener);
+        youTubePlayerView.initialize(listener, iFramePlayerOptions);
+        getLifecycle().addObserver(youTubePlayerView);
+
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                youTubePlayer.loadVideo(trailerId, 0);
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
 }

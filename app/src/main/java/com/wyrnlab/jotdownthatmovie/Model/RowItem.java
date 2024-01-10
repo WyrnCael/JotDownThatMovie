@@ -29,7 +29,7 @@ public class RowItem extends RowItemInterface {
         if(this.type.equalsIgnoreCase(General.PERSON_TYPE)){
             this.desc = movie.getKnownFor();
         } else {
-            this.rating = movie.getRating() == 0.0 || movie.getRating() == null ? context.getResources().getString(R.string.notavailable) : movie.getRating().toString();
+            this.rating = movie.getRating() == 0.0 || movie.getRating() == null ? context.getResources().getString(R.string.notavailable) : String.format("%.1f", movie.getRating());
         }
         this.source = movie.getSource();
         this.object = object;

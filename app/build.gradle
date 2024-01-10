@@ -16,12 +16,12 @@ android {
             android.signingConfigs.release.keyPassword props.keyAliasPassword
         }
     }*/
-    compileSdk 32
+    compileSdk 33
     compileOptions.encoding = 'ISO-8859-1'
     defaultConfig {
         applicationId "com.wyrnLabs.jotdownthatmovie"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
     }
     namespace 'com.wyrnlab.jotdownthatmovie'
     lintOptions {
@@ -40,7 +40,6 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
@@ -52,4 +51,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:2.0.0"
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "org.yaml:snakeyaml:1.18:android"
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0'
+
+
 }
