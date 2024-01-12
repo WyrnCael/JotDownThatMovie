@@ -48,7 +48,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="14dp"
+                android:layout_height="18dp"
                 android:orientation="horizontal"
                 android:layout_gravity="top">
 
@@ -64,7 +64,7 @@
                 <TextView
                     android:id="@+id/year"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
                     android:gravity="top"
@@ -77,10 +77,9 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"
                 android:layout_gravity="top">
 
                 <ImageView
@@ -95,7 +94,7 @@
                 <TextView
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
                     android:gravity="top"
