@@ -54,22 +54,26 @@ public class StreamingAPI  extends AsyncTask<String, Integer, List<Streaming>> i
 
         Document doc = null;
         try {
-            doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
+
+            doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7").header("Accept-Language", "en").ignoreContentType(true).followRedirects(true).get();
+            List<Streaming> streamingList = new ArrayList<Streaming>();
+            if(doc != null && doc.select("div.ott_provider") != null) {
+                for (Element divProviders : doc.select("div.ott_provider")) {
+                    for (Element li : divProviders.select("li:not(.hide)")) {
+                        Streaming strObject = new Streaming(li);
+                        streamingList.add(strObject);
+                    }
+                }
+            }
+
+
+            return streamingList;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        List<Streaming> streamingList = new ArrayList<Streaming>();
+        return null;
 
-        for (Element divProviders : doc.select("div.ott_provider")) {
-            for(Element li : divProviders.select("li:not(.hide)")) {
-                Streaming strObject = new Streaming(li);
-                streamingList.add(strObject);
-            }
-        }
-
-
-        return streamingList;
     }
 
     @Override

@@ -163,10 +163,12 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
 
     private void leerJSONOtrosPosters(AudiovisualInterface show, String json) throws IOException{
         JsonObject info = JsonObject.readFrom( json );
-        JsonArray aux = info.get("posters").asArray();
-        if(aux.size() > 0){
-            JsonObject poster = aux.get(0).asObject();
-            show.setImagePath(poster.get("file_path").asString());
+        if(info != null && info.get("posters") != null) {
+            JsonArray aux = info.get("posters").asArray();
+            if (aux.size() > 0) {
+                JsonObject poster = aux.get(0).asObject();
+                show.setImagePath(poster.get("file_path").asString());
+            }
         }
     }
 

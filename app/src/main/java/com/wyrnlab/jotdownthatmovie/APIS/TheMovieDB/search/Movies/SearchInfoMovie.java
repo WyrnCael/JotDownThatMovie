@@ -162,10 +162,12 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
 
     private void leerJSONOtrosPosters(AudiovisualInterface movie, String json) throws IOException{
         JsonObject info = JsonObject.readFrom( json );
-        JsonArray aux = info.get("posters").asArray();
-        if(aux.size() > 0){
-            JsonObject poster = aux.get(0).asObject();
-            movie.setImagePath(poster.get("file_path").asString());
+        if(info != null && info != null && info.get("posters") != null) {
+            JsonArray aux = info.get("posters").asArray();
+            if (aux.size() > 0) {
+                JsonObject poster = aux.get(0).asObject();
+                movie.setImagePath(poster.get("file_path").asString());
+            }
         }
     }
 
