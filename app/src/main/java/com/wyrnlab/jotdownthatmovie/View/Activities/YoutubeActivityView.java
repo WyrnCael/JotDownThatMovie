@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener;
@@ -59,8 +60,8 @@ public class YoutubeActivityView extends AppCompatActivity {
         //onBackPressedDispatcher.addCallback(onBackPressedCallback);
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
         FrameLayout fullscreenViewContainer = findViewById(R.id.full_screen_view_container);
-        IFramePlayerOptions iFramePlayerOptions = new IFramePlayerOptions.Builder()
-                .controls(1).fullscreen(0)
+        IFramePlayerOptions iFramePlayerOptions = new IFramePlayerOptions.Builder(this)
+                .controls(1).fullscreen(1)
                 .build();
         // we need to initialize manually in order to pass IFramePlayerOptions to the player
         youTubePlayerView.setEnableAutomaticInitialization(false);
@@ -86,8 +87,12 @@ public class YoutubeActivityView extends AppCompatActivity {
             @Override
             public void onReady(YouTubePlayer youTubePlayer) {
                 YoutubeActivityView.this.youTubePlayer = youTubePlayer;
-                youTubePlayer.toggleFullscreen();
                 youTubePlayer.loadVideo(trailerId, 0f);
+            }
+
+            @Override
+            public void onError(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerError error) {
+                Log.e("Trailer", "YouTube player error: " + error);
             }
         }, iFramePlayerOptions);
         getLifecycle().addObserver(youTubePlayerView);

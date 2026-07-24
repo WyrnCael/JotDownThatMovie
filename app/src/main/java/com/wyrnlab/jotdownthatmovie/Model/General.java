@@ -1,5 +1,6 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
+import com.wyrnlab.jotdownthatmovie.BuildConfig;
 import com.wyrnlab.jotdownthatmovie.Model.JSONModels.ModelSearchMultiSearch;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 public class General {
     public final static String URLPRINCIPAL = "https://api.themoviedb.org/";
-    public final static String APIKEY = // YOURMOVIEDBAPIKEY
+    public final static String APIKEY = BuildConfig.TMDB_API_KEY;
     public final static String ALL_TYPE = "All";
     public final static String MOVIE_TYPE = "Movie";
     public final static String TVSHOW_TYPE = "Show";
