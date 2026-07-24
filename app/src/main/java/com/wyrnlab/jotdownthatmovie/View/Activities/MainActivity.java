@@ -136,6 +136,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		mItemTouchHelper.attachToRecyclerView(listView);
 		listView.addItemDecoration(new ItemDecorationRemoveHelper());
 
+		// Prevent the system from re-applying phantom top padding to the list
+		// (e.g. when window insets are re-dispatched after returning to this screen).
+		androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(listView, (v, insets) -> {
+			v.setPadding(0, 0, 0, 0);
+			return insets;
+		});
+
 		// TabLayout
 		tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FilterAll) + " (" + moviesByType.get(FILTER_ALL).size() + ")"));
@@ -143,6 +150,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FilterTVShow) + " (" + moviesByType.get(FILTER_TVSHOW).size() + ")"));
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.Viewed) + " (" + moviesByType.get(FILTER_VIEWED).size() + ")"));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+		tabLayout.post(() -> {
+			listView.setPadding(0, 0, 0, 0);
+			androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams params =
+					(androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams) listView.getLayoutParams();
+			params.topMargin = tabLayout.getHeight();
+			listView.setLayoutParams(params);
+		});
 		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {

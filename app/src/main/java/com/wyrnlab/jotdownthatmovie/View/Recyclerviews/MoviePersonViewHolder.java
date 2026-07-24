@@ -91,8 +91,10 @@ public class MoviePersonViewHolder extends RecyclerView.ViewHolder implements Vi
             this.icon.setImageResource(R.drawable.person);
         }
 
-        if(rowItem.getRelatedToPersonType().equalsIgnoreCase(General.CREW_TYPE)){
+        if(General.CREW_TYPE.equalsIgnoreCase(rowItem.getRelatedToPersonType())){
             this.iconCrewCast.setImageResource(R.drawable.crew);
+        } else {
+            this.iconCrewCast.setImageResource(R.drawable.cast);
         }
 
         if(rowItem.getImageId() instanceof String)
