@@ -90,15 +90,19 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
             this.txtTitle.setLayoutParams(params);
         }
 
-        if(rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.MOVIE_TYPE)){
-            this.icon.setImageResource(R.drawable.video_camera);
-        } else if(rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.TVSHOW_TYPE)) {
-            this.icon.setImageResource(R.drawable.tv);
-        } else if (rowItem.getType() == null || rowItem.getType().equalsIgnoreCase(General.PERSON_TYPE)) {
+        if (rowItem.getType() != null && rowItem.getType().equalsIgnoreCase(General.PERSON_TYPE)) {
             this.icon.setImageResource(R.drawable.person);
             this.calendar.setImageResource(R.drawable.known);
             this.txtYear.setText(rowItem.getDesc());
             this.star.setVisibility(View.GONE);
+        } else {
+            this.calendar.setImageResource(R.drawable.calendar);
+            this.star.setVisibility(View.VISIBLE);
+            if (rowItem.getType() != null && rowItem.getType().equalsIgnoreCase(General.TVSHOW_TYPE)) {
+                this.icon.setImageResource(R.drawable.tv);
+            } else {
+                this.icon.setImageResource(R.drawable.video_camera);
+            }
         }
 
         if(rowItem.getImageId() instanceof String)
