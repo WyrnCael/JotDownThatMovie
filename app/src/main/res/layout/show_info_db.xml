@@ -304,9 +304,10 @@
                 android:id="@+id/StreamingInfoRow">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="start"
                     android:id="@+id/StreamingInfoRowLY"
                     android:layout_marginLeft="15dp">
 
@@ -326,10 +327,23 @@
                         android:textStyle="italic"
                         android:theme="@style/GreenButton" />
 
+                    <TextView
+                        android:id="@+id/streamingCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:gravity="start"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:textColor="@color/verde"
+                        android:textStyle="italic"
+                        android:textSize="10sp"
+                        app:fontFamily="@font/raleway" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvAnimals"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="90dp"/>
 
                 </LinearLayout>
             </TableRow>

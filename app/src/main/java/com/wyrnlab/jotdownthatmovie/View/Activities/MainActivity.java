@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 	FloatingActionButton fab;
 	FloatingActionButton fabFilter;
 	FloatingActionButton fabSearch;
+	FloatingActionButton fabNowPlaying;
+	FloatingActionButton fabUpcoming;
 	Boolean isFABOpen = false;
 	private Map<String, List<AudiovisualInterface>> moviesByType;
 	public RecyclerView listView;
@@ -197,6 +199,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 			public void onClick(View view) {
 				Intent intent =  new Intent(MainActivity.this, SearchActivity.class);
 				startActivityForResult(intent, REQUEST_CODE_A);
+			}
+		});
+
+		fabNowPlaying = (FloatingActionButton) findViewById(R.id.fabNowPlaying);
+		fabNowPlaying.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MainActivity.this, NowPlayingActivity.class));
+			}
+		});
+
+		fabUpcoming = (FloatingActionButton) findViewById(R.id.fabUpcoming);
+		fabUpcoming.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(MainActivity.this, UpcomingActivity.class));
 			}
 		});
 

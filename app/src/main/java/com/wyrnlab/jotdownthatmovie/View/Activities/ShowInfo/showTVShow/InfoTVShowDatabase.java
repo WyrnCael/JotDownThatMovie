@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.StreamingAPI;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.TVShows.GetSimilarTVShows;
@@ -41,6 +40,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
+import com.wyrnlab.jotdownthatmovie.Utils.WatchProvidersHelper;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.WebViewActivity;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.StreamingRecyclerViewAdapter;
@@ -72,7 +72,6 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
     Integer position;
     SimilarMoviesModal similarMoviesModal;
     Context context;
-    StreamingRecyclerViewAdapter adapterStreaming;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +85,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
         pelicula = (AudiovisualInterface)i.getSerializableExtra("Pelicula");
         position = i.getIntExtra("Position", 0);
 
-        //Recuperamos la información pasada en el intent
+        //Recuperamos la informaciï¿½n pasada en el intent
         Bundle bundle = this.getIntent().getExtras();
 
         setContentView(R.layout.show_info_db);
@@ -112,7 +111,7 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
         actualiza();
 
         
-      //Implementamos el evento “click” del botón
+      //Implementamos el evento ï¿½clickï¿½ del botï¿½n
         botonVolver.setOnClickListener(new OnClickListener() {
              @Override
              public void onClick(View v) {  
@@ -206,22 +205,10 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
                 if (!CheckInternetConection.isConnectingToInternet(InfoTVShowDatabase.this)) {
                     MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
                 } else {
-                    LinearLayout streamingRowLY = (LinearLayout) InfoTVShowDatabase.this.findViewById(R.id.StreamingInfoRowLY);
-
-                    Button streamingButton = (Button) InfoTVShowDatabase.this.findViewById(R.id.BtnStreamingInfo);
-                    streamingRowLY.removeView(streamingButton);
-
-                    StreamingAPI searchor = new StreamingAPI(InfoTVShowDatabase.this, String.valueOf(pelicula.getId()), General.TVSHOW_TYPE, getResources().getString(R.string.searching)) {
-                        @Override
-                        public void onResponseReceived(Object result) {
-                            RecyclerView recyclerView = findViewById(R.id.rvAnimals);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(InfoTVShowDatabase.this, LinearLayoutManager.HORIZONTAL, false));
-                            adapterStreaming = new StreamingRecyclerViewAdapter(InfoTVShowDatabase.this, (List<Streaming>) result);
-                            adapterStreaming.setClickListener(InfoTVShowDatabase.this);
-                            recyclerView.setAdapter(adapterStreaming);
-                        }
-                    };
-                    MyUtils.execute(searchor);
+                    WatchProvidersHelper.setup(InfoTVShowDatabase.this, String.valueOf(pelicula.getId()), General.TVSHOW_TYPE,
+                            findViewById(R.id.StreamingInfoRowLY), (Button) findViewById(R.id.BtnStreamingInfo),
+                            findViewById(R.id.rvAnimals), findViewById(R.id.streamingCountry),
+                            InfoTVShowDatabase.this);
                 }
             }
         });
@@ -414,8 +401,8 @@ public class InfoTVShowDatabase extends AppCompatActivity implements AsyncRespon
     }
 
     @Override
-    public void onItemClick(View view, int position) {
-        Uri uri = Uri.parse(adapterStreaming.getItem(position).getUrl());
+    public void onItemClick(View view, Streaming streaming) {
+        Uri uri = Uri.parse(streaming.getUrl());
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         InfoTVShowDatabase.this.startActivity(intent);
     }

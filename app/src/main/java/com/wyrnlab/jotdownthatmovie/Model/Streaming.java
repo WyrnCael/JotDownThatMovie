@@ -1,9 +1,6 @@
 package com.wyrnlab.jotdownthatmovie.Model;
 
-import android.os.Debug;
-import android.util.Log;
-
-import org.jsoup.nodes.Element;
+import com.wyrnlab.jotdownthatmovie.Model.JSONModels.WatchProviders.ModelProvider;
 
 public class Streaming {
     public String imageUrl;
@@ -13,27 +10,11 @@ public class Streaming {
 
     public Streaming(){}
 
-    public Streaming(Element li){
-        this.url = li
-                .select("a")
-                .first()
-                .attr("href");
-
-        this.imageUrl = "https://www.themoviedb.org/" +
-                li
-                .select("img")
-                .first()
-                .attr("src");
-
-        if(li.select("span.price").first() == null){
-            this.isPaid = false;
-        } else {
-            this.price = li
-                    .select("span.price")
-                    .first()
-                    .text();
-            this.isPaid = true;
-        }
+    public Streaming(ModelProvider provider, String link, String categoryLabel, boolean isPaid){
+        this.imageUrl = General.base_url + "w92" + provider.logo_path;
+        this.url = link;
+        this.price = categoryLabel;
+        this.isPaid = isPaid;
     }
 
     public String getImageUrl() {

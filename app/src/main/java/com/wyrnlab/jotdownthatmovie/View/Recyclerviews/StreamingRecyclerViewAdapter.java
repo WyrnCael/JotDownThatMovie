@@ -84,10 +84,12 @@ public class StreamingRecyclerViewAdapter extends RecyclerView.Adapter<Streaming
 
         @Override
         public void onClick(View view) {
+            Streaming streaming = mData.get(getAdapterPosition());
             if (mClickListener != null &&
-                    (mData.get(getAdapterPosition()).price == null
-                            || !mData.get(getAdapterPosition()).price.equalsIgnoreCase(context.getResources().getString(R.string.NoStreams)))) {
-                mClickListener.onItemClick(view, getAdapterPosition());
+                    (streaming.price == null
+                            || !streaming.price.equalsIgnoreCase(context.getResources().getString(R.string.NoStreams)))
+                    && streaming.getUrl() != null) {
+                mClickListener.onItemClick(view, streaming);
             }
         }
     }
@@ -104,6 +106,6 @@ public class StreamingRecyclerViewAdapter extends RecyclerView.Adapter<Streaming
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, Streaming streaming);
     }
 }

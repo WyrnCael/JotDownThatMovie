@@ -4,8 +4,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/StreamingNetwork"
+    android:gravity="center_horizontal"
     android:descendantFocusability="blocksDescendants"
-    android:layout_marginTop="5dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="4dp">
 
     <ImageButton
         android:id="@+id/imageButtonStreamingNetwork"
@@ -18,9 +20,10 @@
 
     <TextView
         android:id="@+id/textViewStreamingNetwork"
-        android:layout_width="50dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:singleLine="true"
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="#000000"

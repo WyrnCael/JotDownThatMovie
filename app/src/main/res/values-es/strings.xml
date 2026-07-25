@@ -27,6 +27,8 @@
 	<string name="title_activity_main">Peliculas por ver</string>
 	<string name="title_activity_saludo">Búsqueda</string>
     <string name="title_activity_results">Resultados de la búsqueda</string>
+    <string name="title_activity_now_playing">En cartelera</string>
+    <string name="title_activity_upcoming">Próximamente</string>
     <string name="title_activity_info">Información de la pelicula</string>
     <string name="removed">eliminada</string>
     <string name="Movie">Película</string>
@@ -82,6 +84,13 @@
     <string name="ShowInfoProvidedBy">Show info provided by:</string>
     <string name="InfoProvidedBy">Info provided by:</string>
     <string name="Streaming">Streaming:</string>
+    <string name="StreamingSubscription">Suscripción</string>
+    <string name="StreamingFree">Gratis</string>
+    <string name="StreamingAds">Gratis con anuncios</string>
+    <string name="StreamingRent">Alquiler</string>
+    <string name="StreamingBuy">Compra</string>
+    <string name="SelectCountry">Selecciona un país</string>
+    <string name="ChangeCountryFormat">Streaming disponible en %1$s (cambiar país)</string>
     <string name="Language">Idioma</string>
     <string name="Save">Guardar</string>
     <string name="LanguageSettings">Opciones de idioma</string>

@@ -27,6 +27,8 @@
 	<string name="title_activity_main">Unseen Movies</string>
 	<string name="title_activity_saludo">Search</string>
     <string name="title_activity_results">Search results</string>
+    <string name="title_activity_now_playing">Now playing</string>
+    <string name="title_activity_upcoming">Upcoming</string>
     <string name="title_activity_info">Movie info</string>
     <string name="removed">removed</string>
     <string name="Movie">Movie</string>
@@ -82,6 +84,13 @@
     <string name="ShowInfoProvidedBy">Show info provided by:</string>
     <string name="InfoProvidedBy">Info provided by:</string>
     <string name="Streaming">Streaming:</string>
+    <string name="StreamingSubscription">Subscription</string>
+    <string name="StreamingFree">Free</string>
+    <string name="StreamingAds">Free with ads</string>
+    <string name="StreamingRent">Rent</string>
+    <string name="StreamingBuy">Buy</string>
+    <string name="SelectCountry">Select a country</string>
+    <string name="ChangeCountryFormat">Streaming available in %1$s (change country)</string>
     <string name="Language">Language</string>
     <string name="Save">Save</string>
     <string name="LanguageSettings">Language settings</string>

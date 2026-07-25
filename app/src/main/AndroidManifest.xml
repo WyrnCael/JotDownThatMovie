@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="75"
-    android:versionName="3.35" >
+    android:versionCode="76"
+    android:versionName="3.36" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -43,6 +43,18 @@
         <activity
             android:name=".View.Activities.SearchResultActivity"
             android:label="@string/title_activity_results"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".View.Activities.NowPlayingActivity"
+            android:label="@string/title_activity_now_playing"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".View.Activities.UpcomingActivity"
+            android:label="@string/title_activity_upcoming"
             android:exported="true">
         </activity>
 

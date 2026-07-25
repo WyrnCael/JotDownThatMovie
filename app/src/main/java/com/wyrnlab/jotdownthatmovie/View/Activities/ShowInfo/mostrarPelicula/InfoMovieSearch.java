@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.StreamingAPI;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Movies.SearchInfoMovie;
 import com.wyrnlab.jotdownthatmovie.ExternalLibraries.FullImages.PhotoFullPopupWindow;
@@ -36,6 +35,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.CheckInternetConection;
 import com.wyrnlab.jotdownthatmovie.Utils.ImageHandler;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
+import com.wyrnlab.jotdownthatmovie.Utils.WatchProvidersHelper;
 import com.wyrnlab.jotdownthatmovie.View.Activities.SimilarMoviesModal;
 import com.wyrnlab.jotdownthatmovie.View.Activities.WebViewActivity;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
@@ -75,7 +75,6 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse,
 	int longClickPosition;
 
 	SimilarMoviesModal similarMoviesModal;
-	StreamingRecyclerViewAdapter adapterStreaming;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -171,22 +170,10 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse,
 				if (!CheckInternetConection.isConnectingToInternet(InfoMovieSearch.this)) {
 					MyUtils.showSnacknar(findViewById(R.id.relativeLayoutMovieInfoDB), getResources().getString(R.string.not_internet));
 				} else {
-					LinearLayout streamingRowLY = (LinearLayout) InfoMovieSearch.this.findViewById(R.id.StreamingInfoRowLY);
-
-					Button streamingButton = (Button) InfoMovieSearch.this.findViewById(R.id.BtnStreamingInfo);
-					streamingRowLY.removeView(streamingButton);
-
-					StreamingAPI searchor = new StreamingAPI(InfoMovieSearch.this, String.valueOf(pelicula.getId()), General.MOVIE_TYPE, getResources().getString(R.string.searching)) {
-						@Override
-						public void onResponseReceived(Object result) {
-							RecyclerView recyclerView = findViewById(R.id.rvAnimals);
-							recyclerView.setLayoutManager(new LinearLayoutManager(InfoMovieSearch.this, LinearLayoutManager.HORIZONTAL, false));
-							adapterStreaming = new StreamingRecyclerViewAdapter(InfoMovieSearch.this, (List<Streaming>) result);
-							adapterStreaming.setClickListener(InfoMovieSearch.this);
-							recyclerView.setAdapter(adapterStreaming);
-						}
-					};
-					MyUtils.execute(searchor);
+					WatchProvidersHelper.setup(InfoMovieSearch.this, String.valueOf(pelicula.getId()), General.MOVIE_TYPE,
+							findViewById(R.id.StreamingInfoRowLY), (Button) findViewById(R.id.BtnStreamingInfo),
+							findViewById(R.id.rvAnimals), findViewById(R.id.streamingCountry),
+							InfoMovieSearch.this);
 				}
 			}
 		});
@@ -341,8 +328,8 @@ public class InfoMovieSearch extends AppCompatActivity implements AsyncResponse,
 	}
 
 	@Override
-	public void onItemClick(View view, int position) {
-		Uri uri = Uri.parse(adapterStreaming.getItem(position).getUrl());
+	public void onItemClick(View view, Streaming streaming) {
+		Uri uri = Uri.parse(streaming.getUrl());
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		InfoMovieSearch.this.startActivity(intent);
 	}

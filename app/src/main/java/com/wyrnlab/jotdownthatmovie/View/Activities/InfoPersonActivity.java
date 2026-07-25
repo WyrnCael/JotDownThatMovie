@@ -21,7 +21,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
-import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.StreamingAPI;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.Person.SearchInfoPerson;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
@@ -357,8 +356,8 @@ public class InfoPersonActivity extends AppCompatActivity implements AsyncRespon
 	}
 
 	@Override
-	public void onItemClick(View view, int position) {
-		Uri uri = Uri.parse(adapterStreaming.getItem(position).getUrl());
+	public void onItemClick(View view, Streaming streaming) {
+		Uri uri = Uri.parse(streaming.getUrl());
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		InfoPersonActivity.this.startActivity(intent);
 	}

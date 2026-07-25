@@ -43,6 +43,32 @@
         app:elevation="0dp"
         app:pressedTranslationZ="0dp" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNowPlaying"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="130dp"
+        app:fabSize="mini"
+        android:tint="@android:color/white"
+        app:srcCompat="@drawable/video_camera"
+        app:elevation="0dp"
+        app:pressedTranslationZ="0dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabUpcoming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="190dp"
+        app:fabSize="mini"
+        android:tint="@android:color/white"
+        app:srcCompat="@drawable/calendar"
+        app:elevation="0dp"
+        app:pressedTranslationZ="0dp" />
+
     <!-- <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabFilter"
         android:layout_width="@dimen/standard_45"
