@@ -117,6 +117,9 @@ public class GetUpcomingMovies extends AsyncTask<Void, Integer, List<Pelicula>> 
 
     private void leerJSONOtrosPosters(AudiovisualInterface movie, String json) throws IOException{
         JsonObject info = JsonObject.readFrom( json );
+        if(info.get("posters") == null) {
+            return;
+        }
         JsonArray aux = info.get("posters").asArray();
         if(aux.size() > 0){
             JsonObject poster = aux.get(0).asObject();

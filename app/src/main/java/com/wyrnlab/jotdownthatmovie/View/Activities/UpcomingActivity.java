@@ -3,6 +3,8 @@ package com.wyrnlab.jotdownthatmovie.View.Activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +35,7 @@ import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewAdapter;
 import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -80,6 +83,12 @@ public class UpcomingActivity extends AppCompatActivity implements
         androidx.recyclerview.widget.ItemTouchHelper mItemTouchHelper = new androidx.recyclerview.widget.ItemTouchHelper(simpleItemTouchCallback);
         mItemTouchHelper.attachToRecyclerView(listView);
         listView.addItemDecoration(new ItemDecorationAddHelper(UpcomingActivity.this));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            listView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+                    listView.setSystemGestureExclusionRects(
+                            Collections.singletonList(new Rect(0, 0, right - left, bottom - top))));
+        }
 
         showCountryLabel();
 
