@@ -5,6 +5,7 @@ public class ModelSearchMovie {
     public ModelMovie[] results = new ModelMovie[]{};
     public Integer total_results;
     public Integer total_pages;
+    public ModelDates dates;
 
     public ModelSearchMovie(){
 

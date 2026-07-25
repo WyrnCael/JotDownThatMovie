@@ -52,7 +52,7 @@
         android:layout_marginBottom="130dp"
         app:fabSize="mini"
         android:tint="@android:color/white"
-        app:srcCompat="@drawable/video_camera"
+        app:srcCompat="@drawable/ic_popcorn_drink"
         app:elevation="0dp"
         app:pressedTranslationZ="0dp" />
 
@@ -65,7 +65,7 @@
         android:layout_marginBottom="190dp"
         app:fabSize="mini"
         android:tint="@android:color/white"
-        app:srcCompat="@drawable/calendar"
+        app:srcCompat="@drawable/ic_filmreel_hourglass"
         app:elevation="0dp"
         app:pressedTranslationZ="0dp" />
 

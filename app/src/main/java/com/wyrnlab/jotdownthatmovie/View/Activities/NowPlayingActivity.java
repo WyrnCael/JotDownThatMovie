@@ -11,6 +11,7 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.conexion.SearchBaseUrl;
 import com.wyrnlab.jotdownthatmovie.APIS.TheMovieDB.search.AsyncResponse;
@@ -33,6 +34,7 @@ import com.wyrnlab.jotdownthatmovie.View.Recyclerviews.RecyclerViewClickListener
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NowPlayingActivity extends AppCompatActivity implements
         AsyncResponse, AdapterCallback, RecyclerViewClickListener {
@@ -79,6 +81,8 @@ public class NowPlayingActivity extends AppCompatActivity implements
         mItemTouchHelper.attachToRecyclerView(listView);
         listView.addItemDecoration(new ItemDecorationAddHelper(NowPlayingActivity.this));
 
+        showCountryLabel();
+
         if (General.base_url == null) {
             SearchBaseUrl searchBaseUrl = new SearchBaseUrl(NowPlayingActivity.this) {
                 @Override
@@ -96,6 +100,18 @@ public class NowPlayingActivity extends AppCompatActivity implements
         GetNowPlayingMovies task = new GetNowPlayingMovies(NowPlayingActivity.this, null);
         task.delegate = NowPlayingActivity.this;
         task.execute();
+    }
+
+    private void showCountryLabel() {
+        String region = Locale.getDefault().getCountry();
+        if (region == null || region.isEmpty()) {
+            region = "US";
+        }
+        String countryName = new Locale("", region).getDisplayCountry();
+
+        TextView countryLabel = (TextView) findViewById(R.id.countryLabel);
+        countryLabel.setText(getResources().getString(R.string.ResultsForCountry, countryName));
+        countryLabel.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -144,12 +160,24 @@ public class NowPlayingActivity extends AppCompatActivity implements
                 MyUtils.showSnacknar(listView, ((AudiovisualInterface) result).getTitulo() + " " + getResources().getString(R.string.alreadySaved));
             }
         } else {
-            results.addAll((List<AudiovisualInterface>) result);
             for (AudiovisualInterface movie : ((List<AudiovisualInterface>) result)) {
+                if(containsId(movie.getId())) {
+                    continue;
+                }
+                results.add(movie);
                 rowItems.add(new RowItem(NowPlayingActivity.this, movie));
             }
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private boolean containsId(int id) {
+        for (AudiovisualInterface movie : results) {
+            if(movie.getId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

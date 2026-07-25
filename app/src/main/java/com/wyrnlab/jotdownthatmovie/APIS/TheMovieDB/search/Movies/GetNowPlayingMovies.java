@@ -20,6 +20,7 @@ import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class GetNowPlayingMovies extends AsyncTask<Void, Integer, List<Pelicula>> {
 
@@ -67,7 +68,12 @@ public class GetNowPlayingMovies extends AsyncTask<Void, Integer, List<Pelicula>
     }
 
     public List<Pelicula> buscar() throws IOException {
-        String url = General.URLPRINCIPAL + "3/movie/now_playing?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage();
+        String region = Locale.getDefault().getCountry();
+        if(region == null || region.isEmpty()) {
+            region = "US";
+        }
+
+        String url = General.URLPRINCIPAL + "3/movie/now_playing?api_key=" + General.APIKEY + "&language=" + SetTheLanguages.getLanguage() + "&region=" + region;
         url += this.page == null ? "" : "&page=" + this.page;
 
         leerJSONBuscar(MyUtils.getHttpRequest(url));
@@ -78,8 +84,21 @@ public class GetNowPlayingMovies extends AsyncTask<Void, Integer, List<Pelicula>
     private void leerJSONBuscar(String json) throws IOException{
         ModelSearchMovie results = new Gson().fromJson(json, ModelSearchMovie.class);
 
+        String minDate = results.dates != null ? results.dates.minimum : null;
+        String maxDate = results.dates != null ? results.dates.maximum : null;
+
         if(results.results.length > 0) {
             for (ModelMovie model : results.results) {
+                if(model.release_date == null || model.release_date.isEmpty()) {
+                    continue;
+                }
+                if(minDate != null && model.release_date.compareTo(minDate) < 0) {
+                    continue;
+                }
+                if(maxDate != null && model.release_date.compareTo(maxDate) > 0) {
+                    continue;
+                }
+
                 pelicula = new Pelicula();
                 pelicula.setDataFromJson(model);
                 if(pelicula.getImagePath() == null) {

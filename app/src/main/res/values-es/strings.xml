@@ -91,6 +91,7 @@
     <string name="StreamingBuy">Compra</string>
     <string name="SelectCountry">Selecciona un país</string>
     <string name="ChangeCountryFormat">Streaming disponible en %1$s (cambiar país)</string>
+    <string name="ResultsForCountry">Resultados para %1$s</string>
     <string name="Language">Idioma</string>
     <string name="Save">Guardar</string>
     <string name="LanguageSettings">Opciones de idioma</string>
