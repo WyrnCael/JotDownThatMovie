@@ -42,7 +42,7 @@ public class DAO {
         //Nos aseguramos de que existe al menos un registro
         int pos = 1;
         if (c.moveToFirst()) {
-            //Recorremos el cursor hasta que no haya más registros
+            //Recorremos el cursor hasta que no haya mï¿½s registros
             do {
                 pelicula = new Pelicula();
                 pelicula.setId(Integer.parseInt(c.getString(0)));
@@ -123,7 +123,7 @@ public class DAO {
 
         //Nos aseguramos de que existe al menos un registro
         if (c.moveToFirst()) {
-            //Recorremos el cursor hasta que no haya más registros
+            //Recorremos el cursor hasta que no haya mï¿½s registros
 
             do {
                 Pelicula pelicula = new Pelicula();
@@ -263,6 +263,51 @@ public class DAO {
             db.close();
         }
         return true;
+    }
+
+    public void deleteAll(Context context){
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
+
+        SQLiteDatabase db = usdbh.getWritableDatabase();
+        db.execSQL("DELETE FROM Peliculas");
+        db.close();
+    }
+
+    public void bulkInsert(Context context, List<AudiovisualInterface> items){
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
+
+        SQLiteDatabase db = usdbh.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            String sql = "INSERT INTO Peliculas (filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating, tipo, temporadas, original_language, viewed) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            SQLiteStatement insertStmt = db.compileStatement(sql);
+
+            for (AudiovisualInterface pelicula : items) {
+                insertStmt.clearBindings();
+                insertStmt.bindString(1, Integer.toString(pelicula.getId()));
+                insertStmt.bindString(2, pelicula.getTitulo());
+                insertStmt.bindString(3, pelicula.getAnyo());
+                insertStmt.bindString(4, pelicula.getTitulo());
+                insertStmt.bindString(5, pelicula.getTituloOriginal());
+                insertStmt.bindString(6, pelicula.getDescripcion());
+                insertStmt.bindBlob(7, pelicula.getImage() == null ? new byte[0] : pelicula.getImage());
+                insertStmt.bindString(8, pelicula.getDirectoresToString());
+                insertStmt.bindString(9, pelicula.getGenerosToStrig());
+                insertStmt.bindString(10, Double.toString(pelicula.getRating() == null ? 0.0 : pelicula.getRating()));
+                insertStmt.bindString(11, pelicula.getTipo());
+                insertStmt.bindString(12, pelicula.getSeasons() == null ? "0" : pelicula.getSeasons());
+                insertStmt.bindString(13, pelicula.getOriginalLanguage() == null ? "" : pelicula.getOriginalLanguage());
+                insertStmt.bindLong(14, pelicula.getViewed() ? 1 : 0);
+                insertStmt.executeInsert();
+            }
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
     }
 
     public boolean updateAsViewed(Context context, AudiovisualInterface pelicula){

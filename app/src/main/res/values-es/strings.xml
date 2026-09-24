@@ -124,6 +124,13 @@
     <string name="MenuAbout">Acerca de</string>
     <string name="MenuQuit">Salir de la App</string>
     <string name="MenuSearch">Buscar/Añadir</string>
+    <string name="MenuExport">Exportar datos</string>
+    <string name="MenuImport">Importar datos</string>
+    <string name="ImportWarningTitle">Importar datos</string>
+    <string name="ImportWarningMessage">Esto sustituirá todas las películas y series que tienes guardadas actualmente por el contenido del archivo seleccionado. Esta acción no se puede deshacer.</string>
+    <string name="ExportError">No se han podido exportar los datos.</string>
+    <string name="ImportSuccess">Datos importados correctamente.</string>
+    <string name="ImportError">No se ha podido importar este archivo. Comprueba que sea una copia de seguridad válida de AnotaCine.</string>
     <string name="Noresults">No hay resultados</string>
     <string name="For">para</string>
     <string name="Trywith">¿Quiere repetir la búsqueda</string>

@@ -45,6 +45,7 @@ import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.Model.RowItem;
 import com.wyrnlab.jotdownthatmovie.Model.RowItemInterface;
 import com.wyrnlab.jotdownthatmovie.R;
+import com.wyrnlab.jotdownthatmovie.Utils.ExportImportHelper;
 import com.wyrnlab.jotdownthatmovie.Utils.MyUtils;
 import com.wyrnlab.jotdownthatmovie.Utils.SetTheLanguages;
 import com.wyrnlab.jotdownthatmovie.Utils.permisionsexecutiontime.ReadExternalStorage;
@@ -313,18 +314,24 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (resultCode){
-			case General.RESULT_CODE_REMOVED:
-				adapter.pendingRemoval(data.getIntExtra("Position", 0));
-				break;
-			case General.RESULT_CODE_ADD:
-				adapter.items.add(new RowItem(MainActivity.this, (AudiovisualInterface)data.getExtras().getSerializable("Pelicula")));
-				adapter.notifyDataSetChanged();
-				MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), "\"" + data.getStringExtra("Name") + "\" " + getResources().getString(R.string.added) + "!");
-				break;
-			case General.RESULT_CODE_NEEDS_REFRESH:
-				refreshList(filter);
-				break;
+		if (requestCode == ExportImportHelper.REQUEST_CODE_IMPORT_FILE) {
+			if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+				ExportImportHelper.confirmAndImport(MainActivity.this, data.getData(), () -> refreshList(filter));
+			}
+		} else {
+			switch (resultCode){
+				case General.RESULT_CODE_REMOVED:
+					adapter.pendingRemoval(data.getIntExtra("Position", 0));
+					break;
+				case General.RESULT_CODE_ADD:
+					adapter.items.add(new RowItem(MainActivity.this, (AudiovisualInterface)data.getExtras().getSerializable("Pelicula")));
+					adapter.notifyDataSetChanged();
+					MyUtils.showSnacknar(findViewById(R.id.realtiveLayoutMovieInfo), "\"" + data.getStringExtra("Name") + "\" " + getResources().getString(R.string.added) + "!");
+					break;
+				case General.RESULT_CODE_NEEDS_REFRESH:
+					refreshList(filter);
+					break;
+			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -357,6 +364,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
 			case R.id.action_filter:
 				inflateOrderOptions();
+				return true;
+
+			case R.id.action_export_data:
+				ExportImportHelper.exportData(MainActivity.this);
+				return true;
+
+			case R.id.action_import_data:
+				ExportImportHelper.pickImportFile(MainActivity.this);
 				return true;
 
 			default:

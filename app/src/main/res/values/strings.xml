@@ -125,6 +125,13 @@
     <string name="MenuAbout">About</string>
     <string name="MenuQuit">Close App</string>
     <string name="MenuSearch">Search/Add</string>
+    <string name="MenuExport">Export data</string>
+    <string name="MenuImport">Import data</string>
+    <string name="ImportWarningTitle">Import data</string>
+    <string name="ImportWarningMessage">This will replace all the movies and shows you currently have saved with the contents of the selected file. This cannot be undone.</string>
+    <string name="ExportError">Could not export your data.</string>
+    <string name="ImportSuccess">Data imported successfully.</string>
+    <string name="ImportError">Could not import this file. Make sure it is a valid AnotaCine backup.</string>
     <string name="alreadySaved">was already saved!</string>
 
     <string name="notAviableTrailer">Not available trailer, try with another language</string>

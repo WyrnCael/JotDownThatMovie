@@ -34,6 +34,20 @@
                 android:title="@string/MenuAbout"/>
 
             <item
+                android:id="@+id/action_export_data"
+                android:orderInCategory="105"
+                android:icon="@android:drawable/ic_menu_share"
+                app:showAsAction="never"
+                android:title="@string/MenuExport"/>
+
+            <item
+                android:id="@+id/action_import_data"
+                android:orderInCategory="106"
+                android:icon="@android:drawable/ic_menu_add"
+                app:showAsAction="never"
+                android:title="@string/MenuImport"/>
+
+            <item
                 android:id="@+id/action_quit"
                 android:orderInCategory="104"
                 android:icon="@drawable/quit"
