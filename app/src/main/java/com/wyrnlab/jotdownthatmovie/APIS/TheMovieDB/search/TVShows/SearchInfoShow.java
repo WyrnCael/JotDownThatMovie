@@ -48,6 +48,7 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
     int Id;
     TVShow tvShow;
     String text;
+    private boolean cancelable = true;
 
     public SearchInfoShow(Context context, int id, String text){
         this.context = context;
@@ -57,13 +58,17 @@ public class SearchInfoShow extends AsyncTask<String, Integer, TVShow> implement
         tvShow.setId(id);
     }
 
+    public void setCancelable(boolean cancelable){
+        this.cancelable = cancelable;
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
 
         pDialog = new ProgressDialog(context);
         pDialog.setMessage(text);
-        pDialog.setCancelable(true);
+        pDialog.setCancelable(cancelable);
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.show();
     }

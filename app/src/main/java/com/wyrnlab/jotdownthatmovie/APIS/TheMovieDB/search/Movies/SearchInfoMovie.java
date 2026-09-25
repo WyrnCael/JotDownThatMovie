@@ -48,6 +48,7 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
     int Id;
     Pelicula pelicula;
     String text;
+    private boolean cancelable = true;
 
     public SearchInfoMovie(Context context, int id, String text){
         this.context = context;
@@ -57,13 +58,17 @@ public class SearchInfoMovie extends AsyncTask<String, Integer, Pelicula> implem
         pelicula.setId(id);
     }
 
+    public void setCancelable(boolean cancelable){
+        this.cancelable = cancelable;
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
 
         pDialog = new ProgressDialog(context);
         pDialog.setMessage(text);
-        pDialog.setCancelable(true);
+        pDialog.setCancelable(cancelable);
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.show();
     }
