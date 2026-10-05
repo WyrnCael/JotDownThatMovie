@@ -10,15 +10,16 @@ import android.util.Base64;
 import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.Export.ExportPayload;
 import com.wyrnlab.jotdownthatmovie.Model.Export.ExportedItem;
-import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.R;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStream;
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class ExportImportHelper {
 
@@ -56,31 +56,6 @@ public class ExportImportHelper {
                 .show();
     }
 
-    private static List<AudiovisualInterface> collectAllItems(android.content.Context context) {
-        Map<String, List<AudiovisualInterface>> byType = DAO.getInstance().readAll(context);
-        List<AudiovisualInterface> all = new ArrayList<>();
-        all.addAll(byType.get(General.ALL_TYPE));
-        all.addAll(byType.get(General.VIEWED));
-        return all;
-    }
-
-    private static ExportedItem toExportedItem(AudiovisualInterface movie) {
-        ExportedItem item = new ExportedItem();
-        item.filmId = movie.getId();
-        item.titulo = movie.getTitulo();
-        item.tituloOriginal = movie.getTituloOriginal();
-        item.anyo = movie.getAnyo();
-        item.descripcion = movie.getDescripcion();
-        item.imageBase64 = movie.getImage() != null ? Base64.encodeToString(movie.getImage(), Base64.NO_WRAP) : null;
-        item.directores = movie.getDirectoresToString();
-        item.generos = movie.getGenerosToStrig();
-        item.rating = String.valueOf(movie.getRating() == null ? 0.0 : movie.getRating());
-        item.tipo = movie.getTipo();
-        item.temporadas = movie.getSeasons();
-        item.originalLanguage = movie.getOriginalLanguage();
-        item.viewed = movie.getViewed();
-        return item;
-    }
 
     private static AudiovisualInterface fromExportedItem(ExportedItem item) {
         Pelicula movie = new Pelicula();
@@ -136,32 +111,38 @@ public class ExportImportHelper {
 
         @Override
         protected File doInBackground(Void... voids) {
+            // Stream straight to disk, one record at a time, instead of building the whole
+            // payload (and its base64-inflated JSON) as Strings in memory: with thousands of
+            // saved items - each carrying a poster image blob - that used to OutOfMemoryError
+            // and crash, since OOM is an Error, not an Exception, so it skipped the catch below.
+            File file = null;
             try {
-                List<AudiovisualInterface> all = collectAllItems(activity);
-
-                ExportPayload payload = new ExportPayload();
-                payload.version = PAYLOAD_VERSION;
-                payload.exportedAt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(new Date());
-                payload.items = new ArrayList<>();
-                for (AudiovisualInterface movie : all) {
-                    payload.items.add(toExportedItem(movie));
-                }
-
-                String json = new Gson().toJson(payload);
-
                 File exportDir = new File(activity.getCacheDir(), "exports");
                 if (!exportDir.exists()) {
                     exportDir.mkdirs();
                 }
                 String fileName = "AnotaCine_backup_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".json";
-                File file = new File(exportDir, fileName);
+                file = new File(exportDir, fileName);
 
-                FileWriter writer = new FileWriter(file);
-                writer.write(json);
-                writer.close();
+                JsonWriter writer = new JsonWriter(new BufferedWriter(new FileWriter(file)));
+                try {
+                    writer.beginObject();
+                    writer.name("version").value(PAYLOAD_VERSION);
+                    writer.name("exportedAt").value(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(new Date()));
+                    writer.name("items");
+                    writer.beginArray();
+                    DAO.getInstance().streamExportAll(activity, writer);
+                    writer.endArray();
+                    writer.endObject();
+                } finally {
+                    writer.close();
+                }
 
                 return file;
-            } catch (Exception e) {
+            } catch (Exception | OutOfMemoryError e) {
+                if (file != null) {
+                    file.delete();
+                }
                 return null;
             }
         }

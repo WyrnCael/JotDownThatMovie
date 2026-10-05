@@ -112,10 +112,12 @@ public abstract class GetSimilarTVShows extends AsyncTask<String, Integer, List<
 
     private void leerJSONOtrosPosters(String json) throws IOException{
         JsonObject info = JsonObject.readFrom( json );
-        JsonArray aux = info.get("posters").asArray();
-        if(aux.size() > 0){
-            JsonObject poster = aux.get(0).asObject();
-            pelicula.setImagePath(poster.get("file_path").asString());
+        if(info != null && info.get("posters") != null) {
+            JsonArray aux = info.get("posters").asArray();
+            if(aux.size() > 0){
+                JsonObject poster = aux.get(0).asObject();
+                pelicula.setImagePath(poster.get("file_path").asString());
+            }
         }
     }
 

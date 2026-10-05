@@ -5,12 +5,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 
+import com.google.gson.stream.JsonWriter;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
 import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -154,6 +157,43 @@ public class DAO {
         dba.close();
 
         return audiovisualByType;
+    }
+
+    // Streams every record straight from the cursor into the JsonWriter, one row at a
+    // time, so exporting thousands of records (each with a poster image blob) never has
+    // to hold the whole dataset - or its base64-inflated JSON - in memory at once.
+    public void streamExportAll(Context context, JsonWriter writer) throws IOException {
+        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
+
+        SQLiteDatabase dba = usdbh.getWritableDatabase();
+        Cursor c = dba.rawQuery(" SELECT filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating, tipo, temporadas, original_language, viewed FROM Peliculas ", null);
+
+        try {
+            if (c.moveToFirst()) {
+                do {
+                    byte[] image = c.getBlob(6);
+
+                    writer.beginObject();
+                    writer.name("filmId").value(Integer.parseInt(c.getString(0)));
+                    writer.name("titulo").value(c.getString(3));
+                    writer.name("tituloOriginal").value(c.getString(4));
+                    writer.name("anyo").value(c.getString(2));
+                    writer.name("descripcion").value(c.getString(5));
+                    writer.name("imageBase64").value(image != null ? Base64.encodeToString(image, Base64.NO_WRAP) : null);
+                    writer.name("directores").value(c.getString(7));
+                    writer.name("generos").value(c.getString(8));
+                    writer.name("rating").value(c.getString(9));
+                    writer.name("tipo").value(c.getString(10));
+                    writer.name("temporadas").value(c.getString(11));
+                    writer.name("originalLanguage").value(c.getString(12));
+                    writer.name("viewed").value(c.getInt(13) != 0);
+                    writer.endObject();
+                } while (c.moveToNext());
+            }
+        } finally {
+            c.close();
+            dba.close();
+        }
     }
 
     public boolean insert(Context context, AudiovisualInterface pelicula){
