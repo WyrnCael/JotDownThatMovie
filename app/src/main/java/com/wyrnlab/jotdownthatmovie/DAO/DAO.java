@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
 import com.wyrnlab.jotdownthatmovie.Model.General;
@@ -305,42 +307,94 @@ public class DAO {
         return true;
     }
 
-    public void deleteAll(Context context){
-        PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
-
-        SQLiteDatabase db = usdbh.getWritableDatabase();
-        db.execSQL("DELETE FROM Peliculas");
-        db.close();
+    public interface ImportProgressListener {
+        void onProgress(int imported);
     }
 
-    public void bulkInsert(Context context, List<AudiovisualInterface> items){
+    // Replaces the whole table from a streamed JsonReader, one record at a time, instead of
+    // materializing the entire import file as a String + a List<AudiovisualInterface> first
+    // (which used to OutOfMemoryError with large backups). The delete and every insert share
+    // one transaction, so a failure partway through rolls back and the user keeps their
+    // original data instead of ending up with an empty library.
+    public void streamImportAll(Context context, JsonReader reader, ImportProgressListener listener) throws IOException {
         PeliculasSQLiteHelper usdbh = new PeliculasSQLiteHelper(context, "DBPeliculas", null, DatabaseVersion);
 
         SQLiteDatabase db = usdbh.getWritableDatabase();
 
         db.beginTransaction();
         try {
+            db.execSQL("DELETE FROM Peliculas");
+
             String sql = "INSERT INTO Peliculas (filmId, nombre, anyo, titulo, tituloOriginal, descripcion, image, directores, generos, rating, tipo, temporadas, original_language, viewed) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             SQLiteStatement insertStmt = db.compileStatement(sql);
 
-            for (AudiovisualInterface pelicula : items) {
+            int count = 0;
+            reader.beginArray();
+            while (reader.hasNext()) {
+                int filmId = 0;
+                String titulo = "", tituloOriginal = "", anyo = "", descripcion = "";
+                byte[] image = null;
+                String directores = "", generos = "", rating = "0.0", tipo = "Movie", temporadas = "0", originalLanguage = "";
+                boolean viewed = false;
+
+                reader.beginObject();
+                while (reader.hasNext()) {
+                    String name = reader.nextName();
+                    if (reader.peek() == JsonToken.NULL) {
+                        reader.nextNull();
+                        continue;
+                    }
+                    switch (name) {
+                        case "filmId": filmId = reader.nextInt(); break;
+                        case "titulo": titulo = reader.nextString(); break;
+                        case "tituloOriginal": tituloOriginal = reader.nextString(); break;
+                        case "anyo": anyo = reader.nextString(); break;
+                        case "descripcion": descripcion = reader.nextString(); break;
+                        case "imageBase64": {
+                            String base64 = reader.nextString();
+                            image = base64.isEmpty() ? null : Base64.decode(base64, Base64.NO_WRAP);
+                            break;
+                        }
+                        case "directores": directores = reader.nextString(); break;
+                        case "generos": generos = reader.nextString(); break;
+                        case "rating": rating = reader.nextString(); break;
+                        case "tipo": tipo = reader.nextString(); break;
+                        case "temporadas": temporadas = reader.nextString(); break;
+                        case "originalLanguage": originalLanguage = reader.nextString(); break;
+                        case "viewed": viewed = reader.nextBoolean(); break;
+                        default: reader.skipValue(); break;
+                    }
+                }
+                reader.endObject();
+
                 insertStmt.clearBindings();
-                insertStmt.bindString(1, Integer.toString(pelicula.getId()));
-                insertStmt.bindString(2, pelicula.getTitulo());
-                insertStmt.bindString(3, pelicula.getAnyo());
-                insertStmt.bindString(4, pelicula.getTitulo());
-                insertStmt.bindString(5, pelicula.getTituloOriginal());
-                insertStmt.bindString(6, pelicula.getDescripcion());
-                insertStmt.bindBlob(7, pelicula.getImage() == null ? new byte[0] : pelicula.getImage());
-                insertStmt.bindString(8, pelicula.getDirectoresToString());
-                insertStmt.bindString(9, pelicula.getGenerosToStrig());
-                insertStmt.bindString(10, Double.toString(pelicula.getRating() == null ? 0.0 : pelicula.getRating()));
-                insertStmt.bindString(11, pelicula.getTipo());
-                insertStmt.bindString(12, pelicula.getSeasons() == null ? "0" : pelicula.getSeasons());
-                insertStmt.bindString(13, pelicula.getOriginalLanguage() == null ? "" : pelicula.getOriginalLanguage());
-                insertStmt.bindLong(14, pelicula.getViewed() ? 1 : 0);
+                insertStmt.bindString(1, Integer.toString(filmId));
+                insertStmt.bindString(2, titulo);
+                insertStmt.bindString(3, anyo);
+                insertStmt.bindString(4, titulo);
+                insertStmt.bindString(5, tituloOriginal);
+                insertStmt.bindString(6, descripcion);
+                insertStmt.bindBlob(7, image == null ? new byte[0] : image);
+                insertStmt.bindString(8, directores);
+                insertStmt.bindString(9, generos);
+                insertStmt.bindString(10, rating);
+                insertStmt.bindString(11, tipo);
+                insertStmt.bindString(12, temporadas);
+                insertStmt.bindString(13, originalLanguage);
+                insertStmt.bindLong(14, viewed ? 1 : 0);
                 insertStmt.executeInsert();
+
+                image = null;
+                count++;
+                if (listener != null && count % 20 == 0) {
+                    listener.onProgress(count);
+                }
+            }
+            reader.endArray();
+
+            if (listener != null) {
+                listener.onProgress(count);
             }
 
             db.setTransactionSuccessful();

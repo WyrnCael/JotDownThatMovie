@@ -2,32 +2,25 @@ package com.wyrnlab.jotdownthatmovie.Utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Base64;
 
 import androidx.core.content.FileProvider;
 
-import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.wyrnlab.jotdownthatmovie.DAO.DAO;
-import com.wyrnlab.jotdownthatmovie.Model.AudiovisualInterface;
-import com.wyrnlab.jotdownthatmovie.Model.Export.ExportPayload;
-import com.wyrnlab.jotdownthatmovie.Model.Export.ExportedItem;
-import com.wyrnlab.jotdownthatmovie.Model.Pelicula;
 import com.wyrnlab.jotdownthatmovie.R;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class ExportImportHelper {
@@ -56,51 +49,6 @@ public class ExportImportHelper {
                 .show();
     }
 
-
-    private static AudiovisualInterface fromExportedItem(ExportedItem item) {
-        Pelicula movie = new Pelicula();
-        movie.setId(item.filmId);
-        movie.setTitulo(item.titulo);
-        movie.setTituloOriginal(item.tituloOriginal);
-        movie.setAnyo(item.anyo);
-        movie.setDescripcion(item.descripcion);
-        if (item.imageBase64 != null && !item.imageBase64.isEmpty()) {
-            movie.setImage(Base64.decode(item.imageBase64, Base64.NO_WRAP));
-        }
-        addCommaSeparated(movie, item.directores, true);
-        addCommaSeparated(movie, item.generos, false);
-        movie.setRating(parseDoubleSafe(item.rating));
-        movie.setTipo(item.tipo);
-        movie.setSeasons(item.temporadas);
-        movie.setOriginalLanguage(item.originalLanguage);
-        movie.setViewed(item.viewed);
-        return movie;
-    }
-
-    private static void addCommaSeparated(Pelicula movie, String value, boolean isDirectores) {
-        if (value == null || value.isEmpty()) {
-            return;
-        }
-        for (String part : value.split(",")) {
-            String trimmed = part.trim();
-            if (trimmed.isEmpty()) {
-                continue;
-            }
-            if (isDirectores) {
-                movie.addDirectores(trimmed);
-            } else {
-                movie.addGeneros(trimmed);
-            }
-        }
-    }
-
-    private static double parseDoubleSafe(String value) {
-        try {
-            return value == null ? 0.0 : Double.parseDouble(value);
-        } catch (NumberFormatException e) {
-            return 0.0;
-        }
-    }
 
     private static class ExportTask extends AsyncTask<Void, Void, File> {
         private final Activity activity;
@@ -166,10 +114,11 @@ public class ExportImportHelper {
         }
     }
 
-    private static class ImportTask extends AsyncTask<Void, Void, Boolean> {
+    private static class ImportTask extends AsyncTask<Void, Integer, Boolean> {
         private final Activity activity;
         private final Uri fileUri;
         private final Runnable onComplete;
+        private ProgressDialog pDialog;
 
         ImportTask(Activity activity, Uri fileUri, Runnable onComplete) {
             this.activity = activity;
@@ -178,39 +127,63 @@ public class ExportImportHelper {
         }
 
         @Override
-        protected Boolean doInBackground(Void... voids) {
-            try {
-                StringBuilder sb = new StringBuilder();
-                InputStream is = activity.getContentResolver().openInputStream(fileUri);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-                reader.close();
-                is.close();
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(activity);
+            pDialog.setMessage(activity.getResources().getString(R.string.ImportingProgress, 0));
+            // Not cancelable: this replaces the whole library inside a single DB transaction,
+            // so letting the user bail out mid-stream would still finish or roll back on its
+            // own - escaping the dialog wouldn't stop it, only hide its progress.
+            pDialog.setCancelable(false);
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialog.show();
+        }
 
-                ExportPayload payload = new Gson().fromJson(sb.toString(), ExportPayload.class);
-                if (payload == null || payload.items == null) {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            // Parses the backup with a streaming JsonReader and inserts straight into the DB
+            // via DAO.streamImportAll, instead of reading the whole file into a String and
+            // building a full List<AudiovisualInterface> in memory first (which used to
+            // OutOfMemoryError and crash with large backups, just like export did before).
+            try (InputStream is = activity.getContentResolver().openInputStream(fileUri)) {
+                if (is == null) {
                     return false;
                 }
-
-                List<AudiovisualInterface> items = new ArrayList<>();
-                for (ExportedItem exportedItem : payload.items) {
-                    items.add(fromExportedItem(exportedItem));
+                JsonReader reader = new JsonReader(new InputStreamReader(is));
+                try {
+                    reader.beginObject();
+                    boolean foundItems = false;
+                    while (reader.hasNext()) {
+                        String name = reader.nextName();
+                        if ("items".equals(name)) {
+                            foundItems = true;
+                            DAO.getInstance().streamImportAll(activity, reader, this::publishProgress);
+                        } else {
+                            reader.skipValue();
+                        }
+                    }
+                    reader.endObject();
+                    return foundItems;
+                } finally {
+                    reader.close();
                 }
-
-                DAO.getInstance().deleteAll(activity);
-                DAO.getInstance().bulkInsert(activity, items);
-
-                return true;
-            } catch (Exception e) {
+            } catch (Exception | OutOfMemoryError e) {
                 return false;
             }
         }
 
         @Override
+        protected void onProgressUpdate(Integer... values) {
+            if (pDialog != null && pDialog.isShowing()) {
+                pDialog.setMessage(activity.getResources().getString(R.string.ImportingProgress, values[0]));
+            }
+        }
+
+        @Override
         protected void onPostExecute(Boolean success) {
+            if (pDialog != null && pDialog.isShowing() && !activity.isFinishing()) {
+                pDialog.dismiss();
+            }
             if (activity.isFinishing()) {
                 return;
             }

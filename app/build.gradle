@@ -7,21 +7,25 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    /*signingConfigs {
-        release {
-            def props = new Properties()
+    signingConfigs {
+        // Only configured when release.properties exists locally (gitignored, holds the
+        // keystore path/passwords), so a debug build still works on a fresh clone without it.
+        if (rootProject.file("release.properties").exists()) {
+            release {
+                def props = new Properties()
 
-            props.load(new FileInputStream(rootProject.file("release.properties")))
+                props.load(new FileInputStream(rootProject.file("release.properties")))
 
-            android.signingConfigs.release.storeFile rootProject.file(props.keyStore)
+                android.signingConfigs.release.storeFile rootProject.file(props.keyStore)
 
-            android.signingConfigs.release.storePassword props.keyStorePassword
+                android.signingConfigs.release.storePassword props.keyStorePassword
 
-            android.signingConfigs.release.keyAlias props.keyAlias
+                android.signingConfigs.release.keyAlias props.keyAlias
 
-            android.signingConfigs.release.keyPassword props.keyAliasPassword
+                android.signingConfigs.release.keyPassword props.keyAliasPassword
+            }
         }
-    }*/
+    }
     compileSdk 36
     compileOptions.encoding = 'ISO-8859-1'
     defaultConfig {
@@ -37,13 +41,15 @@ android {
     buildFeatures {
         buildConfig true
     }
-    /*buildTypes {
+    buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            signingConfig signingConfigs.release
+            if (rootProject.file("release.properties").exists()) {
+                signingConfig signingConfigs.release
+            }
         }
-    }*/
+    }
 }
 
 dependencies {

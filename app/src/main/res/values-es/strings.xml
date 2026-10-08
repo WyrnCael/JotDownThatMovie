@@ -131,6 +131,7 @@
     <string name="ExportError">No se han podido exportar los datos.</string>
     <string name="ImportSuccess">Datos importados correctamente.</string>
     <string name="ImportError">No se ha podido importar este archivo. Comprueba que sea una copia de seguridad válida de AnotaCine.</string>
+    <string name="ImportingProgress">Importando… (%1$d elementos)</string>
     <string name="Noresults">No hay resultados</string>
     <string name="For">para</string>
     <string name="Trywith">¿Quiere repetir la búsqueda</string>

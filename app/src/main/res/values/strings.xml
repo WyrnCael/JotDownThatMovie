@@ -132,6 +132,7 @@
     <string name="ExportError">Could not export your data.</string>
     <string name="ImportSuccess">Data imported successfully.</string>
     <string name="ImportError">Could not import this file. Make sure it is a valid AnotaCine backup.</string>
+    <string name="ImportingProgress">Importing… (%1$d items)</string>
     <string name="alreadySaved">was already saved!</string>
 
     <string name="notAviableTrailer">Not available trailer, try with another language</string>
