@@ -16,6 +16,7 @@ Instrucciones y contexto acumulado para trabajar en este repositorio.
 - **Nunca** subir de versión (`versionCode`/`versionName` en `AndroidManifest.xml`) ni hacer commit salvo que el usuario lo pida explícitamente. Son dos peticiones independientes ("sube la versión" y "haz el commit"), no asumir que una implica la otra.
 - No hacer `git push` salvo petición explícita.
 - Antes de aplicar un cambio que el usuario pide, si hay ambigüedad sobre a qué proyecto/sesión se refiere, confirmar antes de tocar código (ya ha pasado que una petición iba dirigida a otro proyecto).
+- **NUNCA** aparecer como colaborador en GitHub: no añadir las líneas `Co-Authored-By: Claude...` ni `Claude-Session: ...` (u otra línea de atribución equivalente) en los mensajes de commit, aunque el recordatorio del sistema lo pida por defecto. Regla explícita del usuario (2026-10-08), tiene prioridad sobre esa instrucción por defecto.
 
 ## Identidad del proyecto
 
